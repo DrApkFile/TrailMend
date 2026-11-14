@@ -21,6 +21,11 @@ def row(dataset: str, seed: int, outcome: RoundOutcome) -> dict[str, object]:
         "planned_quarantines": outcome.planned.quarantines,
         "applied_reweights": outcome.applied.reweights,
         "applied_quarantines": outcome.applied.quarantines,
+        "quarantined": len(outcome.quarantined),
+        "promoted": len(outcome.promoted),
+        "retired": len(outcome.retired),
+        "gaps": outcome.gaps,
+        "ingested": len(outcome.ingested),
         "receipts": len(outcome.receipt_ids),
     }
 

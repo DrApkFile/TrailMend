@@ -2,11 +2,13 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from random import Random
 
-from trailmend.core.credit import Outcome, assign_credit, confirmed_paths
+from trailmend.core.credit import Outcome, Unreachable, assign_credit, confirmed_paths
 from trailmend.core.model import Change, Credit, EdgeKey, MendConfig, Quarantine, SearchConfig
 from trailmend.core.promote import Confirmation
 from trailmend.core.receipts import Receipt
 from trailmend.core.update import plan_round
+from trailmend.data.documents import DocumentSet
+from trailmend.data.model import Edge
 from trailmend.data.qtemplates import template
 from trailmend.eval.splits import HeldOutQuestion, TrainQuestion
 from trailmend.graph.client import HydraClient
@@ -14,6 +16,7 @@ from trailmend.graph.state import read_states
 from trailmend.loop.apply import apply
 from trailmend.loop.credit_round import outcome_for
 from trailmend.loop.evaluate import Judged, Score, judge_all, score
+from trailmend.loop.gapfill import Filled, run_gapfill
 from trailmend.loop.journal import Journal
 from trailmend.loop.ledger import Ledger
 from trailmend.loop.policy import ChangeProfile, MendPolicy, mechanisms, profile, shape
@@ -35,6 +38,8 @@ class RoundOutcome:
     quarantined: tuple[EdgeKey, ...]
     promoted: tuple[EdgeKey, ...]
     retired: tuple[EdgeKey, ...]
+    gaps: int
+    ingested: tuple[EdgeKey, ...]
     receipt_ids: tuple[str, ...]
 
 
@@ -52,6 +57,10 @@ def confirmations_of(verdicts: Verdicts) -> tuple[Confirmation, ...]:
         for judged, outcome in verdicts
         for path in confirmed_paths(outcome)
     )
+
+
+def gaps_of(verdicts: Verdicts) -> tuple[Unreachable, ...]:
+    return tuple(outcome for _, outcome in verdicts if isinstance(outcome, Unreachable))
 
 
 def plan(client: HydraClient, verdicts: Verdicts, config: MendConfig) -> tuple[Change, ...]:
@@ -74,6 +83,8 @@ def run_round(
     rng: Random,
     mend_config: MendConfig,
     search_config: SearchConfig,
+    documents: DocumentSet | None = None,
+    pool: Sequence[Edge] = (),
 ) -> RoundOutcome:
     arms = mechanisms(policy)
     judged_train = judge_all(client, index, [item.question for item in train], search_config)
@@ -87,6 +98,22 @@ def run_round(
     shortcuts = ShortcutRound((), (), ())
     if arms.promote:
         shortcuts = run_shortcuts(client, journal, run_id, round_index, len(chosen), ledger.all(), mend_config)
+    gaps = gaps_of(verdicts)
+    filled = Filled(gaps, (), ())
+    if arms.gapfill:
+        if documents is None:
+            raise ValueError(f"{policy} fills gaps, so it needs the document set and the pool")
+        filled = run_gapfill(
+            client,
+            journal,
+            run_id,
+            round_index,
+            len(chosen) + len(shortcuts.receipts),
+            documents,
+            pool,
+            gaps,
+            mend_config,
+        )
     judged_held_out = judge_all(client, index, [item.question for item in held_out], search_config)
     return RoundOutcome(
         run_id,
@@ -99,5 +126,7 @@ def run_round(
         tuple(c.edge for c in chosen if isinstance(c, Quarantine)),
         tuple(p.edge for p in shortcuts.promoted),
         tuple(r.edge for r in shortcuts.retired),
-        tuple(receipt.receipt_id for receipt in (*receipts, *shortcuts.receipts)),
+        len(gaps),
+        tuple(f.edge for f in filled.fills),
+        tuple(r.receipt_id for r in (*receipts, *shortcuts.receipts, *filled.receipts)),
     )

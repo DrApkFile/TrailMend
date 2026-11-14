@@ -144,8 +144,17 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   left alone) and 2 live tests in `tests/live/test_round.py`: a real round promotes a path and the search then
   returns the shortcut at its own cost, and quarantining one hop retires it. `promote_only` added to the arms per
   PRD §8.
-- [ ] D5 Gap-fill (PRD §7 step 8): on `unreachable`, ingest pool documents mentioning the seed entity only (INV7:
+- [x] D5 Gap-fill (PRD §7 step 8): on `unreachable`, ingest pool documents mentioning the seed entity only (INV7:
   test that gold ids are never inspected).
+  Done 2026-11-15: `loop/gapfill.py` turns each `Unreachable` gap into the pool documents that mention its seed
+  entity, ingests the edge each document describes as a receipt-bearing `Fill` at cost 1.0 with `origin: gapfill`,
+  and reads the edge back after the write so a receipt can never claim an ingest that did not land. Measured
+  before building: the rule reaches 35 of seed 1's 96 unreachable questions (REALITY_SPIKES S25); a second wave
+  would reach 43 and is in ROADMAP as not built. INV7 is proven two ways in `tests/unit/test_gapfill.py`: a pool
+  document that mentions only the gold entity is left in the pool, and the unreachable path is run against a stand-in
+  whose `gold` raises on access, which it never does. 2 live tests: a real gap is filled and the question it came
+  from stops being unreachable, and a second pass over the same gap ingests nothing. `gapfill_only` added to the
+  arms per PRD §8.
 - [ ] D6 Plain-store arm (`eval/plain_store.py`): BM25 over the documents (pure Python, no new service); answer =
   most frequent entity of the expected label in top-k docs; same rounds (it can't learn — that's the point).
 

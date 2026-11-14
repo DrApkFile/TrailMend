@@ -11,6 +11,7 @@ class MendPolicy(StrEnum):
     REWEIGHT_ONLY = "reweight_only"
     QUARANTINE_ONLY = "quarantine_only"
     PROMOTE_ONLY = "promote_only"
+    GAPFILL_ONLY = "gapfill_only"
     FROZEN = "frozen"
     RANDOM_REWEIGHT = "random_reweight"
     RANDOM_QUARANTINE = "random_quarantine"
@@ -29,16 +30,18 @@ class Mechanisms:
     reweight: bool
     quarantine: bool
     promote: bool
+    gapfill: bool
 
 
 MECHANISMS: Mapping[MendPolicy, Mechanisms] = {
-    MendPolicy.FULL: Mechanisms(True, True, True),
-    MendPolicy.REWEIGHT_ONLY: Mechanisms(True, False, False),
-    MendPolicy.QUARANTINE_ONLY: Mechanisms(False, True, False),
-    MendPolicy.PROMOTE_ONLY: Mechanisms(False, False, True),
-    MendPolicy.FROZEN: Mechanisms(False, False, False),
-    MendPolicy.RANDOM_REWEIGHT: Mechanisms(True, False, False),
-    MendPolicy.RANDOM_QUARANTINE: Mechanisms(False, True, False),
+    MendPolicy.FULL: Mechanisms(True, True, True, True),
+    MendPolicy.REWEIGHT_ONLY: Mechanisms(True, False, False, False),
+    MendPolicy.QUARANTINE_ONLY: Mechanisms(False, True, False, False),
+    MendPolicy.PROMOTE_ONLY: Mechanisms(False, False, True, False),
+    MendPolicy.GAPFILL_ONLY: Mechanisms(False, False, False, True),
+    MendPolicy.FROZEN: Mechanisms(False, False, False, False),
+    MendPolicy.RANDOM_REWEIGHT: Mechanisms(True, False, False, False),
+    MendPolicy.RANDOM_QUARANTINE: Mechanisms(False, True, False, False),
 }
 
 
@@ -96,7 +99,7 @@ def shape(
             return tuple(c for c in planned if isinstance(c, Reweight))
         case MendPolicy.QUARANTINE_ONLY:
             return tuple(c for c in planned if isinstance(c, Quarantine))
-        case MendPolicy.PROMOTE_ONLY | MendPolicy.FROZEN:
+        case MendPolicy.PROMOTE_ONLY | MendPolicy.GAPFILL_ONLY | MendPolicy.FROZEN:
             return ()
         case MendPolicy.RANDOM_REWEIGHT:
             return _mirror_reweights(planned, candidates, rng)

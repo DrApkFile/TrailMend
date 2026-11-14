@@ -99,6 +99,13 @@ class Promote:
 
 
 @dataclass(frozen=True, slots=True)
+class Fill:
+    edge: EdgeKey
+    document_ids: tuple[int, ...]
+    cost: float
+
+
+@dataclass(frozen=True, slots=True)
 class Retire:
     edge: EdgeKey
     via_path: tuple[EdgeKey, ...]
@@ -110,4 +117,4 @@ class Restore:
     state: EdgeState
 
 
-type Change = Reweight | Quarantine | Promote | Retire | Restore
+type Change = Reweight | Quarantine | Promote | Fill | Retire | Restore

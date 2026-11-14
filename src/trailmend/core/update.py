@@ -9,6 +9,7 @@ from trailmend.core.model import (
     EdgeKey,
     EdgeState,
     EdgeStatus,
+    Fill,
     MendConfig,
     Promote,
     Quarantine,
@@ -44,9 +45,9 @@ def apply_change(state: EdgeState, change: Change, cfg: MendConfig) -> EdgeState
             return state
         case Quarantine():
             return replace(state, status=EdgeStatus.QUARANTINED)
-        case Promote(cost=cost):
+        case Promote(cost=cost) | Fill(cost=cost):
             if state.status is not EdgeStatus.ABSENT:
-                raise ValueError(f"{state.key} already exists, so it cannot be promoted")
+                raise ValueError(f"{state.key} already exists, so it cannot be added")
             return replace(state, status=EdgeStatus.ACTIVE, cost=_clamp(cost, cfg))
         case Retire():
             if state.status is EdgeStatus.ABSENT:

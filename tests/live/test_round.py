@@ -5,17 +5,21 @@ from random import Random
 import pytest
 
 from trailmend.core.config import load_mend_config, load_search_config
+from trailmend.core.credit import Unreachable
 from trailmend.core.model import EdgeKey, EdgeStatus, MendConfig, Quarantine, SearchConfig
 from trailmend.data import dataset
 from trailmend.data.northwind import Sizes
 from trailmend.data.qtemplates import SHORTCUT_TYPES
+from trailmend.data.questions import Question
 from trailmend.graph import queries as q
 from trailmend.graph.client import HydraClient
-from trailmend.graph.loader import load
+from trailmend.graph.loader import INITIAL_COST, load
 from trailmend.graph.queries import quarantine_type
 from trailmend.graph.state import list_edge_keys, read_state
 from trailmend.loop.apply import apply
-from trailmend.loop.evaluate import judge_all
+from trailmend.loop.credit_round import outcome_for
+from trailmend.loop.evaluate import Verdict, judge, judge_all
+from trailmend.loop.gapfill import run_gapfill
 from trailmend.loop.journal import Journal
 from trailmend.loop.ledger import Ledger
 from trailmend.loop.policy import CONTROL_OF, MendPolicy, profile, shape
@@ -47,6 +51,8 @@ def loaded(hydra: HydraClient) -> dataset.Dataset:
     for shortcut_type in SHORTCUT_TYPES:
         for existing in (*list_edge_keys(hydra, shortcut_type), *list_edge_keys(hydra, quarantine_type(shortcut_type))):
             hydra.run(q.delete_edge(existing.rel_type), {"src": existing.src, "dst": existing.dst})
+    for withheld in built.ingested.pool:
+        hydra.run(q.delete_edge(withheld.rel_type.value), {"src": withheld.src, "dst": withheld.dst})
     return built
 
 
@@ -80,14 +86,20 @@ def test_d2_a_round_judges_the_train_split_then_changes_the_graph_and_scores_hel
         Random(1),
         mend_config,
         search_config,
+        loaded.documents,
+        loaded.ingested.pool,
     )
     assert outcome.train.n == len(loaded.split.train)
     assert outcome.held_out.n == len(loaded.split.held_out)
     assert outcome.planned == outcome.applied
     assert outcome.planned.reweights > 0
-    assert len(outcome.receipt_ids) == outcome.applied.reweights + outcome.applied.quarantines + len(
-        outcome.promoted
-    ) + len(outcome.retired)
+    assert len(outcome.receipt_ids) == (
+        outcome.applied.reweights
+        + outcome.applied.quarantines
+        + len(outcome.promoted)
+        + len(outcome.retired)
+        + len(outcome.ingested)
+    )
     assert len(journal.lines()) == len(outcome.receipt_ids)
     assert len(set(outcome.receipt_ids)) == len(outcome.receipt_ids)
 
@@ -204,3 +216,74 @@ def test_d4_inv5_a_shortcut_is_retired_once_one_of_its_hops_is_quarantined(
     assert key in {r.edge for r in retired.retired}
     assert read_state(hydra, key) is None
     assert key not in live_shortcuts(hydra)
+
+
+def _an_unreachable_question(
+    hydra: HydraClient, built: dataset.Dataset, search_config: SearchConfig
+) -> tuple[Question, Unreachable] | None:
+    index = build_index(built.graph.nodes)
+    for item in built.split.train:
+        if not built.documents.mentioning(item.question.seed_entity_id, pool_only=True):
+            continue
+        judged = judge(hydra, index, item.question, search_config)
+        if judged.verdict is not Verdict.UNREACHABLE:
+            continue
+        outcome = outcome_for(hydra, judged, search_config)
+        if isinstance(outcome, Unreachable):
+            return item.question, outcome
+    return None
+
+
+def test_d5_a_gap_is_filled_from_pool_documents_and_the_question_becomes_answerable(
+    hydra: HydraClient,
+    loaded: dataset.Dataset,
+    tmp_path: Path,
+    mend_config: MendConfig,
+    search_config: SearchConfig,
+) -> None:
+    found = _an_unreachable_question(hydra, loaded, search_config)
+    if found is None:
+        pytest.skip("this seed left no unreachable train question to fill")
+    question, gap = found
+    journal = Journal.for_run("round-gapfill", tmp_path)
+    filled = run_gapfill(
+        hydra,
+        journal,
+        "round-gapfill",
+        1,
+        0,
+        loaded.documents,
+        loaded.ingested.pool,
+        [gap],
+        mend_config,
+    )
+    if not filled.fills:
+        pytest.skip("no pool document mentions this seed entity")
+    for change in filled.fills:
+        landed = read_state(hydra, change.edge)
+        assert landed is not None
+        assert landed.status is EdgeStatus.ACTIVE
+        assert landed.cost == INITIAL_COST
+    assert len(journal.lines()) == len(filled.receipts)
+    assert all(r.kind == "gapfill" for r in filled.receipts)
+    again = judge(hydra, build_index(loaded.graph.nodes), question, search_config)
+    assert again.verdict is not Verdict.UNREACHABLE
+
+
+def test_d5_a_gap_already_in_the_graph_is_not_ingested_twice(
+    hydra: HydraClient,
+    loaded: dataset.Dataset,
+    tmp_path: Path,
+    mend_config: MendConfig,
+    search_config: SearchConfig,
+) -> None:
+    found = _an_unreachable_question(hydra, loaded, search_config)
+    if found is None:
+        pytest.skip("this seed left no unreachable train question to fill")
+    journal = Journal.for_run("round-gapfill-twice", tmp_path)
+    first = run_gapfill(hydra, journal, "run", 1, 0, loaded.documents, loaded.ingested.pool, [found[1]], mend_config)
+    if not first.fills:
+        pytest.skip("no pool document mentions this seed entity")
+    second = run_gapfill(hydra, journal, "run", 2, 0, loaded.documents, loaded.ingested.pool, [found[1]], mend_config)
+    assert second.fills == ()
+    assert second.receipts == ()
