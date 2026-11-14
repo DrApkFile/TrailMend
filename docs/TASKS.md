@@ -84,9 +84,19 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   850 questions seed successfully and 849 land on the entity they name; the one that does not is the planted
   conflation resolving to the surviving node, which is the fault behaving as designed. 11 tests in
   `tests/unit/test_seeding.py`. Index builds in 0.2 s over 1165 nodes; 850 questions seed in 0.12 s.
-- [ ] C3 Search (`search/answer.py`): SSpaths from seed over the template's relTypes, `maxLen` from config,
+- [x] C3 Search (`search/answer.py`): SSpaths from seed over the template's relTypes, `maxLen` from config,
   answer = lowest-cost node with the expected label; tie on cost → `ambiguous_answer`; returns the edge path.
   Detect truncation (result count == limit) → `budget_exceeded`. Live test on a small generated graph.
+  Done 2026-11-14: the terminal node's label is read off the last relationship type, so no extra query is needed.
+  SSpaths returns one cheapest path per reachable node. 8 pure tests in `tests/unit/test_search_answer.py` and
+  4 live tests in `tests/live/test_search.py`, including the answer moving when the last hop's cost is raised and
+  `Q_*` being unaskable. Search is ~28 ms per question against local HydraDB.
+  Round 0 measured, not a claim about the Mend: seed 7 held-out (340 questions) answers 259 correct (0.762),
+  17 wrong, 33 unreachable, 31 ambiguous.
+- [ ] C3a OPEN QUESTION for D2: 31 of those 340 refusals are multi-answer templates where several equal-cost
+  answers tie at round 0. PRD §7 step 2 says ties refuse; PRD §9 says set-F1 is reported for multi-answer
+  templates. Decide at D2 whether a multi-answer template returns the tied set instead of refusing, and record it
+  in DECISIONS. Not decided silently here.
 
 ## Phase D — the Mend loop (PRD §7–§8)
 - [ ] D1 Graph state sync: read current EdgeState for edges on chosen/gold paths; apply planned changes via queries;

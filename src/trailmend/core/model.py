@@ -54,6 +54,18 @@ class MendConfig:
 
 
 @dataclass(frozen=True, slots=True)
+class SearchConfig:
+    max_len: int
+    result_limit: int
+
+    def __post_init__(self) -> None:
+        if not 1 <= self.max_len <= 4:
+            raise ValueError("max_len must be between 1 and 4")
+        if not 1 <= self.result_limit <= 500:
+            raise ValueError("result_limit must be between 1 and 500")
+
+
+@dataclass(frozen=True, slots=True)
 class Credit:
     edge: EdgeKey
     signal: Signal

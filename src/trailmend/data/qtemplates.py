@@ -17,6 +17,10 @@ class QuestionTemplate:
     def hops(self) -> int:
         return len(self.rel_path)
 
+    @property
+    def search_types(self) -> tuple[str, ...]:
+        return tuple(sorted({rel_type.value for rel_type in self.rel_path}))
+
     def __post_init__(self) -> None:
         if not self.rel_path:
             raise ValueError(f"{self.name} must traverse at least one relationship")
