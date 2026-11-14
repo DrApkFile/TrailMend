@@ -99,9 +99,14 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   in DECISIONS. Not decided silently here.
 
 ## Phase D — the Mend loop (PRD §7–§8)
-- [ ] D1 Graph state sync: read current EdgeState for edges on chosen/gold paths; apply planned changes via queries;
+- [x] D1 Graph state sync: read current EdgeState for edges on chosen/gold paths; apply planned changes via queries;
   receipts appended to `evidence/runs/<run_id>/receipts.jsonl` BEFORE effects. INV3 live: apply then rollback leaves
   the edge byte-identical.
+  Done 2026-11-14: `graph/state.py` reads and writes EdgeState including the `recent` judgement window, which is
+  now an edge property so blame survives rounds and restarts. `loop/journal.py` appends a receipt and fsyncs it
+  before `loop/apply.py` touches the graph. 10 live tests in `tests/live/test_apply_and_rollback.py`, including
+  INV3 for a reweight and for a quarantine (which moves the edge to `Q_*` and back).
+  Reads are one round trip per edge: HydraDB rejects `UNWIND $rows` feeding a RETURN (S20).
 - [ ] D2 Round runner (`loop/round.py`): for each train question → answer → judge vs gold → `Outcome`; for wrong
   answers compute best gold path with SPpaths over active types; `plan_round`; apply; then evaluate held-out
   (read-only). Writes one row per (dataset, seed, arm, round) to `evidence/curve.jsonl`.
