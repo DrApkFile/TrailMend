@@ -46,7 +46,7 @@ Any hypothesis that fails is published as failed.
 
 D1 "Northwind" (generated, seeded, deterministic, no LLM)
 - A fictional 300–500 person SaaS company: Person, Team, Service, Alert, Customer, Incident, Runbook, Repo.
-- Relations: OWNS, MEMBER_OF, DEPENDS_ON, ON_CALL_FOR, ALERTS_ON, AFFECTS, CUSTOMER_OF, ESCALATES_TO, MAINTAINS.
+- Relations (directed; every one points the way a question is answered, because HydraDB path search is `relDirection: 'outgoing'` and one type per MATCH pattern — S4/S5): ALERTS_ON (Alert→Service), OWNED_BY (Service→Team), ON_CALL (Team→Person, exactly one per team), MEMBER_OF (Person→Team), DEPENDS_ON (Service→Service, acyclic), AFFECTS (Incident→Service), SERVES (Service→Customer), ESCALATES_TO (Person→Person), MAINTAINS (Team→Repo), DOCUMENTED_BY (Service→Runbook). This replaces the earlier draft list `OWNS / ON_CALL_FOR / CUSTOMER_OF`, which pointed against the direction of travel; see DECISIONS 2026-11-14.
 - Truth graph T. Rendered into text documents (Slack-like threads, runbooks, tickets) from templates; documents are what gets ingested.
 - Planted faults, declared in `data/<seed>/faults.json`:
   - wrong edges (e.g. stale or swapped OWNS) — rendered in some documents as the fault would really appear;

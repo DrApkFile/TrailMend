@@ -32,10 +32,13 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   `make gate` now runs web typecheck + lint + build.
 
 ## Phase B — the dataset (PRD §4)
-- [ ] B1 `trailmend/data/northwind.py`: seeded generator for the truth graph T. `generate(seed) -> TruthGraph`.
+- [x] B1 `trailmend/data/northwind.py`: seeded generator for the truth graph T. `generate(seed) -> TruthGraph`.
   Sizes: ~400 Person, ~40 Team, ~120 Service, ~300 Alert, ~80 Customer, ~60 Incident. Types and relations per PRD §4.
   Deterministic: same seed → byte-identical JSON. Test: determinism, referential integrity, every Alert reaches a
   Person within 3 hops via ALERTS_ON → OWNED_BY → ON_CALL.
+  Done 2026-11-14: seed 7 gives 1160 nodes / 1766 edges at exactly the planned sizes, plus 90 Runbook and 70 Repo
+  (PRD §4 lists both). 13 tests in `tests/unit/test_northwind_generator.py`, including a byte-identity check run in
+  a fresh interpreter under `PYTHONHASHSEED=12345`. Relation directions and names are recorded in DECISIONS.
 - [ ] B2 Faults (`faults.py`): from T, produce ingested graph G0 + `faults.json`: wrong edges (~8% of OWNED_BY /
   ON_CALL swapped to a plausible wrong target), missing edges (~6% withheld into the not-yet-ingested pool),
   alias duplicates (~5% of services get a second node with an alias name), one conflated person. Test: every fault
