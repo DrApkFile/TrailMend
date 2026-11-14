@@ -1,0 +1,66 @@
+{
+  "claim": "round_zero",
+  "design": "Round 0 is the frozen ingested graph G0: every edge at cost 1.0, no Mend has run. For each seed, load G0, then answer every held-out question read-only and score it. Correct means the returned answer set equals gold exactly (DECISIONS 2026-11-14, C3a): a multi-answer template returns every entity tied at minimum cost, a single-answer template refuses a tie. set_f1 is the mean per-question F1 of answer set against gold. Held-out questions are never used to change the graph. This is the baseline the Mend has to beat, not a result about the Mend. Rows marked superseded are earlier measurements kept on record, with the reason they no longer stand.",
+  "measured_at": "2026-11-14T20:02:14+00:00",
+  "rows": [
+    {
+      "accuracy": 0.8529,
+      "arm": "frozen",
+      "correct": 290,
+      "dataset": "northwind_generated",
+      "n_heldout": 340,
+      "refused": 0,
+      "round": 0,
+      "seed": 1,
+      "set_f1": 0.8797,
+      "superseded": false,
+      "unreachable": 23,
+      "wrong": 27
+    },
+    {
+      "accuracy": 0.8235,
+      "arm": "frozen",
+      "correct": 280,
+      "dataset": "northwind_generated",
+      "n_heldout": 340,
+      "refused": 1,
+      "round": 0,
+      "seed": 7,
+      "set_f1": 0.8431,
+      "superseded": false,
+      "unreachable": 33,
+      "wrong": 26
+    },
+    {
+      "accuracy": 0.8392,
+      "arm": "frozen",
+      "correct": 287,
+      "dataset": "northwind_generated",
+      "n_heldout": 342,
+      "refused": 0,
+      "round": 0,
+      "seed": 42,
+      "set_f1": 0.8572,
+      "superseded": false,
+      "unreachable": 32,
+      "wrong": 23
+    },
+    {
+      "accuracy": 0.7618,
+      "arm": "frozen",
+      "correct": 259,
+      "dataset": "northwind_generated",
+      "measured_at_commit": "2a09c64",
+      "n_heldout": 340,
+      "refused": 31,
+      "round": 0,
+      "seed": 7,
+      "set_f1": null,
+      "superseded": true,
+      "superseded_by": "the C3a rule recorded in DECISIONS on 2026-11-14",
+      "superseded_reason": "Measured at commit 2a09c64, when every tie refused as ambiguous_answer. At round 0 every edge costs 1.0, so all 31 refusals were multi-answer templates whose gold is a set and whose answers were therefore tied by construction. That figure measured the tie-break rule, not the graph. Kept on record rather than deleted.",
+      "unreachable": 33,
+      "wrong": 17
+    }
+  ]
+}

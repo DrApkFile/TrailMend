@@ -19,9 +19,21 @@ class ScoredPath:
 
 @dataclass(frozen=True, slots=True)
 class AnswerFound:
-    answer_id: int
+    answer_ids: tuple[int, ...]
     cost: float
-    path: tuple[EdgeKey, ...]
+    paths: tuple[tuple[EdgeKey, ...], ...]
+
+    @property
+    def answer_id(self) -> int:
+        if len(self.answer_ids) != 1:
+            raise ValueError(f"this answer holds {len(self.answer_ids)} entities, not one")
+        return self.answer_ids[0]
+
+    @property
+    def path(self) -> tuple[EdgeKey, ...]:
+        if len(self.paths) != 1:
+            raise ValueError(f"this answer holds {len(self.paths)} paths, not one")
+        return self.paths[0]
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,6 +41,8 @@ class AnswerRefused:
     code: ErrorCode
     candidates: tuple[int, ...] = ()
 
+
+COST_PLACES = 9
 
 type AnswerOutcome = AnswerFound | AnswerRefused
 
@@ -63,21 +77,22 @@ def score_paths(rows: Sequence[Sequence[object]]) -> tuple[ScoredPath, ...]:
     return tuple(scored)
 
 
-def pick_answer(paths: Sequence[ScoredPath], expected: NodeLabel) -> AnswerOutcome:
+def pick_answer(paths: Sequence[ScoredPath], expected: NodeLabel, *, multi_answer: bool = False) -> AnswerOutcome:
     matching = [p for p in paths if p.terminal_label is expected]
     if not matching:
         return AnswerRefused(ErrorCode.UNREACHABLE)
     cheapest: dict[int, ScoredPath] = {}
     for path in matching:
         held = cheapest.get(path.terminal)
-        if held is None or path.cost < held.cost:
+        if held is None or round(path.cost, COST_PLACES) < round(held.cost, COST_PLACES):
             cheapest[path.terminal] = path
-    best = min(path.cost for path in cheapest.values())
-    winners = sorted((path for path in cheapest.values() if path.cost == best), key=lambda p: p.terminal)
-    if len(winners) > 1:
+    best = min(round(path.cost, COST_PLACES) for path in cheapest.values())
+    winners = sorted(
+        (path for path in cheapest.values() if round(path.cost, COST_PLACES) == best), key=lambda p: p.terminal
+    )
+    if len(winners) > 1 and not multi_answer:
         return AnswerRefused(ErrorCode.AMBIGUOUS_ANSWER, tuple(path.terminal for path in winners))
-    chosen = winners[0]
-    return AnswerFound(chosen.terminal, chosen.cost, chosen.edges)
+    return AnswerFound(tuple(path.terminal for path in winners), best, tuple(path.edges for path in winners))
 
 
 def answer(
@@ -86,8 +101,10 @@ def answer(
     rel_types: Sequence[str],
     expected: NodeLabel,
     config: SearchConfig,
+    *,
+    multi_answer: bool = False,
 ) -> AnswerOutcome:
     result = client.run(q.weighted_paths_from(rel_types, config.max_len, config.result_limit), {"src": seed_id})
     if len(result.rows) >= config.result_limit:
         return AnswerRefused(ErrorCode.BUDGET_EXCEEDED)
-    return pick_answer(score_paths(result.rows), expected)
+    return pick_answer(score_paths(result.rows), expected, multi_answer=multi_answer)

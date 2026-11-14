@@ -28,23 +28,43 @@ class Unreachable:
 
 
 @dataclass(frozen=True, slots=True)
+class SetJudged:
+    question_id: str
+    correct_paths: tuple[EdgePath, ...]
+    wrong_paths: tuple[EdgePath, ...]
+    missed_gold_paths: tuple[EdgePath, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class Refused:
     question_id: str
     reason: str
 
 
-type Outcome = Correct | Wrong | Unreachable | Refused
+type Outcome = Correct | Wrong | SetJudged | Unreachable | Refused
+
+
+def _credit_paths(
+    question_id: str,
+    correct_paths: Sequence[EdgePath],
+    wrong_paths: Sequence[EdgePath],
+    missed_gold_paths: Sequence[EdgePath],
+) -> tuple[Credit, ...]:
+    confirmed = tuple(dict.fromkeys(edge for path in (*correct_paths, *missed_gold_paths) for edge in path))
+    chosen_wrong = tuple(dict.fromkeys(edge for path in wrong_paths for edge in path))
+    blamed = tuple(edge for edge in chosen_wrong if edge not in confirmed)
+    return tuple(Credit(e, Signal.BLAME, question_id) for e in blamed) + tuple(
+        Credit(e, Signal.CONFIRM, question_id) for e in confirmed
+    )
 
 
 def assign_credit(outcome: Outcome) -> tuple[Credit, ...]:
     match outcome:
         case Correct(question_id=qid, chosen=chosen):
-            return tuple(Credit(e, Signal.CONFIRM, qid) for e in dict.fromkeys(chosen))
+            return _credit_paths(qid, (chosen,), (), ())
         case Wrong(question_id=qid, chosen=chosen, best_gold=gold):
-            gold_edges = tuple(dict.fromkeys(gold or ()))
-            blamed = tuple(e for e in dict.fromkeys(chosen) if e not in gold_edges)
-            return tuple(Credit(e, Signal.BLAME, qid) for e in blamed) + tuple(
-                Credit(e, Signal.CONFIRM, qid) for e in gold_edges
-            )
+            return _credit_paths(qid, (), (chosen,), (gold,) if gold else ())
+        case SetJudged(question_id=qid, correct_paths=good, wrong_paths=bad, missed_gold_paths=missed):
+            return _credit_paths(qid, good, bad, missed)
         case Unreachable() | Refused():
             return ()
