@@ -53,6 +53,9 @@ Hard deadline: **Nov 16, 09:00 IST** (03:30 UTC). Submission: hosted live app + 
 - Web pages checked at 390px wide.
 
 ## Local HydraDB
-- With Docker: `make hydra-up` (MinIO + HydraDB image), then `make verify`.
+- `make hydra-up` starts `moto_server` on port 5000 as the S3 stand-in, creates the `hydradb` bucket, then brings up
+  the pinned `ghcr.io/hydra-db/hydradb` image with `network_mode: host`. `make verify` runs the live tests.
+  `make hydra-down` stops both. The container uses host networking because `ufw` drops docker-bridge traffic to a
+  host-side S3 endpoint (S18); MinIO is gone because `minio/minio:latest` no longer exists (S16).
 - Without Docker: build `graph-node` from github.com/hydra-db/hydradb and run it against an S3 emulator; see
   `docs/REALITY_SPIKES.md` S1/S10/S12.

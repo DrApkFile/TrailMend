@@ -14,9 +14,22 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
 ## Phase A — hosting first (PRD §5, deploy/railway/README.md)
 - [ ] A1 Railway: bucket + HydraDB service + API service. Acceptance: public `GET /v1/ready` → `graph_writable: true`;
   restart the HydraDB service, then `/v1/ready` still true. Record image digest in REALITY_SPIKES.md.
+  BLOCKED 2026-11-14: no Railway account reachable from this host — no `railway` CLI, no `RAILWAY_TOKEN`, no
+  `~/.railway` config. Needs a Railway API token (or a logged-in CLI) with permission to create a bucket and two
+  services. Everything that does not need the account is done: the image digest is recorded (REALITY_SPIKES S15) and
+  pinned in `deploy/railway/README.md`, and the same acceptance is proven locally — `/v1/ready` → `graph_writable:
+  true`, survives `docker compose restart`, writes after the restart still land (S17).
 - [ ] A2 Vercel: `apps/web` Next.js app (create with the current stable `create-next-app`, TypeScript strict,
   App Router). One page that server-fetches `/v1/ready` and shows the state. Acceptance: live URL works in a fresh
   browser; API never called from the browser.
+  App BUILT 2026-11-14, DEPLOY BLOCKED: no Vercel account reachable — no `vercel` CLI, no `VERCEL_TOKEN`, no
+  `~/.vercel`. Needs a Vercel token with permission to create a project. Built and proven locally: Next.js 16.4.6,
+  App Router, TypeScript strict plus `noUncheckedIndexedAccess`; `/` is a server component that fetches
+  `GET /v1/ready` through `lib/api.ts` (guarded by `server-only`); against the live API it renders
+  `graph_writable true`, and with the API down it renders `—` and the code `api_unreachable`, never a fake success.
+  `TRAILMEND_API` unset throws by name. No API URL appears in `.next/static`, so the browser never calls the API.
+  Screenshots at 390px: `evidence/demo/a2-ready-390px.png`, `evidence/demo/a2-api-down-390px.png`.
+  `make gate` now runs web typecheck + lint + build.
 
 ## Phase B — the dataset (PRD §4)
 - [ ] B1 `trailmend/data/northwind.py`: seeded generator for the truth graph T. `generate(seed) -> TruthGraph`.

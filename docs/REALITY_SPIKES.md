@@ -1,10 +1,10 @@
 # REALITY_SPIKES
 
-Run in order; record actual output. None run yet.
+Run in order; record actual output. S6, S7 and S-D2 are still open; every other row has a recorded result.
 
 | ID | Question | How | Result |
 |---|---|---|---|
-| S0 | Workspace can reach crates.io (yes), ghcr.io (NO, 403), api.hydradb.com (NO, 403) | curl | done 2026-11-14 |
+| S0 | Workspace can reach crates.io (yes), ghcr.io (NO, 403), api.hydradb.com (NO, 403) | curl | done 2026-11-14. SUPERSEDED for ghcr.io by S15 on the build host: anonymous pull works there. |
 | S1 | HydraDB OSS runs | built 0.4 (commit 916637477) from source with Rust 1.97 `--ignore-rust-version`, LAGraph 1.0.2 via git clone; `CLOUD_PROVIDER=local` | CONFIRMED locally: /healthz ok, /readyz 200, 'create-only probe: writers allowed'. Hosting on Railway still to do. 2026-11-14 |
 | S2 | Basic write/read | MERGE + MATCH over HTTP | CONFIRMED 2026-11-14 |
 | S3 | Edge property update visible on next read | SET r.cost then read; also after restart | CONFIRMED (default consistency), persists across restart. 2026-11-14 |
@@ -18,6 +18,10 @@ Run in order; record actual output. None run yet.
 | S9 | query_id idempotency after restart | restart, then identical probe write | CONFIRMED BUG: server counter restarts at http-query-1 and a repeated write after restart is silently dropped. FIX: HTTP body accepts `query_id` (src/client/http.rs:698); client sends `tm-<uuid4>` per request. Verified across 2 restarts. 2026-11-14 |
 | S10 | Local build with Rust 1.97 | cargo build --release --ignore-rust-version | CONFIRMED, 10m54s. 2026-11-14 |
 | S11 | SSpaths pathCount semantics | toy graph | pathCount 0 and 1 returned only the nearest node; pathCount 5 returned both; treat pathCount as a total cap and set resultLimit explicitly. 2026-11-14 |
-| S12 | Local-disk storage after restart | CLOUD_PROVIDER=local, restart, write | FAILS: `PutMode::Update not yet implemented by LocalFileSystem` → HTTP 500. S3-compatible storage is mandatory (matches CANON). Dev uses moto_server as S3 stand-in; Railway uses its bucket. 2026-11-14 |
+| S12 | Local-disk storage after restart | CLOUD_PROVIDER=local, restart, write | FAILS: `PutMode::Update not yet implemented by LocalFileSystem` → HTTP 500. S3-compatible storage is mandatory (matches CANON). Dev uses moto_server as S3 stand-in; Railway uses its bucket. 2026-11-14. moto stand-in CONFIRMED live in S17. |
 | S13 | Single-statement `MERGE … SET` | live | REJECTED ('MERGE with following clauses is not executable'). Use `UNWIND $rows AS row MERGE (n {id: row.id}) SET n:Label, …` and `UNWIND $rows AS row MATCH (a:L {id: row.src}), (b:L {id: row.dst}) MERGE (a)-[r:T {id: row.eid}]->(b) SET r.… = row.…`. Both CONFIRMED. 2026-11-14 |
 | S14 | Read-your-writes | write then read, before/after restart | Send the `bookmark` from each response on the next request; client does this. CONFIRMED with S9 fix. 2026-11-14 |
+| S15 | Can the build host pull `ghcr.io/hydra-db/hydradb` without credentials? | anonymous ghcr token + `docker pull` | CONFIRMED on the build host (contradicts S0's 403, which was a different workspace). Image pulled: `ghcr.io/hydra-db/hydradb@sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880`, 5 layers / 176 MB, reports `0.1.0+916637477f3f` (same commit as the S1 source build). Entrypoint `/usr/local/bin/graph-node`, image user `10001:10001`. 2026-11-14 |
+| S16 | Does the scaffold's `minio/minio:latest` exist? | `docker pull`, Docker Hub API | NO: `pull access denied ... repository does not exist`, and `hub.docker.com/v2/repositories/minio/minio` returns 404. Docker Hub no longer serves that repository. `quay.io/minio/minio` answers the anonymous token flow, but was not needed (S17). MinIO removed from `docker-compose.yml`. 2026-11-14 |
+| S17 | Is moto_server a usable S3 stand-in for HydraDB locally? | `moto_server` on the host, bucket created with `PUT /hydradb`, then write / restart / read / write | CONFIRMED. `/v1/ready` writability probe passes, all 3 live contract tests pass, an edge written as `cost=2.5` reads back `(2.5, 1, 0)` after `docker compose restart`, and a further write lands (`(7.25, 1, 2)`), so HydraDB's conditional writes work against moto and the S9 `query_id` fix still holds after a restart. 2026-11-14 |
+| S18 | Can the HydraDB container reach a host-side S3 endpoint over the docker bridge? | `extra_hosts: host.docker.internal:host-gateway`, `AWS_ENDPOINT=http://host.docker.internal:5000` | NO on this host: every object-store call fails `tcp connect error, 172.17.0.1:5000 ... TimedOut` while the same `PUT http://172.17.0.1:5000/hydradb` returns 200 from the host shell. Cause: `ufw` is active and drops bridge-to-host traffic. FIX (no firewall change, no privilege): `network_mode: host` for the local hydradb service, `AWS_ENDPOINT=http://127.0.0.1:5000`. Railway is unaffected (private network, its own bucket). 2026-11-14 |

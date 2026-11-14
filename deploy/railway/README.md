@@ -7,7 +7,8 @@ Railway project → New → Bucket. Note its endpoint, region, bucket name, acce
 HydraDB needs S3 conditional writes; a local volume fails after the first restart (spike S12).
 
 ## 2. HydraDB service
-New → Docker image → `ghcr.io/hydra-db/hydradb:latest` (pin the digest after the first good deploy and record it).
+New → Docker image → `ghcr.io/hydra-db/hydradb@sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880`
+(the digest `latest` resolved to on 2026-11-14, recorded in REALITY_SPIKES S15; confirm it is what the service runs).
 Attach a volume at `/data` (cache only; durable data lives in the bucket).
 Variables:
 ```
