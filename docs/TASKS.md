@@ -109,12 +109,28 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   before `loop/apply.py` touches the graph. 10 live tests in `tests/live/test_apply_and_rollback.py`, including
   INV3 for a reweight and for a quarantine (which moves the edge to `Q_*` and back).
   Reads are one round trip per edge: HydraDB rejects `UNWIND $rows` feeding a RETURN (S20).
-- [ ] D2 Round runner (`loop/round.py`): for each train question → answer → judge vs gold → `Outcome`; for wrong
+- [x] D2 Round runner (`loop/round.py`): for each train question → answer → judge vs gold → `Outcome`; for wrong
   answers compute best gold path with SPpaths over active types; `plan_round`; apply; then evaluate held-out
   (read-only). Writes one row per (dataset, seed, arm, round) to `evidence/curve.jsonl`.
-- [ ] D3 Policy seam (`loop/policy.py`): `MendPolicy` = full | reweight_only | quarantine_only | frozen |
+  Done 2026-11-14: `loop/round.run_round` judges the train split, turns each judgement into an `Outcome`
+  (`loop/credit_round.py`, set-aware per C3a), looks up the cheapest gold path for each missed gold answer with
+  SPpaths over the active types (`loop/gold.py`), plans with `core.update.plan_round`, applies through
+  `loop/apply.apply` so every receipt is on disk before the graph moves, then scores held-out read-only.
+  `eval/curve.py` appends the row. 3 live tests in `tests/live/test_round.py`: a full round's receipts match its
+  applied changes one for one, a frozen round leaves 40 sampled edges byte-identical, and INV6 holds on a real
+  plan. INV8's other half is now proven: `run_round` takes `Sequence[TrainQuestion]`, so a held-out question is a
+  type error, asserted in `tests/unit/test_round_contract.py`. No curve has been produced yet.
+- [x] D3 Policy seam (`loop/policy.py`): `MendPolicy` = full | reweight_only | quarantine_only | frozen |
   random_reweight | random_quarantine. Random arms use a seeded RNG, make the same number and magnitude of changes
   as `full` made in that round (INV6 test).
+  Done 2026-11-14: `policy.shape` takes the plan `full` would have applied and returns what the arm applies, so
+  every arm is measured against one plan built from the same credits. A random arm copies each planned change's
+  signal tuple onto an edge drawn without replacement by the injected `random.Random` and prefixes its question
+  ids with `random:` so a receipt can never read as real credit. INV6 passes before any curve: 11 unit tests in
+  `tests/unit/test_mend_policies.py` (including a hypothesis sweep over plan shapes, and a pool too small being
+  refused rather than quietly shrunk) plus the live test on a real plan. Each random arm mirrors the mechanism arm
+  it controls rather than the whole plan, and `quarantine_only` cannot accumulate a `recent` window — both logged
+  in DECISIONS.
 - [ ] D4 Shortcuts (path compression, PRD §7 step 7): promote a multi-hop path confirmed in ≥ promote_min_questions
   distinct questions to `SC_<TEMPLATE>`; retire when any hop is quarantined (INV5). Receipts for both.
 - [ ] D5 Gap-fill (PRD §7 step 8): on `unreachable`, ingest pool documents mentioning the seed entity only (INV7:
