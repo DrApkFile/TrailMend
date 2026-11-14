@@ -138,3 +138,10 @@ def test_b1_a_smaller_plan_still_satisfies_every_structural_rule() -> None:
 def test_b1_a_plan_with_more_teams_than_people_is_refused() -> None:
     with pytest.raises(ValueError, match="people must be >= teams"):
         Sizes(people=3, teams=9)
+
+
+def test_b1_two_seeds_never_share_a_node_or_edge_id_so_they_can_share_one_graph() -> None:
+    first, second = generate(1), generate(42)
+    assert not {n.id for n in first.nodes} & {n.id for n in second.nodes}
+    assert not {e.id for e in first.edges} & {e.id for e in second.edges}
+    assert all(node.natural_key.split(":")[1].startswith("s1-") for node in first.nodes)

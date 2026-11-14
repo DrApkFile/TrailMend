@@ -54,9 +54,13 @@ class TruthGraph:
         return {src: tuple(items) for src, items in grouped.items()}
 
 
-def make_node(label: NodeLabel, slug: str, name: str, aliases: Sequence[str] = ()) -> Node:
-    natural_key = f"{NATURAL_KEY_KIND[label]}:{slug}"
-    return Node(entity_id(natural_key), label, name, tuple(aliases), natural_key)
+@dataclass(frozen=True, slots=True)
+class NodeFactory:
+    seed: int
+
+    def node(self, label: NodeLabel, slug: str, name: str, aliases: Sequence[str] = ()) -> Node:
+        natural_key = f"{NATURAL_KEY_KIND[label]}:s{self.seed}-{slug}"
+        return Node(entity_id(natural_key), label, name, tuple(aliases), natural_key)
 
 
 def make_edge(src: Node, rel_type: RelType, dst: Node) -> Edge:

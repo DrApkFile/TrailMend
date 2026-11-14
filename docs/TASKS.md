@@ -70,8 +70,13 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   be passed to it at all. INV8 is not fully proven until that test exists.
 
 ## Phase C — load and search (PRD §6, §7 steps 1–2)
-- [ ] C1 Loader: write G0 into HydraDB with batch upserts (≤1000 rows per batch), every edge `cost=1.0`.
+- [x] C1 Loader: write G0 into HydraDB with batch upserts (≤1000 rows per batch), every edge `cost=1.0`.
   Acceptance (live): re-load is idempotent (edge counts unchanged); load time recorded in `evidence/load.json`.
+  Done 2026-11-14 against local HydraDB (`make hydra-up`). Each seed writes 1165 nodes and ~1660 edges in 18
+  batches; into an empty store the first load adds exactly what it wrote and a re-load adds 0 nodes and 0 edges.
+  First-load times 1.26 / 1.09 / 1.22 s for seeds 1 / 7 / 42, re-loads 0.75 / 0.86 / 0.78 s — host-local numbers,
+  not the Railway figures the README will need. `evidence/load.json` is written by `make evidence-load`.
+  4 live tests in `tests/live/test_loader.py`. Counting needed `count(*)` rather than `count(n)` (S19).
 - [ ] C2 Seeding (`search/seed.py`): question → exactly one entry entity (exact name/alias, then token match);
   0 → `no_seed`, tie → `ambiguous_seed`. Pure, tested.
 - [ ] C3 Search (`search/answer.py`): SSpaths from seed over the template's relTypes, `maxLen` from config,

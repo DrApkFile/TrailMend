@@ -1,4 +1,4 @@
-.PHONY: install gate lint typecheck test test-live verify web-install web-lint web-typecheck web-build web hydra-up hydra-down api
+.PHONY: install gate lint typecheck test test-live verify web-install web-lint web-typecheck web-build web evidence-load hydra-up hydra-down api
 
 install:
 	uv sync --frozen
@@ -33,6 +33,9 @@ web: web-typecheck web-lint web-build
 gate: lint typecheck test web
 
 verify: test-live
+
+evidence-load:
+	uv run python -m trailmend.eval.load_evidence
 
 hydra-up:
 	./scripts/hydra_up.sh

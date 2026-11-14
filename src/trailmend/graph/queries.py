@@ -106,6 +106,18 @@ def delete_edge(rel_type: str) -> NamedQuery:
     )
 
 
+def count_nodes(label: str) -> NamedQuery:
+    return NamedQuery(f"count_nodes:{label}", Operation.READ, f"MATCH (n:{require_label(label)}) RETURN count(*) AS n")
+
+
+def count_edges(rel_type: str) -> NamedQuery:
+    return NamedQuery(
+        f"count_edges:{rel_type}",
+        Operation.READ,
+        f"MATCH (a)-[r:{require_rel_type(rel_type)}]->(b) RETURN count(*) AS n",
+    )
+
+
 def _rel_list(rel_types: Sequence[str]) -> str:
     if not rel_types:
         raise ValueError("at least one relationship type is required")

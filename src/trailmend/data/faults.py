@@ -15,10 +15,10 @@ from trailmend.data.faultmodel import (
 from trailmend.data.model import (
     Edge,
     Node,
+    NodeFactory,
     TruthGraph,
     first_unused_name,
     make_edge,
-    make_node,
     require_consistent,
 )
 from trailmend.graph.schema import NodeLabel, RelType
@@ -93,13 +93,14 @@ def _duplicate_services(
             incoming[edge.dst].append(edge)
     faults: list[AliasDuplicate] = []
     added: list[Node] = []
+    mint = NodeFactory(truth.seed)
     taken = {n.name for n in truth.nodes} | {a for n in truth.nodes for a in n.aliases}
     for service in sorted(chosen, key=lambda n: n.id):
         short, _, kind = service.name.partition("-")
         name = first_unused_name((f"{short}Svc", f"{short}{kind.title()}Svc", f"{service.name}Svc"), taken)
         alias = first_unused_name((f"{short} service", f"{short} {kind} service", f"{service.name} service"), taken)
         taken.update((name, alias))
-        duplicate = make_node(NodeLabel.SERVICE, f"{service.name}-alias", name, (alias,))
+        duplicate = mint.node(NodeLabel.SERVICE, f"{service.name}-alias", name, (alias,))
         alerts = sorted(incoming[service.id], key=lambda e: (e.src, e.dst))
         moved = alerts[: max(1, len(alerts) // 2)] if alerts else []
         removed: list[Edge] = []

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from random import Random
 
-from trailmend.data.model import Edge, TruthGraph, make_edge, make_node, require_consistent
+from trailmend.data.model import Edge, NodeFactory, TruthGraph, make_edge, require_consistent
 from trailmend.data.populate import (
     build_alerts,
     build_customers,
@@ -52,16 +52,17 @@ def _company_name(rng: Random) -> str:
 def generate(seed: int, sizes: Sizes | None = None) -> TruthGraph:
     plan = sizes or Sizes()
     rng = Random(seed)
+    mint = NodeFactory(seed)
     company = _company_name(rng)
 
-    teams = build_teams(rng, plan.teams)
-    people = build_people(rng, plan.people)
-    services = build_services(rng, plan.services)
-    alerts, alert_service = build_alerts(rng, services, plan.alerts)
-    customers = build_customers(rng, plan.customers)
-    incidents = build_incidents(plan.incidents)
-    runbooks, runbook_service = build_runbooks(rng, services, plan.runbooks)
-    repos, repo_team = build_repos(rng, teams, plan.repos)
+    teams = build_teams(mint, rng, plan.teams)
+    people = build_people(mint, rng, plan.people)
+    services = build_services(mint, rng, plan.services)
+    alerts, alert_service = build_alerts(mint, rng, services, plan.alerts)
+    customers = build_customers(mint, rng, plan.customers)
+    incidents = build_incidents(mint, plan.incidents)
+    runbooks, runbook_service = build_runbooks(mint, rng, services, plan.runbooks)
+    repos, repo_team = build_repos(mint, rng, teams, plan.repos)
 
     members = relate_membership(rng, people, teams)
     edges: list[Edge] = []
@@ -86,4 +87,4 @@ def label_counts(graph: TruthGraph) -> dict[str, int]:
     return {label.value: len(graph.nodes_with_label(label)) for label in NodeLabel}
 
 
-__all__ = ["Sizes", "generate", "label_counts", "make_edge", "make_node"]
+__all__ = ["Sizes", "generate", "label_counts", "make_edge"]

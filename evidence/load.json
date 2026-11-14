@@ -1,0 +1,115 @@
+{
+  "claim": "load",
+  "design": "For each seed: build the generated Northwind dataset, count the store, write G0 into HydraDB with batch upserts (<=1000 rows per batch, every edge cost=1.0), count again, write the identical batches a second time, count again. A re-load is idempotent when the second write adds nothing, so nodes_added_by_reload and edges_added_by_reload are both 0. The *_counts fields are whole-store counts by label and relationship type, so they include anything else already in the graph, including other seeds; only the deltas are about this seed. Times are wall-clock seconds for the write phase alone.",
+  "measured_at": "2026-11-14T19:18:35+00:00",
+  "rows": [
+    {
+      "batches": 18,
+      "dataset": "northwind_generated",
+      "edges_added_by_first_load": 1649,
+      "edges_added_by_reload": 0,
+      "edges_written": 1649,
+      "first_load_seconds": 1.255,
+      "nodes_added_by_first_load": 1165,
+      "nodes_added_by_reload": 0,
+      "nodes_written": 1165,
+      "reload_is_idempotent": true,
+      "reload_seconds": 0.747,
+      "seed": 1,
+      "store_edge_counts_after": {
+        "AFFECTS": 100,
+        "ALERTS_ON": 279,
+        "DEPENDS_ON": 106,
+        "DOCUMENTED_BY": 82,
+        "ESCALATES_TO": 334,
+        "MAINTAINS": 68,
+        "MEMBER_OF": 381,
+        "ON_CALL": 39,
+        "OWNED_BY": 114,
+        "SERVES": 146
+      },
+      "store_node_counts_after": {
+        "Alert": 300,
+        "Customer": 80,
+        "Incident": 60,
+        "Person": 399,
+        "Repo": 70,
+        "Runbook": 90,
+        "Service": 126,
+        "Team": 40
+      }
+    },
+    {
+      "batches": 18,
+      "dataset": "northwind_generated",
+      "edges_added_by_first_load": 1661,
+      "edges_added_by_reload": 0,
+      "edges_written": 1661,
+      "first_load_seconds": 1.09,
+      "nodes_added_by_first_load": 1165,
+      "nodes_added_by_reload": 0,
+      "nodes_written": 1165,
+      "reload_is_idempotent": true,
+      "reload_seconds": 0.859,
+      "seed": 7,
+      "store_edge_counts_after": {
+        "AFFECTS": 197,
+        "ALERTS_ON": 560,
+        "DEPENDS_ON": 219,
+        "DOCUMENTED_BY": 168,
+        "ESCALATES_TO": 676,
+        "MAINTAINS": 134,
+        "MEMBER_OF": 758,
+        "ON_CALL": 77,
+        "OWNED_BY": 227,
+        "SERVES": 294
+      },
+      "store_node_counts_after": {
+        "Alert": 600,
+        "Customer": 160,
+        "Incident": 120,
+        "Person": 798,
+        "Repo": 140,
+        "Runbook": 180,
+        "Service": 252,
+        "Team": 80
+      }
+    },
+    {
+      "batches": 18,
+      "dataset": "northwind_generated",
+      "edges_added_by_first_load": 1676,
+      "edges_added_by_reload": 0,
+      "edges_written": 1676,
+      "first_load_seconds": 1.219,
+      "nodes_added_by_first_load": 1165,
+      "nodes_added_by_reload": 0,
+      "nodes_written": 1165,
+      "reload_is_idempotent": true,
+      "reload_seconds": 0.78,
+      "seed": 42,
+      "store_edge_counts_after": {
+        "AFFECTS": 291,
+        "ALERTS_ON": 838,
+        "DEPENDS_ON": 338,
+        "DOCUMENTED_BY": 254,
+        "ESCALATES_TO": 1013,
+        "MAINTAINS": 201,
+        "MEMBER_OF": 1135,
+        "ON_CALL": 114,
+        "OWNED_BY": 341,
+        "SERVES": 461
+      },
+      "store_node_counts_after": {
+        "Alert": 900,
+        "Customer": 240,
+        "Incident": 180,
+        "Person": 1197,
+        "Repo": 210,
+        "Runbook": 270,
+        "Service": 378,
+        "Team": 120
+      }
+    }
+  ]
+}
