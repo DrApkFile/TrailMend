@@ -52,9 +52,14 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   Done 2026-11-14: seed 7 renders 1661 ingested and 105 pool documents, one per edge, from 30 templates (three
   phrasings per relationship type across ticket / runbook / chat). Both endpoint names appear verbatim in every
   text, so BM25 in the plain-store arm has something to match. 8 tests in `tests/unit/test_documents.py`.
-- [ ] B4 Questions (`questions.py`): templates with gold answers computed on T (not G0), 1–3 hops, e.g.
+- [x] B4 Questions (`questions.py`): templates with gold answers computed on T (not G0), 1–3 hops, e.g.
   `page_owner` (Alert→Service→Team→Person), `service_owner_team`, `customer_affected_by_incident`,
   `escalation_contact`. ≥600 questions per seed. Test: gold answers come from T; each question names its seed entity.
+  Done 2026-11-14: 10 templates, 850 questions for seed 7 (850 / 850 / 856 for seeds 1 / 7 / 42) — 470 one-hop,
+  170 two-hop, 210 three-hop. Seven templates are single-answer, three are multi-answer. 12 tests in
+  `tests/unit/test_questions.py`, including one that fails if the planted faults never change an answer.
+  Dataset headroom, not a result: traversing G0 instead of T gets 16.1% / 18.4% / 20.4% of questions wrong on
+  seeds 1 / 7 / 42, so a frozen round-0 graph starts about that far below the ceiling.
 - [ ] B5 Splits (`trailmend/eval/splits.py`): train/held-out ≈60/40 stratified by template and hops; no shared
   (seed entity, template) pair across splits. Test: INV8 held-out never reaches the loop (structural test).
 
