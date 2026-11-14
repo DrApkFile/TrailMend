@@ -21,6 +21,7 @@ from trailmend.loop.journal import Journal
 from trailmend.loop.ledger import Ledger
 from trailmend.loop.policy import ChangeProfile, MendPolicy, mechanisms, profile, shape
 from trailmend.loop.shortcuts import ShortcutRound, run_shortcuts
+from trailmend.loop.tape import Tape
 from trailmend.search.seed import EntityIndex
 
 type Verdicts = tuple[tuple[Judged, Outcome], ...]
@@ -73,6 +74,7 @@ def run_round(
     client: HydraClient,
     journal: Journal,
     ledger: Ledger,
+    tape: Tape,
     run_id: str,
     round_index: int,
     policy: MendPolicy,
@@ -115,6 +117,7 @@ def run_round(
             mend_config,
         )
     judged_held_out = judge_all(client, index, [item.question for item in held_out], search_config)
+    tape.record(round_index, judged_held_out)
     return RoundOutcome(
         run_id,
         round_index,

@@ -11,3 +11,7 @@ promote_min_questions = 3
 [search]
 max_len = 3
 result_limit = 200
+
+[run]
+rounds = 5
+plain_store_top_k = 15

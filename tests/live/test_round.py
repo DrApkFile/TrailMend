@@ -25,6 +25,7 @@ from trailmend.loop.ledger import Ledger
 from trailmend.loop.policy import CONTROL_OF, MendPolicy, profile, shape
 from trailmend.loop.round import plan, run_round, verdicts_for
 from trailmend.loop.shortcuts import live_shortcuts, run_shortcuts
+from trailmend.loop.tape import Tape
 from trailmend.search.answer import score_paths
 from trailmend.search.seed import build_index
 
@@ -76,6 +77,7 @@ def test_d2_a_round_judges_the_train_split_then_changes_the_graph_and_scores_hel
         hydra,
         journal,
         Ledger.for_run("round-full", tmp_path),
+        Tape.for_run("round-full", tmp_path),
         "round-full",
         1,
         MendPolicy.FULL,
@@ -117,6 +119,7 @@ def test_d2_a_frozen_round_scores_the_same_questions_without_touching_the_graph(
         hydra,
         Journal.for_run("round-frozen", tmp_path),
         Ledger.for_run("round-frozen", tmp_path),
+        Tape.for_run("round-frozen", tmp_path),
         "round-frozen",
         1,
         MendPolicy.FROZEN,
@@ -157,6 +160,7 @@ def test_d4_a_confirmed_path_is_promoted_to_a_shortcut_the_search_then_uses(
         hydra,
         Journal.for_run("round-promote", tmp_path),
         Ledger.for_run("round-promote", tmp_path),
+        Tape.for_run("round-promote", tmp_path),
         "round-promote",
         1,
         MendPolicy.PROMOTE_ONLY,
@@ -197,6 +201,7 @@ def test_d4_inv5_a_shortcut_is_retired_once_one_of_its_hops_is_quarantined(
         hydra,
         journal,
         ledger,
+        Tape.for_run("round-retire", tmp_path),
         "round-retire",
         1,
         MendPolicy.PROMOTE_ONLY,
