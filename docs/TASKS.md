@@ -47,8 +47,11 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   6 alias duplicates, 1 conflation. Each fault declares the exact edges it removed and added, and replaying only
   the declaration over T reproduces G0's edge set. Faults are disjoint — no edge carries two. 13 tests in
   `tests/unit/test_planted_faults.py`.
-- [ ] B3 Documents (`documents.py`): render every G0 edge and every pool edge into short text documents from
+- [x] B3 Documents (`documents.py`): render every G0 edge and every pool edge into short text documents from
   templates (ticket, runbook line, chat message). Each doc lists its entity mentions. Deterministic.
+  Done 2026-11-14: seed 7 renders 1661 ingested and 105 pool documents, one per edge, from 30 templates (three
+  phrasings per relationship type across ticket / runbook / chat). Both endpoint names appear verbatim in every
+  text, so BM25 in the plain-store arm has something to match. 8 tests in `tests/unit/test_documents.py`.
 - [ ] B4 Questions (`questions.py`): templates with gold answers computed on T (not G0), 1–3 hops, e.g.
   `page_owner` (Alert→Service→Team→Person), `service_owner_team`, `customer_affected_by_incident`,
   `escalation_contact`. ≥600 questions per seed. Test: gold answers come from T; each question names its seed entity.
