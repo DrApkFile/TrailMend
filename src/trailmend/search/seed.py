@@ -83,11 +83,11 @@ def _token_scores(index: EntityIndex, question: str) -> dict[int, float]:
     return scores
 
 
-def _top(scores: Mapping[int, float]) -> tuple[float, tuple[int, ...]]:
+def _top(scores: Mapping[int, float]) -> tuple[int, ...]:
     if not scores:
-        return 0.0, ()
+        return ()
     best = max(scores.values())
-    return best, tuple(sorted(entity for entity, score in scores.items() if score == best))
+    return tuple(sorted(entity for entity, score in scores.items() if score == best))
 
 
 def seed_entity(index: EntityIndex, question: str) -> SeedOutcome:
@@ -99,9 +99,10 @@ def seed_entity(index: EntityIndex, question: str) -> SeedOutcome:
         if len(winners) == 1:
             return SeedFound(winners[0], best[0][0], "exact")
         return SeedRefused(ErrorCode.AMBIGUOUS_SEED, tuple(sorted(winners)))
-    score, winners = _top(_token_scores(index, question))
-    if not winners or score <= 0:
-        return SeedRefused(ErrorCode.NO_SEED, ())
-    if len(winners) > 1:
-        return SeedRefused(ErrorCode.AMBIGUOUS_SEED, winners)
-    return SeedFound(winners[0], question, "token")
+    match _top(_token_scores(index, question)):
+        case ():
+            return SeedRefused(ErrorCode.NO_SEED, ())
+        case (only,):
+            return SeedFound(only, question, "token")
+        case tied:
+            return SeedRefused(ErrorCode.AMBIGUOUS_SEED, tied)
