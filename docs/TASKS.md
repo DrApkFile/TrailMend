@@ -77,8 +77,13 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   First-load times 1.26 / 1.09 / 1.22 s for seeds 1 / 7 / 42, re-loads 0.75 / 0.86 / 0.78 s — host-local numbers,
   not the Railway figures the README will need. `evidence/load.json` is written by `make evidence-load`.
   4 live tests in `tests/live/test_loader.py`. Counting needed `count(*)` rather than `count(n)` (S19).
-- [ ] C2 Seeding (`search/seed.py`): question → exactly one entry entity (exact name/alias, then token match);
+- [x] C2 Seeding (`search/seed.py`): question → exactly one entry entity (exact name/alias, then token match);
   0 → `no_seed`, tie → `ambiguous_seed`. Pure, tested.
+  Done 2026-11-14: pure, no I/O. Longest exact name-or-alias match wins (so an alert beats the service name inside
+  it), word boundaries stop `ledger` matching `ledgerbook`, then a rarity-weighted token fallback. On seed 7 all
+  850 questions seed successfully and 849 land on the entity they name; the one that does not is the planted
+  conflation resolving to the surviving node, which is the fault behaving as designed. 11 tests in
+  `tests/unit/test_seeding.py`. Index builds in 0.2 s over 1165 nodes; 850 questions seed in 0.12 s.
 - [ ] C3 Search (`search/answer.py`): SSpaths from seed over the template's relTypes, `maxLen` from config,
   answer = lowest-cost node with the expected label; tie on cost → `ambiguous_answer`; returns the edge path.
   Detect truncation (result count == limit) → `budget_exceeded`. Live test on a small generated graph.
