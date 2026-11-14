@@ -10,3 +10,7 @@ def entity_id(natural_key: str) -> int:
         raise ValueError(f"natural key must look like 'kind:slug', got {natural_key!r}")
     digest = hashlib.blake2b(natural_key.encode(), digest_size=8).digest()
     return int.from_bytes(digest, "big") >> (64 - _ID_BITS)
+
+
+def edge_id(rel_type: str, src: int, dst: int) -> int:
+    return entity_id(f"edge:{rel_type.lower()}-{src}-{dst}")

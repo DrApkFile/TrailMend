@@ -64,14 +64,14 @@ def test_c3_the_answer_follows_the_cheapest_route_and_moves_when_a_cost_rises(
     last_hop = first.path[-1]
     hydra.run(
         q.set_edge_counters(last_hop.rel_type),
-        {"src": last_hop.src, "dst": last_hop.dst, "cost": 15.0, "confirms": 0, "blames": 4},
+        {"src": last_hop.src, "dst": last_hop.dst, "cost": 15.0, "confirms": 0, "blames": 4, "recent": "BBBB"},
     )
     raised = answer(hydra, alert_id, types, NodeLabel.PERSON, CONFIG)
     assert isinstance(raised, AnswerFound)
     assert raised.cost > first.cost
     hydra.run(
         q.set_edge_counters(last_hop.rel_type),
-        {"src": last_hop.src, "dst": last_hop.dst, "cost": 1.0, "confirms": 0, "blames": 0},
+        {"src": last_hop.src, "dst": last_hop.dst, "cost": 1.0, "confirms": 0, "blames": 0, "recent": ""},
     )
 
 

@@ -34,7 +34,10 @@ def _node_rows(nodes: Sequence[Node]) -> list[Row]:
 
 
 def _edge_rows(edges: Sequence[Edge]) -> list[Row]:
-    return [{"src": e.src, "dst": e.dst, "eid": e.id, "cost": INITIAL_COST, "confirms": 0, "blames": 0} for e in edges]
+    return [
+        {"src": e.src, "dst": e.dst, "eid": e.id, "cost": INITIAL_COST, "confirms": 0, "blames": 0, "recent": ""}
+        for e in edges
+    ]
 
 
 def _grouped_nodes(graph: TruthGraph) -> dict[NodeLabel, list[Node]]:

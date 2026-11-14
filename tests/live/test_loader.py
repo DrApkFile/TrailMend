@@ -40,7 +40,7 @@ def test_c1_every_loaded_edge_starts_at_cost_one_with_no_judgements(hydra: Hydra
     for rel_type in (RelType.OWNED_BY, RelType.ON_CALL, RelType.ALERTS_ON):
         for edge in built.graph.edges_of_type(rel_type)[:3]:
             result = hydra.run(q.read_edge(rel_type.value), {"src": edge.src, "dst": edge.dst})
-            assert result.rows == ((INITIAL_COST, 0, 0),)
+            assert result.rows == ((INITIAL_COST, 0, 0, ""),)
             checked += 1
     assert checked >= 9
 

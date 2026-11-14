@@ -3,7 +3,7 @@ from collections import defaultdict
 from collections.abc import Container, Mapping, Sequence
 from dataclasses import dataclass
 
-from trailmend.graph.ids import entity_id
+from trailmend.graph.ids import edge_id, entity_id
 from trailmend.graph.schema import ENDPOINTS, NATURAL_KEY_KIND, NodeLabel, RelType
 
 
@@ -67,8 +67,7 @@ def make_edge(src: Node, rel_type: RelType, dst: Node) -> Edge:
     expected_src, expected_dst = ENDPOINTS[rel_type]
     if src.label is not expected_src or dst.label is not expected_dst:
         raise ValueError(f"{rel_type} must go {expected_src}->{expected_dst}, got {src.label}->{dst.label}")
-    natural_key = f"edge:{rel_type.value.lower()}-{src.id}-{dst.id}"
-    return Edge(entity_id(natural_key), src.id, rel_type, dst.id)
+    return Edge(edge_id(rel_type.value, src.id, dst.id), src.id, rel_type, dst.id)
 
 
 def require_consistent(nodes: Sequence[Node], edges: Sequence[Edge]) -> None:

@@ -76,7 +76,7 @@ def upsert_edges(src_label: str, rel_type: str, dst_label: str) -> NamedQuery:
         f"UNWIND $rows AS row MATCH (a:{require_label(src_label)} {{id: row.src}}), "
         f"(b:{require_label(dst_label)} {{id: row.dst}}) "
         f"MERGE (a)-[r:{require_rel_type(rel_type)} {{id: row.eid}}]->(b) "
-        "SET r.cost = row.cost, r.confirms = row.confirms, r.blames = row.blames",
+        "SET r.cost = row.cost, r.confirms = row.confirms, r.blames = row.blames, r.recent = row.recent",
     )
 
 
@@ -85,7 +85,7 @@ def read_edge(rel_type: str) -> NamedQuery:
         f"read_edge:{rel_type}",
         Operation.READ,
         f"MATCH (a {{id: $src}})-[r:{require_rel_type(rel_type)}]->(b {{id: $dst}}) "
-        "RETURN r.cost AS cost, r.confirms AS confirms, r.blames AS blames",
+        "RETURN r.cost AS cost, r.confirms AS confirms, r.blames AS blames, r.recent AS recent",
     )
 
 
@@ -94,7 +94,7 @@ def set_edge_counters(rel_type: str) -> NamedQuery:
         f"set_edge_counters:{rel_type}",
         Operation.WRITE,
         f"MATCH (a {{id: $src}})-[r:{require_rel_type(rel_type)}]->(b {{id: $dst}}) "
-        "SET r.cost = $cost, r.confirms = $confirms, r.blames = $blames",
+        "SET r.cost = $cost, r.confirms = $confirms, r.blames = $blames, r.recent = $recent",
     )
 
 
@@ -157,6 +157,6 @@ def move_edge(from_type: str, to_type: str, src_label: str, dst_label: str) -> t
         f"UNWIND $rows AS row MATCH (a:{require_label(src_label)} {{id: row.src}}), "
         f"(b:{require_label(dst_label)} {{id: row.dst}}) "
         f"MERGE (a)-[r:{require_rel_type(to_type)} {{id: row.eid}}]->(b) "
-        "SET r.cost = row.cost, r.confirms = row.confirms, r.blames = row.blames",
+        "SET r.cost = row.cost, r.confirms = row.confirms, r.blames = row.blames, r.recent = row.recent",
     )
     return copy, delete_edge(from_type)

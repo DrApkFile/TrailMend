@@ -52,5 +52,20 @@ def make_receipt(
     return Receipt(f"rcpt-{digest[:16]}", run_id, round_index, sequence, kind, change, before, after, digest)
 
 
+def to_json(receipt: Receipt) -> str:
+    payload: dict[str, object] = {
+        "receipt_id": receipt.receipt_id,
+        "run_id": receipt.run_id,
+        "round": receipt.round_index,
+        "sequence": receipt.sequence,
+        "kind": receipt.kind,
+        "change": asdict(receipt.change),
+        "before": asdict(receipt.before),
+        "after": asdict(receipt.after),
+        "digest": receipt.digest,
+    }
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)
+
+
 def inverse(receipt: Receipt) -> Restore:
     return Restore(receipt.before.key, receipt.before)
