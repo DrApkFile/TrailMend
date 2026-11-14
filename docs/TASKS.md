@@ -60,8 +60,14 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   `tests/unit/test_questions.py`, including one that fails if the planted faults never change an answer.
   Dataset headroom, not a result: traversing G0 instead of T gets 16.1% / 18.4% / 20.4% of questions wrong on
   seeds 1 / 7 / 42, so a frozen round-0 graph starts about that far below the ceiling.
-- [ ] B5 Splits (`trailmend/eval/splits.py`): train/held-out ≈60/40 stratified by template and hops; no shared
+- [x] B5 Splits (`trailmend/eval/splits.py`): train/held-out ≈60/40 stratified by template and hops; no shared
   (seed entity, template) pair across splits. Test: INV8 held-out never reaches the loop (structural test).
+  Done 2026-11-14: seed 7 splits 850 questions into 510 train / 340 held-out, exactly 60/40 inside every one of
+  the 10 (template, hops) strata. Train and held-out are different types (`TrainQuestion`, `HeldOutQuestion`) with
+  no conversion between them, and a structural test scans `src/trailmend/` and fails if any module other than
+  `eval/splits.py` constructs a `TrainQuestion`. 13 tests in `tests/unit/test_splits.py`.
+  Still to come with D2: the round runner must take `TrainQuestion` in its signature, so held-out questions cannot
+  be passed to it at all. INV8 is not fully proven until that test exists.
 
 ## Phase C — load and search (PRD §6, §7 steps 1–2)
 - [ ] C1 Loader: write G0 into HydraDB with batch upserts (≤1000 rows per batch), every edge `cost=1.0`.
