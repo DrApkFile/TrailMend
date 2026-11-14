@@ -1,4 +1,4 @@
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from enum import StrEnum
 from random import Random
@@ -10,6 +10,7 @@ class MendPolicy(StrEnum):
     FULL = "full"
     REWEIGHT_ONLY = "reweight_only"
     QUARANTINE_ONLY = "quarantine_only"
+    PROMOTE_ONLY = "promote_only"
     FROZEN = "frozen"
     RANDOM_REWEIGHT = "random_reweight"
     RANDOM_QUARANTINE = "random_quarantine"
@@ -21,6 +22,31 @@ CONTROL_OF: dict[MendPolicy, MendPolicy] = {
 }
 
 RANDOM_QUESTION_PREFIX = "random:"
+
+
+@dataclass(frozen=True, slots=True)
+class Mechanisms:
+    reweight: bool
+    quarantine: bool
+    promote: bool
+
+
+MECHANISMS: Mapping[MendPolicy, Mechanisms] = {
+    MendPolicy.FULL: Mechanisms(True, True, True),
+    MendPolicy.REWEIGHT_ONLY: Mechanisms(True, False, False),
+    MendPolicy.QUARANTINE_ONLY: Mechanisms(False, True, False),
+    MendPolicy.PROMOTE_ONLY: Mechanisms(False, False, True),
+    MendPolicy.FROZEN: Mechanisms(False, False, False),
+    MendPolicy.RANDOM_REWEIGHT: Mechanisms(True, False, False),
+    MendPolicy.RANDOM_QUARANTINE: Mechanisms(False, True, False),
+}
+
+
+def mechanisms(policy: MendPolicy) -> Mechanisms:
+    found = MECHANISMS.get(policy)
+    if found is None:
+        raise KeyError(f"{policy} declares no mechanisms")
+    return found
 
 
 @dataclass(frozen=True, slots=True)
@@ -70,7 +96,7 @@ def shape(
             return tuple(c for c in planned if isinstance(c, Reweight))
         case MendPolicy.QUARANTINE_ONLY:
             return tuple(c for c in planned if isinstance(c, Quarantine))
-        case MendPolicy.FROZEN:
+        case MendPolicy.PROMOTE_ONLY | MendPolicy.FROZEN:
             return ()
         case MendPolicy.RANDOM_REWEIGHT:
             return _mirror_reweights(planned, candidates, rng)

@@ -3,10 +3,10 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import StrEnum
 
+from trailmend.core.model import QUARANTINE_PREFIX
+
 _LABEL = re.compile(r"^[A-Z][A-Za-z0-9]{0,40}$")
 _REL_TYPE = re.compile(r"^[A-Z][A-Z0-9_]{0,40}$")
-QUARANTINE_PREFIX = "Q_"
-SHORTCUT_PREFIX = "SC_"
 PROBE_SOURCE_ID = 4_000_000_000_000_000_001
 PROBE_TARGET_ID = 4_000_000_000_000_000_002
 
@@ -39,6 +39,15 @@ def require_searchable(rel_type: str) -> str:
     if require_rel_type(rel_type).startswith(QUARANTINE_PREFIX):
         raise ValueError(f"quarantined type {rel_type!r} can never be searched")
     return rel_type
+
+
+ORIGINS = ("ingest", "shortcut", "gapfill")
+
+
+def require_origin(origin: str) -> str:
+    if origin not in ORIGINS:
+        raise ValueError(f"unknown edge origin {origin!r}")
+    return origin
 
 
 def quarantine_type(rel_type: str) -> str:
@@ -85,7 +94,8 @@ def read_edge(rel_type: str) -> NamedQuery:
         f"read_edge:{rel_type}",
         Operation.READ,
         f"MATCH (a {{id: $src}})-[r:{require_rel_type(rel_type)}]->(b {{id: $dst}}) "
-        "RETURN r.cost AS cost, r.confirms AS confirms, r.blames AS blames, r.recent AS recent",
+        "RETURN r.cost AS cost, r.confirms AS confirms, r.blames AS blames, r.recent AS recent, "
+        "r.via_path AS via_path",
     )
 
 
@@ -103,6 +113,26 @@ def delete_edge(rel_type: str) -> NamedQuery:
         f"delete_edge:{rel_type}",
         Operation.WRITE,
         f"MATCH (a {{id: $src}})-[r:{require_rel_type(rel_type)}]->(b {{id: $dst}}) DELETE r",
+    )
+
+
+def create_edge(src_label: str, rel_type: str, dst_label: str) -> NamedQuery:
+    return NamedQuery(
+        f"create_edge:{rel_type}",
+        Operation.WRITE,
+        f"UNWIND $rows AS row MATCH (a:{require_label(src_label)} {{id: row.src}}), "
+        f"(b:{require_label(dst_label)} {{id: row.dst}}) "
+        f"MERGE (a)-[r:{require_rel_type(rel_type)} {{id: row.eid}}]->(b) "
+        "SET r.cost = row.cost, r.confirms = row.confirms, r.blames = row.blames, r.recent = row.recent, "
+        "r.via_path = row.via_path, r.target_label = row.target_label, r.origin = row.origin",
+    )
+
+
+def list_edges(rel_type: str) -> NamedQuery:
+    return NamedQuery(
+        f"list_edges:{rel_type}",
+        Operation.READ,
+        f"MATCH (a)-[r:{require_rel_type(rel_type)}]->(b) RETURN a.id AS src, b.id AS dst",
     )
 
 

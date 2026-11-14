@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from trailmend.graph.schema import NodeLabel, RelType
+from trailmend.graph.schema import NodeLabel, RelType, shortcut_type
 
 
 @dataclass(frozen=True, slots=True)
@@ -18,8 +18,16 @@ class QuestionTemplate:
         return len(self.rel_path)
 
     @property
-    def search_types(self) -> tuple[str, ...]:
+    def base_types(self) -> tuple[str, ...]:
         return tuple(sorted({rel_type.value for rel_type in self.rel_path}))
+
+    @property
+    def shortcut_type(self) -> str:
+        return shortcut_type(self.name)
+
+    @property
+    def search_types(self) -> tuple[str, ...]:
+        return (*self.base_types, self.shortcut_type)
 
     def __post_init__(self) -> None:
         if not self.rel_path:
@@ -28,6 +36,7 @@ class QuestionTemplate:
             raise ValueError(f"{self.name} must name its seed entity")
         if self.cap < 1:
             raise ValueError(f"{self.name} must allow at least one question")
+        shortcut_type(self.name)
 
 
 TEMPLATES: tuple[QuestionTemplate, ...] = (
@@ -124,6 +133,8 @@ TEMPLATES: tuple[QuestionTemplate, ...] = (
 )
 
 BY_NAME = {t.name: t for t in TEMPLATES}
+
+SHORTCUT_TYPES: tuple[str, ...] = tuple(sorted({t.shortcut_type for t in TEMPLATES}))
 
 
 def template(name: str) -> QuestionTemplate:

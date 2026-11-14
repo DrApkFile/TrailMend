@@ -1,6 +1,7 @@
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from enum import StrEnum
 
+from trailmend.core.model import QUARANTINE_PREFIX, SHORTCUT_PREFIX, EdgeKey
 from trailmend.graph.queries import require_label, require_rel_type
 
 
@@ -53,6 +54,31 @@ NATURAL_KEY_KIND: Mapping[NodeLabel, str] = {
 }
 
 
+def shortcut_type(template_name: str) -> str:
+    return require_rel_type(SHORTCUT_PREFIX + template_name.upper())
+
+
+def is_shortcut(rel_type: str) -> bool:
+    return rel_type.removeprefix(QUARANTINE_PREFIX).startswith(SHORTCUT_PREFIX)
+
+
+def endpoints_of(rel_type: str) -> tuple[NodeLabel, NodeLabel]:
+    bare = rel_type.removeprefix(QUARANTINE_PREFIX)
+    if is_shortcut(bare):
+        raise ValueError(f"{bare} is a shortcut, so its endpoints come from its via_path")
+    return ENDPOINTS[RelType(bare)]
+
+
+def shortcut_endpoints(via_path: Sequence[EdgeKey]) -> tuple[NodeLabel, NodeLabel]:
+    if len(via_path) < 2:
+        raise ValueError(f"a shortcut compresses at least two hops, got {len(via_path)}")
+    return endpoints_of(via_path[0].rel_type)[0], endpoints_of(via_path[-1].rel_type)[1]
+
+
+def labels_of(rel_type: str, via_path: Sequence[EdgeKey]) -> tuple[NodeLabel, NodeLabel]:
+    return shortcut_endpoints(via_path) if is_shortcut(rel_type) else endpoints_of(rel_type)
+
+
 def source_label(rel_type: RelType) -> NodeLabel:
     return ENDPOINTS[rel_type][0]
 
@@ -70,6 +96,9 @@ def validate_schema() -> None:
         require_rel_type(rel_type.value)
         if rel_type not in ENDPOINTS:
             raise ValueError(f"{rel_type} has no declared endpoints")
+    for rel_type in RelType:
+        if is_shortcut(rel_type.value):
+            raise ValueError(f"{rel_type} must not use the shortcut prefix")
 
 
 validate_schema()

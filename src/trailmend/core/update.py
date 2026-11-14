@@ -10,8 +10,10 @@ from trailmend.core.model import (
     EdgeState,
     EdgeStatus,
     MendConfig,
+    Promote,
     Quarantine,
     Restore,
+    Retire,
     Reweight,
     Signal,
 )
@@ -42,12 +44,20 @@ def apply_change(state: EdgeState, change: Change, cfg: MendConfig) -> EdgeState
             return state
         case Quarantine():
             return replace(state, status=EdgeStatus.QUARANTINED)
+        case Promote(cost=cost):
+            if state.status is not EdgeStatus.ABSENT:
+                raise ValueError(f"{state.key} already exists, so it cannot be promoted")
+            return replace(state, status=EdgeStatus.ACTIVE, cost=_clamp(cost, cfg))
+        case Retire():
+            if state.status is EdgeStatus.ABSENT:
+                raise ValueError(f"{state.key} is already gone, so it cannot be retired")
+            return replace(state, status=EdgeStatus.ABSENT)
         case Restore(state=prior):
             return prior
 
 
 def should_quarantine(state: EdgeState, cfg: MendConfig, *, confirmed_this_round: bool) -> bool:
-    if state.status is EdgeStatus.QUARANTINED or confirmed_this_round:
+    if state.status is not EdgeStatus.ACTIVE or confirmed_this_round:
         return False
     recent_blames = sum(s is Signal.BLAME for s in state.recent)
     return (
@@ -66,7 +76,7 @@ def plan_round(states: Mapping[EdgeKey, EdgeState], credits: Iterable[Credit], c
     changes: list[Change] = []
     for edge in sorted(grouped):
         state = states[edge]
-        if state.status is EdgeStatus.QUARANTINED:
+        if state.status is not EdgeStatus.ACTIVE:
             continue
         ordered = sorted(grouped[edge], key=lambda c: (c.question_id, c.signal.value))
         reweight = Reweight(edge, tuple(c.signal for c in ordered), tuple(c.question_id for c in ordered))

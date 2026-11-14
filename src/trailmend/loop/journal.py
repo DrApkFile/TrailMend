@@ -7,15 +7,19 @@ from trailmend.core.receipts import Receipt, to_json
 RUNS_DIR = Path("evidence/runs")
 
 
+def require_run_id(run_id: str) -> str:
+    if not run_id or "/" in run_id or run_id in {".", ".."}:
+        raise ValueError(f"run_id must be a simple name, got {run_id!r}")
+    return run_id
+
+
 @dataclass(frozen=True, slots=True)
 class Journal:
     path: Path
 
     @classmethod
     def for_run(cls, run_id: str, root: Path = RUNS_DIR) -> "Journal":
-        if not run_id or "/" in run_id or run_id in {".", ".."}:
-            raise ValueError(f"run_id must be a simple name, got {run_id!r}")
-        directory = root / run_id
+        directory = root / require_run_id(run_id)
         directory.mkdir(parents=True, exist_ok=True)
         return cls(directory / "receipts.jsonl")
 

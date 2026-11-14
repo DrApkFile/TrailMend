@@ -58,6 +58,18 @@ def _credit_paths(
     )
 
 
+def confirmed_paths(outcome: Outcome) -> tuple[EdgePath, ...]:
+    match outcome:
+        case Correct(chosen=chosen):
+            return (chosen,)
+        case Wrong(best_gold=gold):
+            return (gold,) if gold else ()
+        case SetJudged(correct_paths=good, missed_gold_paths=missed):
+            return (*good, *missed)
+        case Unreachable() | Refused():
+            return ()
+
+
 def assign_credit(outcome: Outcome) -> tuple[Credit, ...]:
     match outcome:
         case Correct(question_id=qid, chosen=chosen):

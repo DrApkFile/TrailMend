@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from trailmend.core.model import Change, EdgeState, MendConfig, Restore
+from trailmend.core.model import Change, EdgeState, EdgeStatus, MendConfig, Promote, Restore
 from trailmend.core.receipts import Receipt, inverse, make_receipt
 from trailmend.core.update import apply_change as compute_after
 from trailmend.graph.client import HydraClient
@@ -24,14 +24,17 @@ def apply(
     sequence: int,
     change: Change,
     config: MendConfig,
+    origin: str = "shortcut",
 ) -> Applied:
     before = read_state(client, change.edge)
     if before is None:
-        raise KeyError(f"{change.edge} is not in the graph, so it cannot be changed")
+        if not isinstance(change, Promote):
+            raise KeyError(f"{change.edge} is not in the graph, so it cannot be changed")
+        before = EdgeState(change.edge, 0.0, EdgeStatus.ABSENT, via_path=change.via_path)
     after = compute_after(before, change, config)
     receipt = make_receipt(run_id, round_index, sequence, change, before, after)
     journal.append(receipt)
-    write_state(client, before, after, edge_id(before.key.rel_type, before.key.src, before.key.dst))
+    write_state(client, before, after, edge_id(before.key.rel_type, before.key.src, before.key.dst), origin)
     return Applied(receipt, before, after)
 
 

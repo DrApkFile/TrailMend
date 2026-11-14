@@ -58,4 +58,4 @@ def test_inv4_a_quarantined_edge_is_never_used_by_search(hydra: HydraClient) -> 
     hydra.run(delete, {"src": s, "dst": bottom})
     assert _best_route(hydra, s, t) == (s, top, t)
     moved = hydra.run(q.read_edge("Q_R"), {"src": s, "dst": bottom})
-    assert moved.rows == ((1.0, 0, 4, "BBBB"),)
+    assert moved.rows == ((1.0, 0, 4, "BBBB", None),)

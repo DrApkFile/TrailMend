@@ -131,8 +131,19 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   refused rather than quietly shrunk) plus the live test on a real plan. Each random arm mirrors the mechanism arm
   it controls rather than the whole plan, and `quarantine_only` cannot accumulate a `recent` window — both logged
   in DECISIONS.
-- [ ] D4 Shortcuts (path compression, PRD §7 step 7): promote a multi-hop path confirmed in ≥ promote_min_questions
+- [x] D4 Shortcuts (path compression, PRD §7 step 7): promote a multi-hop path confirmed in ≥ promote_min_questions
   distinct questions to `SC_<TEMPLATE>`; retire when any hop is quarantined (INV5). Receipts for both.
+  Done 2026-11-15: `core/promote.py` holds the pure rule, `loop/shortcuts.py` applies it, `loop/ledger.py` keeps
+  the confirmed paths for a run in an append-only `confirmations.jsonl` so the tally spans rounds. The rule had to
+  change: measured first, no whole confirmed path is ever confirmed by more than one question, so the rule as
+  written can never fire — promotion now compresses any confirmed contiguous sub-path of ≥ 2 hops (REALITY_SPIKES
+  S24, DECISIONS 2026-11-15). A shortcut starts at the summed cost of the hops it replaces, so promotion cannot
+  change an answer in the round it happens. Promotion and retirement are receipt-bearing `Change` variants over a
+  new `EdgeStatus.absent`, so INV3 covers them and rollback works. 17 unit tests in `tests/unit/test_promotion.py`
+  (INV5 both ways, rollback of a promotion and of a retirement, no nested shortcuts, a hop with no live cost is
+  left alone) and 2 live tests in `tests/live/test_round.py`: a real round promotes a path and the search then
+  returns the shortcut at its own cost, and quarantining one hop retires it. `promote_only` added to the arms per
+  PRD §8.
 - [ ] D5 Gap-fill (PRD §7 step 8): on `unreachable`, ingest pool documents mentioning the seed entity only (INV7:
   test that gold ids are never inspected).
 - [ ] D6 Plain-store arm (`eval/plain_store.py`): BM25 over the documents (pure Python, no new service); answer =

@@ -1,6 +1,9 @@
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+QUARANTINE_PREFIX = "Q_"
+SHORTCUT_PREFIX = "SC_"
+
 
 class Signal(StrEnum):
     CONFIRM = "confirm"
@@ -10,6 +13,7 @@ class Signal(StrEnum):
 class EdgeStatus(StrEnum):
     ACTIVE = "active"
     QUARANTINED = "quarantined"
+    ABSENT = "absent"
 
 
 @dataclass(frozen=True, slots=True, order=True)
@@ -27,6 +31,7 @@ class EdgeState:
     confirms: int = 0
     blames: int = 0
     recent: tuple[Signal, ...] = field(default=())
+    via_path: tuple[EdgeKey, ...] = field(default=())
 
 
 @dataclass(frozen=True, slots=True)
@@ -86,9 +91,23 @@ class Quarantine:
 
 
 @dataclass(frozen=True, slots=True)
+class Promote:
+    edge: EdgeKey
+    via_path: tuple[EdgeKey, ...]
+    question_ids: tuple[str, ...]
+    cost: float
+
+
+@dataclass(frozen=True, slots=True)
+class Retire:
+    edge: EdgeKey
+    via_path: tuple[EdgeKey, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class Restore:
     edge: EdgeKey
     state: EdgeState
 
 
-type Change = Reweight | Quarantine | Restore
+type Change = Reweight | Quarantine | Promote | Retire | Restore

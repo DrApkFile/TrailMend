@@ -5,7 +5,7 @@ from trailmend.core.model import EdgeKey, SearchConfig
 from trailmend.errors import ErrorCode
 from trailmend.graph import queries as q
 from trailmend.graph.client import HydraClient
-from trailmend.graph.schema import ENDPOINTS, NodeLabel, RelType
+from trailmend.graph.schema import NodeLabel, endpoints_of, is_shortcut
 from trailmend.graph.values import PathValue
 
 
@@ -50,11 +50,16 @@ type AnswerOutcome = AnswerFound | AnswerRefused
 def _terminal_label(path: PathValue) -> NodeLabel | None:
     if not path.rels:
         return None
+    last = path.rels[-1]
+    if is_shortcut(last.rel_type):
+        declared = last.props.get("target_label")
+        if not isinstance(declared, str):
+            raise ValueError(f"shortcut {last.rel_type} {last.src}->{last.dst} carries no target_label")
+        return NodeLabel(declared)
     try:
-        rel_type = RelType(path.rels[-1].rel_type)
-    except ValueError:
+        return endpoints_of(last.rel_type)[1]
+    except (KeyError, ValueError):
         return None
-    return ENDPOINTS[rel_type][1]
 
 
 def _as_cost(raw: object) -> float:

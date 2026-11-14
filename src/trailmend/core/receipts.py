@@ -2,7 +2,7 @@ import hashlib
 import json
 from dataclasses import asdict, dataclass
 
-from trailmend.core.model import Change, EdgeState, Quarantine, Restore, Reweight
+from trailmend.core.model import Change, EdgeState, Promote, Quarantine, Restore, Retire, Reweight
 
 
 @dataclass(frozen=True, slots=True)
@@ -24,6 +24,10 @@ def _kind(change: Change) -> str:
             return "reweight"
         case Quarantine():
             return "quarantine"
+        case Promote():
+            return "promote"
+        case Retire():
+            return "retire"
         case Restore():
             return "restore"
 
