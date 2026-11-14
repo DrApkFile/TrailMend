@@ -1,6 +1,6 @@
 import json
 from collections import defaultdict
-from collections.abc import Mapping, Sequence
+from collections.abc import Container, Mapping, Sequence
 from dataclasses import dataclass
 
 from trailmend.graph.ids import entity_id
@@ -65,6 +65,29 @@ def make_edge(src: Node, rel_type: RelType, dst: Node) -> Edge:
         raise ValueError(f"{rel_type} must go {expected_src}->{expected_dst}, got {src.label}->{dst.label}")
     natural_key = f"edge:{rel_type.value.lower()}-{src.id}-{dst.id}"
     return Edge(entity_id(natural_key), src.id, rel_type, dst.id)
+
+
+def require_consistent(nodes: Sequence[Node], edges: Sequence[Edge]) -> None:
+    node_ids = [n.id for n in nodes]
+    if len(set(node_ids)) != len(node_ids):
+        raise ValueError("node ids collided")
+    edge_ids = [e.id for e in edges]
+    if len(set(edge_ids)) != len(edge_ids):
+        raise ValueError("edge ids collided")
+    labels: list[str] = [n.name for n in nodes] + [a for n in nodes for a in n.aliases]
+    if len(set(labels)) != len(labels):
+        raise ValueError("node names and aliases must be unique so a question can name one entity")
+    known = {n.id for n in nodes}
+    for edge in edges:
+        if edge.src not in known or edge.dst not in known:
+            raise ValueError(f"edge {edge.rel_type} points outside the graph")
+
+
+def first_unused_name(candidates: Sequence[str], taken: Container[str]) -> str:
+    for candidate in candidates:
+        if candidate not in taken:
+            return candidate
+    raise ValueError(f"every candidate name is taken: {list(candidates)}")
 
 
 def to_json(graph: TruthGraph) -> str:

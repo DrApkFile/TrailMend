@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from random import Random
 
-from trailmend.data.model import Edge, Node, TruthGraph, make_edge, make_node
+from trailmend.data.model import Edge, TruthGraph, make_edge, make_node, require_consistent
 from trailmend.data.populate import (
     build_alerts,
     build_customers,
@@ -49,22 +49,6 @@ def _company_name(rng: Random) -> str:
     return f"{rng.choice(COMPANY_NAMES)} Logistics"
 
 
-def _require_unique(nodes: tuple[Node, ...], edges: tuple[Edge, ...]) -> None:
-    node_ids = [n.id for n in nodes]
-    if len(set(node_ids)) != len(node_ids):
-        raise ValueError("node ids collided")
-    edge_ids = [e.id for e in edges]
-    if len(set(edge_ids)) != len(edge_ids):
-        raise ValueError("edge ids collided")
-    labels: list[str] = [n.name for n in nodes] + [a for n in nodes for a in n.aliases]
-    if len(set(labels)) != len(labels):
-        raise ValueError("node names and aliases must be unique across the truth graph")
-    known = {n.id for n in nodes}
-    for edge in edges:
-        if edge.src not in known or edge.dst not in known:
-            raise ValueError(f"edge {edge.rel_type} points outside the graph")
-
-
 def generate(seed: int, sizes: Sizes | None = None) -> TruthGraph:
     plan = sizes or Sizes()
     rng = Random(seed)
@@ -94,7 +78,7 @@ def generate(seed: int, sizes: Sizes | None = None) -> TruthGraph:
 
     nodes = (*teams, *people, *services, *alerts, *customers, *incidents, *runbooks, *repos)
     graph = TruthGraph(seed, company, nodes, tuple(edges))
-    _require_unique(graph.nodes, graph.edges)
+    require_consistent(graph.nodes, graph.edges)
     return graph
 
 

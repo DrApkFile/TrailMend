@@ -39,10 +39,14 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   Done 2026-11-14: seed 7 gives 1160 nodes / 1766 edges at exactly the planned sizes, plus 90 Runbook and 70 Repo
   (PRD §4 lists both). 13 tests in `tests/unit/test_northwind_generator.py`, including a byte-identity check run in
   a fresh interpreter under `PYTHONHASHSEED=12345`. Relation directions and names are recorded in DECISIONS.
-- [ ] B2 Faults (`faults.py`): from T, produce ingested graph G0 + `faults.json`: wrong edges (~8% of OWNED_BY /
+- [x] B2 Faults (`faults.py`): from T, produce ingested graph G0 + `faults.json`: wrong edges (~8% of OWNED_BY /
   ON_CALL swapped to a plausible wrong target), missing edges (~6% withheld into the not-yet-ingested pool),
   alias duplicates (~5% of services get a second node with an alias name), one conflated person. Test: every fault
   is declared; G0 = T − missing + wrong (exactly).
+  Done 2026-11-14: seed 7 gives G0 1661 edges / 1165 nodes from T 1766 / 1160, pool 105; 13 wrong, 105 missing,
+  6 alias duplicates, 1 conflation. Each fault declares the exact edges it removed and added, and replaying only
+  the declaration over T reproduces G0's edge set. Faults are disjoint — no edge carries two. 13 tests in
+  `tests/unit/test_planted_faults.py`.
 - [ ] B3 Documents (`documents.py`): render every G0 edge and every pool edge into short text documents from
   templates (ticket, runbook line, chat message). Each doc lists its entity mentions. Deterministic.
 - [ ] B4 Questions (`questions.py`): templates with gold answers computed on T (not G0), 1–3 hops, e.g.
