@@ -155,8 +155,15 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   whose `gold` raises on access, which it never does. 2 live tests: a real gap is filled and the question it came
   from stops being unreachable, and a second pass over the same gap ingests nothing. `gapfill_only` added to the
   arms per PRD §8.
-- [ ] D6 Plain-store arm (`eval/plain_store.py`): BM25 over the documents (pure Python, no new service); answer =
+- [x] D6 Plain-store arm (`eval/plain_store.py`): BM25 over the documents (pure Python, no new service); answer =
   most frequent entity of the expected label in top-k docs; same rounds (it can't learn — that's the point).
+  Done 2026-11-15: `eval/plain_store.py` is BM25 (k1=1.5, b=0.75) in pure Python over the same ingested documents
+  the graph was built from, with the pool withheld from it exactly as from the graph. It returns a `Judged`, so
+  `loop/evaluate.score` scores both arms the same way, ties included (C3a). `eval/plain_run.py` measured held-out
+  for all 3 seeds: **0.2647 / 0.2353 / 0.2368** (evidence/plain_store.json), against the graph's round-0
+  0.8529 / 0.8235 / 0.8392. top_k was swept on seed 1 and fixed at its best value, 15 — tuning that favours the
+  baseline, since the Mend's constants were frozen before any run. 7 unit tests in `tests/unit/test_plain_store.py`.
+  It is scored once and the same number stands for every round, because it cannot learn.
 
 ## Phase E — measurement (PRD §9–§10, docs/UPGRADES.md 1–5)
 - [ ] E1 Run 3 seeds × arms × N rounds (N fixed in config before the first run). Constants frozen in
