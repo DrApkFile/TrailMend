@@ -93,10 +93,12 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   `Q_*` being unaskable. Search is ~28 ms per question against local HydraDB.
   Round 0 measured, not a claim about the Mend: seed 7 held-out (340 questions) answers 259 correct (0.762),
   17 wrong, 33 unreachable, 31 ambiguous.
-- [ ] C3a OPEN QUESTION for D2: 31 of those 340 refusals are multi-answer templates where several equal-cost
-  answers tie at round 0. PRD §7 step 2 says ties refuse; PRD §9 says set-F1 is reported for multi-answer
-  templates. Decide at D2 whether a multi-answer template returns the tied set instead of refusing, and record it
-  in DECISIONS. Not decided silently here.
+- [x] C3a SETTLED 2026-11-14, before any Mend run (DECISIONS): a multi-answer template returns every answer tied
+  at minimum cost (costs compared after rounding to 1e-9); correct = exact set match with gold, set-F1 alongside.
+  Single-answer templates still refuse a tie. Credit for a set answer blames the chosen path of each wrong member,
+  confirms the cheapest gold path of each missed gold member, and confirms the path of each correct member.
+  Round 0 is re-measured under this rule for all 3 seeds; the earlier seed-7 figure of 0.762 stays in the evidence
+  marked superseded, with the reason.
 
 ## Phase D — the Mend loop (PRD §7–§8)
 - [x] D1 Graph state sync: read current EdgeState for edges on chosen/gold paths; apply planned changes via queries;
