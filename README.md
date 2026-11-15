@@ -123,17 +123,17 @@ Run 2:
 | file | what it is | sha256 (first 16) |
 |---|---|---|
 | [`evidence/curve_v2.jsonl`](evidence/curve_v2.jsonl) | run 2: held-out and training accuracy per seed, arm and round | `f443cd566b5953a2…` |
-| [`evidence/mechanisms_v2.json`](evidence/mechanisms_v2.json) | run 2: one row per arm, from round 0 to the last round | `efbf3ade0da1f7b6…` |
-| [`evidence/paired_v2.json`](evidence/paired_v2.json) | run 2: every held-out question counted as a pair against the frozen arm, with its p-value | `9e6f79376e842bfb…` |
-| [`evidence/captured_share_v2.json`](evidence/captured_share_v2.json) | run 2: what the full arm gained over what the oracle says was reachable | `1acdec55d6d5c051…` |
+| [`evidence/mechanisms_v2.json`](evidence/mechanisms_v2.json) | run 2: one row per arm, from round 0 to the last round | `9b41b56e92310b2f…` |
+| [`evidence/paired_v2.json`](evidence/paired_v2.json) | run 2: every held-out question counted as a pair against the frozen arm, with its p-value | `e2bf423b690173aa…` |
+| [`evidence/captured_share_v2.json`](evidence/captured_share_v2.json) | run 2: what the full arm gained over what the oracle says was reachable | `e711a1c763cc6158…` |
 | [`evidence/oracle_v2.json`](evidence/oracle_v2.json) | run 2: the ceiling of each repair, measured by applying it perfectly | `cdaf8d536af75918…` |
-| [`evidence/changes_v2.json`](evidence/changes_v2.json) | run 2: change counts per seed, arm and round, every control beside the full arm | `9c71a5c872c8ea37…` |
-| [`evidence/non_regression_v2.json`](evidence/non_regression_v2.json) | run 2: newly fixed, newly broken and net per round, each break traced to receipts | `8beb6b10986e86c7…` |
-| [`evidence/quarantine_v2.json`](evidence/quarantine_v2.json) | run 2: quarantine precision and recall against the planted faults | `a0d77afda0ab870b…` |
-| [`evidence/hypotheses_v2.json`](evidence/hypotheses_v2.json) | run 2: H1' to H8' with the rule each was decided by | `6ae170b548c9ce72…` |
+| [`evidence/changes_v2.json`](evidence/changes_v2.json) | run 2: change counts per seed, arm and round, every control beside the full arm | `6a93789cf0328241…` |
+| [`evidence/non_regression_v2.json`](evidence/non_regression_v2.json) | run 2: newly fixed, newly broken and net per round, each break traced to receipts | `43ea610d10d79c0c…` |
+| [`evidence/quarantine_v2.json`](evidence/quarantine_v2.json) | run 2: quarantine precision and recall against the planted faults | `1e696a446dabaec4…` |
+| [`evidence/hypotheses_v2.json`](evidence/hypotheses_v2.json) | run 2: H1' to H8' with the rule each was decided by | `0ed5c1c99fd749d9…` |
 | [`evidence/plain_store_v2.json`](evidence/plain_store_v2.json) | run 2: the document-only baseline, re-tuned on v2 to its own best score | `ffb5b6dcdde73a9a…` |
 | [`evidence/fault_recoverability_v2.json`](evidence/fault_recoverability_v2.json) | run 2: where the truth behind each planted fault is, by fault kind | `deaa67c20abbc6c8…` |
-| [`evidence/run_manifest_v2.json`](evidence/run_manifest_v2.json) | run 2: commit, HydraDB digest, config hash, data version, seeds and every digest | `5517f67c472bf480…` |
+| [`evidence/run_manifest_v2.json`](evidence/run_manifest_v2.json) | run 2: commit, HydraDB digest, config hash, data version, seeds and every digest | `10aa21ff747fd434…` |
 
 Run 1, and the two files that describe the deployment both runs used:
 

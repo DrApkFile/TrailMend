@@ -1,7 +1,7 @@
 {
   "claim": "non_regression_v2",
   "design": "Per round, from evidence/runs/<run>/heldout.jsonl: which held-out questions turned correct and which turned away from correct, and for each break the receipts written that round that touched an edge on that question's previous correct path.",
-  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_at": "2026-11-15T21:01:32+00:00",
   "measured_on": null,
   "rows": [
     {

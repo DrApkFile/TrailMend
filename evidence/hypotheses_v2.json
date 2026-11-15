@@ -1,7 +1,7 @@
 {
   "claim": "hypotheses_v2",
   "design": "The eight hypotheses preregistered in PRD section 3.2 before any of run 2 was built, decided from this run's curve, paired held-out verdicts, non-regression rows and quarantine report. A failed hypothesis is published as failed, beside run 1's.",
-  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_at": "2026-11-15T21:01:32+00:00",
   "measured_on": null,
   "rows": [
     {

@@ -1,7 +1,7 @@
 {
   "claim": "changes_v2",
   "design": "One row per seed and round, with the change counts of every run-2 arm side by side: what the Mend planned that round from that arm's own graph, what the arm applied, and what it promoted, retired or ingested. Each random control plans under the same update rule as full_v2 and applies exactly as many changes as the Mend planned in that same round of that same arm, of the one mechanism it controls and no other (INV6, checked before any of these files is written).",
-  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_at": "2026-11-15T21:01:32+00:00",
   "measured_on": null,
   "rows": [
     {

@@ -1,5 +1,5 @@
 {
-  "code_commit": "1afab2c058e1adf8dc0ee33e321995b8356c7309",
+  "code_commit": "363a86807b3f6c965b26106328484d95f164358a",
   "config": {
     "path": "config/mend.toml",
     "sha256": "580ae8dcbe48dfd141064f6bc4a8d7510ef6aa236a0e75debe0858ec909e454e",
@@ -7,10 +7,11 @@
   },
   "data_version": "v2",
   "evidence_sha256": {
+    ".measuring.json": "627bdbb852a9b6e41acf5915222a39e79dbb35b48072eea225d9839eacacaa2d",
     "anatomy.json": "409fada1c2cb94a3ccda5a595ce7c315a096e863093bf4338e27a9181d6a9033",
-    "captured_share_v2.json": "1acdec55d6d5c051db79150f554b138ed509a5b76cd41d754004052403754789",
+    "captured_share_v2.json": "e711a1c763cc61585d93822e667b2ac233f83714c876ccd5482db44ae29f20c4",
     "changes.json": "6ebbc0facb6233c18e73c5b61c7f7c9030dc5b30ce9b8cfd77923b5d39e2320d",
-    "changes_v2.json": "9c71a5c872c8ea37bf7bafa9b137fe55caf299b33ad76d80822036c167f78feb",
+    "changes_v2.json": "6a93789cf0328241f28d7a29639baee1ebcfef8eb7d718110fb7dd281c7c92c2",
     "curve.jsonl": "eb886008a2906f65f377726b231e7f5a80e2152332bbc5e057850cb555c112ca",
     "curve.svg": "eefd76a8ee3eac5fd99db1a745b40630917e6456143cf0414d258c020ddce7cf",
     "curve_v2.jsonl": "f443cd566b5953a20c7ea939fc29e5554b0a1cc257ef3441503dac7c5b557b00",
@@ -18,20 +19,20 @@
     "fault_recoverability.json": "58158001b487e3fd1fe6c587ceb99a8796d221a2cbc3dfc59ccb08a024d82179",
     "fault_recoverability_v2.json": "deaa67c20abbc6c83157c2550c1e25650f7df09b43d5eff7124c83e86b02b9f3",
     "hypotheses.json": "920ee235e0130614f8cd7ebd45750cc9ab19259257fb0904854936cf51aa6277",
-    "hypotheses_v2.json": "6ae170b548c9ce7239284ebcaec1a4513bff04a5ad20464356c1c3204ae9daaa",
+    "hypotheses_v2.json": "0ed5c1c99fd749d9475691c7700acca3a77010c83b185a732e040c31ed157bde",
     "latency.json": "87a2921754f7ed09df47cec971857a4edb1c87d2472748dcf406ae7a5ddfb111",
     "load.json": "ef1c00b3507de398559b7b7a5759042fa710718ff60b2b5800d2a5a0ba063769",
     "mechanisms.json": "d80402a162f79b14b8ac4fddd908d97cac51ca7b779eca28263bfdc5928bd495",
-    "mechanisms_v2.json": "efbf3ade0da1f7b64ceac3c8ebf788c0b4dc543e942e8c8973a7bd71f8bbcf08",
+    "mechanisms_v2.json": "9b41b56e92310b2f9a9972a5e09d5726a645cdf33a48d258a56e00a4810ad35d",
     "non_regression.json": "a850cf278565d52d2442dc996346839508eea9abd49d5160a429c74f06715e8b",
-    "non_regression_v2.json": "8beb6b10986e86c757ed8828531d746c7601c11480d0055e17a66cb5c253b48a",
+    "non_regression_v2.json": "43ea610d10d79c0c0674cc77cdf8421b923638aea07981b77e534d187ffb5f31",
     "oracle.json": "21ddd7cbf2535ffacbfde1d7933cb1de7c76945ebca3213a60f38a874dc7aa10",
     "oracle_v2.json": "cdaf8d536af75918b2b63e5b55d3bb26dc411852e8df9accc0a6d8d0188423a6",
-    "paired_v2.json": "9e6f79376e842bfb19b1d6c41bdc020c2a0c90e49b6d433f65f807cae4da179f",
+    "paired_v2.json": "e2bf423b690173aa2777feaa605d7a837eac6f1d15214626557d2722fe8c7466",
     "plain_store.json": "e651fd53aec262361d368a35e5140852403619fa8fc2487f5debb0bca388421a",
     "plain_store_v2.json": "ffb5b6dcdde73a9ae3b62308d5f55d0dd328a47ccc3abfae9ec6bc0f16ab312a",
     "quarantine.json": "dedd1780b2273e19a8ea133c8dd3b57b8abe25a4bc2b84102bd82838d1ec4c14",
-    "quarantine_v2.json": "a0d77afda0ab870b9cea88ba4b7fc7ed129867c1bec8e0c781aa137752ef2734",
+    "quarantine_v2.json": "1e696a446dabaec45a8077098eaa24aea3e187e7234662d478853c91cd3ce0dc",
     "round_zero.json": "5639023839538d87886018eac70fcacc75b6c072c72a88d3a90a5eda26b12da0"
   },
   "hydradb": {
@@ -39,6 +40,7 @@
     "image": "ghcr.io/hydra-db/hydradb"
   },
   "hydradb_per_evidence_file": {
+    ".measuring.json": null,
     "anatomy.json": {
       "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
       "host": "127.0.0.1",
@@ -107,7 +109,8 @@
     "plain_store_v2.json": null,
     "quarantine.json": null,
     "quarantine_v2.json": null,
-    "round_zero.json": null
+    "round_zero.json": null,
+    "run_manifest_v2.json": null
   },
   "run_id": "26b5469-580ae8dc",
   "seeds": {

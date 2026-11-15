@@ -1,7 +1,7 @@
 {
   "claim": "paired_v2",
   "design": "Every held-out question answered by two arms on the same seed at the last round, counted as a pair: both correct, one correct, or neither. The p-value is a two-sided exact McNemar test on the discordant pairs. This replaces run 1's test, which compared a per-seed delta against the spread between seeds at round 0.",
-  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_at": "2026-11-15T21:01:32+00:00",
   "measured_on": null,
   "rows": [
     {
