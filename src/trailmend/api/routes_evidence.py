@@ -16,6 +16,7 @@ SERVABLE: tuple[str, ...] = (
     "hypotheses",
     "run_manifest",
     "load",
+    "latency",
 )
 
 

@@ -80,21 +80,24 @@ def hypotheses_table() -> list[str]:
     return lines
 
 
+FILES: tuple[tuple[str, str], ...] = (
+    ("curve.jsonl", "held-out and training accuracy per seed, arm and round"),
+    ("round_zero.json", "the frozen-graph baseline before any judging"),
+    ("plain_store.json", "the document-only baseline, tuned to its own best score"),
+    ("mechanisms.json", "one mechanism per arm, against full and against the random controls"),
+    ("non_regression.json", "newly fixed, newly broken and net per round, each break traced to receipts"),
+    ("quarantine.json", "quarantine precision and recall against the planted faults"),
+    ("hypotheses.json", "H1-H5 with the rule each was decided by"),
+    ("run_manifest.json", "commit, HydraDB image digest, config hash, seeds, and every file's sha256"),
+    ("load.json", "loading G0 into HydraDB, and that a re-load adds nothing"),
+    ("latency.json", "p50/p95/p99, QPS and errors by code under concurrent clients"),
+)
+
+
 def files_table() -> list[str]:
-    names = (
-        "curve.jsonl",
-        "round_zero.json",
-        "plain_store.json",
-        "mechanisms.json",
-        "non_regression.json",
-        "quarantine.json",
-        "hypotheses.json",
-        "run_manifest.json",
-        "load.json",
-    )
-    lines = ["| file | sha256 (first 16) |", "|---|---|"]
-    for name in names:
-        lines.append(f"| [`evidence/{name}`](evidence/{name}) | {_digest(name)} |")
+    lines = ["| file | what it is | sha256 (first 16) |", "|---|---|---|"]
+    for name, what in FILES:
+        lines.append(f"| [`evidence/{name}`](evidence/{name}) | {what} | {_digest(name)} |")
     return lines
 
 

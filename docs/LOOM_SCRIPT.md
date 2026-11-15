@@ -64,7 +64,7 @@ Say the honest part out loud:
 Shot: `/mend` rollback button, the accuracy dropping back, then apply the round again.
 
 **3:10 — load numbers.** p50 / p95 / p99 and QPS on the product query mix, read off `/evidence`. Source:
-`evidence/load.json`.
+`evidence/latency.json`.
 
 **3:30 — who pays.**
 

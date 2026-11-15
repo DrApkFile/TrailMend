@@ -98,7 +98,7 @@ def main(base_url: str, clients: int = 8, per_client: int = 25, seed: int = 1) -
     first = run(base_url, questions, clients, per_client, "reads only")
     print(first.row(), flush=True)
     rows.append(first.row())
-    path = evidence.write(evidence.make("load", DESIGN, rows))
+    path = evidence.write(evidence.make("latency", DESIGN, rows))
     print(f"wrote {path} sha256={evidence.digest(path)}")
     return 0
 

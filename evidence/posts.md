@@ -13,7 +13,7 @@ Fill from:
 | frozen, plain store, random controls | `evidence/mechanisms.json` | `arms` |
 | H1 verdict | `evidence/hypotheses.json` | `H1.verdict` |
 | quarantine precision / recall | `evidence/quarantine.json` | `precision`, `recall` |
-| p95 | `evidence/load.json` | `p95_ms` |
+| p95 | `evidence/latency.json` | `p95_ms` |
 
 ---
 
