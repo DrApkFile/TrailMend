@@ -388,14 +388,14 @@ export default async function Home() {
               Why it failed:{" "}
               <a
                 className="underline hover:text-ink"
-                href={`${REPO_URL}/blob/main/docs/RUN1_DIAGNOSIS.md`}
+                href={`${REPO_URL}/blob/master/docs/RUN1_DIAGNOSIS.md`}
               >
                 docs/RUN1_DIAGNOSIS.md
               </a>
               . What changed in response, fixed before run 2:{" "}
               <a
                 className="underline hover:text-ink"
-                href={`${REPO_URL}/blob/main/docs/PRD.md`}
+                href={`${REPO_URL}/blob/master/docs/PRD.md`}
               >
                 PRD §3.2
               </a>

@@ -13,3 +13,4 @@ evidence/.measuring.json
 
 data/external/metaqa/
 evidence/metaqa/*.partial.json
+hydradb-data2/
