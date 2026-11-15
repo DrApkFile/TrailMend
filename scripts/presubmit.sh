@@ -54,9 +54,9 @@ if not manifest.exists():
     print("evidence/run_manifest.json is missing")
     sys.exit(1)
 payload = json.loads(manifest.read_text(encoding="utf-8"))
-files = payload.get("files")
+files = payload.get("evidence_sha256")
 if not isinstance(files, dict) or not files:
-    print("run_manifest.json records no files")
+    print("run_manifest.json records no evidence_sha256 map")
     sys.exit(1)
 bad = []
 for name, digest in files.items():

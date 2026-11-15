@@ -1,0 +1,52 @@
+{
+  "claim": "latency",
+  "design": "Concurrent clients ask the product question mix over HTTP against a running API, one thread per client, each picking questions round-robin from the training split so no held-out question is touched. Latency is wall-clock per request including the HydraDB round trip. Errors are counted by the API's own error code, not by exception type. The second pass repeats the same load while a Mend round writes to the same graph, to show what a writer does to read latency.",
+  "measured_at": "2026-11-15T06:39:27+00:00",
+  "measured_on": {
+    "digest": null,
+    "host": "trailmend-production-ee2e07ff.up.railway.app",
+    "image": null,
+    "kind": "remote",
+    "note": "a hosted HydraDB; its image digest is whatever that service runs and is not readable from here"
+  },
+  "rows": [
+    {
+      "clients": 8,
+      "errors_by_code": {
+        "unreachable": 4
+      },
+      "label": "reads only",
+      "max_ms": 6105.6,
+      "ok": 52,
+      "p50_ms": 552.9,
+      "p95_ms": 6071.1,
+      "p99_ms": 6099.6,
+      "qps": 5.62,
+      "requests": 56,
+      "seconds": 9.971
+    },
+    {
+      "clients": 8,
+      "errors_by_code": {
+        "unreachable": 4
+      },
+      "label": "reads while a mend round writes",
+      "max_ms": 5991.2,
+      "ok": 52,
+      "p50_ms": 515.7,
+      "p95_ms": 5970.1,
+      "p99_ms": 5989.4,
+      "qps": 5.82,
+      "requests": 56,
+      "seconds": 9.628,
+      "writer": {
+        "changed_anything": true,
+        "code": "ok",
+        "quarantines": 5,
+        "receipts": 606,
+        "reweights": 572,
+        "seconds": 71.504
+      }
+    }
+  ]
+}

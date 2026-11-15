@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
@@ -5,7 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from trailmend.api import routes_ask, routes_evidence, routes_mend
+from trailmend.api import demo, routes_ask, routes_evidence, routes_mend
 from trailmend.api.state import Live, build_live
 from trailmend.errors import ERROR_SPECS, ErrorCode, TrailMendError
 from trailmend.graph.client import HydraClient
@@ -20,6 +21,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     live = build_live(load_settings())
     app.state.live = live
     app.state.hydra = live.client
+    app.state.first_load = asyncio.get_running_loop().run_in_executor(None, demo.load_if_empty, live)
     yield
     live.close()
 

@@ -65,14 +65,14 @@ The document-only baseline (BM25 over the same corpus, no graph) scores 24.6%, w
 | [`evidence/curve.jsonl`](evidence/curve.jsonl) | held-out and training accuracy per seed, arm and round | `eb886008a2906f65…` |
 | [`evidence/round_zero.json`](evidence/round_zero.json) | the frozen-graph baseline before any judging | `5639023839538d87…` |
 | [`evidence/plain_store.json`](evidence/plain_store.json) | the document-only baseline, tuned to its own best score | `e651fd53aec26236…` |
-| [`evidence/mechanisms.json`](evidence/mechanisms.json) | one mechanism per arm, against full and against the random controls | `c79782dbe2a25ca7…` |
-| [`evidence/changes.json`](evidence/changes.json) | change counts per seed, arm and round, full and every control side by side | `348eb3bf01c0ba59…` |
-| [`evidence/non_regression.json`](evidence/non_regression.json) | newly fixed, newly broken and net per round, each break traced to receipts | `88d568ab001fb012…` |
-| [`evidence/quarantine.json`](evidence/quarantine.json) | quarantine precision and recall against the planted faults | `2014ff07700c0354…` |
-| [`evidence/hypotheses.json`](evidence/hypotheses.json) | H1-H5 with the rule each was decided by | `f47b54018efe3721…` |
-| [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `657f6dc9a3b12817…` |
+| [`evidence/mechanisms.json`](evidence/mechanisms.json) | one mechanism per arm, against full and against the random controls | `1b6e39d34eaa9cdb…` |
+| [`evidence/changes.json`](evidence/changes.json) | change counts per seed, arm and round, full and every control side by side | `b14b4d9431df9f8b…` |
+| [`evidence/non_regression.json`](evidence/non_regression.json) | newly fixed, newly broken and net per round, each break traced to receipts | `ddc8dd735fbac782…` |
+| [`evidence/quarantine.json`](evidence/quarantine.json) | quarantine precision and recall against the planted faults | `469a904d687f9a53…` |
+| [`evidence/hypotheses.json`](evidence/hypotheses.json) | H1-H5 with the rule each was decided by | `adda1c68bb594490…` |
+| [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `b17958ea0db6a340…` |
 | [`evidence/load.json`](evidence/load.json) | loading G0 into HydraDB, and that a re-load adds nothing | `ef1c00b3507de398…` |
-| [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | not measured |
+| [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | `87a2921754f7ed09…` |
 <!-- numbers:end -->
 
 Every figure above is written into this file by `trailmend.eval.report` from the files in `evidence/`. None of them is

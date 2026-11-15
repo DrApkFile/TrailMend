@@ -235,6 +235,31 @@ export async function askQuestion(question: string): Promise<Fetched<Answer>> {
   );
 }
 
+export type Rollback = {
+  receipt_id: string;
+  undone_by: string;
+  kind: string;
+  changed_anything: boolean;
+};
+
+export async function rollbackReceipt(receiptId: string): Promise<Fetched<Rollback>> {
+  const token = adminToken();
+  if (token === null) {
+    return {
+      ok: false,
+      error: {
+        code: "admin_token_missing",
+        message: "Rolling back writes to the graph, so it needs TRAILMEND_ADMIN_TOKEN set on the server.",
+      },
+    };
+  }
+  return shaped<Rollback>(
+    await postJson(`/v1/rollback/${encodeURIComponent(receiptId)}`, {}, { "x-admin-token": token }),
+    (body) => isObject(body) && typeof body.undone_by === "string",
+    "/v1/rollback",
+  );
+}
+
 export async function judgeAnswer(
   question: string,
   verdict: string,

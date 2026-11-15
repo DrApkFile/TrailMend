@@ -5,6 +5,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from trailmend.api.app import app
+from trailmend.api.state import Live
 from trailmend.eval import measuring
 from trailmend.graph.client import HydraClient
 
@@ -28,3 +29,10 @@ def client() -> Iterator[TestClient]:
     os.environ["TRAILMEND_ADMIN_TOKEN"] = ADMIN
     with TestClient(app) as started:
         yield started
+
+
+@pytest.fixture(autouse=True)
+def fresh_rate_limits(client: TestClient) -> None:
+    live: Live = app.state.live
+    live.limiter.seen.clear()
+    live.judge_limiter.seen.clear()

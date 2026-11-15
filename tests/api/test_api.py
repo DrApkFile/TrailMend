@@ -2,6 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from tests.api.conftest import ADMIN
+from trailmend.api import demo
 from trailmend.api.app import app
 from trailmend.api.state import Live
 from trailmend.data import dataset
@@ -184,3 +185,29 @@ def test_f1_an_evidence_file_that_does_not_exist_says_so_rather_than_inventing_o
     body = client.get("/v1/evidence/mechanisms").json()
     assert body["name"] == "mechanisms"
     assert "available" in body
+
+
+def test_f1_a_started_api_leaves_a_loaded_demo_graph_alone(client: TestClient, loaded: dataset.Dataset) -> None:
+    live: Live = app.state.live
+    before = len(live.journal.lines())
+    assert demo.node_count(live) > 0
+    assert demo.load_if_empty(live) is None
+    assert len(live.journal.lines()) == before
+
+
+def test_f1_a_started_api_loads_g0_when_the_demo_graph_is_empty(
+    client: TestClient, loaded: dataset.Dataset, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    live: Live = app.state.live
+
+    def empty(_: Live) -> int:
+        return 0
+
+    monkeypatch.setattr(demo, "node_count", empty)
+    receipt = demo.load_if_empty(live)
+    assert receipt is not None
+    assert receipt.kind == "reset"
+    listed = client.get("/v1/receipts", params={"limit": 1}).json()
+    assert listed[0]["receipt_id"] == receipt.receipt_id
+    answered = client.post("/v1/ask", json={"question": _a_question(loaded, "alert_owning_team")})
+    assert answered.status_code == 200

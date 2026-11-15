@@ -3,6 +3,7 @@ from typing import cast
 
 from fastapi import APIRouter, Header, Request
 
+from trailmend.api import demo
 from trailmend.api.auth import require_admin
 from trailmend.api.models import (
     Hop,
@@ -17,9 +18,7 @@ from trailmend.api.models import (
 from trailmend.api.paths import hop_of
 from trailmend.api.state import Live
 from trailmend.core.model import EdgeKey, EdgeState
-from trailmend.core.receipts import make_reset_receipt
 from trailmend.errors import ErrorCode, TrailMendError
-from trailmend.graph.reset import reset_to_ingested
 from trailmend.graph.state import read_states, state_from_row
 from trailmend.loop.apply import rollback_to
 from trailmend.loop.policy import MendPolicy
@@ -170,18 +169,7 @@ def mend_round(body: RoundRequest, request: Request, x_admin_token: str | None =
 def demo_reset(request: Request, x_admin_token: str | None = Header(default=None)) -> ResetResponse:
     live = _live(request)
     require_admin(live, x_admin_token)
-    pool = tuple((e.src, e.rel_type.value, e.dst) for e in live.built.ingested.pool)
-    report = reset_to_ingested(live.client, live.built.graph, pool)
-    restored = {
-        "quarantines_cleared": report.quarantines_cleared,
-        "shortcuts_cleared": report.shortcuts_cleared,
-        "pool_edges_withheld": report.pool_edges_withheld,
-        "rounds_discarded": live.rounds_run,
-        "demo_seed": live.settings.demo_seed,
-    }
-    receipt = make_reset_receipt(live.settings.live_run_id, live.rounds_run, len(live.journal.lines()), restored)
-    live.journal.append_reset(receipt)
-    live.rounds_run = 0
+    report, receipt = demo.restore(live)
     return ResetResponse(
         receipt_id=receipt.receipt_id,
         digest=receipt.digest,

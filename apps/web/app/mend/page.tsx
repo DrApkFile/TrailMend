@@ -1,6 +1,7 @@
 import { Failed, Hops, Panel } from "@/components/Shell";
 import { fetchEvidence, fetchReceipts } from "@/lib/api";
 import { NOT_MEASURED } from "@/lib/curve";
+import { RollbackForm } from "./RollbackForm";
 
 export const dynamic = "force-dynamic";
 
@@ -144,6 +145,10 @@ export default async function MendPage() {
                       <Hops hops={[receipt.edge]} />
                     </div>
                   )}
+                  <RollbackForm
+                    receiptId={receipt.receipt_id}
+                    kind={receipt.kind}
+                  />
                 </li>
               ))}
             </ul>

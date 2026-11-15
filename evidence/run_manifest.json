@@ -1,5 +1,5 @@
 {
-  "code_commit": "d6945c115121caab8438e019a9b69863a9f690fe",
+  "code_commit": "62ec737da184a9b126d59a635b21a09929e200e5",
   "config": {
     "path": "config/mend.toml",
     "sha256": "06b10c13cda629027a14baaebef070106ec27c2646a72cea44a13b3167636e7c",
@@ -7,16 +7,17 @@
   },
   "evidence_sha256": {
     ".gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "changes.json": "348eb3bf01c0ba5989a3071cfa9b601e8a76e85f7ce878b52c8a734ae6c15a07",
+    "changes.json": "b14b4d9431df9f8b0a90b5669fa5c244ebbce571bfb0de86ab0120f44f05ae11",
     "curve.jsonl": "eb886008a2906f65f377726b231e7f5a80e2152332bbc5e057850cb555c112ca",
     "curve.svg": "eefd76a8ee3eac5fd99db1a745b40630917e6456143cf0414d258c020ddce7cf",
-    "hypotheses.json": "f47b54018efe37215c53375e39580614b6edee67865ffc8d94799498cddef92f",
+    "hypotheses.json": "adda1c68bb594490100cc162455000ac7d12c1a92c8dbbe8c4a49742a2e97c07",
+    "latency.json": "87a2921754f7ed09df47cec971857a4edb1c87d2472748dcf406ae7a5ddfb111",
     "load.json": "ef1c00b3507de398559b7b7a5759042fa710718ff60b2b5800d2a5a0ba063769",
-    "mechanisms.json": "c79782dbe2a25ca77dcbcc86fbdd8474c6d72261ea3b8a273be9d29da22b21c5",
-    "non_regression.json": "88d568ab001fb0121602d1011d9a1ee112a06ed0e9d0e53c9cff563bf1ac77d3",
+    "mechanisms.json": "1b6e39d34eaa9cdb3196c606a8fce6d0fcf8ac9dab589fe19a40a853634651ee",
+    "non_regression.json": "ddc8dd735fbac7821250599fe368b4b703bcade95cd3c01512cebebd22250794",
     "plain_store.json": "e651fd53aec262361d368a35e5140852403619fa8fc2487f5debb0bca388421a",
     "posts.md": "b2f671da50a8a217071d5589058c8bc96797754271fad8a50c1239f63ba9d98c",
-    "quarantine.json": "2014ff07700c0354988ee03e118041d6f423648f746cab45207d3dfc3a4ce65a",
+    "quarantine.json": "469a904d687f9a53c10da9a1d36d534b2e523b300f79d05322699383d038cf80",
     "round_zero.json": "5639023839538d87886018eac70fcacc75b6c072c72a88d3a90a5eda26b12da0"
   },
   "hydradb": {
@@ -34,6 +35,13 @@
       }
     ],
     "hypotheses.json": null,
+    "latency.json": {
+      "digest": null,
+      "host": "trailmend-production-ee2e07ff.up.railway.app",
+      "image": null,
+      "kind": "remote",
+      "note": "a hosted HydraDB; its image digest is whatever that service runs and is not readable from here"
+    },
     "load.json": null,
     "mechanisms.json": null,
     "non_regression.json": null,
