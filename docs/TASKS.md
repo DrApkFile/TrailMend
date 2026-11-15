@@ -269,6 +269,10 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   (6 weeks, $2,000, capped at 250 services, refunded if the agreed number does not move), plus what it is not and the
   generated-data label.
 - [ ] G3 Loom (script in PRD §13). G4 Posts on X and LinkedIn tagging HydraDB → `evidence/posts.md`.
+  G4 DRAFTED 2026-11-15: both posts in `evidence/posts.md` now carry the finished run's figures, each with the
+  evidence file it was read from, including the three failed hypotheses and why the lift is small. Two blanks
+  are left on purpose: the Loom link, and `@<hydradb-handle>`, which the file says to read off the hackathon
+  page rather than guess. G3 needs a recording, which only the repo owner can make.
   SCRIPT AND DRAFTS WRITTEN 2026-11-15: `docs/LOOM_SCRIPT.md` is the shot-by-shot recording script with the page each
   spoken number is read off; `evidence/posts.md` holds the X thread and the LinkedIn post with a table saying which
   evidence file fills each blank, and `@<hydradb-handle>` to be checked rather than guessed. Recording the Loom and
