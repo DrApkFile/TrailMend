@@ -28,22 +28,27 @@ or the file that shows it is true.
 ## The order the rest has to happen in
 
 1. The E1 sweep finishes (3 seeds × 9 arms × 6 rounds into `evidence/curve.jsonl`).
-2. Re-run seed 1 `reweight_only`: its rows were written while the API tests wrote judge receipts and a rollback into
+2. Re-run the two contaminated seed-arms. Seed 7 `random_quarantine` as well as seed 1 `reweight_only`: the live
+   and API suite was run against the same graph while that arm was in flight (02:11-02:16 on 2026-11-15), because a
+   hand-written lock carried a pid that had already exited. Every other arm resets the graph when it starts, so the
+   damage is confined to the arm that was running.
+   `uv run python -m trailmend.eval.rerun 7 random_quarantine "the live and API tests ran against this graph while this arm was in flight"`
+3. Re-run seed 1 `reweight_only`: its rows were written while the API tests wrote judge receipts and a rollback into
    the same graph. One command, which keeps the contaminated rows on record under `evidence/superseded/` with the
    reason and reuses the arm index the sweep used so the RNG stream is the same:
    `uv run python -m trailmend.eval.rerun 1 reweight_only "the API tests wrote judge receipts and a rollback into the same graph during this arm"`
-3. `uv run python -m trailmend.eval.analyse` → curve.svg, non_regression.json, quarantine.json, mechanisms.json,
+4. `uv run python -m trailmend.eval.analyse` → curve.svg, non_regression.json, quarantine.json, mechanisms.json,
    hypotheses.json, run_manifest.json. It refuses any seed-arm whose held-out tape is missing.
-4. `uv run python -m trailmend.eval.report` → the README numbers block.
-5. `railway login`, then A1: bucket, HydraDB service on the pinned digest, API service, `GET /v1/ready` →
+5. `uv run python -m trailmend.eval.report` → the README numbers block.
+6. `railway login`, then A1: bucket, HydraDB service on the pinned digest, API service, `GET /v1/ready` →
    `graph_writable: true`, restart HydraDB and check again. Steps in `deploy/railway/README.md`.
-6. `vercel login`, then A2: deploy `apps/web` with `TRAILMEND_API=<railway api url>`; check in a fresh browser and
+7. `vercel login`, then A2: deploy `apps/web` with `TRAILMEND_API=<railway api url>`; check in a fresh browser and
    at 390px wide; confirm no API URL appears in `.next/static`.
-7. `uv run python -m trailmend.eval.load <railway api url>` → `evidence/latency.json` (E6), then re-run report.
-8. Record the Loom from `docs/LOOM_SCRIPT.md`; put the link at the top of the README.
-9. Fill the blanks in `evidence/posts.md` from the evidence files, check HydraDB's handle, post, log the URLs.
-10. `bash scripts/presubmit.sh` with the live tests on (needs `make hydra-up`), expect every check to pass.
-11. Submit.
+8. `uv run python -m trailmend.eval.load <railway api url>` → `evidence/latency.json` (E6), then re-run report.
+9. Record the Loom from `docs/LOOM_SCRIPT.md`; put the link at the top of the README.
+10. Fill the blanks in `evidence/posts.md` from the evidence files, check HydraDB's handle, post, log the URLs.
+11. `bash scripts/presubmit.sh` with the live tests on (needs `make hydra-up`), expect every check to pass.
+12. Submit.
 
 ## What is published as a failure, not hidden
 

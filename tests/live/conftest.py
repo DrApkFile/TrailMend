@@ -3,6 +3,7 @@ from collections.abc import Iterator
 
 import pytest
 
+from trailmend.eval import measuring
 from trailmend.graph.client import HydraClient
 
 URL = os.environ.get("TRAILMEND_HYDRA_URL", "http://127.0.0.1:8443")
@@ -15,5 +16,9 @@ def hydra() -> Iterator[HydraClient]:
     if not client.is_healthy():
         client.close()
         pytest.skip(f"HydraDB not reachable at {URL}")
+    busy = measuring.skip_reason()
+    if busy is not None:
+        client.close()
+        pytest.skip(busy)
     yield client
     client.close()

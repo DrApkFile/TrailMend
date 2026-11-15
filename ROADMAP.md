@@ -12,3 +12,5 @@ Ideas that are not in the current build. Nothing here is claimed as built.
 - Pooling confirmed sub-paths across templates when promoting. Measured on seed 1 round 0: 8 sub-paths reach the
   promotion threshold keyed per template, 12 if pooled (REALITY_SPIKES S24). Not built: `SC_<TEMPLATE>` per PRD §4
   keeps each template searching only its own shortcuts.
+
+- **A second HydraDB for tests.** Not built. The live and API tests share the one local graph with the measured runs and serialise on `evidence/.measuring.json` instead. True isolation needs a second container with its own bucket and a token scoped to its own graph id; the local token is scoped to `default/graphs/default` and a write to any other graph id is refused 403.

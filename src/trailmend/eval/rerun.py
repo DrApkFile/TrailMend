@@ -5,7 +5,7 @@ from pathlib import Path
 
 from trailmend.core.config import load_run_config
 from trailmend.data import dataset
-from trailmend.eval import curve
+from trailmend.eval import curve, measuring
 from trailmend.eval.evidence import now_utc
 from trailmend.eval.run import ARMS, CONFIG, run_arm, run_id_for
 from trailmend.eval.session import client_from_settings
@@ -87,11 +87,15 @@ def main(seed: int, arm_value: str, reason: str) -> int:
     built = dataset.build(seed)
     print(f"re-running seed {seed} arm {arm.value} (arm index {arm_index}) for {run.rounds} rounds", flush=True)
     written = 0
-    with client_from_settings() as client:
-        client.require_writable()
-        for row in run_arm(client, built, arm, arm_index, run_id, run.rounds):
-            curve.append(row)
-            written += 1
+    measuring.acquire(f"{run_id}-s{seed}-{arm.value}-rerun")
+    try:
+        with client_from_settings() as client:
+            client.require_writable()
+            for row in run_arm(client, built, arm, arm_index, run_id, run.rounds):
+                curve.append(row)
+                written += 1
+    finally:
+        measuring.release()
     print(f"appended {written} rows to {curve.CURVE}")
     return 0
 

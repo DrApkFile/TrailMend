@@ -5,6 +5,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from trailmend.api.app import app
+from trailmend.eval import measuring
 from trailmend.graph.client import HydraClient
 
 URL = os.environ.get("TRAILMEND_HYDRA_URL", "http://127.0.0.1:8443")
@@ -19,6 +20,9 @@ def client() -> Iterator[TestClient]:
     probe.close()
     if not healthy:
         pytest.skip(f"HydraDB not reachable at {URL}")
+    busy = measuring.skip_reason()
+    if busy is not None:
+        pytest.skip(busy)
     os.environ["TRAILMEND_HYDRA_URL"] = URL
     os.environ["TRAILMEND_HYDRA_TOKEN"] = TOKEN
     os.environ["TRAILMEND_ADMIN_TOKEN"] = ADMIN

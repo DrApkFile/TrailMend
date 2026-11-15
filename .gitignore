@@ -8,3 +8,4 @@ hydradb-data/
 node_modules/
 .next/
 apps/web/.vercel
+evidence/.measuring.json

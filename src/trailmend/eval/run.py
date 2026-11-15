@@ -6,7 +6,7 @@ from random import Random
 from trailmend.core.config import config_digest, load_mend_config, load_run_config, load_search_config
 from trailmend.core.model import EdgeKey
 from trailmend.data import dataset
-from trailmend.eval import curve
+from trailmend.eval import curve, measuring
 from trailmend.eval.plain_store import build_store, judge_all_plain
 from trailmend.eval.session import client_from_settings
 from trailmend.graph.client import HydraClient
@@ -141,21 +141,32 @@ def main(seeds: tuple[int, ...], arms: tuple[MendPolicy, ...] = ARMS) -> int:
     run = load_run_config(CONFIG)
     run_id = run_id_for()
     print(f"run {run_id}: {len(seeds)} seeds x {len(arms)} arms x {run.rounds} rounds", flush=True)
+    measuring.acquire(run_id)
+    try:
+        written = _sweep(seeds, arms, run_id, run.rounds, run.plain_store_top_k)
+    finally:
+        measuring.release()
+    print(f"wrote {written} rows to {curve.CURVE}")
+    return 0
+
+
+def _sweep(
+    seeds: tuple[int, ...], arms: tuple[MendPolicy, ...], run_id: str, rounds: int, plain_store_top_k: int
+) -> int:
     written = 0
     with client_from_settings() as client:
         client.require_writable()
         for seed in seeds:
             built = dataset.build(seed)
             print(f"seed {seed}", flush=True)
-            for row in plain_rows(run_id, built, run.rounds, run.plain_store_top_k):
+            for row in plain_rows(run_id, built, rounds, plain_store_top_k):
                 curve.append(row)
                 written += 1
             for arm_index, arm in enumerate(arms):
-                for row in run_arm(client, built, arm, arm_index, run_id, run.rounds):
+                for row in run_arm(client, built, arm, arm_index, run_id, rounds):
                     curve.append(row)
                     written += 1
-    print(f"wrote {written} rows to {curve.CURVE}")
-    return 0
+    return written
 
 
 if __name__ == "__main__":
