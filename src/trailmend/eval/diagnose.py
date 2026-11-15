@@ -106,9 +106,25 @@ def recovery_row(seed: int, built: dataset.Dataset, judged: Sequence[Judged]) ->
         for key in _chosen(one) & facts.wrong_added:
             touched[key] += 1
     counts = sorted(touched.get(EdgeKey(f.src, f.rel_type.value, f.wrong_dst), 0) for f in wrong)
+    by_kind: dict[str, dict[str, int]] = {}
+    for fault in wrong:
+        key = EdgeKey(fault.src, fault.rel_type.value, fault.true_dst)
+        seen = by_kind.setdefault(
+            fault.kind.value,
+            {"planted": 0, "true_edge_still_in_g0": 0, "true_edge_in_the_gapfill_pool": 0, "true_edge_nowhere": 0},
+        )
+        seen["planted"] += 1
+        if key in in_g0:
+            seen["true_edge_still_in_g0"] += 1
+        elif key in in_pool:
+            seen["true_edge_in_the_gapfill_pool"] += 1
+        else:
+            seen["true_edge_nowhere"] += 1
     return {
         "seed": seed,
+        "data_version": built.data_version,
         "planted_wrong_edges": len(wrong),
+        "by_kind": dict(sorted(by_kind.items())),
         "true_edge_still_in_g0": sum(key in in_g0 for key in true_keys),
         "true_edge_in_the_gapfill_pool": sum(key in in_pool for key in true_keys),
         "true_edge_nowhere": sum(key not in in_g0 and key not in in_pool for key in true_keys),
@@ -159,7 +175,7 @@ def main(seeds: tuple[int, ...] = SEEDS) -> int:
                 train = [t.question for t in built.split.train]
                 print(f"seed {seed}", flush=True)
 
-                reset_to_ingested(client, built.graph, pool)
+                reset_to_ingested(client, built.graph, pool, built.support)
                 index = build_index(built.graph.nodes)
                 at_zero = judge_all(client, index, train, search)
                 anatomy_rows.append(anatomy_row(seed, "round_0", at_zero, anatomies(at_zero, built, facts)))
@@ -172,7 +188,7 @@ def main(seeds: tuple[int, ...] = SEEDS) -> int:
                 anatomy_rows.append(row | {"receipts_replayed": kinds})
                 print(f"  last round train: {score(at_last).correct}/{len(train)}  replayed {kinds}", flush=True)
 
-                reset_to_ingested(client, built.graph, pool)
+                reset_to_ingested(client, built.graph, pool, built.support)
                 oracle_rows.extend(ladder(client, built, search))
     finally:
         measuring.release()

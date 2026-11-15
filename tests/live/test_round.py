@@ -48,7 +48,7 @@ def search_config() -> SearchConfig:
 @pytest.fixture
 def loaded(hydra: HydraClient) -> dataset.Dataset:
     built = dataset.build(SEED, SMALL)
-    load(hydra, built.graph)
+    load(hydra, built.graph, built.support)
     for shortcut_type in SHORTCUT_TYPES:
         for existing in (*list_edge_keys(hydra, shortcut_type), *list_edge_keys(hydra, quarantine_type(shortcut_type))):
             hydra.run(q.delete_edge(existing.rel_type), {"src": existing.src, "dst": existing.dst})

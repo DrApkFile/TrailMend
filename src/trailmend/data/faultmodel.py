@@ -1,8 +1,19 @@
 import json
 from dataclasses import dataclass
+from enum import StrEnum
 
 from trailmend.data.model import Edge, Node, TruthGraph
 from trailmend.graph.schema import RelType
+
+V1 = "v1"
+V2 = "v2"
+DATA_VERSIONS: tuple[str, ...] = (V1, V2)
+
+
+class WrongKind(StrEnum):
+    CONTRADICTED = "contradicted"
+    RECOVERABLE = "recoverable"
+    DESTROYED = "destroyed"
 
 
 @dataclass(frozen=True, slots=True)
@@ -18,6 +29,15 @@ class WrongEdge:
     true_dst: int
     wrong_dst: int
     delta: EdgeDelta
+    kind: WrongKind = WrongKind.DESTROYED
+
+    @property
+    def wrong_key(self) -> tuple[int, RelType, int]:
+        return (self.src, self.rel_type, self.wrong_dst)
+
+    @property
+    def true_key(self) -> tuple[int, RelType, int]:
+        return (self.src, self.rel_type, self.true_dst)
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,6 +72,14 @@ class FaultSet:
     missing_edges: tuple[MissingEdge, ...]
     alias_duplicates: tuple[AliasDuplicate, ...]
     conflations: tuple[ConflatedPerson, ...]
+    data_version: str = V1
+
+    def __post_init__(self) -> None:
+        if self.data_version not in DATA_VERSIONS:
+            raise ValueError(f"unknown data_version {self.data_version!r}")
+
+    def wrong_of_kind(self, kind: WrongKind) -> tuple[WrongEdge, ...]:
+        return tuple(f for f in self.wrong_edges if f.kind is kind)
 
     @property
     def deltas(self) -> tuple[EdgeDelta, ...]:
@@ -99,19 +127,23 @@ def _delta_row(delta: EdgeDelta) -> dict[str, object]:
     return {"removed": _edge_rows(delta.removed), "added": _edge_rows(delta.added)}
 
 
+def _wrong_row(fault: WrongEdge, data_version: str) -> dict[str, object]:
+    row: dict[str, object] = {
+        "rel_type": fault.rel_type.value,
+        "src": fault.src,
+        "true_dst": fault.true_dst,
+        "wrong_dst": fault.wrong_dst,
+        "delta": _delta_row(fault.delta),
+    }
+    if data_version != V1:
+        row["kind"] = fault.kind.value
+    return row
+
+
 def to_json(faults: FaultSet) -> str:
-    payload = {
+    payload: dict[str, object] = {
         "seed": faults.seed,
-        "wrong_edges": [
-            {
-                "rel_type": f.rel_type.value,
-                "src": f.src,
-                "true_dst": f.true_dst,
-                "wrong_dst": f.wrong_dst,
-                "delta": _delta_row(f.delta),
-            }
-            for f in faults.wrong_edges
-        ],
+        "wrong_edges": [_wrong_row(f, faults.data_version) for f in faults.wrong_edges],
         "missing_edges": [
             {"rel_type": f.rel_type.value, "src": f.src, "dst": f.dst, "delta": _delta_row(f.delta)}
             for f in faults.missing_edges
@@ -136,4 +168,6 @@ def to_json(faults: FaultSet) -> str:
             for f in faults.conflations
         ],
     }
+    if faults.data_version != V1:
+        payload["data_version"] = faults.data_version
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False)

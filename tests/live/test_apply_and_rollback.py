@@ -27,7 +27,7 @@ def config() -> MendConfig:
 @pytest.fixture
 def loaded(hydra: HydraClient) -> dataset.Dataset:
     built = dataset.build(SEED, SMALL)
-    load(hydra, built.graph)
+    load(hydra, built.graph, built.support)
     return built
 
 

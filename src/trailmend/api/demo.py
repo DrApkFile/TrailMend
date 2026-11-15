@@ -16,7 +16,7 @@ def node_count(live: Live) -> int:
 
 def restore(live: Live) -> tuple[ResetReport, ResetReceipt]:
     pool = tuple((e.src, e.rel_type.value, e.dst) for e in live.built.ingested.pool)
-    report = reset_to_ingested(live.client, live.built.graph, pool)
+    report = reset_to_ingested(live.client, live.built.graph, pool, live.built.support)
     restored: dict[str, object] = {
         "quarantines_cleared": report.quarantines_cleared,
         "shortcuts_cleared": report.shortcuts_cleared,

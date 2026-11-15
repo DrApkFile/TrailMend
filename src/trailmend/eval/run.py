@@ -77,7 +77,7 @@ def run_arm(
     mend = load_mend_config(CONFIG)
     search = load_search_config(CONFIG)
     pool = tuple((e.src, e.rel_type.value, e.dst) for e in built.ingested.pool)
-    reset_to_ingested(client, built.graph, pool)
+    reset_to_ingested(client, built.graph, pool, built.support)
     index = build_index(built.graph.nodes)
     name = f"{run_id}-s{built.seed}-{arm.value}"
     journal = Journal.for_run(name)

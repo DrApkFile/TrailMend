@@ -26,7 +26,7 @@ def built() -> dataset.Dataset:
 
 @pytest.fixture
 def loaded(hydra: HydraClient, built: dataset.Dataset) -> dataset.Dataset:
-    load(hydra, built.graph)
+    load(hydra, built.graph, built.support)
     return built
 
 

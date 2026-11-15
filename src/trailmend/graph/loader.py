@@ -3,12 +3,13 @@ from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 
+from trailmend.core.ingest import MIN_SUPPORT, ingest_cost
 from trailmend.data.model import Edge, Node, TruthGraph
 from trailmend.graph import queries as q
 from trailmend.graph.client import HydraClient, ParamValue
 from trailmend.graph.schema import ENDPOINTS, NodeLabel, RelType
 
-INITIAL_COST = 1.0
+INITIAL_COST = ingest_cost(MIN_SUPPORT)
 MAX_BATCH = 1000
 
 type Row = Mapping[str, int | float | str | bool]
@@ -33,9 +34,21 @@ def _node_rows(nodes: Sequence[Node]) -> list[Row]:
     return [{"id": n.id, "name": n.name} for n in nodes]
 
 
-def _edge_rows(edges: Sequence[Edge]) -> list[Row]:
+def cost_of(support: Mapping[int, int], edge: Edge) -> float:
+    return ingest_cost(support.get(edge.id, MIN_SUPPORT))
+
+
+def _edge_rows(edges: Sequence[Edge], support: Mapping[int, int]) -> list[Row]:
     return [
-        {"src": e.src, "dst": e.dst, "eid": e.id, "cost": INITIAL_COST, "confirms": 0, "blames": 0, "recent": ""}
+        {
+            "src": e.src,
+            "dst": e.dst,
+            "eid": e.id,
+            "cost": cost_of(support, e),
+            "confirms": 0,
+            "blames": 0,
+            "recent": "",
+        }
         for e in edges
     ]
 
@@ -72,6 +85,7 @@ def count_graph(client: HydraClient, graph: TruthGraph) -> tuple[dict[str, int],
 def load(
     client: HydraClient,
     graph: TruthGraph,
+    support: Mapping[int, int],
     batch_size: int = MAX_BATCH,
     clock: Callable[[], float] = time.monotonic,
 ) -> LoadReport:
@@ -87,7 +101,7 @@ def load(
     for rel_type, edges in sorted(_grouped_edges(graph).items()):
         source, target = ENDPOINTS[rel_type]
         for chunk in _chunks(edges, batch_size):
-            params = {"rows": _edge_rows(chunk)}
+            params = {"rows": _edge_rows(chunk, support)}
             client.run(q.upsert_edges(source.value, rel_type.value, target.value), params)
             batches += 1
     seconds = clock() - started

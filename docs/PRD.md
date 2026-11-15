@@ -80,13 +80,15 @@ is derived from how many ingested documents assert it:
 
 > `cost(e) = INGEST_BASE / (1 + ln(support(e)))`, `INGEST_BASE = 1.0`, `support(e) ≥ 1`
 
-which gives 1.000, 0.591, 0.477, 0.419, 0.383 for support 1 to 5: better-attested links are cheaper to walk, by one
-monotone rule with no special case anywhere in it. Support is drawn for **every** edge in the graph from one declared
-distribution — P(1) 0.52, P(2) 0.26, P(3) 0.13, P(4) 0.06, P(5) 0.03 — and the corpus renders that many distinct
-documents per edge. A `contradicted` fault's stale edge draws from the upper tail of that same distribution
-(3, 4 or 5, renormalised) while the true edge it contradicts draws 1, so the frozen graph prefers the stale owner by
-the rule. Support ≥ 3 is not a fault detector: about 22% of ordinary edges have it. Gap-fill ingests at the same rule,
-from the number of pool documents supporting the edge it adds, where run 1 ingested everything at a flat 1.0.
+which gives 1.000, 0.591 and 0.477 for support 1, 2 and 3: better-attested links are cheaper to walk, by one monotone
+rule with no special case anywhere in it. Support is drawn for **every** edge in the graph from one declared
+distribution — P(1) 0.55, P(2) 0.25, P(3) 0.20 — and the corpus renders that many documents per edge, each from a
+different template. Support stops at 3 because there are exactly three document templates per relation type, and a
+fourth supporting document could only be the same sentence twice; the rule itself is defined for any support. A
+`contradicted` fault's stale edge draws from the top of that same distribution while the true edge it contradicts
+draws 1, so the frozen graph prefers the stale owner by the rule and needs three blames to be talked out of it.
+Support 3 is not a fault detector: 20% of ordinary edges have it. Gap-fill ingests at the same rule, from the number
+of pool documents supporting the edge it adds, where run 1 ingested everything at a flat 1.0.
 
 Two consequences, stated now rather than discovered later: round 0 is a different and stronger baseline than run 1's,
 where every edge cost 1.0; and the cost ties that the C3a tie rule was written for mostly disappear, since two routes

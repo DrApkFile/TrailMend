@@ -2,12 +2,12 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 
 from trailmend.core.credit import Unreachable
+from trailmend.core.ingest import MIN_SUPPORT, ingest_cost
 from trailmend.core.model import EdgeKey, EdgeStatus, Fill, MendConfig
 from trailmend.core.receipts import Receipt
 from trailmend.data.documents import DocumentSet
 from trailmend.data.model import Edge
 from trailmend.graph.client import HydraClient
-from trailmend.graph.loader import INITIAL_COST
 from trailmend.graph.state import read_state
 from trailmend.loop.apply import apply
 from trailmend.loop.journal import Journal
@@ -28,14 +28,17 @@ def _key(edge: Edge) -> EdgeKey:
 
 def candidate_edges(documents: DocumentSet, pool: Sequence[Edge], gaps: Sequence[Unreachable]) -> dict[EdgeKey, Fill]:
     withheld = {edge.id: edge for edge in pool}
+    support = documents.pool_support
     found: dict[EdgeKey, list[int]] = {}
+    cost: dict[EdgeKey, float] = {}
     for gap in sorted({g.seed_id for g in gaps}):
         for document in documents.mentioning(gap, pool_only=True):
             edge = withheld.get(document.edge_id)
             if edge is not None:
                 found.setdefault(_key(edge), []).append(document.id)
+                cost[_key(edge)] = ingest_cost(support.get(edge.id, MIN_SUPPORT))
     return {
-        key: Fill(key, tuple(dict.fromkeys(document_ids)), INITIAL_COST) for key, document_ids in sorted(found.items())
+        key: Fill(key, tuple(dict.fromkeys(document_ids)), cost[key]) for key, document_ids in sorted(found.items())
     }
 
 

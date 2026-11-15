@@ -3,6 +3,7 @@ from dataclasses import dataclass, replace
 from random import Random
 
 from trailmend.data.faultmodel import (
+    V1,
     AliasDuplicate,
     ConflatedPerson,
     EdgeDelta,
@@ -10,6 +11,7 @@ from trailmend.data.faultmodel import (
     Ingested,
     MissingEdge,
     WrongEdge,
+    WrongKind,
     replay,
 )
 from trailmend.data.model import (
@@ -34,6 +36,8 @@ class FaultPlan:
     missing_edge_share: float = 0.06
     alias_duplicate_share: float = 0.05
     conflated_people: int = 1
+    contradicted_share: float = 0.4
+    recoverable_share: float = 0.3
 
     def __post_init__(self) -> None:
         for name in ("wrong_edge_share", "missing_edge_share", "alias_duplicate_share"):
@@ -42,27 +46,58 @@ class FaultPlan:
                 raise ValueError(f"{name} must be in [0, 0.5)")
         if self.conflated_people < 0:
             raise ValueError("conflated_people must not be negative")
+        for name in ("contradicted_share", "recoverable_share"):
+            share = getattr(self, name)
+            if not 0 <= share <= 1:
+                raise ValueError(f"{name} must be in [0, 1]")
+        if self.contradicted_share + self.recoverable_share > 1:
+            raise ValueError("contradicted and recoverable shares must leave room for destroyed faults")
+
+
+def _kinds(rng: Random, count: int, plan: FaultPlan) -> list[WrongKind]:
+    contradicted = round(count * plan.contradicted_share)
+    recoverable = round(count * plan.recoverable_share)
+    destroyed = count - contradicted - recoverable
+    if destroyed < 0:
+        raise ValueError("rounding the wrong-edge kinds left no destroyed faults")
+    kinds = (
+        [WrongKind.CONTRADICTED] * contradicted
+        + [WrongKind.RECOVERABLE] * recoverable
+        + [WrongKind.DESTROYED] * destroyed
+    )
+    rng.shuffle(kinds)
+    return kinds
 
 
 def _share(count: int, share: float) -> int:
     return max(1, round(count * share)) if share > 0 and count > 0 else 0
 
 
-def _swap_targets(rng: Random, truth: TruthGraph, index: EdgeIndex, plan: FaultPlan) -> list[WrongEdge]:
+def _swap_targets(
+    rng: Random, truth: TruthGraph, index: EdgeIndex, plan: FaultPlan, data_version: str
+) -> tuple[list[WrongEdge], list[Edge]]:
     swappable = sorted(
         (e for e in truth.edges if e.rel_type in SWAPPABLE), key=lambda e: (e.rel_type.value, e.src, e.dst)
     )
     chosen = rng.sample(swappable, _share(len(swappable), plan.wrong_edge_share))
+    ordered = sorted(chosen, key=lambda e: (e.rel_type.value, e.src, e.dst))
+    kinds = [WrongKind.DESTROYED] * len(ordered) if data_version == V1 else _kinds(rng, len(ordered), plan)
     by_id = truth.by_id
     faults: list[WrongEdge] = []
-    for edge in sorted(chosen, key=lambda e: (e.rel_type.value, e.src, e.dst)):
+    withheld: list[Edge] = []
+    for edge, kind in zip(ordered, kinds, strict=True):
         candidates = [n for n in truth.nodes_with_label(by_id[edge.dst].label) if n.id != edge.dst]
         wrong = rng.choice(candidates)
         replacement = make_edge(by_id[edge.src], edge.rel_type, wrong)
-        del index[(edge.src, edge.rel_type, edge.dst)]
         index[(replacement.src, replacement.rel_type, replacement.dst)] = replacement
-        faults.append(WrongEdge(edge.rel_type, edge.src, edge.dst, wrong.id, EdgeDelta((edge,), (replacement,))))
-    return faults
+        removed: tuple[Edge, ...] = ()
+        if kind is not WrongKind.CONTRADICTED:
+            del index[(edge.src, edge.rel_type, edge.dst)]
+            removed = (edge,)
+        if kind is WrongKind.RECOVERABLE:
+            withheld.append(edge)
+        faults.append(WrongEdge(edge.rel_type, edge.src, edge.dst, wrong.id, EdgeDelta(removed, (replacement,)), kind))
+    return faults, withheld
 
 
 def _withhold(
@@ -151,20 +186,21 @@ def _conflate_people(
     return faults, removed_nodes, rewritten
 
 
-def inject(truth: TruthGraph, plan: FaultPlan | None = None) -> Ingested:
+def inject(truth: TruthGraph, plan: FaultPlan | None = None, data_version: str = V1) -> Ingested:
     settings = plan or FaultPlan()
     rng = Random(truth.seed * 1_000_003 + 17)
     index: EdgeIndex = {(e.src, e.rel_type, e.dst): e for e in truth.edges}
 
-    wrong = _swap_targets(rng, truth, index, settings)
-    touched_edges = {(f.src, f.rel_type, f.wrong_dst) for f in wrong}
+    wrong, recoverable = _swap_targets(rng, truth, index, settings, data_version)
+    touched_edges = {f.wrong_key for f in wrong} | {f.true_key for f in wrong}
     missing, pool = _withhold(rng, index, settings, touched_edges)
+    pool = recoverable + pool
     duplicates, added_nodes = _duplicate_services(rng, truth, index, settings)
     touched_people = {f.src for f in wrong} | {f.wrong_dst for f in wrong} | {f.true_dst for f in wrong}
     touched_people |= {f.src for f in missing} | {f.dst for f in missing}
     conflations, removed_nodes, rewritten = _conflate_people(rng, truth, index, settings, touched_people)
 
-    faults = FaultSet(truth.seed, tuple(wrong), tuple(missing), tuple(duplicates), tuple(conflations))
+    faults = FaultSet(truth.seed, tuple(wrong), tuple(missing), tuple(duplicates), tuple(conflations), data_version)
     gone = {n.id for n in removed_nodes}
     kept = tuple(rewritten.get(n.id, n) for n in truth.nodes if n.id not in gone)
     nodes = kept + tuple(added_nodes)

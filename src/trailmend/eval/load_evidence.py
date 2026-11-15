@@ -28,8 +28,8 @@ def main(seeds: tuple[int, ...]) -> int:
         for seed in seeds:
             built = dataset.build(seed)
             before_nodes, before_edges = count_graph(client, built.graph)
-            first = load(client, built.graph)
-            second = load(client, built.graph)
+            first = load(client, built.graph, built.support)
+            second = load(client, built.graph, built.support)
             added_by_reload_nodes = _total(second.node_counts) - _total(first.node_counts)
             added_by_reload_edges = _total(second.edge_counts) - _total(first.edge_counts)
             rows.append(

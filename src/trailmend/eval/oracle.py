@@ -1,6 +1,7 @@
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
+from trailmend.core.ingest import MIN_SUPPORT, ingest_cost
 from trailmend.core.model import EdgeKey, EdgeState, EdgeStatus
 from trailmend.data.dataset import Dataset
 from trailmend.data.faultmodel import EdgeDelta
@@ -8,7 +9,6 @@ from trailmend.data.model import Node
 from trailmend.graph import queries as q
 from trailmend.graph.client import HydraClient, ParamValue
 from trailmend.graph.ids import edge_id
-from trailmend.graph.loader import INITIAL_COST
 from trailmend.graph.state import read_state, write_state
 
 INGEST = "ingest"
@@ -27,11 +27,15 @@ def _quarantine(client: HydraClient, key: EdgeKey) -> bool:
     return True
 
 
-def _add(client: HydraClient, key: EdgeKey) -> bool:
+def ingest_cost_of(built: Dataset, key: EdgeKey) -> float:
+    return ingest_cost(built.documents.pool_support.get(edge_id(key.rel_type, key.src, key.dst), MIN_SUPPORT))
+
+
+def _add(client: HydraClient, key: EdgeKey, cost: float) -> bool:
     if read_state(client, key) is not None:
         return False
     before = EdgeState(key, 0.0, EdgeStatus.ABSENT)
-    after = EdgeState(key, INITIAL_COST, EdgeStatus.ACTIVE)
+    after = EdgeState(key, cost, EdgeStatus.ACTIVE)
     write_state(client, before, after, edge_id(key.rel_type, key.src, key.dst), INGEST)
     return True
 
@@ -49,9 +53,13 @@ def _add_node(client: HydraClient, node: Node) -> None:
     client.run(q.upsert_nodes(node.label.value), params)
 
 
-def _undo(client: HydraClient, deltas: Sequence[EdgeDelta]) -> tuple[int, int]:
+def _undo(client: HydraClient, built: Dataset, deltas: Sequence[EdgeDelta]) -> tuple[int, int]:
     dropped = sum(_drop(client, _key(e.src, e.rel_type.value, e.dst)) for delta in deltas for e in delta.added)
-    added = sum(_add(client, _key(e.src, e.rel_type.value, e.dst)) for delta in deltas for e in delta.removed)
+    added = 0
+    for delta in deltas:
+        for edge in delta.removed:
+            key = _key(edge.src, edge.rel_type.value, edge.dst)
+            added += _add(client, key, ingest_cost_of(built, key))
     return dropped, added
 
 
@@ -63,19 +71,22 @@ def quarantine_planted_wrong_edges(client: HydraClient, built: Dataset) -> dict[
 
 
 def ingest_withheld_edges(client: HydraClient, built: Dataset) -> dict[str, object]:
-    done = sum(_add(client, _key(e.src, e.rel_type.value, e.dst)) for e in built.ingested.pool)
+    done = 0
+    for edge in built.ingested.pool:
+        key = _key(edge.src, edge.rel_type.value, edge.dst)
+        done += _add(client, key, ingest_cost_of(built, key))
     return {"pool_edges": len(built.ingested.pool), "ingested": done}
 
 
 def merge_alias_duplicates(client: HydraClient, built: Dataset) -> dict[str, object]:
-    dropped, added = _undo(client, [f.delta for f in built.ingested.faults.alias_duplicates])
+    dropped, added = _undo(client, built, [f.delta for f in built.ingested.faults.alias_duplicates])
     return {"duplicates": len(built.ingested.faults.alias_duplicates), "edges_moved_back": added, "dropped": dropped}
 
 
 def split_conflated_people(client: HydraClient, built: Dataset) -> dict[str, object]:
     for node in built.ingested.removed_nodes:
         _add_node(client, node)
-    dropped, added = _undo(client, [f.delta for f in built.ingested.faults.conflations])
+    dropped, added = _undo(client, built, [f.delta for f in built.ingested.faults.conflations])
     return {
         "conflations": len(built.ingested.faults.conflations),
         "people_restored": len(built.ingested.removed_nodes),

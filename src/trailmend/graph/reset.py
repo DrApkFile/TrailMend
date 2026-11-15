@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 from trailmend.data.model import TruthGraph
@@ -23,7 +24,9 @@ def _clear(client: HydraClient, rel_type: str) -> int:
     return len(keys)
 
 
-def reset_to_ingested(client: HydraClient, graph: TruthGraph, pool: tuple[tuple[int, str, int], ...]) -> ResetReport:
+def reset_to_ingested(
+    client: HydraClient, graph: TruthGraph, pool: tuple[tuple[int, str, int], ...], support: Mapping[int, int]
+) -> ResetReport:
     quarantines = sum(_clear(client, q.quarantine_type(rel_type.value)) for rel_type in RelType)
     shortcuts = 0
     for shortcut_type in SHORTCUT_TYPES:
@@ -31,5 +34,5 @@ def reset_to_ingested(client: HydraClient, graph: TruthGraph, pool: tuple[tuple[
         shortcuts += _clear(client, q.quarantine_type(shortcut_type))
     for src, rel_type, dst in pool:
         client.run(q.delete_edge(rel_type), {"src": src, "dst": dst})
-    load(client, graph)
+    load(client, graph, support)
     return ResetReport(quarantines, shortcuts, len(pool))

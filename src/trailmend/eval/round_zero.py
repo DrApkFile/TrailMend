@@ -54,7 +54,7 @@ def main(seeds: tuple[int, ...]) -> int:
         client.require_writable()
         for seed in seeds:
             built = dataset.build(seed)
-            load(client, built.graph)
+            load(client, built.graph, built.support)
             index = build_index(built.graph.nodes)
             judged = judge_all(client, index, [h.question for h in built.split.held_out], config)
             result = score(judged)

@@ -15,7 +15,7 @@ pytestmark = pytest.mark.hydra
 def loaded(client: TestClient) -> dataset.Dataset:
     built = dataset.build(1)
     live: Live = app.state.live
-    load(live.client, built.graph)
+    load(live.client, built.graph, built.support)
     return built
 
 
