@@ -15,6 +15,7 @@ class ResetReport:
     quarantines_cleared: int
     shortcuts_cleared: int
     pool_edges_withheld: int
+    edges_pruned: int
 
 
 def _clear(client: HydraClient, rel_type: str) -> int:
@@ -22,6 +23,18 @@ def _clear(client: HydraClient, rel_type: str) -> int:
     for key in keys:
         client.run(q.delete_edge(rel_type), {"src": key.src, "dst": key.dst})
     return len(keys)
+
+
+def _prune(client: HydraClient, graph: TruthGraph) -> int:
+    wanted = {(edge.src, edge.rel_type.value, edge.dst) for edge in graph.edges}
+    pruned = 0
+    for rel_type in RelType:
+        for key in list_edge_keys(client, rel_type.value):
+            if (key.src, rel_type.value, key.dst) in wanted:
+                continue
+            client.run(q.delete_edge(rel_type.value), {"src": key.src, "dst": key.dst})
+            pruned += 1
+    return pruned
 
 
 def reset_to_ingested(
@@ -32,7 +45,6 @@ def reset_to_ingested(
     for shortcut_type in SHORTCUT_TYPES:
         shortcuts += _clear(client, shortcut_type)
         shortcuts += _clear(client, q.quarantine_type(shortcut_type))
-    for src, rel_type, dst in pool:
-        client.run(q.delete_edge(rel_type), {"src": src, "dst": dst})
+    pruned = _prune(client, graph)
     load(client, graph, support)
-    return ResetReport(quarantines, shortcuts, len(pool))
+    return ResetReport(quarantines, shortcuts, len(pool), pruned)

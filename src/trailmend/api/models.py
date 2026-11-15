@@ -94,6 +94,7 @@ class ResetResponse(Strict):
     quarantines_cleared: int
     shortcuts_cleared: int
     pool_edges_withheld: int
+    edges_pruned: int
     changed_anything: bool
 
 

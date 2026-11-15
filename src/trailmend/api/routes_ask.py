@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Header, Request
 
 from trailmend.api.auth import require_admin
+from trailmend.api.examples import entities_with_a_repairable_fault, one_per_template
 from trailmend.api.models import AskRequest, AskResponse, Example, JudgeRequest, JudgeResponse
 from trailmend.api.paths import hops_of
 from trailmend.api.state import Live, now
@@ -37,12 +38,9 @@ def examples(request: Request, limit: int = 8) -> tuple[Example, ...]:
     live = _live(request)
     if not 1 <= limit <= 50:
         raise TrailMendError(ErrorCode.INVALID_REQUEST, "limit must be between 1 and 50")
-    seen: dict[str, Example] = {}
-    for item in live.built.split.train:
-        question = item.question
-        if question.template not in seen:
-            seen[question.template] = Example(question=question.text, template=question.template, hops=question.hops)
-    return tuple(sorted(seen.values(), key=lambda e: (e.hops, e.template))[:limit])
+    repairable = entities_with_a_repairable_fault(live.built.ingested.faults)
+    chosen = one_per_template(live.built.split.train, repairable)
+    return tuple(sorted(chosen.values(), key=lambda e: (e.hops, e.template))[:limit])
 
 
 @router.post("/v1/ask", response_model=AskResponse)

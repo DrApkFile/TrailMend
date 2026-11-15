@@ -33,6 +33,7 @@ print("receipt", body["receipt_id"], "digest", body["digest"][:16])
 print("quarantines cleared", body["quarantines_cleared"])
 print("shortcuts cleared  ", body["shortcuts_cleared"])
 print("pool edges withheld", body["pool_edges_withheld"])
+print("edges pruned       ", body["edges_pruned"])
 '
 rm -f /tmp/trailmend-reset.json
 curl -sS --max-time 30 "$TRAILMEND_API_URL/v1/ready"

@@ -21,6 +21,7 @@ def restore(live: Live) -> tuple[ResetReport, ResetReceipt]:
         "quarantines_cleared": report.quarantines_cleared,
         "shortcuts_cleared": report.shortcuts_cleared,
         "pool_edges_withheld": report.pool_edges_withheld,
+        "edges_pruned": report.edges_pruned,
         "rounds_discarded": live.rounds_run,
         "demo_seed": live.settings.demo_seed,
     }

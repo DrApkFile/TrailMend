@@ -1,0 +1,57 @@
+from dataclasses import replace
+
+import pytest
+
+from trailmend.core.model import EdgeKey
+from trailmend.data import dataset
+from trailmend.data.model import Edge, make_edge
+from trailmend.data.northwind import Sizes
+from trailmend.graph.client import HydraClient
+from trailmend.graph.loader import count_graph, load
+from trailmend.graph.reset import reset_to_ingested
+from trailmend.graph.schema import NodeLabel, RelType
+from trailmend.graph.state import read_state
+
+pytestmark = pytest.mark.hydra
+
+SEED = 5_151
+SMALL = Sizes(people=30, teams=5, services=10, alerts=16, customers=6, incidents=4, runbooks=6, repos=4)
+
+
+@pytest.fixture(scope="module")
+def built() -> dataset.Dataset:
+    return dataset.build(SEED, SMALL)
+
+
+def _edge_g0_does_not_have(built: dataset.Dataset) -> Edge:
+    graph = built.graph
+    member_of = graph.edges_of_type(RelType.MEMBER_OF)[0]
+    present = {(e.src, e.rel_type, e.dst) for e in graph.edges}
+    for team in graph.nodes_with_label(NodeLabel.TEAM):
+        candidate = make_edge(graph.node(member_of.src), RelType.MEMBER_OF, team)
+        if (candidate.src, candidate.rel_type, candidate.dst) not in present:
+            return candidate
+    raise AssertionError("this graph connects one person to every team, so nothing can be added")
+
+
+def test_a_reset_removes_an_edge_the_ingested_graph_does_not_have(hydra: HydraClient, built: dataset.Dataset) -> None:
+    extra = _edge_g0_does_not_have(built)
+    load(hydra, replace(built.graph, edges=(*built.graph.edges, extra)), built.support)
+    key = EdgeKey(extra.src, extra.rel_type.value, extra.dst)
+    assert read_state(hydra, key) is not None
+
+    report = reset_to_ingested(hydra, built.graph, (), built.support)
+
+    assert report.edges_pruned == 1
+    assert read_state(hydra, key) is None
+
+
+def test_a_reset_leaves_exactly_the_ingested_graph(hydra: HydraClient, built: dataset.Dataset) -> None:
+    load(hydra, built.graph, built.support)
+    _, before = count_graph(hydra, built.graph)
+    load(hydra, replace(built.graph, edges=(*built.graph.edges, _edge_g0_does_not_have(built))), built.support)
+
+    reset_to_ingested(hydra, built.graph, (), built.support)
+
+    _, after = count_graph(hydra, built.graph)
+    assert after == before

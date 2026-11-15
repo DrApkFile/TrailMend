@@ -176,6 +176,7 @@ def demo_reset(request: Request, x_admin_token: str | None = Header(default=None
         quarantines_cleared=report.quarantines_cleared,
         shortcuts_cleared=report.shortcuts_cleared,
         pool_edges_withheld=report.pool_edges_withheld,
+        edges_pruned=report.edges_pruned,
         changed_anything=True,
     )
 
