@@ -54,3 +54,183 @@ export async function fetchReadiness(): Promise<Fetched<Readiness>> {
   }
   return { ok: true, value: { graph_writable: (body as Readiness).graph_writable } };
 }
+
+export type Hop = {
+  src: number;
+  src_name: string;
+  rel_type: string;
+  dst: number;
+  dst_name: string;
+  cost: number;
+};
+
+export type Answer = {
+  question: string;
+  seed_entity_id: number;
+  seed_entity_name: string;
+  matched_how: string;
+  answer_ids: number[];
+  answer_names: string[];
+  cost: number;
+  paths: Hop[][];
+  template: string | null;
+};
+
+export type Example = { question: string; template: string; hops: number };
+
+export type Score = {
+  n: number;
+  correct: number;
+  accuracy: number;
+  set_f1: number;
+  unreachable: number;
+  refused: number;
+  wrong: number;
+};
+
+export type CurveRow = {
+  dataset: string;
+  seed: number;
+  arm: string;
+  round: number;
+  run_id: string;
+  held_out: Score;
+  train: Score | null;
+  promoted?: number;
+  retired?: number;
+  gaps?: number;
+  ingested?: number;
+  applied_reweights?: number;
+  applied_quarantines?: number;
+};
+
+export type Curve = { rows: CurveRow[]; available: boolean; sha256?: string };
+
+export type EvidenceFile = {
+  name: string;
+  available: boolean;
+  sha256?: string;
+  payload?: { claim: string; design: string; measured_at: string; rows: unknown[] };
+};
+
+export type Receipt = {
+  receipt_id: string;
+  run_id: string;
+  round: number;
+  sequence: number;
+  kind: string;
+  edge: Hop | null;
+  digest: string;
+};
+
+export type Neighbour = {
+  rel_type: string;
+  other_id: number;
+  other_name: string;
+  direction: string;
+  cost: number;
+  status: string;
+};
+
+export type Neighbourhood = { entity_id: number; name: string; label: string; neighbours: Neighbour[] };
+
+export type Judgement = {
+  question: string;
+  verdict: string;
+  confirmed: number[];
+  blamed: number[];
+  receipts: string[];
+  changed_anything: boolean;
+};
+
+async function postJson(path: string, body: unknown): Promise<Fetched<unknown>> {
+  let response: Response;
+  try {
+    response = await fetch(`${apiBaseUrl()}${path}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+      cache: "no-store",
+    });
+  } catch (cause) {
+    return {
+      ok: false,
+      error: { code: "api_unreachable", message: cause instanceof Error ? cause.message : "fetch failed" },
+    };
+  }
+  let parsed: unknown = null;
+  try {
+    parsed = await response.json();
+  } catch {
+    parsed = null;
+  }
+  if (!response.ok) {
+    return { ok: false, error: errorFrom(response.status, parsed) };
+  }
+  return { ok: true, value: parsed };
+}
+
+function shaped<T>(result: Fetched<unknown>, guard: (body: unknown) => boolean, what: string): Fetched<T> {
+  if (!result.ok) {
+    return result;
+  }
+  if (!guard(result.value)) {
+    return { ok: false, error: { code: "unreadable_response", message: `${what} did not return what we expect.` } };
+  }
+  return { ok: true, value: result.value as T };
+}
+
+const isObject = (body: unknown): body is Record<string, unknown> =>
+  typeof body === "object" && body !== null;
+
+export async function fetchCurve(): Promise<Fetched<Curve>> {
+  return shaped<Curve>(
+    await getJson("/v1/evidence/curve"),
+    (body) => isObject(body) && Array.isArray(body.rows) && typeof body.available === "boolean",
+    "/v1/evidence/curve",
+  );
+}
+
+export async function fetchEvidence(name: string): Promise<Fetched<EvidenceFile>> {
+  return shaped<EvidenceFile>(
+    await getJson(`/v1/evidence/${name}`),
+    (body) => isObject(body) && typeof body.available === "boolean",
+    `/v1/evidence/${name}`,
+  );
+}
+
+export async function fetchExamples(): Promise<Fetched<Example[]>> {
+  return shaped<Example[]>(await getJson("/v1/examples"), Array.isArray, "/v1/examples");
+}
+
+export async function fetchReceipts(limit = 20): Promise<Fetched<Receipt[]>> {
+  return shaped<Receipt[]>(await getJson(`/v1/receipts?limit=${limit}`), Array.isArray, "/v1/receipts");
+}
+
+export async function fetchNeighbourhood(id: number): Promise<Fetched<Neighbourhood>> {
+  return shaped<Neighbourhood>(
+    await getJson(`/v1/graph/neighbourhood/${id}`),
+    (body) => isObject(body) && Array.isArray(body.neighbours),
+    "/v1/graph/neighbourhood",
+  );
+}
+
+export async function askQuestion(question: string): Promise<Fetched<Answer>> {
+  return shaped<Answer>(
+    await postJson("/v1/ask", { question }),
+    (body) => isObject(body) && Array.isArray(body.answer_ids) && Array.isArray(body.paths),
+    "/v1/ask",
+  );
+}
+
+export async function judgeAnswer(
+  question: string,
+  verdict: string,
+  correctAnswerIds: number[] = [],
+): Promise<Fetched<Judgement>> {
+  return shaped<Judgement>(
+    await postJson("/v1/judge", { question, verdict, correct_answer_ids: correctAnswerIds }),
+    (body) => isObject(body) && Array.isArray(body.receipts),
+    "/v1/judge",
+  );
+}

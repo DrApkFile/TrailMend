@@ -7,6 +7,12 @@ class Strict(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
+class Example(Strict):
+    question: str
+    template: str
+    hops: int
+
+
 class AskRequest(Strict):
     question: str = Field(min_length=3, max_length=300)
 

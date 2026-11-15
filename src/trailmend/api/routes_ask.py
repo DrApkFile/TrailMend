@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 
-from trailmend.api.models import AskRequest, AskResponse, JudgeRequest, JudgeResponse
+from trailmend.api.models import AskRequest, AskResponse, Example, JudgeRequest, JudgeResponse
 from trailmend.api.paths import hops_of
 from trailmend.api.state import Live, now
 from trailmend.core.credit import Outcome, Refused, SetJudged, Wrong, assign_credit
@@ -29,6 +29,19 @@ def _template_for(text: str) -> QuestionTemplate | None:
         if head and lowered.startswith(head):
             return spec
     return None
+
+
+@router.get("/v1/examples", response_model=tuple[Example, ...])
+def examples(request: Request, limit: int = 8) -> tuple[Example, ...]:
+    live = _live(request)
+    if not 1 <= limit <= 50:
+        raise TrailMendError(ErrorCode.INVALID_REQUEST, "limit must be between 1 and 50")
+    seen: dict[str, Example] = {}
+    for item in live.built.split.train:
+        question = item.question
+        if question.template not in seen:
+            seen[question.template] = Example(question=question.text, template=question.template, hops=question.hops)
+    return tuple(sorted(seen.values(), key=lambda e: (e.hops, e.template))[:limit])
 
 
 @router.post("/v1/ask", response_model=AskResponse)
