@@ -1,0 +1,8 @@
+{
+  "arm": "reweight_only",
+  "rows_superseded": 6,
+  "run_id": "01f1f6f-06b10c13",
+  "seed": 1,
+  "superseded_at": "2026-11-15T02:09:29+00:00",
+  "superseded_reason": "the API tests wrote judge receipts and a rollback into the same graph while this arm was running"
+}

@@ -22,10 +22,15 @@ function share(value: number | null | undefined): string {
 }
 
 export default async function MendPage() {
-  const [receipts, quarantine] = await Promise.all([fetchReceipts(30), fetchEvidence("quarantine")]);
+  const [receipts, quarantine] = await Promise.all([
+    fetchReceipts(30),
+    fetchEvidence("quarantine"),
+  ]);
   const rows =
     quarantine.ok && quarantine.value.available && quarantine.value.payload
-      ? (quarantine.value.payload.rows as QuarantineRow[]).filter((row) => row.arm === "full")
+      ? (quarantine.value.payload.rows as QuarantineRow[]).filter(
+          (row) => row.arm === "full",
+        )
       : [];
   const kinds = receipts.ok
     ? receipts.value.reduce<Record<string, number>>((tally, receipt) => {
@@ -36,20 +41,25 @@ export default async function MendPage() {
 
   return (
     <main>
-      <h1 className="text-2xl font-semibold tracking-tight">The link that kept being wrong</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">
+        The link that kept being wrong
+      </h1>
       <p className="mt-2 text-stone-400">
-        The generated graph has planted faults: links pointing at the wrong target, links withheld entirely,
-        duplicated services, two people merged into one. Blame accumulates on an edge across rounds. When an edge is
-        blamed enough times, with a high enough share of its last judgements and almost no confirmations, it is
-        quarantined: moved to a <span className="font-mono">Q_</span> type that the search can never traverse.
+        The generated graph has planted faults: links pointing at the wrong
+        target, links withheld entirely, duplicated services, two people merged
+        into one. Blame accumulates on an edge across rounds. When an edge is
+        blamed enough times, with a high enough share of its last judgements and
+        almost no confirmations, it is quarantined: moved to a{" "}
+        <span className="font-mono">Q_</span> type that the search can never
+        traverse.
       </p>
 
       <Panel title="How often quarantine was right">
         {quarantine.ok ? (
           rows.length === 0 ? (
             <p className="text-sm text-stone-400">
-              Not measured yet. This fills in from evidence/quarantine.json once a run has been scored against the
-              planted faults.
+              Not measured yet. This fills in from evidence/quarantine.json once
+              a run has been scored against the planted faults.
             </p>
           ) : (
             <div className="overflow-x-auto">
@@ -73,8 +83,12 @@ export default async function MendPage() {
                       <td className="py-2 pr-4">{row.planted_wrong_edges}</td>
                       <td className="py-2 pr-4">{row.quarantined}</td>
                       <td className="py-2 pr-4">{share(row.precision)}</td>
-                      <td className="py-2 pr-4">{share(row.recall_on_planted_wrong_edges)}</td>
-                      <td className="py-2 pr-4">{share(row.false_quarantine_rate)}</td>
+                      <td className="py-2 pr-4">
+                        {share(row.recall_on_planted_wrong_edges)}
+                      </td>
+                      <td className="py-2 pr-4">
+                        {share(row.false_quarantine_rate)}
+                      </td>
                       <td className="py-2 pr-4">{row.gaps_filled}</td>
                       <td className="py-2">{row.spurious_ingests}</td>
                     </tr>
@@ -84,16 +98,28 @@ export default async function MendPage() {
             </div>
           )
         ) : (
-          <Failed code={quarantine.error.code} message={quarantine.error.message} />
+          <Failed
+            code={quarantine.error.code}
+            message={quarantine.error.message}
+          />
         )}
         <p className="mt-3 text-xs text-stone-500">
-          Precision counts quarantined edges that a planted fault introduced. The false-quarantine rate counts
-          quarantined edges that are in the truth graph. An ingest is spurious if the edge it added is not in the
+          Precision counts quarantined edges that a planted fault introduced.
+          The false-quarantine rate counts quarantined edges that are in the
+          truth graph. An ingest is spurious if the edge it added is not in the
           truth graph.
         </p>
       </Panel>
 
       <Panel title="What the live demo graph has done">
+        <p className="mb-3 text-xs text-stone-500">
+          These receipts are from the shared live demo graph that anyone judging
+          on this site writes to. They are not the evaluation: the quarantine
+          numbers above and the curve on the front page come from recorded runs
+          against a separate graph, and nothing done on this site can change
+          them. An admin can reset the demo graph to its loaded state, which
+          writes a receipt of its own.
+        </p>
         {receipts.ok ? (
           <>
             <p className="text-sm text-stone-300">
@@ -105,11 +131,19 @@ export default async function MendPage() {
             </p>
             <ul className="mt-3 flex flex-col gap-2">
               {receipts.value.slice(0, 12).map((receipt) => (
-                <li key={receipt.receipt_id} className="rounded border border-stone-800 p-2">
+                <li
+                  key={receipt.receipt_id}
+                  className="rounded border border-stone-800 p-2"
+                >
                   <p className="font-mono text-xs break-all text-stone-400">
-                    {receipt.receipt_id} · {receipt.kind} · round {receipt.round}
+                    {receipt.receipt_id} · {receipt.kind} · round{" "}
+                    {receipt.round}
                   </p>
-                  {receipt.edge && <div className="mt-1"><Hops hops={[receipt.edge]} /></div>}
+                  {receipt.edge && (
+                    <div className="mt-1">
+                      <Hops hops={[receipt.edge]} />
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -118,9 +152,10 @@ export default async function MendPage() {
           <Failed code={receipts.error.code} message={receipts.error.message} />
         )}
         <p className="mt-3 text-xs text-stone-500">
-          Every change writes its receipt before the graph is touched, so a receipt can describe a change that was
-          then rolled back, but never a change that was made without one. Rolling back needs the admin token and
-          writes its own receipt.
+          Every change writes its receipt before the graph is touched, so a
+          receipt can describe a change that was then rolled back, but never a
+          change that was made without one. Rolling back needs the admin token
+          and writes its own receipt.
         </p>
       </Panel>
     </main>

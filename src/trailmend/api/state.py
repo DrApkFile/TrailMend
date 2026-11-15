@@ -42,6 +42,7 @@ class Live:
     ledger: Ledger
     tape: Tape
     limiter: RateLimiter
+    judge_limiter: RateLimiter
     rounds_run: int = 0
 
     @property
@@ -76,6 +77,7 @@ def build_live(settings: Settings) -> Live:
         Ledger.for_run(settings.live_run_id),
         Tape.for_run(settings.live_run_id),
         RateLimiter(settings.ask_rate_per_minute),
+        RateLimiter(settings.judge_rate_per_minute),
     )
 
 

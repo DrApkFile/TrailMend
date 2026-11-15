@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     demo_seed: int = Field(default=1, ge=0)
     live_run_id: str = Field(default="live", min_length=1)
     ask_rate_per_minute: int = Field(default=60, ge=1, le=10_000)
+    judge_rate_per_minute: int = Field(default=20, ge=1, le=10_000)
 
 
 @lru_cache(maxsize=1)

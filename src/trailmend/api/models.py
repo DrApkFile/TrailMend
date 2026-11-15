@@ -88,6 +88,15 @@ class RollbackResponse(Strict):
     changed_anything: bool
 
 
+class ResetResponse(Strict):
+    receipt_id: str
+    digest: str
+    quarantines_cleared: int
+    shortcuts_cleared: int
+    pool_edges_withheld: int
+    changed_anything: bool
+
+
 class Neighbour(Strict):
     rel_type: str
     other_id: int

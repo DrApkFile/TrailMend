@@ -93,6 +93,7 @@ def _outcome(question_id: str, found: AnswerFound, body: JudgeRequest) -> Outcom
 def judge(body: JudgeRequest, request: Request, x_admin_token: str | None = Header(default=None)) -> JudgeResponse:
     live = _live(request)
     require_admin(live, x_admin_token)
+    live.judge_limiter.check(request.client.host if request.client else "unknown", now())
     spec = _template_for(body.question)
     if spec is None:
         raise TrailMendError(ErrorCode.INVALID_REQUEST, "this question does not match a known template")

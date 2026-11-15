@@ -2,7 +2,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
-from trailmend.core.receipts import Receipt, to_json
+from trailmend.core.receipts import Receipt, ResetReceipt, reset_to_json, to_json
 
 RUNS_DIR = Path("evidence/runs")
 
@@ -26,6 +26,12 @@ class Journal:
     def append(self, receipt: Receipt) -> None:
         with self.path.open("a", encoding="utf-8") as handle:
             handle.write(to_json(receipt) + "\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+
+    def append_reset(self, receipt: ResetReceipt) -> None:
+        with self.path.open("a", encoding="utf-8") as handle:
+            handle.write(reset_to_json(receipt) + "\n")
             handle.flush()
             os.fsync(handle.fileno())
 

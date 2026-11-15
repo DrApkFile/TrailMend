@@ -45,7 +45,13 @@ Plaintext is acceptable only because traffic stays on Railway's private network.
 New → GitHub repo → Dockerfile path `deploy/railway/api.Dockerfile`. Public domain on. Variables from `.env.example`
 with `TRAILMEND_HYDRA_URL=http://hydradb.railway.internal:8443`. Check `GET /v1/ready` returns `graph_writable: true`.
 
-The image was built and run on 2026-11-15: it honours Railway's `$PORT`, answers `/healthz` 200, serves the
+The service listens on **0.0.0.0:8000**, which is what the working deployment used; `TRAILMEND_PORT` overrides it
+and Railway's own `PORT` is deliberately ignored. The first redeploy of the product API bound `${PORT:-8000}`
+instead and the public domain answered `502 Application failed to respond` on every route, including `/healthz`,
+while the same image started and served happily in a 512 MB container locally — so if Railway ever needs another
+port, set `TRAILMEND_PORT` to the port the domain targets rather than `PORT`.
+
+The image was built and run on 2026-11-15: it answers `/healthz` 200 with `PORT` set to something else, serves the
 `evidence/*.json` files it now copies in (without that copy `/v1/evidence/...` and the site's curve would have been
 empty on the deployment), and with an unreachable graph `/v1/ready` answers `graph_unavailable` rather than a fake
 success.

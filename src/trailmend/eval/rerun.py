@@ -7,7 +7,7 @@ from trailmend.core.config import load_run_config
 from trailmend.data import dataset
 from trailmend.eval import curve, measuring, target
 from trailmend.eval.evidence import now_utc
-from trailmend.eval.run import ARMS, CONFIG, run_arm, run_id_for
+from trailmend.eval.run import ARMS, CONFIG, commit, run_arm, run_id_for
 from trailmend.eval.session import client_from_settings
 from trailmend.loop.journal import RUNS_DIR
 from trailmend.loop.policy import MendPolicy
@@ -20,6 +20,20 @@ def arm_index_of(arm: MendPolicy) -> int:
     if arm not in ARMS:
         raise ValueError(f"{arm.value} is not one of the recorded arms: {[a.value for a in ARMS]}")
     return ARMS.index(arm)
+
+
+def recorded_run_id(seed: int, arm: MendPolicy, path: Path = curve.CURVE) -> str:
+    found = {
+        str(row["run_id"])
+        for row in (json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
+        if row.get("seed") == seed and row.get("arm") == arm.value
+    }
+    if len(found) != 1:
+        raise ValueError(
+            f"{path} has {len(found)} run ids for seed {seed} arm {arm.value} ({sorted(found)}); "
+            "say which run is being replaced before re-running it"
+        )
+    return found.pop()
 
 
 def set_aside_rows(seed: int, arm: MendPolicy, run_id: str, reason: str, path: Path = curve.CURVE) -> tuple[int, Path]:
@@ -78,7 +92,14 @@ def set_aside_run(name: str, reason: str, root: Path = RUNS_DIR) -> Path | None:
 def main(seed: int, arm_value: str, reason: str) -> int:
     arm = MendPolicy(arm_value)
     arm_index = arm_index_of(arm)
-    run_id = run_id_for()
+    run_id = recorded_run_id(seed, arm)
+    current = run_id_for()
+    if run_id != current:
+        print(
+            f"re-running inside recorded run {run_id}; this working tree would start a new run as {current}, "
+            "so the replacement rows carry the commit they were measured at",
+            flush=True,
+        )
     run = load_run_config(CONFIG)
     name = f"{run_id}-s{seed}-{arm.value}"
     dropped, out = set_aside_rows(seed, arm, run_id, reason)
@@ -94,7 +115,7 @@ def main(seed: int, arm_value: str, reason: str) -> int:
         with client_from_settings() as client:
             client.require_writable()
             for row in run_arm(client, built, arm, arm_index, run_id, run.rounds):
-                curve.append(row | {"hydradb": where})
+                curve.append(row | {"hydradb": where, "rerun_commit": commit(), "rerun_reason": reason})
                 written += 1
     finally:
         measuring.release()

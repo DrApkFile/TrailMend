@@ -1,0 +1,8 @@
+{
+  "arm": "random_quarantine",
+  "rows_superseded": 6,
+  "run_id": "01f1f6f-06b10c13",
+  "seed": 7,
+  "superseded_at": "2026-11-15T02:28:01+00:00",
+  "superseded_reason": "the live and API test suite ran against this graph while this arm was in flight"
+}

@@ -95,6 +95,7 @@ def run_arm(
             "arm": arm.value,
             "round": 0,
             "run_id": run_id,
+            "arm_run": name,
             "held_out": {
                 "n": baseline.n,
                 "correct": baseline.correct,
@@ -127,7 +128,7 @@ def run_arm(
             built.documents,
             built.ingested.pool,
         )
-        rows.append(curve.row(DATASET, built.seed, outcome))
+        rows.append(curve.row(DATASET, built.seed, outcome) | {"run_id": run_id, "arm_run": name})
         print(
             f"  {arm.value} round {round_index}: held-out {outcome.held_out.correct}/{outcome.held_out.n} = "
             f"{outcome.held_out.accuracy:.4f}  train {outcome.train.accuracy:.4f}  "

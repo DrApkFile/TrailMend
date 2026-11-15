@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import cast
 
 from trailmend.core.model import EdgeKey
+from trailmend.core.receipts import RESET_KIND
 from trailmend.loop.journal import RUNS_DIR
 from trailmend.loop.tape import Answered, Tape
 
@@ -60,7 +61,9 @@ def _receipts_touching(
     receipts: Sequence[Mapping[str, object]], round_index: int, edges: frozenset[EdgeKey]
 ) -> tuple[str, ...]:
     return tuple(
-        str(r["receipt_id"]) for r in receipts if as_int(r["round"], "round") == round_index and edge_of(r) in edges
+        str(r["receipt_id"])
+        for r in receipts
+        if r.get("kind") != RESET_KIND and as_int(r["round"], "round") == round_index and edge_of(r) in edges
     )
 
 

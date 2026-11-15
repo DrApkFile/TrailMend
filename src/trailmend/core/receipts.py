@@ -1,5 +1,6 @@
 import hashlib
 import json
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 
 from trailmend.core.model import Change, EdgeState, Fill, Promote, Quarantine, Restore, Retire, Reweight
@@ -75,3 +76,44 @@ def to_json(receipt: Receipt) -> str:
 
 def inverse(receipt: Receipt) -> Restore:
     return Restore(receipt.before.key, receipt.before)
+
+
+RESET_KIND = "reset"
+
+
+@dataclass(frozen=True, slots=True)
+class ResetReceipt:
+    receipt_id: str
+    run_id: str
+    round_index: int
+    sequence: int
+    kind: str
+    restored: Mapping[str, object]
+    digest: str
+
+
+def make_reset_receipt(run_id: str, round_index: int, sequence: int, restored: Mapping[str, object]) -> ResetReceipt:
+    if round_index < 0 or sequence < 0:
+        raise ValueError("round_index and sequence must be non-negative")
+    body: dict[str, object] = {
+        "run_id": run_id,
+        "round": round_index,
+        "sequence": sequence,
+        "kind": RESET_KIND,
+        "restored": dict(restored),
+    }
+    digest = _digest(body)
+    return ResetReceipt(f"rcpt-{digest[:16]}", run_id, round_index, sequence, RESET_KIND, dict(restored), digest)
+
+
+def reset_to_json(receipt: ResetReceipt) -> str:
+    payload: dict[str, object] = {
+        "receipt_id": receipt.receipt_id,
+        "run_id": receipt.run_id,
+        "round": receipt.round_index,
+        "sequence": receipt.sequence,
+        "kind": receipt.kind,
+        "restored": dict(receipt.restored),
+        "digest": receipt.digest,
+    }
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)

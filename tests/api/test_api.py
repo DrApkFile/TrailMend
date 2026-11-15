@@ -122,6 +122,43 @@ def test_f1_a_mend_round_needs_the_admin_token(client: TestClient) -> None:
     assert client.post("/v1/mend/round", json={"rounds": 1}).status_code == 400
 
 
+def test_f1_resetting_the_demo_graph_needs_the_admin_token(client: TestClient) -> None:
+    assert client.post("/v1/demo/reset").status_code == 400
+
+
+def test_f1_a_reset_restores_the_loaded_graph_and_leaves_a_receipt(client: TestClient, loaded: dataset.Dataset) -> None:
+    question = _a_question(loaded, "alert_owning_team")
+    client.post("/v1/judge", json={"question": question, "verdict": "wrong"}, headers={"X-Admin-Token": ADMIN})
+
+    done = client.post("/v1/demo/reset", headers={"X-Admin-Token": ADMIN})
+    assert done.status_code == 200
+    body = done.json()
+    assert body["changed_anything"] is True
+    assert body["pool_edges_withheld"] > 0
+    assert len(body["digest"]) == 64
+
+    listed = client.get("/v1/receipts", params={"limit": 1}).json()
+    assert listed[0]["receipt_id"] == body["receipt_id"]
+    assert listed[0]["kind"] == "reset"
+
+    answered = client.post("/v1/ask", json={"question": question})
+    assert answered.status_code == 200
+    assert {hop["cost"] for path in answered.json()["paths"] for hop in path} == {1.0}
+
+
+def test_f1_judging_is_rate_limited_separately_from_asking(client: TestClient, loaded: dataset.Dataset) -> None:
+    question = _a_question(loaded, "service_owner_team")
+    live: Live = app.state.live
+    codes = {
+        client.post(
+            "/v1/judge", json={"question": question, "verdict": "correct"}, headers={"X-Admin-Token": ADMIN}
+        ).status_code
+        for _ in range(live.judge_limiter.per_minute + 2)
+    }
+    assert 429 in codes
+    assert live.judge_limiter.per_minute < live.limiter.per_minute
+
+
 def test_f1_the_neighbourhood_of_an_entity_shows_its_edges_and_their_costs(
     client: TestClient, loaded: dataset.Dataset
 ) -> None:
