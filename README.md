@@ -23,9 +23,14 @@ No LLM is on the answer path, and no LLM scores an answer.
 
 ## Judge it in 60 seconds
 
-1. `/ask` — run one of the listed questions. You see the path the graph walked and the cost of every hop.
-2. Press **wrong**. The edges on that path get more expensive and you are handed receipt ids.
-3. Ask again. If another route is now cheaper, the answer changes. Nothing else moved.
+1. `/ask` — ask **"Who is on call for the Delta team?"** It answers *Selin Tadesse* over an edge costing 0.477,
+   because three documents say so. The truth is *Bao Maeda*, asserted by one document, so that edge costs 1.000.
+2. Press **wrong**. The edge on the path gets more expensive and you are handed a receipt id. Ask again: 0.677.
+   Wrong again: 0.960. On the third, the edge has been blamed often enough to be **quarantined**, and the answer
+   becomes *Bao Maeda* — the correct person, reached over the link the stale one was outranking.
+3. Nothing else moved: every change wrote its receipt before touching the graph, and each one can be rolled
+   back. The demo graph is shared, so if someone judged before you the answer may already be *Bao Maeda*; the
+   costs on the page tell you which state you are in, and an admin reset puts it back.
 4. `/mend` — how often quarantine was right on the recorded runs, against the planted faults, and every change
    the live demo graph has made. Each one has a **roll this back** button that undoes it and leaves its own receipt.
 5. `/evidence` — every number on the site, with the file that produced it and that file's sha256.
