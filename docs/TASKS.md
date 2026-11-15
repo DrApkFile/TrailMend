@@ -200,14 +200,17 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   `gapfill_only` +2.2, `full` +0.4, `frozen` / `quarantine_only` / `promote_only` 0.0, `reweight_only` −1.9,
   `random_quarantine` −2.5, `random_reweight` −7.6. Targeted beats random on both levers measured separately, with
   the controls matched on the number and size of changes per round (`evidence/changes.json`, INV6).
-- [ ] E6 Load test (`eval/load.py`): concurrent clients on the product query mix, p50/p95/p99, QPS, errors by code;
+- [x] E6 Load test (`eval/load.py`): concurrent clients on the product query mix, p50/p95/p99, QPS, errors by code;
   second run with a Mend round writing concurrently. Against the Railway deployment.
-  WRITTEN 2026-11-15, NOT RUN YET: `eval/load.py` writes `evidence/latency.json` (the claim is `latency`, not `load`,
-  because `evidence/load.json` already holds G0's load evidence) and records which HydraDB answered. Both passes are
-  implemented: reads only, then the same read load while a Mend round writes to the same graph, with the writer's
-  own wall time, code and change counts in the row. It runs against
-  `https://trailmend-production-ee2e07ff.up.railway.app` with `TRAILMEND_ADMIN_TOKEN` in the environment, and exits
-  with that instruction rather than silently skipping the second pass if it is unset.
+  Evidence: `evidence/latency.json`, measured against `https://trailmend-production-ee2e07ff.up.railway.app` and
+  recording in `measured_on` that this ran against the hosted HydraDB, not the pinned local image. 8 clients x 7 asks
+  a pass. **Reads only**: 56 requests in 9.97s, 5.62 qps, p50 552.9 ms, p95 6071.1 ms, p99 6099.6 ms, 52 answered and
+  4 `unreachable`. **Reads while a Mend round writes to the same graph**: 56 requests in 9.63s, 5.82 qps, p50 515.7
+  ms, p95 5970.1 ms, 52 answered and 4 `unreachable`, while the writer took 71.5s to apply 572 reweights and 5
+  quarantines under 606 receipts. Read latency did not degrade under the writer. No request was rate-limited: the run
+  was sized to stay under the public 60-asks-a-minute limit rather than raise it (DECISIONS 2026-11-15), so a larger
+  run needs `TRAILMEND_ASK_RATE_PER_MINUTE` raised on the deployment first. The p95 is connection setup, not the
+  graph: the first request on a fresh connection costs ~6.0s and later ones on it ~0.53s (REALITY_SPIKES S34).
 - [x] E7 Preregistered hypotheses H1–H5 (PRD §3): write PASS / FAIL / INCONCLUSIVE with numbers. Failed ones stay.
   Evidence: `evidence/hypotheses.json` and the README table. H1 **FAIL** (full arm +0.0059 / +0.0000 / +0.0058 per
   seed against a round-0 seed spread of 0.0294), H2 **PASS** (both random controls fall, −0.021 to −0.088),
@@ -218,18 +221,39 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   reports, and refuses to write anything if INV6 fails; this run printed `INV6 holds for 30 recorded control rounds`.
 
 ## Phase F — product surface (PRD §11–§12)
-- [ ] F1 API: `/v1/ask`, `/v1/judge`, `/v1/mend/round` (admin token), `/v1/receipts`, `/v1/receipts/{id}`,
+- [x] F1 API: `/v1/ask`, `/v1/judge`, `/v1/mend/round` (admin token), `/v1/receipts`, `/v1/receipts/{id}`,
   `/v1/rollback/{id}` (admin token), `/v1/evidence/curve`, `/v1/graph/neighbourhood/{id}`. Rate limit `/v1/ask`.
-- [ ] F2 Web `/`: hook + curve (all arms, seed bands) + 60-second judge path.
-- [ ] F3 Web `/ask`: ask, see the path drawn, judge it, see receipts.
-- [ ] F4 Web `/mend`: the planted bad link — blame building up, quarantine, accuracy rising; rollback button.
-- [ ] F5 Web `/evidence` and `/pricing`.
-  BUILT; RENDER CHECKED AGAINST A STUB 2026-11-15: all five pages return 200 with no `api_unreachable`,
-  `unreadable_response` or framework error, served by `next start` against a stand-in API that replayed the real
-  curve rows and the real analysis files. `/evidence` now lists `load` and `latency` as well. Nothing long can
-  overflow at 390px: the only table is wrapped in `overflow-x-auto`, the curve is a `viewBox` SVG at `w-full`, and
-  every sha256, run id and path line carries `break-all`. No API url appears in `.next/static` or `.next/server/app`.
-  Ticks when the same five pages are rendered against the live API in a real browser at 390px (task #3).
+  Evidence: all of these answer on the deployment, plus `/healthz`, `/v1/ready`, `/v1/examples`, `/v1/evidence/{name}`
+  and `/v1/demo/reset`. Every write endpoint refuses without the admin token — `/v1/judge`, `/v1/mend/round`,
+  `/v1/rollback/{id}` and `/v1/demo/reset` all answer 400 `invalid_request` "Nothing was changed" with no token and
+  with a wrong one, and the real cause is logged server-side only. `/v1/ask` is limited to 60 a minute per client and
+  `/v1/judge` to 20, each with its own bucket, pinned by `test_f1_judging_is_rate_limited_separately_from_asking`.
+  20 api tests pass under `make verify`.
+- [x] F2 Web `/`: hook + curve (all arms, seed bands) + 60-second judge path.
+  Evidence: `evidence/demo/f-home-390px.png`, taken from `https://trail-mend.vercel.app` at 390px. The curve is the
+  live API's 162 rows, run id `01f1f6f-06b10c13`, full arm 83.9% to 84.2%, the five hypotheses with their three
+  FAILs, the judge path in five steps, and `graph_writable true` read from `/v1/ready` server-side.
+- [x] F3 Web `/ask`: ask, see the path drawn, judge it, see receipts.
+  Evidence: `evidence/demo/f-ask-judged-390px.png`, driven in a real Chromium at 390px against the deployed site, not
+  a stub: typed the listed question, pressed **Ask**, then pressed **wrong**. The page answered
+  `Judged wrong. Changed anything: true.` with receipt `rcpt-9fc4f9c3d622f229`, re-asked, and drew the same path with
+  the edge's cost moved from 1.000 to 1.419 (one blame at eta 0.35). `/v1/receipts` on the API shows that receipt
+  against the edge `recommend-scheduler-clock-skew —ALERTS_ON→ recommend-scheduler`.
+- [x] F4 Web `/mend`: the planted bad link — blame building up, quarantine, accuracy rising; rollback button.
+  Evidence: `evidence/demo/f-mend-rollback-390px.png`, driven in Chromium at 390px against the deployed site. The
+  page shows quarantine precision, recall and false-quarantine rate per seed from `evidence/quarantine.json`, then
+  the live demo graph's own receipts. Pressing **roll this back** on `rcpt-07041ecfedc5c60c` (a reweight to 1.419)
+  answered `undone by rcpt-170b29c65f65b373, changed anything true`, and the next `/v1/ask` returned that edge at
+  cost 1.0 with both receipts listed, the reweight and its restore. A reset receipt has no inverse, so its button is
+  disabled and says so. The live receipt list empties on a redeploy (REALITY_SPIKES S35), which the page states.
+- [x] F5 Web `/evidence` and `/pricing`.
+  Evidence: `evidence/demo/f-evidence-390px.png` and `evidence/demo/f-pricing-390px.png` from the deployed site at
+  390px. `/evidence` shows the curve's 162 rows and its sha256 matching `evidence/run_manifest.json`, the controls
+  side by side per seed, every evidence file with its claim, design, row count and sha256, and the run manifest's own
+  panel (run id, commit, HydraDB image and digest, config sha256, seeds, files hashed); nothing says
+  `api_unreachable` and only `latency.json` said "not produced" before E6 ran. `/pricing` carries the buyer, pain,
+  status quo, unit price, pilot and what it is not. Wide tables scroll inside their own panels, so nothing overflows
+  at 390px, and no API url appears in `.next/static` or `.next/server/app`.
 
 ## Phase G — submission (PRD §13, §17, §18)
 - [x] G1 README: judge path in 60 seconds, the curve, how HydraDB is used, numbers each linked to evidence,

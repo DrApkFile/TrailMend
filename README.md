@@ -151,6 +151,12 @@ These are real and they bound what the numbers can show.
   a single round.
 - **The data is generated.** The entities, documents and faults come from a seeded generator, not from a real
   catalogue.
+- **The live demo's receipt list empties when the service redeploys.** It is a file inside the API container, so a
+  new deployment starts it empty while the graph keeps the changes those receipts describe. The recorded evaluation
+  runs are not affected: their journals are in this repo under `evidence/runs/`.
+- **The hosted API's p95 is connection setup, not the graph.** The first request on a fresh connection to the Railway
+  edge costs about 6 s; later requests on the same connection answer in about 0.53 s, and so does a question with no
+  path. The load test opens one connection per client, so 8 of its 56 requests pay that.
 - **The plain-store baseline is tuned in its own favour** and the Mend's constants are frozen, which makes the gap
   between them a conservative estimate of the gap.
 

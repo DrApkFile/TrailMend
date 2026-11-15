@@ -119,7 +119,10 @@ export default async function MendPage() {
           numbers above and the curve on the front page come from recorded runs
           against a separate graph, and nothing done on this site can change
           them. An admin can reset the demo graph to its loaded state, which
-          writes a receipt of its own.
+          writes a receipt of its own. This list lives in the running service,
+          so a deployment starts it empty while the graph keeps the changes
+          these receipts describe; the recorded runs keep their own journals in
+          the repository.
         </p>
         {receipts.ok ? (
           <>
