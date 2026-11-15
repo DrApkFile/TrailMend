@@ -110,6 +110,10 @@ export type CurveRow = {
   ingested?: number;
   applied_reweights?: number;
   applied_quarantines?: number;
+  data_version?: string;
+  gapfill_reached?: number;
+  gapfill_ingested?: number;
+  rules?: { update: string; gapfill: string };
 };
 
 export type Curve = { rows: CurveRow[]; available: boolean; sha256?: string };
@@ -200,6 +204,14 @@ export async function fetchCurve(): Promise<Fetched<Curve>> {
     await getJson("/v1/evidence/curve"),
     (body) => isObject(body) && Array.isArray(body.rows) && typeof body.available === "boolean",
     "/v1/evidence/curve",
+  );
+}
+
+export async function fetchCurveV2(): Promise<Fetched<Curve>> {
+  return shaped<Curve>(
+    await getJson("/v1/evidence/curve-v2"),
+    (body) => isObject(body) && Array.isArray(body.rows) && typeof body.available === "boolean",
+    "/v1/evidence/curve-v2",
   );
 }
 

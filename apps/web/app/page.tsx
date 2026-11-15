@@ -1,11 +1,43 @@
 import { Curve } from "@/components/Curve";
 import { Failed, Panel } from "@/components/Shell";
-import { fetchCurve, fetchEvidence, fetchReadiness } from "@/lib/api";
+import { fetchCurve, fetchCurveV2, fetchEvidence, fetchReadiness } from "@/lib/api";
+import type { CurveRow } from "@/lib/api";
 import { NOT_MEASURED, delta, meanByRound, percent, seedsOf } from "@/lib/curve";
 
 export const dynamic = "force-dynamic";
 
-const HEADLINE_ARMS = ["full", "frozen", "plain_store", "random_reweight", "random_quarantine"];
+const RUN1_ARMS = ["full", "frozen", "plain_store", "random_reweight", "random_quarantine"];
+const RUN2_ARMS = ["full_v2", "frozen", "plain_store", "random_reweight", "random_quarantine"];
+
+type Verdict = { id: string; claim: string; verdict: string };
+
+function verdictsOf(file: Awaited<ReturnType<typeof fetchEvidence>>): Verdict[] {
+  return file.ok && file.value.available && file.value.payload
+    ? (file.value.payload.rows as Verdict[])
+    : [];
+}
+
+function Summary({ rows, arm }: { rows: CurveRow[]; arm: string }) {
+  const points = meanByRound(rows, arm);
+  const moved = delta(rows, arm);
+  return (
+    <dl className="mt-4">
+      <Row label="seeds in the run" value={rows.length ? seedsOf(rows).join(", ") : NOT_MEASURED} />
+      <Row label={`${arm}, round 0`} value={points.length ? percent(points[0]?.accuracy) : NOT_MEASURED} />
+      <Row label={`${arm}, last round`} value={points.length ? percent(points.at(-1)?.accuracy) : NOT_MEASURED} />
+      <Row
+        label="change over the run"
+        value={
+          typeof moved === "number"
+            ? `${moved >= 0 ? "+" : ""}${(moved * 100).toFixed(1)} points`
+            : NOT_MEASURED
+        }
+      />
+      <Row label="run id" value={rows.at(0)?.run_id ?? NOT_MEASURED} />
+      <Row label="data version" value={rows.at(0)?.data_version ?? "v1"} />
+    </dl>
+  );
+}
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
@@ -17,18 +49,23 @@ function Row({ label, value }: { label: string; value: string }) {
 }
 
 export default async function Home() {
-  const [readiness, curve, hypotheses] = await Promise.all([
+  const [readiness, curve, curveV2, hypotheses, hypothesesV2, captured] = await Promise.all([
     fetchReadiness(),
     fetchCurve(),
+    fetchCurveV2(),
     fetchEvidence("hypotheses"),
+    fetchEvidence("hypotheses_v2"),
+    fetchEvidence("captured_share_v2"),
   ]);
   const rows = curve.ok && curve.value.available ? curve.value.rows : [];
-  const fullPoints = meanByRound(rows, "full");
-  const fullDelta = delta(rows, "full");
-  const verdicts =
-    hypotheses.ok && hypotheses.value.available && hypotheses.value.payload
-      ? (hypotheses.value.payload.rows as { id: string; claim: string; verdict: string }[])
+  const rowsV2 = curveV2.ok && curveV2.value.available ? curveV2.value.rows : [];
+  const verdicts = verdictsOf(hypotheses);
+  const verdictsV2 = verdictsOf(hypothesesV2);
+  const shares =
+    captured.ok && captured.value.available && captured.value.payload
+      ? (captured.value.payload.rows as { seed: number; captured_share: number; reachable_points: number }[])
       : [];
+  const current = rowsV2.length > 0;
 
   return (
     <main>

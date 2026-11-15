@@ -138,7 +138,11 @@ there is no LLM on the answer path. The same terms are on [/pricing](apps/web/ap
 
 ## Limitations
 
-These are real and they bound what the numbers can show.
+These are real and they bound what the numbers can show. The first two were measured after run 1 failed, and the
+whole measurement is written up in **[docs/RUN1_DIAGNOSIS.md](docs/RUN1_DIAGNOSIS.md)**: what the errors actually
+were, whether each planted fault could be repaired at all, which mechanisms ran, and an oracle ceiling that shows
+how much of the repairable damage the Mend left on the table. Run 2 is preregistered in
+[PRD §3.2](docs/PRD.md) and is a response to it; run 1 stays published as FAIL either way.
 
 - **A planted wrong edge has no recoverable truth in the corpus.** When a fault points a link at the wrong target,
   the true link is removed and no document describes it. Quarantining the wrong edge therefore turns a wrong answer
@@ -232,6 +236,7 @@ is a type error.
   [docs/LOOM_SCRIPT.md](docs/LOOM_SCRIPT.md)
 - Every design decision and why: [DECISIONS.md](DECISIONS.md) · What is deliberately not built:
   [ROADMAP.md](ROADMAP.md)
+- Why run 1's headline failed, measured on the train split only: [docs/RUN1_DIAGNOSIS.md](docs/RUN1_DIAGNOSIS.md)
 
 ## Attribution
 
