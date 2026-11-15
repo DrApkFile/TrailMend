@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from trailmend.core.ingest import MIN_SUPPORT, ingest_cost
 from trailmend.core.model import EdgeKey, EdgeState, EdgeStatus
 from trailmend.data.dataset import Dataset
-from trailmend.data.faultmodel import EdgeDelta
+from trailmend.data.faultmodel import EdgeDelta, WrongKind
 from trailmend.data.model import Node
 from trailmend.graph import queries as q
 from trailmend.graph.client import HydraClient, ParamValue
@@ -63,6 +63,12 @@ def _undo(client: HydraClient, built: Dataset, deltas: Sequence[EdgeDelta]) -> t
     return dropped, added
 
 
+def quarantine_contradicted_wrong_edges(client: HydraClient, built: Dataset) -> dict[str, object]:
+    faults = built.ingested.faults.wrong_of_kind(WrongKind.CONTRADICTED)
+    done = sum(_quarantine(client, _key(f.src, f.rel_type.value, f.wrong_dst)) for f in faults)
+    return {"contradicted_wrong_edges": len(faults), "quarantined": done}
+
+
 def quarantine_planted_wrong_edges(client: HydraClient, built: Dataset) -> dict[str, object]:
     done = sum(
         _quarantine(client, _key(f.src, f.rel_type.value, f.wrong_dst)) for f in built.ingested.faults.wrong_edges
@@ -105,6 +111,13 @@ class Stage:
 
 LADDER: tuple[Stage, ...] = (
     Stage("g0", "the ingested graph, no repair at all: this is round 0 of every arm", None, "ingested"),
+    Stage(
+        "quarantine_contradicted_wrong_edges",
+        "every stale edge that still has its true rival in the graph quarantined, which is the most reweight alone "
+        "could ever achieve",
+        quarantine_contradicted_wrong_edges,
+        "ingested",
+    ),
     Stage(
         "quarantine_planted_wrong_edges",
         "every planted wrong edge quarantined, which is the most the quarantine mechanism could ever achieve",

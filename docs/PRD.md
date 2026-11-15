@@ -111,8 +111,10 @@ reaching 43). Kept as its own arm against the narrow rule.
 **Arms (7).** `frozen`, `plain_store`, `full_v2`, `full_v1_rule` (v2 data, run-1 update rule and narrow gap-fill),
 `gapfill_wide_only`, `random_reweight`, `random_quarantine`. The two random controls keep INV6: the same number and
 size of changes as the arm they mirror, in the same round. Run 1's mechanism-ablation arms are not in this sweep, so
-each random control now mirrors **`full_v2`** — the arm whose claim it is there to attack — instead of a single
-mechanism arm, and `check_inv6` is re-pointed at that pairing before any curve is written.
+what each random control mirrors is **`full_v2`**'s plan: it plans with the same update rule as `full_v2` on its own
+graph, then applies exactly as many changes as that plan contains, of the single mechanism it controls, to edges
+drawn at random. `check_inv6` verifies that equality round by round before any curve is written, and a test pins the
+rule identity, so the pairing cannot drift to a rule the headline arm does not use.
 
 **Seeds and rounds.** Seeds 1, 7, 42; 5 rounds. Seeds 101 and 404, and the mechanism-ablation arms
 (`reweight_only`, `quarantine_only`, `gapfill_only`, `promote_only`), run **only if the main sweep finishes early**
