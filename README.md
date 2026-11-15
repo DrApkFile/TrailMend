@@ -131,6 +131,29 @@ These are real and they bound what the numbers can show.
 - **The plain-store baseline is tuned in its own favour** and the Mend's constants are frozen, which makes the gap
   between them a conservative estimate of the gap.
 
+## Questions judges usually ask
+
+**"Isn't this Cognee?"** Cognee adjusts weights from sentiment over text. TrailMend repairs the graph's structure —
+quarantine, shortcut compression, gap-fill — and answers by weighted path search inside HydraDB, with the lift
+measured against random controls that make the same number and size of changes.
+
+**"Would a dictionary do this?"** The `plain_store` arm answers that: the same questions over the same documents with
+no graph, BM25-ranked, its one hyperparameter tuned in its own favour. Its curve is flat by construction because it
+cannot learn.
+
+**"You tuned it until it went up."** The Mend's constants are in `config/mend.toml` and were fixed before the first
+run; the run id in every evidence file is `<commit>-<config digest>`, so a changed constant changes the run id. The
+hypotheses were written before the run and the failed ones are published with their rules.
+
+**"Does it break what used to work?"** `evidence/non_regression.json` has newly fixed, newly broken and net per
+round, with each break traced to the receipt ids on the path it used to take.
+
+**"Is it just SelfGraph?"** SelfGraph turns text into a graph and does not learn from answers; it is not on the
+answer path (`docs/SELFGRAPH.md`). The loop, the search and the evaluation are in `src/trailmend/{loop,search,eval}`.
+
+**"The data is synthetic."** Yes, deliberately: the faults have to be known for precision and recall on them to mean
+anything. It is labelled generated everywhere it appears, and no customer data has been measured.
+
 ## Run it locally
 
 ```bash
@@ -175,6 +198,8 @@ is a type error.
 - Plan: [docs/PRD.md](docs/PRD.md) · Build order: [docs/TASKS.md](docs/TASKS.md) · Rules:
   [docs/BUILD_CONTRACT.md](docs/BUILD_CONTRACT.md)
 - HydraDB facts verified live: [docs/REALITY_SPIKES.md](docs/REALITY_SPIKES.md)
+- What is left before submission, in order: [docs/SUBMISSION.md](docs/SUBMISSION.md) · Demo script:
+  [docs/LOOM_SCRIPT.md](docs/LOOM_SCRIPT.md)
 - Every design decision and why: [DECISIONS.md](DECISIONS.md) · What is deliberately not built:
   [ROADMAP.md](ROADMAP.md)
 
