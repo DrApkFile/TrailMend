@@ -21,6 +21,24 @@ No LLM is on the answer path, and no LLM scores an answer.
 | Loom | — |
 | Repo | this one |
 
+## The benchmark in one paragraph
+
+<!-- benchmark:start -->
+<!-- benchmark:end -->
+
+That paragraph is written by `trailmend.eval.benchmark` from the evidence files and from nothing else: each sentence
+is a row of [`evidence/benchmark.json`](evidence/benchmark.json) with the files it was read from, and every number in
+it is in [`evidence/benchmark_facts.json`](evidence/benchmark_facts.json). Where a claim did not hold, the sentence
+says what happened instead.
+
+## The three judging criteria, and the file that proves each
+
+| What the judges ask | What was measured | Evidence |
+|---|---|---|
+| **The right metrics** | Held-out exact-match accuracy on the company graphs and held-out Hits@1 on MetaQA, both fixed before the runs, with the wrong-answer rate and exact-set beside them. No LLM scores anything. Every hypothesis was written down first and the failed ones are published. | [`hypotheses_v2.json`](evidence/hypotheses_v2.json) · [`hypotheses_metaqa.json`](evidence/hypotheses_metaqa.json) · [`hypotheses.json`](evidence/hypotheses.json) (run 1, failed) · [PRD §3](docs/PRD.md) |
+| **Continual learning against a baseline** | The same held-out questions after each of 5 rounds, against the frozen graph, question by question (exact McNemar), on 3 seeds; and how much of the oracle-reachable gain was captured. | [`curve_v2.jsonl`](evidence/curve_v2.jsonl) · [`paired_v2.json`](evidence/paired_v2.json) · [`captured_share_v2.json`](evidence/captured_share_v2.json) · [`curve_metaqa.jsonl`](evidence/curve_metaqa.jsonl) · [`paired_metaqa.json`](evidence/paired_metaqa.json) · [`non_regression_v2.json`](evidence/non_regression_v2.json) |
+| **The graph does real work, and it falls apart on a plain store** | Random reweighting with the same number and size of changes; the same corpus in a BM25 document store with no graph; and the same loop with a search that ignores the learned costs. | [`changes_v2.json`](evidence/changes_v2.json) (matched controls) · [`plain_store_v2.json`](evidence/plain_store_v2.json) · [`plain_store_metaqa.json`](evidence/plain_store_metaqa.json) · [`curve_v2_unweighted.jsonl`](evidence/curve_v2_unweighted.jsonl) · [`paired_v2_unweighted.json`](evidence/paired_v2_unweighted.json) |
+
 ## Judge it in 60 seconds
 
 1. `/ask` — ask **"Who is on call for the Delta team?"** It answers *Selin Tadesse* over an edge costing 0.477,
@@ -33,7 +51,10 @@ No LLM is on the answer path, and no LLM scores an answer.
    costs on the page tell you which state you are in, and an admin reset puts it back.
 4. `/mend` — how often quarantine was right on the recorded runs, against the planted faults, and every change
    the live demo graph has made. Each one has a **roll this back** button that undoes it and leaves its own receipt.
-5. `/evidence` — every number on the site, with the file that produced it and that file's sha256.
+5. `/truth` — every fault planted in the demo graph, read back from HydraDB as it is now: still wrong, quarantined,
+   corrected, or restored by gap-fill, with the receipts that changed it. The Delta on-call fault moves from
+   *still wrong* to *quarantined* after step 2.
+6. `/evidence` — every number on the site, with the file that produced it and that file's sha256.
 
 ## The numbers
 
@@ -240,9 +261,17 @@ how much of the repairable damage the Mend left on the table. Run 2 is preregist
   the true link is removed and no document describes it. Quarantining the wrong edge therefore turns a wrong answer
   into a refusal, never into a correct one. Only withheld edges (the missing-edge faults) have a document that
   gap-fill can find.
-- **Gap-fill is one wave.** It reads only pool documents that mention the seed entity of the question that failed.
-  Measured on seed 1, that reaches 35 of 96 unreachable questions; following the newly reached nodes for one more
-  wave would reach 43, and is not built.
+- **That was run 1's data.** Run 2 keeps 30% of its wrong edges exactly like that, on purpose, so a refusal stays
+  the honest outcome for them; the rest have a true link the Mend can find, and gap-fill follows a second wave.
+- **Run 2 still failed two of its eight hypotheses.** Quarantine recall and its false-quarantine rate missed their
+  thresholds (H4'), and the wrong-answer rate fell by about 30%, not the 40% that was preregistered (H6').
+- **MetaQA is a sample inside a region, not the whole benchmark.** 360 held-out questions per seed, drawn from a
+  seeded neighbourhood of 300 movies so that training answers and held-out answers share links; the numbers are not
+  comparable to published full-test-set MetaQA results, and gold answers are not always exactly what a walk of the
+  full knowledge base returns ([PRD §3.3](docs/PRD.md)).
+- **Weighted search returns the cheapest answer, not the whole set.** For questions whose answer is a set, costs
+  derived from document support rarely tie, so the weighted search misses members that a hop-count search returns.
+  The unweighted-search extension measures this instead of hiding it.
 - **`quarantine_only` is weaker than it sounds.** It applies the quarantines the full Mend planned but not the cost
   changes, so the `recent` window never fills across rounds and it can only quarantine on blame concentrated inside
   a single round.
@@ -300,6 +329,19 @@ uv run python -m trailmend.eval.analyse             # curve, regressions, quaran
 uv run python -m trailmend.eval.report              # fill the numbers block in this file
 ```
 
+Run 2, MetaQA and the unweighted-search extension:
+
+```bash
+uv run python -m trailmend.eval.run --v2 1 7 42 && bash scripts/run2_finish.sh   # run 2 and H1' to H8'
+uv run python -m trailmend.metaqa.files                 # check a MetaQA download against the pinned sha256
+uv run python -m trailmend.metaqa.run 1 7 42            # frozen, full_v2, random_reweight and the ladder
+uv run python -m trailmend.metaqa.plain_run 1 7 42      # the document-only baseline on MetaQA
+uv run python -m trailmend.metaqa.analyse               # M1 to M5
+uv run python -m trailmend.eval.run --unweighted 1 7 42 # the same loop, search ignoring cost
+uv run python -m trailmend.eval.analyse_unweighted
+uv run python -m trailmend.eval.report                  # numbers block and the benchmark paragraph
+```
+
 `make hydra-up` needs Docker. Without it, build `graph-node` from the HydraDB repo and run it against any
 S3-compatible endpoint; see [docs/REALITY_SPIKES.md](docs/REALITY_SPIKES.md) S1, S10 and S12.
 
@@ -331,6 +373,13 @@ is a type error.
 - Why run 1's headline failed, measured on the train split only: [docs/RUN1_DIAGNOSIS.md](docs/RUN1_DIAGNOSIS.md)
 
 ## Attribution
+
+MetaQA is from Zhang, Dai, Kozareva, Smola and Song, *Variational Reasoning for Question Answering with Knowledge
+Graph*, AAAI 2018 (https://github.com/yuyuz/MetaQA), released under a Creative Commons licence. Its files are not
+redistributed here: [`data/external/metaqa.manifest.json`](data/external/metaqa.manifest.json) pins the sha256 of
+each file the run used and [`data/external/README.md`](data/external/README.md) says where they go. The incomplete-KG
+setting (half the triples withheld) follows `MetaQA_half` in Saxena, Tripathi and Talukdar, *Improving Multi-hop
+Question Answering over Knowledge Graphs using Knowledge Base Embeddings* (EmbedKGQA), ACL 2020, re-drawn per seed.
 
 HydraDB is AGPL-3.0 and runs here as a separate, unmodified service, pulled by digest. TrailMend's own code is
 Apache-2.0. [SelfGraph](docs/SELFGRAPH.md) was evaluated and is **not** on the answer path.

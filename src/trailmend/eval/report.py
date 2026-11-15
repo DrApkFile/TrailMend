@@ -3,11 +3,13 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import cast
 
-from trailmend.eval import curve, evidence
+from trailmend.eval import benchmark, curve, evidence
 
 README = Path("README.md")
 START = "<!-- numbers:start -->"
 END = "<!-- numbers:end -->"
+BENCHMARK_START = "<!-- benchmark:start -->"
+BENCHMARK_END = "<!-- benchmark:end -->"
 MISSING = "not measured"
 
 
@@ -35,7 +37,8 @@ def _accuracy(row: Mapping[str, object]) -> float | None:
     held = row.get("held_out")
     if not isinstance(held, dict):
         return None
-    value = cast("dict[str, object]", held).get("accuracy")
+    scores = cast("dict[str, object]", held)
+    value = scores.get("accuracy", scores.get("hits_at_1"))
     return float(value) if isinstance(value, int | float) and not isinstance(value, bool) else None
 
 
@@ -124,8 +127,8 @@ def files_table(files: Sequence[tuple[str, str]] = FILES) -> list[str]:
     return lines
 
 
-def captured_table() -> list[str]:
-    rows = _rows("captured_share_v2")
+def captured_table(name: str = "captured_share_v2") -> list[str]:
+    rows = _rows(name)
     if not rows:
         return ["Not measured yet."]
     lines = ["| seed | round 0 | last round | gained | reachable | captured |", "|---|---|---|---|---|---|"]
@@ -139,8 +142,8 @@ def captured_table() -> list[str]:
     return lines
 
 
-def paired_table() -> list[str]:
-    rows = [row for row in _rows("paired_v2") if row.get("reference") == "frozen"]
+def paired_table(name: str = "paired_v2") -> list[str]:
+    rows = [row for row in _rows(name) if row.get("reference") == "frozen"]
     if not rows:
         return ["Not measured yet."]
     lines = ["| seed | arm | gain over frozen | p (exact McNemar) |", "|---|---|---|---|"]
@@ -185,6 +188,76 @@ def run_two() -> list[str]:
     ]
 
 
+FILES_METAQA: tuple[tuple[str, str], ...] = (
+    ("curve_metaqa.jsonl", "MetaQA: held-out Hits@1, exact-set and wrong-answer rate per seed, arm and round"),
+    ("paired_metaqa.json", "MetaQA: every held-out question as a pair against the frozen arm, with its p-value"),
+    ("captured_share_metaqa.json", "MetaQA: what the full arm gained over what the ladder says was reachable"),
+    ("oracle_metaqa.json", "MetaQA: the oracle ladder on held-out, answered through HydraDB"),
+    ("non_regression_metaqa.json", "MetaQA: hits kept and lost per round, each break traced to receipts"),
+    ("plain_store_metaqa.json", "MetaQA: the document-only baseline and the top_k sweep it was tuned by"),
+    ("hypotheses_metaqa.json", "MetaQA: M1 to M5 with the rule each was decided by"),
+    ("metaqa/dataset_s1.json", "MetaQA seed 1: sizes, region, sample and digests (seeds 7 and 42 beside it)"),
+    ("metaqa/faults_s1.json", "MetaQA seed 1: every planted wrong triple with its kind (seeds 7 and 42 beside it)"),
+)
+FILES_EXTENSION: tuple[tuple[str, str], ...] = (
+    ("curve_v2_unweighted.jsonl", "run 2 data, later commit: the same loop with search that ignores cost"),
+    ("paired_v2_unweighted.json", "the unweighted loop against run 2's weighted loop and frozen graph, paired"),
+    ("dataset_summary_v2.json", "run 2: nodes, edges and planted faults per generated company"),
+    ("benchmark.json", "the benchmark paragraph, one sentence per row with its sources"),
+    ("benchmark_facts.json", "every number the benchmark paragraph uses"),
+)
+
+
+def metaqa() -> list[str]:
+    rows = _curve_rows(evidence.EVIDENCE_DIR / "curve_metaqa.jsonl")
+    if not rows:
+        return [
+            "### MetaQA",
+            "",
+            "Preregistered in [PRD §3.3](docs/PRD.md); no MetaQA result is on record, so nothing is reported here.",
+        ]
+    captured = _rows("captured_share_metaqa")
+    lines = [
+        "### MetaQA, public data, half the triples withheld",
+        "",
+        "Held-out Hits@1 (the top-ranked answer is a gold answer), mean of the seeds. Questions are a stratified "
+        "sample of the official test split inside a seeded region of the graph; the Mend sees only questions from "
+        "the official dev split. Design and reasons: [PRD §3.3](docs/PRD.md).",
+        "",
+        *arms_table(rows),
+        "",
+        *paired_table("paired_metaqa"),
+    ]
+    if captured:
+        lines += [
+            "",
+            "Captured share of the gain the oracle ladder says was reachable:",
+            "",
+            *captured_table("captured_share_metaqa"),
+        ]
+    return [
+        *lines,
+        "",
+        "#### Hypotheses, fixed before any MetaQA question was answered",
+        "",
+        *hypotheses_table("hypotheses_metaqa"),
+    ]
+
+
+def unweighted() -> list[str]:
+    rows = _curve_rows(curve.CURVE_V2_UNWEIGHTED)
+    if not rows:
+        return ["### The same loop with unweighted search", "", "Not run yet."]
+    return [
+        "### The same loop with unweighted search (extension, not part of any preregistered verdict)",
+        "",
+        "Run 2's data and constants at a later commit. `full_unweighted` is the full Mend with a search that ignores "
+        "cost and takes the fewest hops; `frozen` is re-run with the normal search and must reproduce run 2's.",
+        "",
+        *arms_table(rows),
+    ]
+
+
 def run_one() -> list[str]:
     rows = _curve_rows()
     plain = _rows("plain_store")
@@ -209,9 +282,21 @@ def block() -> str:
     parts: list[str] = [
         *run_two(),
         "",
+        *metaqa(),
+        "",
+        *unweighted(),
+        "",
         *run_one(),
         "",
         "### Evidence files",
+        "",
+        "MetaQA:",
+        "",
+        *files_table(FILES_METAQA),
+        "",
+        "The unweighted-search extension and the benchmark paragraph:",
+        "",
+        *files_table(FILES_EXTENSION),
         "",
         "Run 2:",
         "",
@@ -224,15 +309,27 @@ def block() -> str:
     return "\n".join(parts)
 
 
+def _fill(text: str, start: str, end: str, body: str) -> str:
+    head, rest = text.split(start, 1)
+    _, tail = rest.split(end, 1)
+    return f"{head}{start}\n{body}\n{end}{tail}"
+
+
+def paragraph() -> str:
+    return " ".join(str(row.get("text")) for row in _rows("benchmark")) or "Not generated yet."
+
+
 def write(path: Path = README) -> Path:
     text = path.read_text(encoding="utf-8")
     if START not in text or END not in text:
         raise ValueError(f"{path} has no numbers block to fill")
-    head, rest = text.split(START, 1)
-    _, tail = rest.split(END, 1)
-    path.write_text(f"{head}{START}\n{block()}\n{END}{tail}")
+    text = _fill(text, START, END, block())
+    if BENCHMARK_START in text and BENCHMARK_END in text:
+        text = _fill(text, BENCHMARK_START, BENCHMARK_END, paragraph())
+    path.write_text(text)
     return path
 
 
 if __name__ == "__main__":
+    benchmark.write()
     print(f"filled {write()}")
