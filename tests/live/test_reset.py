@@ -7,10 +7,10 @@ from trailmend.data import dataset
 from trailmend.data.model import Edge, make_edge
 from trailmend.data.northwind import Sizes
 from trailmend.graph.client import HydraClient
-from trailmend.graph.loader import count_graph, load
+from trailmend.graph.loader import load
 from trailmend.graph.reset import reset_to_ingested
 from trailmend.graph.schema import NodeLabel, RelType
-from trailmend.graph.state import read_state
+from trailmend.graph.state import list_edge_keys, read_state
 
 pytestmark = pytest.mark.hydra
 
@@ -46,12 +46,13 @@ def test_a_reset_removes_an_edge_the_ingested_graph_does_not_have(hydra: HydraCl
     assert read_state(hydra, key) is None
 
 
-def test_a_reset_leaves_exactly_the_ingested_graph(hydra: HydraClient, built: dataset.Dataset) -> None:
-    load(hydra, built.graph, built.support)
-    _, before = count_graph(hydra, built.graph)
+def test_a_reset_leaves_only_edges_the_ingested_graph_has(hydra: HydraClient, built: dataset.Dataset) -> None:
     load(hydra, replace(built.graph, edges=(*built.graph.edges, _edge_g0_does_not_have(built))), built.support)
 
     reset_to_ingested(hydra, built.graph, (), built.support)
 
-    _, after = count_graph(hydra, built.graph)
-    assert after == before
+    wanted = {(edge.src, edge.rel_type.value, edge.dst) for edge in built.graph.edges}
+    found = {
+        (key.src, rel_type.value, key.dst) for rel_type in RelType for key in list_edge_keys(hydra, rel_type.value)
+    }
+    assert found == wanted

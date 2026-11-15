@@ -237,7 +237,8 @@ Load: concurrent clients on the product query mix, p50/p95/p99, QPS, error rate 
 
 ## 10. Evidence
 
-- `evidence/curve.jsonl`: `dataset, seed, arm, round, n_heldout, correct, accuracy, set_f1` — appended by the loop, never edited.
+- `evidence/curve.jsonl`: `dataset, seed, arm, round, n_heldout, correct, accuracy, set_f1` — appended by the loop, never edited. Run 1 only: once published, its 162 rows are fixed and their sha256 is the one `run_manifest.json` records.
+- `evidence/curve_v2.jsonl`: the same rows for run 2, plus `data_version`, `rules` and the cumulative gap-fill counts. A row is written to the file its `data_version` names, and a v2 row offered to run 1's file is refused, so the two runs cannot mix.
 - `evidence/<claim>.json` per claim, each with `measured_at`, `design` string, per-row data.
 - `evidence/run_manifest.json`: git commit, HydraDB image digest/commit, dataset hashes, config, SHA-256 of every evidence file.
 - Failed or skipped items: `not_run` with the verbatim reason.
