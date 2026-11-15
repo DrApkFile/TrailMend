@@ -23,7 +23,7 @@ from trailmend.data.relate import (
     relate_runbooks,
 )
 from trailmend.data.vocab import COMPANY_NAMES
-from trailmend.graph.schema import NodeLabel
+from trailmend.graph.schema import NORTHWIND_LABELS
 
 
 @dataclass(frozen=True, slots=True)
@@ -84,7 +84,7 @@ def generate(seed: int, sizes: Sizes | None = None) -> TruthGraph:
 
 
 def label_counts(graph: TruthGraph) -> dict[str, int]:
-    return {label.value: len(graph.nodes_with_label(label)) for label in NodeLabel}
+    return {label.value: len(graph.nodes_with_label(label)) for label in NORTHWIND_LABELS}
 
 
 __all__ = ["Sizes", "generate", "label_counts", "make_edge"]

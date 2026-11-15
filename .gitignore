@@ -10,3 +10,5 @@ node_modules/
 apps/web/.vercel
 evidence/.measuring.json
 .env.prod
+
+data/external/metaqa/

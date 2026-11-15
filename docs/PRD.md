@@ -158,6 +158,85 @@ not a hypothesis.
 
 Any hypothesis that fails is published as failed, beside run 1's.
 
+### 3.3 MetaQA — preregistered 2026-11-15, before any MetaQA question was answered through HydraDB
+
+A second dataset the project did not generate: MetaQA (Zhang et al., AAAI 2018), a movie knowledge base of 134,741
+`subject|relation|object` lines (133,582 distinct triples, 43,234 entities, 9 relations) with 1-, 2- and 3-hop
+questions whose topic entity is the `[bracketed]` span. The files are not redistributed; `data/external/metaqa.manifest.json`
+pins their sha256 and `trailmend.metaqa` loads them. Everything below is fixed now. The only things measured before
+writing it were offline counts on the files, never an answer from HydraDB, and each is stated where it is used.
+
+**Graph.** Each triple is one typed edge `MQ_<RELATION>` from the movie to its object and one edge of a separate
+type `MQ_<RELATION>_REV` back. The two directions carry their own cost, counters and receipts. Entities are typed by
+the position they hold (movie, person, year, language, genre, tag, votes, rating), so a title that is also a tag is
+two nodes.
+
+**Incomplete-KG setting.** A seeded random 50% of the distinct triples is G0 and the other half is the gap-fill
+pool — the `MetaQA_half` setting of EmbedKGQA (Saxena et al., ACL 2020), re-drawn per seed rather than taken from
+their file. A document asserts a triple, so ingesting a pool document adds both directions.
+
+**Faults, by the Northwind v2 rule.** 8% of G0's triples get a wrong object of the same type that is not a true
+object of that movie and relation, split 0.4 `contradicted` / 0.3 `recoverable` / 0.3 `destroyed` exactly as in §3.2,
+and every one is declared in `evidence/metaqa/faults_s<seed>.json`. Support and initial cost use the same ingest
+rule and the same distribution; a contradicted fault's stale triple draws 3 and the true one 1. Alias duplicates and
+conflations are not planted: MetaQA has no alias table to draw them from.
+
+**Questions.** Train is a sample of the official **dev** split and held-out a sample of the official **test** split,
+each stratified by hop and qtype (largest-remainder allocation). Both are drawn from one seeded *workload region*:
+300 movies grown breadth-first through shared people from a seeded start movie, plus the people in them; a question
+is eligible when its topic entity is in the region. A held-out question never shares (topic, qtype) with a train
+question. Sizes: **480 train, 360 held-out per seed**, 5 rounds, seeds 1, 7, 42 — chosen so three seeds of three
+graph arms and the ladder fit the time box. Why a region: a uniform sample of 480 of the 39,138 dev questions shares
+a topic entity with 8 of 360 uniformly sampled test questions (measured offline), so there would be almost no edge a
+train answer could teach a held-out answer through and the run could neither pass nor fail. A region is what usage
+looks like — questions cluster — and it is the same for every arm. `tag_to_movie` has no eligible question because
+its topic is a tag.
+
+**Search.** `algo.SSpaths` from the topic entity over the relation types on the question's qtype path, `maxLen` =
+hops, `weightProp: 'cost'`, `pathCount` 500; a path counts only if its relation sequence equals the qtype's and it
+visits no node twice. Answers are ranked by cheapest path cost, ties by entity id. 500 or more rows is a refusal
+(`budget_exceeded`), never a truncated answer.
+
+**Metrics.** Primary: held-out **Hits@1** (the top-ranked answer is a gold answer), the field's standard for MetaQA.
+Reported beside it: exact-set (every answer the graph supports equals the gold set) and the wrong-answer rate
+(top-ranked answer is not gold) / n. An unreachable or refused question is not a hit and not a wrong answer.
+Known ceiling, measured offline: walking the *full* knowledge base along the qtype path reproduces the gold set
+exactly for 81% of questions and as a strict superset for the rest (3-hop paths that pass back through the topic
+movie, and same-titled films merged under one name), so a perfect graph does not score 100%.
+
+**Arms (4).** `frozen`; `plain_store` (BM25 over the documents G0 was ingested from, its `top_k` tuned to its own best
+held-out Hits@1 on seed 1); `full_v2` (update rule v2 with quarantine, and gap-fill on wrong and unreachable train
+answers); `random_reweight` (INV6: as many reweights as `full_v2`'s rule plans on its own graph each round, with the
+same signals, on edges drawn at random from the G0 edges that lie on a qtype path of some train question — the
+edges the Mend itself could have touched — and nothing else). Constants are `config/mend.toml` unchanged plus
+`config/metaqa.toml`; both digests are in the run id.
+
+**Two adaptations of the loop, declared.** (1) Gap-fill follows the failed question's own relation path: wave *i*
+ingests the pool documents that mention an entity reached so far and assert the relation the question needs at hop
+*i*, for as many waves as the question has hops. Northwind's rule (every pool document mentioning the entity, then
+one more wave) would pull in a year's or a genre's whole pool the first time a movie was a gap. Documents are still
+chosen by the topic entity and the question's relations, never by the gold answer (INV7). (2) Promotion is off:
+shortcut types are per template and MetaQA has 49 qtypes.
+
+**Hypotheses.**
+
+M1. On all 3 seeds, `full_v2` beats `frozen` on the same held-out questions at round 5 under a two-sided exact
+McNemar test at p < 0.05, with a gain of at least 2.0 points of Hits@1.
+M2. `random_reweight` does not beat `frozen` under the same test on any seed.
+M3. `plain_store` is flat across rounds.
+M4. In `full_v2` the held-out wrong-answer rate falls by at least 40% from round 0 to round 5, on every seed. Stated
+knowing it may fail here: gap-fill makes unreachable questions answerable, and some of the new routes run over
+planted wrong triples.
+M5. In `full_v2`, at most 2% of the held-out questions that were hits after one round are not hits after the next,
+in every round and seed.
+
+**The ladder.** The same cumulative oracle ladder runs on held-out through HydraDB — G0; contradicted stale triples
+removed; recoverable triples restored; the whole pool ingested; destroyed wrong triples removed — and `full_v2`'s
+captured share of the reachable gain (round 5 − round 0, over the "whole pool ingested" rung − round 0) is published
+whatever it is. It is not a hypothesis.
+
+Any hypothesis that fails is published as failed, beside the Northwind runs.
+
 ## 4. Datasets
 
 D1 "Northwind" (generated, seeded, deterministic, no LLM)

@@ -9,7 +9,7 @@ from trailmend.data.northwind import Sizes
 from trailmend.graph.client import HydraClient
 from trailmend.graph.loader import load
 from trailmend.graph.reset import reset_to_ingested
-from trailmend.graph.schema import NodeLabel, RelType
+from trailmend.graph.schema import NORTHWIND_REL_TYPES, NodeLabel, RelType
 from trailmend.graph.state import list_edge_keys, read_state
 
 pytestmark = pytest.mark.hydra
@@ -53,6 +53,8 @@ def test_a_reset_leaves_only_edges_the_ingested_graph_has(hydra: HydraClient, bu
 
     wanted = {(edge.src, edge.rel_type.value, edge.dst) for edge in built.graph.edges}
     found = {
-        (key.src, rel_type.value, key.dst) for rel_type in RelType for key in list_edge_keys(hydra, rel_type.value)
+        (key.src, rel_type.value, key.dst)
+        for rel_type in NORTHWIND_REL_TYPES
+        for key in list_edge_keys(hydra, rel_type.value)
     }
     assert found == wanted

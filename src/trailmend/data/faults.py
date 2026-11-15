@@ -54,7 +54,7 @@ class FaultPlan:
             raise ValueError("contradicted and recoverable shares must leave room for destroyed faults")
 
 
-def _kinds(rng: Random, count: int, plan: FaultPlan) -> list[WrongKind]:
+def wrong_kinds(rng: Random, count: int, plan: FaultPlan) -> list[WrongKind]:
     contradicted = round(count * plan.contradicted_share)
     recoverable = round(count * plan.recoverable_share)
     destroyed = count - contradicted - recoverable
@@ -81,7 +81,7 @@ def _swap_targets(
     )
     chosen = rng.sample(swappable, _share(len(swappable), plan.wrong_edge_share))
     ordered = sorted(chosen, key=lambda e: (e.rel_type.value, e.src, e.dst))
-    kinds = [WrongKind.DESTROYED] * len(ordered) if data_version == V1 else _kinds(rng, len(ordered), plan)
+    kinds = [WrongKind.DESTROYED] * len(ordered) if data_version == V1 else wrong_kinds(rng, len(ordered), plan)
     by_id = truth.by_id
     faults: list[WrongEdge] = []
     withheld: list[Edge] = []

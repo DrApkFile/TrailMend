@@ -1,0 +1,11 @@
+[sample]
+region_movies = 300
+train = 480
+held_out = 360
+
+[search]
+result_limit = 500
+
+[run]
+rounds = 5
+plain_store_top_k = 10

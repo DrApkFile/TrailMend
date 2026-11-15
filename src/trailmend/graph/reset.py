@@ -6,7 +6,7 @@ from trailmend.data.qtemplates import SHORTCUT_TYPES
 from trailmend.graph import queries as q
 from trailmend.graph.client import HydraClient
 from trailmend.graph.loader import load
-from trailmend.graph.schema import RelType
+from trailmend.graph.schema import NORTHWIND_REL_TYPES
 from trailmend.graph.state import list_edge_keys
 
 
@@ -28,7 +28,7 @@ def _clear(client: HydraClient, rel_type: str) -> int:
 def _prune(client: HydraClient, graph: TruthGraph) -> int:
     wanted = {(edge.src, edge.rel_type.value, edge.dst) for edge in graph.edges}
     pruned = 0
-    for rel_type in RelType:
+    for rel_type in NORTHWIND_REL_TYPES:
         for key in list_edge_keys(client, rel_type.value):
             if (key.src, rel_type.value, key.dst) in wanted:
                 continue
@@ -40,7 +40,7 @@ def _prune(client: HydraClient, graph: TruthGraph) -> int:
 def reset_to_ingested(
     client: HydraClient, graph: TruthGraph, pool: tuple[tuple[int, str, int], ...], support: Mapping[int, int]
 ) -> ResetReport:
-    quarantines = sum(_clear(client, q.quarantine_type(rel_type.value)) for rel_type in RelType)
+    quarantines = sum(_clear(client, q.quarantine_type(rel_type.value)) for rel_type in NORTHWIND_REL_TYPES)
     shortcuts = 0
     for shortcut_type in SHORTCUT_TYPES:
         shortcuts += _clear(client, shortcut_type)
