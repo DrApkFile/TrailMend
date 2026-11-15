@@ -48,7 +48,10 @@ function armNames(rows: ChangeRow[]): string[] {
     }
   }
   const ordered = [
+    "full_v2",
     "full",
+    "full_v1_rule",
+    "gapfill_wide_only",
     "reweight_only",
     "random_reweight",
     "quarantine_only",

@@ -23,14 +23,19 @@ function share(value: number | null | undefined): string {
 }
 
 export default async function MendPage() {
-  const [receipts, quarantine] = await Promise.all([
+  const [receipts, quarantine, quarantineV2] = await Promise.all([
     fetchReceipts(30),
     fetchEvidence("quarantine"),
+    fetchEvidence("quarantine_v2"),
   ]);
+  const current =
+    quarantineV2.ok && quarantineV2.value.available ? quarantineV2 : quarantine;
+  const headline =
+    quarantineV2.ok && quarantineV2.value.available ? "full_v2" : "full";
   const rows =
-    quarantine.ok && quarantine.value.available && quarantine.value.payload
-      ? (quarantine.value.payload.rows as QuarantineRow[]).filter(
-          (row) => row.arm === "full",
+    current.ok && current.value.available && current.value.payload
+      ? (current.value.payload.rows as QuarantineRow[]).filter(
+          (row) => row.arm === headline,
         )
       : [];
   const kinds = receipts.ok
@@ -56,7 +61,7 @@ export default async function MendPage() {
       </p>
 
       <Panel title="How often quarantine was right">
-        {quarantine.ok ? (
+        {current.ok ? (
           rows.length === 0 ? (
             <p className="text-sm text-stone-400">
               Not measured yet. This fills in from evidence/quarantine.json once
@@ -99,10 +104,7 @@ export default async function MendPage() {
             </div>
           )
         ) : (
-          <Failed
-            code={quarantine.error.code}
-            message={quarantine.error.message}
-          />
+          <Failed code={current.error.code} message={current.error.message} />
         )}
         <p className="mt-3 text-xs text-stone-500">
           Precision counts quarantined edges that a planted fault introduced.
