@@ -1,0 +1,35 @@
+{
+  "claim": "captured_share_v2",
+  "design": "How much of the repairable damage the full arm repaired. The denominator is the oracle ladder on the same data: the held-out accuracy of a graph with every planted wrong edge quarantined and every withheld edge ingested, minus round 0. The numerator is what full_v2 actually gained. Run 1 captured 4% of its reachable gain and nothing on the page said so.",
+  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full_v2",
+      "captured_share": 0.8967,
+      "gained_points": 10.29,
+      "reachable_points": 11.48,
+      "round_0": 0.7706,
+      "round_n": 0.8735,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "captured_share": 0.5252,
+      "gained_points": 6.18,
+      "reachable_points": 11.76,
+      "round_0": 0.7735,
+      "round_n": 0.8353,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "captured_share": 0.6486,
+      "gained_points": 7.02,
+      "reachable_points": 10.82,
+      "round_0": 0.7924,
+      "round_n": 0.8626,
+      "seed": 42
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "code_commit": "1afab2c058e1adf8dc0ee33e321995b8356c7309",
+  "config": {
+    "path": "config/mend.toml",
+    "sha256": "580ae8dcbe48dfd141064f6bc4a8d7510ef6aa236a0e75debe0858ec909e454e",
+    "text": "[mend]\neta = 0.35\neta_confirm = 0.10\ncost_floor = 0.5\ncost_ceiling = 20.0\nwindow = 6\nquarantine_min_blames = 3\nquarantine_blame_share = 0.8\nquarantine_confirm_ceiling = 1\npromote_min_questions = 3\n\n[run1_rule]\neta = 0.35\ncost_floor = 0.05\n\n[gapfill]\nwaves = 2\non_wrong = true\n\n[search]\nmax_len = 3\nresult_limit = 200\n\n[run]\nrounds = 5\nplain_store_top_k = 15\n"
+  },
+  "data_version": "v2",
+  "evidence_sha256": {
+    "anatomy.json": "409fada1c2cb94a3ccda5a595ce7c315a096e863093bf4338e27a9181d6a9033",
+    "captured_share_v2.json": "1acdec55d6d5c051db79150f554b138ed509a5b76cd41d754004052403754789",
+    "changes.json": "6ebbc0facb6233c18e73c5b61c7f7c9030dc5b30ce9b8cfd77923b5d39e2320d",
+    "changes_v2.json": "9c71a5c872c8ea37bf7bafa9b137fe55caf299b33ad76d80822036c167f78feb",
+    "curve.jsonl": "eb886008a2906f65f377726b231e7f5a80e2152332bbc5e057850cb555c112ca",
+    "curve.svg": "eefd76a8ee3eac5fd99db1a745b40630917e6456143cf0414d258c020ddce7cf",
+    "curve_v2.jsonl": "f443cd566b5953a20c7ea939fc29e5554b0a1cc257ef3441503dac7c5b557b00",
+    "curve_v2.svg": "49c91f759c1bce3a0259df120ee021b96e04cc45ef0104b16eb0b8f3c377562a",
+    "fault_recoverability.json": "58158001b487e3fd1fe6c587ceb99a8796d221a2cbc3dfc59ccb08a024d82179",
+    "fault_recoverability_v2.json": "deaa67c20abbc6c83157c2550c1e25650f7df09b43d5eff7124c83e86b02b9f3",
+    "hypotheses.json": "920ee235e0130614f8cd7ebd45750cc9ab19259257fb0904854936cf51aa6277",
+    "hypotheses_v2.json": "6ae170b548c9ce7239284ebcaec1a4513bff04a5ad20464356c1c3204ae9daaa",
+    "latency.json": "87a2921754f7ed09df47cec971857a4edb1c87d2472748dcf406ae7a5ddfb111",
+    "load.json": "ef1c00b3507de398559b7b7a5759042fa710718ff60b2b5800d2a5a0ba063769",
+    "mechanisms.json": "d80402a162f79b14b8ac4fddd908d97cac51ca7b779eca28263bfdc5928bd495",
+    "mechanisms_v2.json": "efbf3ade0da1f7b64ceac3c8ebf788c0b4dc543e942e8c8973a7bd71f8bbcf08",
+    "non_regression.json": "a850cf278565d52d2442dc996346839508eea9abd49d5160a429c74f06715e8b",
+    "non_regression_v2.json": "8beb6b10986e86c757ed8828531d746c7601c11480d0055e17a66cb5c253b48a",
+    "oracle.json": "21ddd7cbf2535ffacbfde1d7933cb1de7c76945ebca3213a60f38a874dc7aa10",
+    "oracle_v2.json": "cdaf8d536af75918b2b63e5b55d3bb26dc411852e8df9accc0a6d8d0188423a6",
+    "paired_v2.json": "9e6f79376e842bfb19b1d6c41bdc020c2a0c90e49b6d433f65f807cae4da179f",
+    "plain_store.json": "e651fd53aec262361d368a35e5140852403619fa8fc2487f5debb0bca388421a",
+    "plain_store_v2.json": "ffb5b6dcdde73a9ae3b62308d5f55d0dd328a47ccc3abfae9ec6bc0f16ab312a",
+    "quarantine.json": "dedd1780b2273e19a8ea133c8dd3b57b8abe25a4bc2b84102bd82838d1ec4c14",
+    "quarantine_v2.json": "a0d77afda0ab870b9cea88ba4b7fc7ed129867c1bec8e0c781aa137752ef2734",
+    "round_zero.json": "5639023839538d87886018eac70fcacc75b6c072c72a88d3a90a5eda26b12da0"
+  },
+  "hydradb": {
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+    "image": "ghcr.io/hydra-db/hydradb"
+  },
+  "hydradb_per_evidence_file": {
+    "anatomy.json": {
+      "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+      "host": "127.0.0.1",
+      "image": "ghcr.io/hydra-db/hydradb",
+      "kind": "local"
+    },
+    "captured_share_v2.json": null,
+    "changes.json": null,
+    "changes_v2.json": null,
+    "curve.jsonl": [
+      {
+        "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+        "host": "127.0.0.1",
+        "image": "ghcr.io/hydra-db/hydradb",
+        "kind": "local"
+      }
+    ],
+    "curve_v2.jsonl": [
+      {
+        "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+        "host": "127.0.0.1",
+        "image": "ghcr.io/hydra-db/hydradb",
+        "kind": "local"
+      }
+    ],
+    "fault_recoverability.json": {
+      "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+      "host": "127.0.0.1",
+      "image": "ghcr.io/hydra-db/hydradb",
+      "kind": "local"
+    },
+    "fault_recoverability_v2.json": {
+      "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+      "host": "127.0.0.1",
+      "image": "ghcr.io/hydra-db/hydradb",
+      "kind": "local"
+    },
+    "hypotheses.json": null,
+    "hypotheses_v2.json": null,
+    "latency.json": {
+      "digest": null,
+      "host": "trailmend-production-ee2e07ff.up.railway.app",
+      "image": null,
+      "kind": "remote",
+      "note": "a hosted HydraDB; its image digest is whatever that service runs and is not readable from here"
+    },
+    "load.json": null,
+    "mechanisms.json": null,
+    "mechanisms_v2.json": null,
+    "non_regression.json": null,
+    "non_regression_v2.json": null,
+    "oracle.json": {
+      "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+      "host": "127.0.0.1",
+      "image": "ghcr.io/hydra-db/hydradb",
+      "kind": "local"
+    },
+    "oracle_v2.json": {
+      "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+      "host": "127.0.0.1",
+      "image": "ghcr.io/hydra-db/hydradb",
+      "kind": "local"
+    },
+    "paired_v2.json": null,
+    "plain_store.json": null,
+    "plain_store_v2.json": null,
+    "quarantine.json": null,
+    "quarantine_v2.json": null,
+    "round_zero.json": null
+  },
+  "run_id": "26b5469-580ae8dc",
+  "seeds": {
+    "1": {
+      "documents": "9f234dc5d1cf67e45734327c0d20f99f0dcbdfdb9ae5971d738a8c0c6cdc2a82",
+      "faults": "7b5bab05344316d07a5c260e362d1bb74f1e669c0216af7ba0d0b593d5dfca04",
+      "split": "c93ca2e073fc9c7f8220c4c0d4af5a80f3b8a67bf6955a957183ae8de0c0e12d"
+    },
+    "42": {
+      "documents": "c97e89a342a1ed9550ded01e5686b69e232d479f90c3aa4a8840644f01283599",
+      "faults": "2f0403e1e4466fa88f5c8cab0937ef62adaeee1be448a933d4995ddfafb887bb",
+      "split": "9fa7c171394ad8cefc45b96a75b55645a80c65634196c0a4c01a676d49a036f6"
+    },
+    "7": {
+      "documents": "14eb8cdff9d1158550a936cc91a5697fbf3817eab9d3880359d2dc68935f4986",
+      "faults": "626b9c9164db1bf2ffbbdd0cbbeab11b4707b93f2e2fee50c2d4433b9235d0c5",
+      "split": "d749758fa362c126c49773ec9a4e6006a568cf390090926507ff43673a479b4d"
+    }
+  },
+  "working_tree_clean": false
+}

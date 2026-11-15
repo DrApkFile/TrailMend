@@ -1,0 +1,98 @@
+{
+  "claim": "mechanisms_v2",
+  "design": "One row per arm: which mechanisms it runs and what held-out accuracy it reached from round 0 to round N, per seed and as a mean. Arms share seeds, splits, rounds and questions; they differ in which changes they apply and under which update and gap-fill rule, which every curve row records.",
+  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full_v2",
+      "delta_mean": 0.0783,
+      "delta_per_seed": [
+        0.1029,
+        0.0618,
+        0.0702
+      ],
+      "gapfill": true,
+      "promote": true,
+      "quarantine": true,
+      "reweight": true,
+      "round_0_mean": 0.7788,
+      "round_n_mean": 0.8571
+    },
+    {
+      "arm": "frozen",
+      "delta_mean": 0.0,
+      "delta_per_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": false,
+      "reweight": false,
+      "round_0_mean": 0.7788,
+      "round_n_mean": 0.7788
+    },
+    {
+      "arm": "full_v1_rule",
+      "delta_mean": 0.0529,
+      "delta_per_seed": [
+        0.0706,
+        0.0471,
+        0.0409
+      ],
+      "gapfill": true,
+      "promote": true,
+      "quarantine": true,
+      "reweight": true,
+      "round_0_mean": 0.7788,
+      "round_n_mean": 0.8317
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "delta_mean": 0.0499,
+      "delta_per_seed": [
+        0.0559,
+        0.0412,
+        0.0526
+      ],
+      "gapfill": true,
+      "promote": false,
+      "quarantine": false,
+      "reweight": false,
+      "round_0_mean": 0.7788,
+      "round_n_mean": 0.8287
+    },
+    {
+      "arm": "random_reweight",
+      "delta_mean": -0.0127,
+      "delta_per_seed": [
+        -0.0118,
+        -0.0059,
+        -0.0205
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": false,
+      "reweight": true,
+      "round_0_mean": 0.7788,
+      "round_n_mean": 0.7661
+    },
+    {
+      "arm": "random_quarantine",
+      "delta_mean": -0.0225,
+      "delta_per_seed": [
+        -0.0353,
+        -0.0206,
+        -0.0117
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": true,
+      "reweight": false,
+      "round_0_mean": 0.7788,
+      "round_n_mean": 0.7563
+    }
+  ]
+}

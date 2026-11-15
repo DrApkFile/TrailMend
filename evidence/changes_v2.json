@@ -1,0 +1,908 @@
+{
+  "claim": "changes_v2",
+  "design": "One row per seed and round, with the change counts of every run-2 arm side by side: what the Mend planned that round from that arm's own graph, what the arm applied, and what it promoted, retired or ingested. Each random control plans under the same update rule as full_v2 and applies exactly as many changes as the Mend planned in that same round of that same arm, of the one mechanism it controls and no other (INV6, checked before any of these files is written).",
+  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 5,
+          "applied_reweights": 562,
+          "ingested": 29,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 7,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 5,
+          "applied_reweights": 562,
+          "ingested": 54,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 7,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 55,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 5,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 562,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 6,
+          "applied_reweights": 595,
+          "ingested": 0,
+          "planned_quarantines": 6,
+          "planned_reweights": 595,
+          "promoted": 2,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 5,
+          "applied_reweights": 613,
+          "ingested": 2,
+          "planned_quarantines": 5,
+          "planned_reweights": 613,
+          "promoted": 2,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 613,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 5,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 553,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 564,
+          "ingested": 0,
+          "planned_quarantines": 2,
+          "planned_reweights": 564,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 6,
+          "applied_reweights": 587,
+          "ingested": 4,
+          "planned_quarantines": 6,
+          "planned_reweights": 587,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 2,
+          "applied_reweights": 608,
+          "ingested": 0,
+          "planned_quarantines": 2,
+          "planned_reweights": 608,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 613,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 5,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 549,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 566,
+          "ingested": 0,
+          "planned_quarantines": 3,
+          "planned_reweights": 566,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 1,
+          "applied_reweights": 585,
+          "ingested": 1,
+          "planned_quarantines": 1,
+          "planned_reweights": 585,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 606,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 606,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 613,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 5,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 548,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 566,
+          "ingested": 0,
+          "planned_quarantines": 2,
+          "planned_reweights": 566,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 1,
+          "applied_reweights": 587,
+          "ingested": 2,
+          "planned_quarantines": 1,
+          "planned_reweights": 587,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 606,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 606,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 613,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 5,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 546,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 566,
+          "ingested": 0,
+          "planned_quarantines": 2,
+          "planned_reweights": 566,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 7,
+          "applied_reweights": 571,
+          "ingested": 34,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 4,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 7,
+          "applied_reweights": 571,
+          "ingested": 55,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 4,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 55,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 7,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 571,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 0,
+          "applied_reweights": 598,
+          "ingested": 3,
+          "planned_quarantines": 0,
+          "planned_reweights": 598,
+          "promoted": 1,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 615,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 615,
+          "promoted": 1,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 3,
+          "planned_reweights": 615,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 7,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 565,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 570,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 570,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 5,
+          "applied_reweights": 606,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 606,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 5,
+          "applied_reweights": 615,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 615,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 3,
+          "planned_reweights": 615,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 7,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 564,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 571,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 0,
+          "applied_reweights": 601,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 601,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 610,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 610,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 3,
+          "planned_reweights": 615,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 7,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 562,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 570,
+          "ingested": 0,
+          "planned_quarantines": 5,
+          "planned_reweights": 570,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 0,
+          "applied_reweights": 601,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 601,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 610,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 610,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 3,
+          "planned_reweights": 615,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 7,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 7,
+          "planned_reweights": 561,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 570,
+          "ingested": 0,
+          "planned_quarantines": 4,
+          "planned_reweights": 570,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 8,
+          "applied_reweights": 574,
+          "ingested": 22,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 1,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 8,
+          "applied_reweights": 573,
+          "ingested": 47,
+          "planned_quarantines": 8,
+          "planned_reweights": 573,
+          "promoted": 1,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 47,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 8,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 574,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 0,
+          "applied_reweights": 586,
+          "ingested": 2,
+          "planned_quarantines": 0,
+          "planned_reweights": 586,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 600,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 600,
+          "promoted": 1,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 614,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 8,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 571,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 575,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 575,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 2,
+          "applied_reweights": 589,
+          "ingested": 0,
+          "planned_quarantines": 2,
+          "planned_reweights": 589,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 599,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 599,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 614,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 8,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 570,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 577,
+          "ingested": 0,
+          "planned_quarantines": 4,
+          "planned_reweights": 577,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 0,
+          "applied_reweights": 587,
+          "ingested": 2,
+          "planned_quarantines": 0,
+          "planned_reweights": 587,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 599,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 599,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 614,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 8,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 564,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 577,
+          "ingested": 0,
+          "planned_quarantines": 1,
+          "planned_reweights": 577,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arms": {
+        "frozen": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 574,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v1_rule": {
+          "applied_quarantines": 0,
+          "applied_reweights": 588,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 588,
+          "promoted": 0,
+          "retired": 0
+        },
+        "full_v2": {
+          "applied_quarantines": 0,
+          "applied_reweights": 599,
+          "ingested": 0,
+          "planned_quarantines": 0,
+          "planned_reweights": 599,
+          "promoted": 0,
+          "retired": 0
+        },
+        "gapfill_wide_only": {
+          "applied_quarantines": 0,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 614,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_quarantine": {
+          "applied_quarantines": 8,
+          "applied_reweights": 0,
+          "ingested": 0,
+          "planned_quarantines": 8,
+          "planned_reweights": 561,
+          "promoted": 0,
+          "retired": 0
+        },
+        "random_reweight": {
+          "applied_quarantines": 0,
+          "applied_reweights": 577,
+          "ingested": 0,
+          "planned_quarantines": 1,
+          "planned_reweights": 577,
+          "promoted": 0,
+          "retired": 0
+        }
+      },
+      "round": 5,
+      "seed": 42
+    }
+  ]
+}

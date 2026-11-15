@@ -1,0 +1,1681 @@
+{
+  "claim": "non_regression_v2",
+  "design": "Per round, from evidence/runs/<run>/heldout.jsonl: which held-out questions turned correct and which turned away from correct, and for each break the receipts written that round that touched an edge on that question's previous correct path.",
+  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-incident_pager-491650223965225695"
+      ],
+      "correct": 290,
+      "net": 28,
+      "newly_broken": 1,
+      "newly_fixed": 29,
+      "receipts_blamed": {
+        "q-incident_pager-491650223965225695": [
+          "rcpt-47f72b0901aeb6c0",
+          "rcpt-705868baf34a0049",
+          "rcpt-d37f11a3ec8f9bc9",
+          "rcpt-fbc772de42c374ee",
+          "rcpt-a97f96dac3f0af2a"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 295,
+      "net": 5,
+      "newly_broken": 0,
+      "newly_fixed": 5,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 295,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 297,
+      "net": 2,
+      "newly_broken": 0,
+      "newly_fixed": 2,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 297,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-incident_pager-491650223965225695"
+      ],
+      "correct": 275,
+      "net": 13,
+      "newly_broken": 1,
+      "newly_fixed": 14,
+      "receipts_blamed": {
+        "q-incident_pager-491650223965225695": [
+          "rcpt-bdecc9fa2eaa480f",
+          "rcpt-df8133500383362f",
+          "rcpt-ddd05e203cd25109",
+          "rcpt-7197809157b803e7",
+          "rcpt-c58d6cc0ae25b66d"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 278,
+      "net": 3,
+      "newly_broken": 0,
+      "newly_fixed": 3,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 283,
+      "net": 5,
+      "newly_broken": 0,
+      "newly_fixed": 5,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 284,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 286,
+      "net": 2,
+      "newly_broken": 0,
+      "newly_fixed": 2,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 19,
+      "newly_broken": 0,
+      "newly_fixed": 19,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 7,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-4328389305259018388",
+        "q-incident_pager-491650223965225695",
+        "q-service_customers-2302278771834809154",
+        "q-service_customers-2960338721168468544",
+        "q-service_customers-3294037519282380016",
+        "q-service_customers-34379501779898177",
+        "q-service_customers-3988343777877776924"
+      ],
+      "correct": 256,
+      "net": -6,
+      "newly_broken": 7,
+      "newly_fixed": 1,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-4328389305259018388": [
+          "rcpt-d22af76614c6ac6e"
+        ],
+        "q-incident_pager-491650223965225695": [
+          "rcpt-a44f0bbf8ed888fc",
+          "rcpt-5147b8b0c49992ab",
+          "rcpt-ac0fb47420184ef9",
+          "rcpt-230cbb164779c69a"
+        ],
+        "q-service_customers-2302278771834809154": [
+          "rcpt-bb34d15ffd5ce006"
+        ],
+        "q-service_customers-2960338721168468544": [
+          "rcpt-a6a98bc9710b35d1"
+        ],
+        "q-service_customers-3294037519282380016": [
+          "rcpt-a7bb0226a47c40bb"
+        ],
+        "q-service_customers-34379501779898177": [
+          "rcpt-563457b669e12f99"
+        ],
+        "q-service_customers-3988343777877776924": [
+          "rcpt-d22af76614c6ac6e"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-1033464602371665513"
+      ],
+      "correct": 256,
+      "net": 0,
+      "newly_broken": 1,
+      "newly_fixed": 1,
+      "receipts_blamed": {
+        "q-service_customers-1033464602371665513": [
+          "rcpt-fefc700750173921"
+        ]
+      },
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-incident_pager-3398449064462738231"
+      ],
+      "correct": 255,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-incident_pager-3398449064462738231": [
+          "rcpt-5569380ccfd3361a",
+          "rcpt-087309f74a60db68"
+        ]
+      },
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 257,
+      "net": 2,
+      "newly_broken": 0,
+      "newly_fixed": 2,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 258,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-3473224055209806310",
+        "q-page_owner-3473224055209806310",
+        "q-page_owner-875600065065081072"
+      ],
+      "correct": 259,
+      "net": -3,
+      "newly_broken": 3,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-3473224055209806310": [
+          "rcpt-f8c041e09b3edd96"
+        ],
+        "q-page_owner-3473224055209806310": [
+          "rcpt-f8c041e09b3edd96"
+        ],
+        "q-page_owner-875600065065081072": [
+          "rcpt-f8c041e09b3edd96"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 259,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-1352297579307057198",
+        "q-service_owner_team-1013333845461902076"
+      ],
+      "correct": 257,
+      "net": -2,
+      "newly_broken": 2,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-1352297579307057198": [
+          "rcpt-7b74b491566e3f46"
+        ],
+        "q-service_owner_team-1013333845461902076": [
+          "rcpt-7b74b491566e3f46"
+        ]
+      },
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 257,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 7,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-page_owner-1392349902748781769",
+        "q-page_owner-931027454336975567",
+        "q-page_owner-98682454067351152",
+        "q-person_team-3811379094423669675",
+        "q-person_team-4500098289410428759",
+        "q-service_customers-3294037519282380016",
+        "q-team_on_call-204921221219190707"
+      ],
+      "correct": 250,
+      "net": -7,
+      "newly_broken": 7,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-page_owner-1392349902748781769": [
+          "rcpt-bf89e943e296893b"
+        ],
+        "q-page_owner-931027454336975567": [
+          "rcpt-bf89e943e296893b"
+        ],
+        "q-page_owner-98682454067351152": [
+          "rcpt-bf89e943e296893b"
+        ],
+        "q-person_team-3811379094423669675": [
+          "rcpt-250ffb158e52f8da"
+        ],
+        "q-person_team-4500098289410428759": [
+          "rcpt-9629df0da3f1c0d1"
+        ],
+        "q-service_customers-3294037519282380016": [
+          "rcpt-a481e67ae582b191"
+        ],
+        "q-team_on_call-204921221219190707": [
+          "rcpt-bf89e943e296893b"
+        ]
+      },
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 18,
+      "newly_broken": 0,
+      "newly_fixed": 18,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 283,
+      "net": 2,
+      "newly_broken": 0,
+      "newly_fixed": 2,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 283,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 284,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 284,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 275,
+      "net": 12,
+      "newly_broken": 0,
+      "newly_fixed": 12,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 278,
+      "net": 3,
+      "newly_broken": 0,
+      "newly_fixed": 3,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 279,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 279,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 279,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 277,
+      "net": 14,
+      "newly_broken": 0,
+      "newly_fixed": 14,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 277,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 277,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 277,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 277,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-1707911656671496818",
+        "q-service_customers-665296650054529243"
+      ],
+      "correct": 261,
+      "net": -2,
+      "newly_broken": 2,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-service_customers-1707911656671496818": [
+          "rcpt-ce35e0f3f6b98a6a"
+        ],
+        "q-service_customers-665296650054529243": [
+          "rcpt-1e81bbb2d0dad565"
+        ]
+      },
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 261,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 264,
+      "net": 3,
+      "newly_broken": 0,
+      "newly_fixed": 3,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 264,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-page_owner-2721131152913669484",
+        "q-page_owner-605588891211101774",
+        "q-page_owner-643705423944204322"
+      ],
+      "correct": 261,
+      "net": -3,
+      "newly_broken": 3,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-page_owner-2721131152913669484": [
+          "rcpt-14e021f23e47130e",
+          "rcpt-c7b930714f2ede7e"
+        ],
+        "q-page_owner-605588891211101774": [
+          "rcpt-e4884734bb709760",
+          "rcpt-14e021f23e47130e"
+        ],
+        "q-page_owner-643705423944204322": [
+          "rcpt-14e021f23e47130e",
+          "rcpt-e63ba3a40d66eebe"
+        ]
+      },
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 263,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-incident_pager-2527515688896287815",
+        "q-incident_pager-418011796511120206",
+        "q-page_owner-3136542472665281962"
+      ],
+      "correct": 260,
+      "net": -3,
+      "newly_broken": 3,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-incident_pager-2527515688896287815": [
+          "rcpt-bfab7d5f67d5f619"
+        ],
+        "q-incident_pager-418011796511120206": [
+          "rcpt-bfab7d5f67d5f619"
+        ],
+        "q-page_owner-3136542472665281962": [
+          "rcpt-bfab7d5f67d5f619"
+        ]
+      },
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 260,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 260,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-person_team-296600150637408854"
+      ],
+      "correct": 259,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-person_team-296600150637408854": [
+          "rcpt-5f199e3c71173429"
+        ]
+      },
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-2434659845315749095",
+        "q-alert_owning_team-4256973072513608836",
+        "q-page_owner-2434659845315749095"
+      ],
+      "correct": 256,
+      "net": -3,
+      "newly_broken": 3,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-2434659845315749095": [
+          "rcpt-f8d4b7937f371261"
+        ],
+        "q-alert_owning_team-4256973072513608836": [
+          "rcpt-bc626d5fb422207c"
+        ],
+        "q-page_owner-2434659845315749095": [
+          "rcpt-f8d4b7937f371261"
+        ]
+      },
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-3409546157727337604"
+      ],
+      "correct": 290,
+      "net": 19,
+      "newly_broken": 1,
+      "newly_fixed": 20,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-3409546157727337604": [
+          "rcpt-f275599aed18dea3",
+          "rcpt-6a3760862d4bc18f",
+          "rcpt-e7a5f2ca052991c9",
+          "rcpt-316dcce3df973b71",
+          "rcpt-56a2783a12d1c45b",
+          "rcpt-5f1144c70041f37c",
+          "rcpt-7eb15b839ce85da7"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 291,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 292,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 294,
+      "net": 2,
+      "newly_broken": 0,
+      "newly_fixed": 2,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 295,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-3409546157727337604"
+      ],
+      "correct": 283,
+      "net": 12,
+      "newly_broken": 1,
+      "newly_fixed": 13,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-3409546157727337604": [
+          "rcpt-b71ab98dc0657fdc",
+          "rcpt-18bb52b71fe15460",
+          "rcpt-ad831c17a6fdc780",
+          "rcpt-ac19840f4e5d0779",
+          "rcpt-989610d90c2e1134",
+          "rcpt-df84f702e22f3180",
+          "rcpt-92f5505b48bcff23"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 283,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 283,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 284,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "full_v1_rule",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 285,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 289,
+      "net": 18,
+      "newly_broken": 0,
+      "newly_fixed": 18,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 289,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 289,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 289,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_wide_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 289,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 5,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-3409546157727337604",
+        "q-service_customers-2220516493332025309",
+        "q-service_customers-4039299895861161158",
+        "q-service_customers-4254307574424166482",
+        "q-service_customers-4424711746138934930"
+      ],
+      "correct": 266,
+      "net": -5,
+      "newly_broken": 5,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-3409546157727337604": [
+          "rcpt-534c8a407178d8f3",
+          "rcpt-9e8fb3d8d98db724",
+          "rcpt-c92fcd43bff2bfc2"
+        ],
+        "q-service_customers-2220516493332025309": [
+          "rcpt-30a3ab1f80562122"
+        ],
+        "q-service_customers-4039299895861161158": [
+          "rcpt-c71048bce708cb99"
+        ],
+        "q-service_customers-4254307574424166482": [
+          "rcpt-4f6b2e1db8699607"
+        ],
+        "q-service_customers-4424711746138934930": [
+          "rcpt-4b9e531f2080ab78",
+          "rcpt-0df6542670a6595f"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-2838774568312463076"
+      ],
+      "correct": 265,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-service_customers-2838774568312463076": [
+          "rcpt-a75d20f3bcbf3b3a"
+        ]
+      },
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-1191293796009504668"
+      ],
+      "correct": 264,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-service_customers-1191293796009504668": [
+          "rcpt-e97a7c5f6e89df1f"
+        ]
+      },
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 265,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-4147144995175443331"
+      ],
+      "correct": 264,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-service_customers-4147144995175443331": [
+          "rcpt-de01e94467598a26"
+        ]
+      },
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-3409546157727337604",
+        "q-escalation_contact-2555407964461048217"
+      ],
+      "correct": 269,
+      "net": -2,
+      "newly_broken": 2,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-3409546157727337604": [
+          "rcpt-3350c891871e08b0",
+          "rcpt-185dc39e6eb039c8"
+        ],
+        "q-escalation_contact-2555407964461048217": [
+          "rcpt-cef90e0da005d666"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 269,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-page_owner-1865234592749621027",
+        "q-page_owner-3556179242480244133"
+      ],
+      "correct": 267,
+      "net": -2,
+      "newly_broken": 2,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-page_owner-1865234592749621027": [
+          "rcpt-ed080b53693e3551"
+        ],
+        "q-page_owner-3556179242480244133": [
+          "rcpt-ed080b53693e3551"
+        ]
+      },
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 267,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 267,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    }
+  ]
+}

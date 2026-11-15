@@ -1,0 +1,56 @@
+{
+  "claim": "plain_store_v2",
+  "design": "The plain_store arm answers the same held-out questions from the same ingested documents, with no graph. BM25 (k1=1.5, b=0.75) ranks the documents by the question text, and the answer is the most frequently mentioned entity of the template's expected label across the top-k documents. Ties follow the same C3a rule as the graph arm: a multi-answer template returns the whole tied set, a single-answer template refuses. No document mentioning an entity of the expected label in the top-k means unreachable. The pool is withheld from this arm exactly as it is from the graph, so both see the same evidence. It cannot learn, so its number is the same in every round - that is the point of the arm. top_k was swept on seed 1 held-out accuracy (k=1: 0.2147, 3: 0.1559, 5: 0.1706, 10: 0.2294, 12: 0.2441, 15: 0.2647, 18: 0.2529, 20: 0.2500, 25: 0.2441, 30: 0.1853, 50: 0.1500) and fixed at its best value, 15, for every seed. That tuning favours the baseline: it was chosen on held-out scores, while the Mend's constants were frozen in config/mend.toml before any run. Swept again on data v2, where every edge is asserted by one to three documents instead of exactly one (k=1: 0.2588, 3: 0.2176, 5: 0.2324, 10: 0.2794, 12: 0.2912, 15: 0.2941, 18: 0.2853, 20: 0.2735, 25: 0.2941, 30: 0.2882, 50: 0.2147): 15 and 25 tie for best, so the configured 15 stays and the baseline keeps its advantage.",
+  "measured_at": "2026-11-15T16:43:26+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "accuracy": 0.2941,
+      "arm": "plain_store",
+      "correct": 100,
+      "data_version": "v2",
+      "dataset": "northwind_generated",
+      "documents": 2759,
+      "n_heldout": 340,
+      "refused": 70,
+      "round": 0,
+      "seed": 1,
+      "set_f1": 0.317,
+      "top_k": 15,
+      "unreachable": 110,
+      "wrong": 60
+    },
+    {
+      "accuracy": 0.2824,
+      "arm": "plain_store",
+      "correct": 96,
+      "data_version": "v2",
+      "dataset": "northwind_generated",
+      "documents": 2769,
+      "n_heldout": 340,
+      "refused": 55,
+      "round": 0,
+      "seed": 7,
+      "set_f1": 0.3089,
+      "top_k": 15,
+      "unreachable": 115,
+      "wrong": 74
+    },
+    {
+      "accuracy": 0.2719,
+      "arm": "plain_store",
+      "correct": 93,
+      "data_version": "v2",
+      "dataset": "northwind_generated",
+      "documents": 2857,
+      "n_heldout": 342,
+      "refused": 81,
+      "round": 0,
+      "seed": 42,
+      "set_f1": 0.285,
+      "top_k": 15,
+      "unreachable": 105,
+      "wrong": 63
+    }
+  ]
+}

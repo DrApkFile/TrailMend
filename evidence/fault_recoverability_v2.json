@@ -1,0 +1,148 @@
+{
+  "claim": "fault_recoverability_v2",
+  "design": "For each planted wrong edge, whether the edge it replaced is still reachable at all: present in G0, or in the withheld pool that gap-fill reads, or nowhere. Plus how many train questions walk each planted wrong edge at round 0, which is what blame concentration has to work with.",
+  "measured_at": "2026-11-15T16:43:10+00:00",
+  "measured_on": {
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+    "host": "127.0.0.1",
+    "image": "ghcr.io/hydra-db/hydradb",
+    "kind": "local"
+  },
+  "rows": [
+    {
+      "by_kind": {
+        "contradicted": {
+          "planted": 5,
+          "true_edge_in_the_gapfill_pool": 0,
+          "true_edge_nowhere": 0,
+          "true_edge_still_in_g0": 5
+        },
+        "destroyed": {
+          "planted": 4,
+          "true_edge_in_the_gapfill_pool": 0,
+          "true_edge_nowhere": 4,
+          "true_edge_still_in_g0": 0
+        },
+        "recoverable": {
+          "planted": 4,
+          "true_edge_in_the_gapfill_pool": 4,
+          "true_edge_nowhere": 0,
+          "true_edge_still_in_g0": 0
+        }
+      },
+      "data_version": "v2",
+      "planted_wrong_edges": 13,
+      "planted_wrong_edges_walked_by_no_train_question": 0,
+      "questions_per_planted_wrong_edge": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        5
+      ],
+      "seed": 1,
+      "train_questions_walking_a_planted_wrong_edge_at_round_0": 30,
+      "true_edge_in_the_gapfill_pool": 4,
+      "true_edge_nowhere": 4,
+      "true_edge_still_in_g0": 5
+    },
+    {
+      "by_kind": {
+        "contradicted": {
+          "planted": 5,
+          "true_edge_in_the_gapfill_pool": 0,
+          "true_edge_nowhere": 0,
+          "true_edge_still_in_g0": 5
+        },
+        "destroyed": {
+          "planted": 4,
+          "true_edge_in_the_gapfill_pool": 0,
+          "true_edge_nowhere": 4,
+          "true_edge_still_in_g0": 0
+        },
+        "recoverable": {
+          "planted": 4,
+          "true_edge_in_the_gapfill_pool": 4,
+          "true_edge_nowhere": 0,
+          "true_edge_still_in_g0": 0
+        }
+      },
+      "data_version": "v2",
+      "planted_wrong_edges": 13,
+      "planted_wrong_edges_walked_by_no_train_question": 1,
+      "questions_per_planted_wrong_edge": [
+        0,
+        1,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5
+      ],
+      "seed": 7,
+      "train_questions_walking_a_planted_wrong_edge_at_round_0": 34,
+      "true_edge_in_the_gapfill_pool": 4,
+      "true_edge_nowhere": 4,
+      "true_edge_still_in_g0": 5
+    },
+    {
+      "by_kind": {
+        "contradicted": {
+          "planted": 5,
+          "true_edge_in_the_gapfill_pool": 0,
+          "true_edge_nowhere": 0,
+          "true_edge_still_in_g0": 5
+        },
+        "destroyed": {
+          "planted": 4,
+          "true_edge_in_the_gapfill_pool": 0,
+          "true_edge_nowhere": 4,
+          "true_edge_still_in_g0": 0
+        },
+        "recoverable": {
+          "planted": 4,
+          "true_edge_in_the_gapfill_pool": 4,
+          "true_edge_nowhere": 0,
+          "true_edge_still_in_g0": 0
+        }
+      },
+      "data_version": "v2",
+      "planted_wrong_edges": 13,
+      "planted_wrong_edges_walked_by_no_train_question": 2,
+      "questions_per_planted_wrong_edge": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        5
+      ],
+      "seed": 42,
+      "train_questions_walking_a_planted_wrong_edge_at_round_0": 31,
+      "true_edge_in_the_gapfill_pool": 4,
+      "true_edge_nowhere": 4,
+      "true_edge_still_in_g0": 5
+    }
+  ]
+}

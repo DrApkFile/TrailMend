@@ -1,0 +1,171 @@
+{
+  "claim": "hypotheses_v2",
+  "design": "The eight hypotheses preregistered in PRD section 3.2 before any of run 2 was built, decided from this run's curve, paired held-out verdicts, non-regression rows and quarantine report. A failed hypothesis is published as failed, beside run 1's.",
+  "measured_at": "2026-11-15T16:43:49+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "claim": "the full Mend beats the frozen graph on the same held-out questions, every seed",
+      "id": "H1'",
+      "per_seed": [
+        {
+          "delta_points": 10.2941,
+          "p_value": 0.0,
+          "seed": 1
+        },
+        {
+          "delta_points": 6.1765,
+          "p_value": 1e-06,
+          "seed": 7
+        },
+        {
+          "delta_points": 7.0175,
+          "p_value": 1e-06,
+          "seed": 42
+        }
+      ],
+      "rule": "full_v2 beats frozen on the same held-out questions at the last round under a two-sided exact McNemar test at p < 0.05, with a gain of at least 2.0 points, on all 3 of 3 seeds",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "neither random control beats the frozen graph",
+      "id": "H2'",
+      "per_arm": {
+        "random_quarantine": [
+          {
+            "delta_points": -3.5294,
+            "p_value": 0.000488,
+            "seed": 1
+          },
+          {
+            "delta_points": -2.0588,
+            "p_value": 0.015625,
+            "seed": 7
+          },
+          {
+            "delta_points": -1.1696,
+            "p_value": 0.125,
+            "seed": 42
+          }
+        ],
+        "random_reweight": [
+          {
+            "delta_points": -1.1765,
+            "p_value": 0.34375,
+            "seed": 1
+          },
+          {
+            "delta_points": -0.5882,
+            "p_value": 0.5,
+            "seed": 7
+          },
+          {
+            "delta_points": -2.0468,
+            "p_value": 0.039062,
+            "seed": 42
+          }
+        ]
+      },
+      "rule": "neither random control beats frozen under the same paired test on any seed",
+      "verdict": "PASS"
+    },
+    {
+      "accuracy_per_seed": {
+        "1": 0.2941,
+        "42": 0.2719,
+        "7": 0.2824
+      },
+      "claim": "the plain-store arm is flat across rounds",
+      "id": "H3'",
+      "note": "flat by construction: it is scored once per seed and cannot learn",
+      "rule": "the plain-store accuracy is identical at every round, for every seed",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "quarantine recall on planted wrong edges >= 0.7 with false-quarantine rate <= 0.1",
+      "false_quarantine_rate_per_seed": [
+        0.1667,
+        0.25,
+        0.0
+      ],
+      "id": "H4'",
+      "recall_per_seed": [
+        0.7692,
+        0.6923,
+        0.6154
+      ],
+      "rule": "recall on planted wrong edges >= 0.7 for every seed, and false-quarantine rate <= 0.1 where defined",
+      "verdict": "FAIL"
+    },
+    {
+      "claim": "net regressions on previously-correct held-out questions <= 2% per round",
+      "id": "H5'",
+      "rule": "newly_broken / correct <= 0.02 in the worst round after round 0, full_v2",
+      "verdict": "PASS",
+      "worst_round_break_share": 0.0034
+    },
+    {
+      "claim": "the held-out wrong-answer rate falls by at least 40%",
+      "id": "H6'",
+      "per_seed": {
+        "1": {
+          "round_0": 0.15,
+          "round_n": 0.1029
+        },
+        "42": {
+          "round_0": 0.117,
+          "round_n": 0.0789
+        },
+        "7": {
+          "round_0": 0.1441,
+          "round_n": 0.1059
+        }
+      },
+      "rule": "the held-out wrong-answer rate falls by at least 40% from round 0 to the last round, every seed",
+      "verdict": "FAIL"
+    },
+    {
+      "claim": "gap-fill ingests most of what its own rule reaches",
+      "id": "H7'",
+      "per_seed": {
+        "1": {
+          "ingested": 56,
+          "reached": 56
+        },
+        "42": {
+          "ingested": 47,
+          "reached": 47
+        },
+        "7": {
+          "ingested": 55,
+          "reached": 55
+        }
+      },
+      "rule": "full_v2 ingests at least 60% of the withheld edges its own gap-fill rule reached, every seed",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "the run-2 update and gap-fill rules beat the run-1 rules on the same data",
+      "id": "H8'",
+      "per_seed": [
+        {
+          "delta_points": 3.2353,
+          "p_value": 0.000977,
+          "seed": 1
+        },
+        {
+          "delta_points": 1.4706,
+          "p_value": 0.125,
+          "seed": 7
+        },
+        {
+          "delta_points": 2.924,
+          "p_value": 0.001953,
+          "seed": 42
+        }
+      ],
+      "rule": "full_v2 beats full_v1_rule under the same paired test on at least 2 of the 3 seeds",
+      "verdict": "PASS"
+    }
+  ]
+}

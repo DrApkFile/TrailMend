@@ -38,7 +38,61 @@ No LLM is on the answer path, and no LLM scores an answer.
 ## The numbers
 
 <!-- numbers:start -->
-### Held-out accuracy by arm
+### Run 2, on dataset v2
+
+| arm | round 0 | round 5 | change |
+|---|---|---|---|
+| `frozen` | 77.9% | 77.9% | +0.0 points |
+| `full_v1_rule` | 77.9% | 83.2% | +5.3 points |
+| `full_v2` | 77.9% | 85.7% | +7.8 points |
+| `gapfill_wide_only` | 77.9% | 82.9% | +5.0 points |
+| `plain_store` | 28.3% | 28.3% | +0.0 points |
+| `random_quarantine` | 77.9% | 75.6% | -2.3 points |
+| `random_reweight` | 77.9% | 76.6% | -1.3 points |
+
+The document-only baseline (BM25 over the same corpus, no graph) scores 28.3%, with its one hyperparameter re-tuned on this data to its own best held-out score.
+
+Against the frozen graph, question by question on the same seed and split:
+
+| seed | arm | gain over frozen | p (exact McNemar) |
+|---|---|---|---|
+| 1 | `full_v2` | +10.3 points | 0.0000 |
+| 7 | `full_v2` | +6.2 points | 0.0000 |
+| 42 | `full_v2` | +7.0 points | 0.0000 |
+| 1 | `gapfill_wide_only` | +5.6 points | 0.0000 |
+| 7 | `gapfill_wide_only` | +4.1 points | 0.0001 |
+| 42 | `gapfill_wide_only` | +5.3 points | 0.0000 |
+| 1 | `random_quarantine` | -3.5 points | 0.0005 |
+| 7 | `random_quarantine` | -2.1 points | 0.0156 |
+| 42 | `random_quarantine` | -1.2 points | 0.1250 |
+| 1 | `random_reweight` | -1.2 points | 0.3438 |
+| 7 | `random_reweight` | -0.6 points | 0.5000 |
+| 42 | `random_reweight` | -2.0 points | 0.0391 |
+
+How much of the repairable damage the full arm repaired, with the denominator measured by an oracle on the same data:
+
+| seed | round 0 | last round | gained | reachable | captured |
+|---|---|---|---|---|---|
+| 1 | 77.1% | 87.4% | +10.3 points | 11.5 points | 90% |
+| 7 | 77.3% | 83.5% | +6.2 points | 11.8 points | 53% |
+| 42 | 79.2% | 86.3% | +7.0 points | 10.8 points | 65% |
+
+#### Hypotheses, fixed before run 2 was built
+
+| id | claim | verdict |
+|---|---|---|
+| H1' | the full Mend beats the frozen graph on the same held-out questions, every seed | **PASS** |
+| H2' | neither random control beats the frozen graph | **PASS** |
+| H3' | the plain-store arm is flat across rounds | **PASS** |
+| H4' | quarantine recall on planted wrong edges >= 0.7 with false-quarantine rate <= 0.1 | **FAIL** |
+| H5' | net regressions on previously-correct held-out questions <= 2% per round | **PASS** |
+| H6' | the held-out wrong-answer rate falls by at least 40% | **FAIL** |
+| H7' | gap-fill ingests most of what its own rule reaches | **PASS** |
+| H8' | the run-2 update and gap-fill rules beat the run-1 rules on the same data | **PASS** |
+
+### Run 1, which failed and stays published
+
+Its headline hypothesis asked for a lift larger than the spread between seeds and did not get one. It is kept here exactly as it was published, next to run 2. The two runs use different generated data, so only comparisons inside a run are claims. Why it failed is measured in [docs/RUN1_DIAGNOSIS.md](docs/RUN1_DIAGNOSIS.md).
 
 | arm | round 0 | round 5 | change |
 |---|---|---|---|
@@ -52,9 +106,7 @@ No LLM is on the answer path, and no LLM scores an answer.
 | `random_reweight` | 83.9% | 76.2% | -7.6 points |
 | `reweight_only` | 83.9% | 82.0% | -1.9 points |
 
-The document-only baseline (BM25 over the same corpus, no graph) scores 24.6%, with its one hyperparameter tuned to its own best held-out score.
-
-### Preregistered hypotheses
+Document-only baseline on run 1's data: 24.6%.
 
 | id | claim | verdict |
 |---|---|---|
@@ -66,6 +118,25 @@ The document-only baseline (BM25 over the same corpus, no graph) scores 24.6%, w
 
 ### Evidence files
 
+Run 2:
+
+| file | what it is | sha256 (first 16) |
+|---|---|---|
+| [`evidence/curve_v2.jsonl`](evidence/curve_v2.jsonl) | run 2: held-out and training accuracy per seed, arm and round | `f443cd566b5953a2…` |
+| [`evidence/mechanisms_v2.json`](evidence/mechanisms_v2.json) | run 2: one row per arm, from round 0 to the last round | `efbf3ade0da1f7b6…` |
+| [`evidence/paired_v2.json`](evidence/paired_v2.json) | run 2: every held-out question counted as a pair against the frozen arm, with its p-value | `9e6f79376e842bfb…` |
+| [`evidence/captured_share_v2.json`](evidence/captured_share_v2.json) | run 2: what the full arm gained over what the oracle says was reachable | `1acdec55d6d5c051…` |
+| [`evidence/oracle_v2.json`](evidence/oracle_v2.json) | run 2: the ceiling of each repair, measured by applying it perfectly | `cdaf8d536af75918…` |
+| [`evidence/changes_v2.json`](evidence/changes_v2.json) | run 2: change counts per seed, arm and round, every control beside the full arm | `9c71a5c872c8ea37…` |
+| [`evidence/non_regression_v2.json`](evidence/non_regression_v2.json) | run 2: newly fixed, newly broken and net per round, each break traced to receipts | `8beb6b10986e86c7…` |
+| [`evidence/quarantine_v2.json`](evidence/quarantine_v2.json) | run 2: quarantine precision and recall against the planted faults | `a0d77afda0ab870b…` |
+| [`evidence/hypotheses_v2.json`](evidence/hypotheses_v2.json) | run 2: H1' to H8' with the rule each was decided by | `6ae170b548c9ce72…` |
+| [`evidence/plain_store_v2.json`](evidence/plain_store_v2.json) | run 2: the document-only baseline, re-tuned on v2 to its own best score | `ffb5b6dcdde73a9a…` |
+| [`evidence/fault_recoverability_v2.json`](evidence/fault_recoverability_v2.json) | run 2: where the truth behind each planted fault is, by fault kind | `deaa67c20abbc6c8…` |
+| [`evidence/run_manifest_v2.json`](evidence/run_manifest_v2.json) | run 2: commit, HydraDB digest, config hash, data version, seeds and every digest | `5517f67c472bf480…` |
+
+Run 1, and the two files that describe the deployment both runs used:
+
 | file | what it is | sha256 (first 16) |
 |---|---|---|
 | [`evidence/curve.jsonl`](evidence/curve.jsonl) | held-out and training accuracy per seed, arm and round | `eb886008a2906f65…` |
@@ -76,6 +147,9 @@ The document-only baseline (BM25 over the same corpus, no graph) scores 24.6%, w
 | [`evidence/non_regression.json`](evidence/non_regression.json) | newly fixed, newly broken and net per round, each break traced to receipts | `a850cf278565d52d…` |
 | [`evidence/quarantine.json`](evidence/quarantine.json) | quarantine precision and recall against the planted faults | `dedd1780b2273e19…` |
 | [`evidence/hypotheses.json`](evidence/hypotheses.json) | H1-H5 with the rule each was decided by | `920ee235e0130614…` |
+| [`evidence/anatomy.json`](evidence/anatomy.json) | run 1 diagnosed: every failing train question by what broke its path | `409fada1c2cb94a3…` |
+| [`evidence/oracle.json`](evidence/oracle.json) | run 1 diagnosed: the ceiling of each repair on run 1's data | `21ddd7cbf2535ffa…` |
+| [`evidence/fault_recoverability.json`](evidence/fault_recoverability.json) | run 1 diagnosed: whether the truth behind a planted fault exists anywhere | `58158001b487e3fd…` |
 | [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `a0c4e5cec36e2834…` |
 | [`evidence/load.json`](evidence/load.json) | loading G0 into HydraDB, and that a re-load adds nothing | `ef1c00b3507de398…` |
 | [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | `87a2921754f7ed09…` |
