@@ -1,0 +1,243 @@
+{
+  "claim": "anatomy",
+  "design": "Every train question the full arm did not answer correctly, at round 0 and after the last recorded round, classified by what broke the path that should have carried the gold answer. The round-5 graph is reached by replaying the arm's own receipts onto a freshly loaded G0, so no judging and no new randomness is involved. Causes are decided in one order - planted wrong edge, missing edge, alias duplicate, conflated entity, tie, other - and every other cause that also applied to the same question is counted in overlaps.",
+  "measured_at": "2026-11-15T08:34:12+00:00",
+  "measured_on": {
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+    "host": "127.0.0.1",
+    "image": "ghcr.io/hydra-db/hydradb",
+    "kind": "local"
+  },
+  "rows": [
+    {
+      "accuracy": 0.8431,
+      "also_applied": {
+        "missing_edge": 6
+      },
+      "by_template": {
+        "alert_owning_team": 12,
+        "alert_service": 4,
+        "customer_affected_by_incident": 8,
+        "escalation_contact": 3,
+        "incident_pager": 13,
+        "page_owner": 22,
+        "service_customers": 4,
+        "service_owner_team": 8,
+        "team_on_call": 6
+      },
+      "causes": {
+        "alias_duplicate": 5,
+        "conflated_entity": 0,
+        "missing_edge": 42,
+        "other": 0,
+        "planted_wrong_edge": 33,
+        "tie": 0
+      },
+      "correct": 430,
+      "point": "round_0",
+      "refused": 0,
+      "seed": 1,
+      "train_questions": 510,
+      "true_edge_was_replaced": 33,
+      "unreachable": 31,
+      "wrong": 49,
+      "wrong_edge_on_the_chosen_path": 28
+    },
+    {
+      "accuracy": 0.8784,
+      "also_applied": {
+        "missing_edge": 6
+      },
+      "by_template": {
+        "alert_owning_team": 9,
+        "alert_service": 2,
+        "customer_affected_by_incident": 9,
+        "incident_pager": 17,
+        "page_owner": 13,
+        "service_customers": 3,
+        "service_owner_team": 4,
+        "team_on_call": 5
+      },
+      "causes": {
+        "alias_duplicate": 5,
+        "conflated_entity": 0,
+        "missing_edge": 18,
+        "other": 6,
+        "planted_wrong_edge": 33,
+        "tie": 0
+      },
+      "correct": 448,
+      "point": "last_round",
+      "receipts_replayed": {
+        "gapfill": 31,
+        "promote": 9,
+        "quarantine": 17,
+        "reweight": 2876
+      },
+      "refused": 0,
+      "seed": 1,
+      "train_questions": 510,
+      "true_edge_was_replaced": 33,
+      "unreachable": 35,
+      "wrong": 27,
+      "wrong_edge_on_the_chosen_path": 0
+    },
+    {
+      "accuracy": 0.8078,
+      "also_applied": {
+        "alias_duplicate": 2,
+        "missing_edge": 6,
+        "tie": 1
+      },
+      "by_template": {
+        "alert_owning_team": 18,
+        "alert_service": 5,
+        "customer_affected_by_incident": 8,
+        "escalation_contact": 5,
+        "incident_pager": 14,
+        "page_owner": 29,
+        "person_team": 4,
+        "service_customers": 6,
+        "service_owner_team": 6,
+        "team_on_call": 3
+      },
+      "causes": {
+        "alias_duplicate": 3,
+        "conflated_entity": 1,
+        "missing_edge": 59,
+        "other": 0,
+        "planted_wrong_edge": 35,
+        "tie": 0
+      },
+      "correct": 412,
+      "point": "round_0",
+      "refused": 1,
+      "seed": 7,
+      "train_questions": 510,
+      "true_edge_was_replaced": 35,
+      "unreachable": 53,
+      "wrong": 44,
+      "wrong_edge_on_the_chosen_path": 31
+    },
+    {
+      "accuracy": 0.8667,
+      "also_applied": {
+        "alias_duplicate": 2,
+        "missing_edge": 6,
+        "tie": 1
+      },
+      "by_template": {
+        "alert_owning_team": 12,
+        "alert_service": 1,
+        "customer_affected_by_incident": 11,
+        "incident_pager": 15,
+        "page_owner": 19,
+        "person_team": 1,
+        "service_customers": 3,
+        "service_owner_team": 3,
+        "team_on_call": 3
+      },
+      "causes": {
+        "alias_duplicate": 3,
+        "conflated_entity": 1,
+        "missing_edge": 22,
+        "other": 7,
+        "planted_wrong_edge": 35,
+        "tie": 0
+      },
+      "correct": 442,
+      "point": "last_round",
+      "receipts_replayed": {
+        "gapfill": 35,
+        "promote": 5,
+        "quarantine": 16,
+        "reweight": 2869
+      },
+      "refused": 1,
+      "seed": 7,
+      "train_questions": 510,
+      "true_edge_was_replaced": 35,
+      "unreachable": 42,
+      "wrong": 25,
+      "wrong_edge_on_the_chosen_path": 0
+    },
+    {
+      "accuracy": 0.8171,
+      "also_applied": {
+        "missing_edge": 2,
+        "tie": 1
+      },
+      "by_template": {
+        "alert_owning_team": 19,
+        "alert_service": 4,
+        "customer_affected_by_incident": 4,
+        "escalation_contact": 3,
+        "incident_pager": 18,
+        "page_owner": 31,
+        "person_team": 4,
+        "service_customers": 3,
+        "service_owner_team": 6,
+        "team_on_call": 2
+      },
+      "causes": {
+        "alias_duplicate": 5,
+        "conflated_entity": 1,
+        "missing_edge": 49,
+        "other": 0,
+        "planted_wrong_edge": 38,
+        "tie": 1
+      },
+      "correct": 420,
+      "point": "round_0",
+      "refused": 2,
+      "seed": 42,
+      "train_questions": 514,
+      "true_edge_was_replaced": 38,
+      "unreachable": 47,
+      "wrong": 45,
+      "wrong_edge_on_the_chosen_path": 33
+    },
+    {
+      "accuracy": 0.8541,
+      "also_applied": {
+        "missing_edge": 2,
+        "tie": 1
+      },
+      "by_template": {
+        "alert_owning_team": 13,
+        "alert_service": 1,
+        "customer_affected_by_incident": 8,
+        "escalation_contact": 1,
+        "incident_pager": 19,
+        "page_owner": 24,
+        "person_team": 1,
+        "service_customers": 3,
+        "service_owner_team": 4,
+        "team_on_call": 1
+      },
+      "causes": {
+        "alias_duplicate": 5,
+        "conflated_entity": 1,
+        "missing_edge": 23,
+        "other": 7,
+        "planted_wrong_edge": 38,
+        "tie": 1
+      },
+      "correct": 439,
+      "point": "last_round",
+      "receipts_replayed": {
+        "gapfill": 25,
+        "promote": 1,
+        "quarantine": 14,
+        "reweight": 2850
+      },
+      "refused": 2,
+      "seed": 42,
+      "train_questions": 514,
+      "true_edge_was_replaced": 38,
+      "unreachable": 48,
+      "wrong": 25,
+      "wrong_edge_on_the_chosen_path": 0
+    }
+  ]
+}

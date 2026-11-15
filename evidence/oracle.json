@@ -1,0 +1,238 @@
+{
+  "claim": "oracle",
+  "design": "A ladder of perfect repairs read straight from faults.json, each stage applied on top of the last, scored on held-out questions. It answers one question: what could any repair mechanism reach on this data? The first two rungs are the whole vocabulary this build has (quarantine, gap-fill); the last two are repairs no mechanism in this build can make, and the final rung is the truth graph itself.",
+  "measured_at": "2026-11-15T08:34:12+00:00",
+  "measured_on": {
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+    "host": "127.0.0.1",
+    "image": "ghcr.io/hydra-db/hydradb",
+    "kind": "local"
+  },
+  "rows": [
+    {
+      "claim": "the ingested graph, no repair at all: this is round 0 of every arm",
+      "held_out_accuracy": 0.8529,
+      "held_out_correct": 290,
+      "held_out_n": 340,
+      "refused": 0,
+      "repaired": {},
+      "seed": 1,
+      "stage": "g0",
+      "unreachable": 23,
+      "wrong": 27
+    },
+    {
+      "claim": "every planted wrong edge quarantined, which is the most the quarantine mechanism could ever achieve",
+      "held_out_accuracy": 0.8529,
+      "held_out_correct": 290,
+      "held_out_n": 340,
+      "refused": 0,
+      "repaired": {
+        "planted_wrong_edges": 13,
+        "quarantined": 13
+      },
+      "seed": 1,
+      "stage": "quarantine_planted_wrong_edges",
+      "unreachable": 36,
+      "wrong": 14
+    },
+    {
+      "claim": "and every withheld edge ingested, which is the most gap-fill could ever achieve",
+      "held_out_accuracy": 0.9265,
+      "held_out_correct": 315,
+      "held_out_n": 340,
+      "refused": 0,
+      "repaired": {
+        "ingested": 104,
+        "pool_edges": 104
+      },
+      "seed": 1,
+      "stage": "and_ingest_withheld_edges",
+      "unreachable": 19,
+      "wrong": 6
+    },
+    {
+      "claim": "and every duplicated service merged back, which no mechanism in this build can do",
+      "held_out_accuracy": 0.9324,
+      "held_out_correct": 317,
+      "held_out_n": 340,
+      "refused": 0,
+      "repaired": {
+        "dropped": 7,
+        "duplicates": 6,
+        "edges_moved_back": 7
+      },
+      "seed": 1,
+      "stage": "and_merge_alias_duplicates",
+      "unreachable": 18,
+      "wrong": 5
+    },
+    {
+      "claim": "and every conflated person split again: the graph is now the truth graph, so this is the data's ceiling",
+      "held_out_accuracy": 0.9324,
+      "held_out_correct": 317,
+      "held_out_n": 340,
+      "refused": 0,
+      "repaired": {
+        "conflations": 1,
+        "dropped": 2,
+        "edges_restored": 2,
+        "people_restored": 1
+      },
+      "seed": 1,
+      "stage": "and_split_conflated_people",
+      "unreachable": 18,
+      "wrong": 5
+    },
+    {
+      "claim": "the ingested graph, no repair at all: this is round 0 of every arm",
+      "held_out_accuracy": 0.8235,
+      "held_out_correct": 280,
+      "held_out_n": 340,
+      "refused": 1,
+      "repaired": {},
+      "seed": 7,
+      "stage": "g0",
+      "unreachable": 33,
+      "wrong": 26
+    },
+    {
+      "claim": "every planted wrong edge quarantined, which is the most the quarantine mechanism could ever achieve",
+      "held_out_accuracy": 0.8235,
+      "held_out_correct": 280,
+      "held_out_n": 340,
+      "refused": 1,
+      "repaired": {
+        "planted_wrong_edges": 13,
+        "quarantined": 13
+      },
+      "seed": 7,
+      "stage": "quarantine_planted_wrong_edges",
+      "unreachable": 50,
+      "wrong": 9
+    },
+    {
+      "claim": "and every withheld edge ingested, which is the most gap-fill could ever achieve",
+      "held_out_accuracy": 0.9412,
+      "held_out_correct": 320,
+      "held_out_n": 340,
+      "refused": 1,
+      "repaired": {
+        "ingested": 105,
+        "pool_edges": 105
+      },
+      "seed": 7,
+      "stage": "and_ingest_withheld_edges",
+      "unreachable": 18,
+      "wrong": 1
+    },
+    {
+      "claim": "and every duplicated service merged back, which no mechanism in this build can do",
+      "held_out_accuracy": 0.9441,
+      "held_out_correct": 321,
+      "held_out_n": 340,
+      "refused": 1,
+      "repaired": {
+        "dropped": 7,
+        "duplicates": 6,
+        "edges_moved_back": 7
+      },
+      "seed": 7,
+      "stage": "and_merge_alias_duplicates",
+      "unreachable": 17,
+      "wrong": 1
+    },
+    {
+      "claim": "and every conflated person split again: the graph is now the truth graph, so this is the data's ceiling",
+      "held_out_accuracy": 0.9471,
+      "held_out_correct": 322,
+      "held_out_n": 340,
+      "refused": 0,
+      "repaired": {
+        "conflations": 1,
+        "dropped": 2,
+        "edges_restored": 2,
+        "people_restored": 1
+      },
+      "seed": 7,
+      "stage": "and_split_conflated_people",
+      "unreachable": 17,
+      "wrong": 1
+    },
+    {
+      "claim": "the ingested graph, no repair at all: this is round 0 of every arm",
+      "held_out_accuracy": 0.8392,
+      "held_out_correct": 287,
+      "held_out_n": 342,
+      "refused": 0,
+      "repaired": {},
+      "seed": 42,
+      "stage": "g0",
+      "unreachable": 32,
+      "wrong": 23
+    },
+    {
+      "claim": "every planted wrong edge quarantined, which is the most the quarantine mechanism could ever achieve",
+      "held_out_accuracy": 0.8392,
+      "held_out_correct": 287,
+      "held_out_n": 342,
+      "refused": 0,
+      "repaired": {
+        "planted_wrong_edges": 13,
+        "quarantined": 13
+      },
+      "seed": 42,
+      "stage": "quarantine_planted_wrong_edges",
+      "unreachable": 44,
+      "wrong": 11
+    },
+    {
+      "claim": "and every withheld edge ingested, which is the most gap-fill could ever achieve",
+      "held_out_accuracy": 0.9415,
+      "held_out_correct": 322,
+      "held_out_n": 342,
+      "refused": 0,
+      "repaired": {
+        "ingested": 106,
+        "pool_edges": 106
+      },
+      "seed": 42,
+      "stage": "and_ingest_withheld_edges",
+      "unreachable": 15,
+      "wrong": 5
+    },
+    {
+      "claim": "and every duplicated service merged back, which no mechanism in this build can do",
+      "held_out_accuracy": 0.9503,
+      "held_out_correct": 325,
+      "held_out_n": 342,
+      "refused": 0,
+      "repaired": {
+        "dropped": 8,
+        "duplicates": 6,
+        "edges_moved_back": 8
+      },
+      "seed": 42,
+      "stage": "and_merge_alias_duplicates",
+      "unreachable": 13,
+      "wrong": 4
+    },
+    {
+      "claim": "and every conflated person split again: the graph is now the truth graph, so this is the data's ceiling",
+      "held_out_accuracy": 0.9503,
+      "held_out_correct": 325,
+      "held_out_n": 342,
+      "refused": 0,
+      "repaired": {
+        "conflations": 1,
+        "dropped": 3,
+        "edges_restored": 3,
+        "people_restored": 1
+      },
+      "seed": 42,
+      "stage": "and_split_conflated_people",
+      "unreachable": 13,
+      "wrong": 4
+    }
+  ]
+}
