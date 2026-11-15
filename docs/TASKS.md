@@ -278,10 +278,11 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   evidence file fills each blank, and `@<hydradb-handle>` to be checked rather than guessed. Recording the Loom and
   posting both need the hosted URLs (A1/A2) and the finished numbers.
 - [ ] G5 Pre-submit audit from a clean clone; submit before 09:00 IST Nov 16.
-  RUN CLEAN 2026-11-15 at 588b2e5 with the live tests on: all 14 checks pass — no `.env` in the clone, no
+  RUN CLEAN 2026-11-15 at f94a9d9 with the live tests on: all 14 checks pass — no `.env` in the clone, no
   credential-shaped strings, the README numbers block has no holes, every digest in `evidence/run_manifest.json`
   matches the file as cloned, no unfilled blanks on the site, `uv sync --frozen`, ruff, pyright strict, the unit
   tests, the web install, typecheck, lint and build, and the live contract tests against a real HydraDB. It
-  found and fixed one bug of its own first: the digest check read a `files` key that `run_manifest.json` has
-  never had, so it could only ever fail. Ticks when it is run once more with the Loom link in the README,
+  found two bugs first: the digest check read a `files` key that `run_manifest.json` has never had, so it could only
+  ever fail; and the manifest hashed `evidence/posts.md`, so editing the post drafts broke the audit for a file no
+  number is read from. The manifest now hashes the measured files only. Ticks when it is run once more with the Loom link in the README,
   immediately before submitting.
