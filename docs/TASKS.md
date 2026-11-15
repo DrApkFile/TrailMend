@@ -293,7 +293,7 @@ Run 1 is finished and published as FAIL. Phase H does not touch run 1's evidence
 task is traced to a finding in `docs/RUN1_DIAGNOSIS.md`. Time boxes, Lagos: H1–H4 gated by 19:00, sweep done by
 23:30, analysis and live verification by 00:30. A missed box is reported at once, with what is left.
 
-- [ ] H1 The ingest rule, then dataset v2 on top of it.
+- [x] H1 The ingest rule, then dataset v2 on top of it.
   `core/ingest.py` prices every edge as `1.0 / (1 + ln(support))` from the number of ingested documents asserting it;
   the renderer draws support for every edge from the declared distribution and renders that many distinct documents;
   the loader and gap-fill both ingest at that rule. Then `data_version="v2"` splits the planted wrong edges into
@@ -303,23 +303,41 @@ task is traced to a finding in `docs/RUN1_DIAGNOSIS.md`. Time boxes, Lagos: H1�
   for every `recoverable` one and nowhere for every `destroyed` one; v1's generated digests are unchanged, which the
   manifest proves; a test shows at least 15% of ordinary v2 edges have support ≥ 3, so support cannot be read as a
   fault flag; unit tests pin the rule's monotonicity and the three kinds. (Diagnosis §2, §5; amendment 1.)
-- [ ] H2 Update rule v2 as a measured dimension, not a replacement. `eta_blame` 0.35 and `eta_confirm` 0.10 replace
+    DONE 2026-11-15: 1/(1+ln(support)) prices every edge, support drawn from P(1) .55 / P(2) .25 / P(3) .20 and capped
+  at 3 because there are three document templates per relation type. v2's 13 wrong edges split 5 contradicted / 4
+  recoverable / 4 destroyed on every seed, checked per kind; v1 reproduces run 1's published faults, documents and
+  split digests, which a test asserts against evidence/run_manifest.json; 21-22% of ordinary v2 edges have support 3,
+  so support is not a fault flag.
+- [x] H2 Update rule v2 as a measured dimension, not a replacement. `eta_blame` 0.35 and `eta_confirm` 0.10 replace
   the single `eta`, `cost_floor` rises to 0.5, and the run-1 rule stays reachable so `full_v1_rule` runs on the same
   data. Acceptance: the bound property tests pass under both rules; a test shows a confirm moving cost less than a
   blame; `config/mend.toml` carries both and the config digest changes. (Diagnosis §6.)
-- [ ] H3 Gap-fill v2 as its own arm. It triggers on wrong answers as well as unreachable ones and follows one extra
+    DONE 2026-11-15: eta_blame 0.35, eta_confirm 0.10, cost_floor 0.5 in [mend]; run 1's symmetric rule kept in
+  [run1_rule] and reachable as full_v1_rule. Bound property tests pass under both; a test shows a confirm moving cost
+  less than a blame.
+- [x] H3 Gap-fill v2 as its own arm. It triggers on wrong answers as well as unreachable ones and follows one extra
   wave from the nodes the first wave reached, behind `gapfill_waves`; the narrow rule stays reachable.
   Acceptance: INV7 holds for both rules in the live tests; a test shows the wide rule firing on a wrong answer the
   narrow rule ignores. (Diagnosis §5, REALITY_SPIKES S25.)
-- [ ] H4 Analysis for the new hypotheses, written and tested before the sweep. Two-sided exact McNemar on paired
+    DONE 2026-11-15: triggers on wrong answers as well as unreachable ones and follows a second wave from the entities
+  the first wave reached, declared in [gapfill]. INV7 pinned for both rules; the live suite passes under the new
+  config (48 tests).
+- [x] H4 Analysis for the new hypotheses, written and tested before the sweep. Two-sided exact McNemar on paired
   per-question held-out verdicts, the held-out wrong-answer rate, the captured share of the reachable gain, H1'–H8'
-  decided by code, and `check_inv6` re-pointed so each random control is checked against `full_v2`.
+  decided by code, and each random control checked against its own plan, which is computed under `full_v2`'s rule.
   Acceptance: unit tests give McNemar hand-checkable inputs including the zero-discordant case; the run-1 refusals
-  still hold (no verdict from an empty input); `hypotheses.json` carries both runs side by side with the rule each
-  was decided by. (Diagnosis finding 5; amendments 2 and 3.)
-- [ ] H5 The oracle ladder on v2 → `evidence/oracle_v2.json`, giving the denominator for the captured share.
+  still hold (no verdict from an empty input); `hypotheses_v2.json` is published beside `hypotheses.json`, each with
+  the rule its verdicts were decided by. (Diagnosis finding 5; amendments 2 and 3.)
+    DONE 2026-11-15: two-sided exact McNemar on paired per-question verdicts with hand-checkable tests including the
+  zero-discordant case, the held-out wrong-answer rate, the captured share of the reachable gain, and H1'-H8' decided
+  by code in analyse_v2. Every run-1 refusal kept and three added: no analysis of a curve that mixes runs or data
+  versions, no captured share without a ladder.
+- [x] H5 The oracle ladder on v2 → `evidence/oracle_v2.json`, giving the denominator for the captured share.
   Acceptance: the ladder's rungs repair `contradicted`, `recoverable` and withheld faults and are scored on held-out;
   the reachable-gain denominator is read from this file by code, never typed. (Amendment 2.)
+    DONE 2026-11-15: oracle_run walks the ladder on v2, with a new first rung that quarantines only the contradicted
+  stale edges so reweight's ceiling is separated from quarantine's. The captured share reads its denominator from
+  oracle_v2.json.
 - [ ] H6 Run the sweep and publish it beside run 1. Seeds 1, 7, 42; arms frozen, plain_store, full_v2, full_v1_rule,
   gapfill_wide_only, random_reweight, random_quarantine; 5 rounds; under `evidence/.measuring.json`. `/`, `/evidence`
   and the README show run 2 as current and run 1 as the prior run, both with run ids, data versions and verdicts, and
