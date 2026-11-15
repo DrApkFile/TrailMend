@@ -51,7 +51,9 @@ def test_f1_ask_rejects_an_unknown_field(client: TestClient) -> None:
 
 def test_f1_judging_an_answer_correct_writes_receipts(client: TestClient, loaded: dataset.Dataset) -> None:
     question = _a_question(loaded, "alert_owning_team")
-    response = client.post("/v1/judge", json={"question": question, "verdict": "correct"})
+    response = client.post(
+        "/v1/judge", json={"question": question, "verdict": "correct"}, headers={"X-Admin-Token": ADMIN}
+    )
     assert response.status_code == 200
     body = response.json()
     assert body["changed_anything"] is True
@@ -63,8 +65,44 @@ def test_f1_judging_an_answer_correct_writes_receipts(client: TestClient, loaded
     assert held.json()["edge"]["rel_type"]
 
 
+def test_f1_judging_without_the_admin_token_changes_nothing(client: TestClient, loaded: dataset.Dataset) -> None:
+    question = _a_question(loaded, "alert_owning_team")
+    before = client.get("/v1/receipts", params={"limit": 1}).json()
+    refused = client.post("/v1/judge", json={"question": question, "verdict": "wrong"})
+    assert refused.status_code == 400
+    assert refused.json()["error"]["code"] == "invalid_request"
+    assert "Nothing was changed" in refused.json()["error"]["message"]
+    assert client.get("/v1/receipts", params={"limit": 1}).json() == before
+
+
+def test_f1_judging_with_the_wrong_admin_token_changes_nothing(client: TestClient, loaded: dataset.Dataset) -> None:
+    question = _a_question(loaded, "alert_owning_team")
+    before = client.get("/v1/receipts", params={"limit": 1}).json()
+    refused = client.post(
+        "/v1/judge",
+        json={"question": question, "verdict": "wrong"},
+        headers={"X-Admin-Token": "not-the-admin-token-but-same-length"},
+    )
+    assert refused.status_code == 400
+    assert client.get("/v1/receipts", params={"limit": 1}).json() == before
+
+
+def test_f1_asking_is_rate_limited(client: TestClient, loaded: dataset.Dataset) -> None:
+    question = _a_question(loaded, "alert_owning_team")
+    live: Live = app.state.live
+    codes = {
+        client.post("/v1/ask", json={"question": question}).status_code for _ in range(live.limiter.per_minute + 2)
+    }
+    assert 429 in codes
+    assert live.limiter.per_minute >= 1
+
+
 def test_f1_receipts_are_listed_newest_first(client: TestClient, loaded: dataset.Dataset) -> None:
-    client.post("/v1/judge", json={"question": _a_question(loaded, "service_owner_team"), "verdict": "correct"})
+    client.post(
+        "/v1/judge",
+        json={"question": _a_question(loaded, "service_owner_team"), "verdict": "correct"},
+        headers={"X-Admin-Token": ADMIN},
+    )
     rows = client.get("/v1/receipts", params={"limit": 5}).json()
     assert rows
     assert all(row["digest"] for row in rows)

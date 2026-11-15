@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Header, Request
 
+from trailmend.api.auth import require_admin
 from trailmend.api.models import AskRequest, AskResponse, Example, JudgeRequest, JudgeResponse
 from trailmend.api.paths import hops_of
 from trailmend.api.state import Live, now
@@ -89,8 +90,9 @@ def _outcome(question_id: str, found: AnswerFound, body: JudgeRequest) -> Outcom
 
 
 @router.post("/v1/judge", response_model=JudgeResponse)
-def judge(body: JudgeRequest, request: Request) -> JudgeResponse:
+def judge(body: JudgeRequest, request: Request, x_admin_token: str | None = Header(default=None)) -> JudgeResponse:
     live = _live(request)
+    require_admin(live, x_admin_token)
     spec = _template_for(body.question)
     if spec is None:
         raise TrailMendError(ErrorCode.INVALID_REQUEST, "this question does not match a known template")

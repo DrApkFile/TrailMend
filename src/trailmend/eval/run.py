@@ -6,7 +6,7 @@ from random import Random
 from trailmend.core.config import config_digest, load_mend_config, load_run_config, load_search_config
 from trailmend.core.model import EdgeKey
 from trailmend.data import dataset
-from trailmend.eval import curve, measuring
+from trailmend.eval import curve, measuring, target
 from trailmend.eval.plain_store import build_store, judge_all_plain
 from trailmend.eval.session import client_from_settings
 from trailmend.graph.client import HydraClient
@@ -18,6 +18,7 @@ from trailmend.loop.policy import MendPolicy
 from trailmend.loop.round import run_round
 from trailmend.loop.tape import Tape
 from trailmend.search.seed import build_index
+from trailmend.settings import load_settings
 
 CONFIG = Path("config/mend.toml")
 ARMS: tuple[MendPolicy, ...] = (
@@ -154,17 +155,18 @@ def _sweep(
     seeds: tuple[int, ...], arms: tuple[MendPolicy, ...], run_id: str, rounds: int, plain_store_top_k: int
 ) -> int:
     written = 0
+    where = target.describe(str(load_settings().hydra_url))
     with client_from_settings() as client:
         client.require_writable()
         for seed in seeds:
             built = dataset.build(seed)
             print(f"seed {seed}", flush=True)
             for row in plain_rows(run_id, built, rounds, plain_store_top_k):
-                curve.append(row)
+                curve.append(row | {"hydradb": where})
                 written += 1
             for arm_index, arm in enumerate(arms):
                 for row in run_arm(client, built, arm, arm_index, run_id, rounds):
-                    curve.append(row)
+                    curve.append(row | {"hydradb": where})
                     written += 1
     return written
 

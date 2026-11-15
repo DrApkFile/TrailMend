@@ -16,7 +16,8 @@ No LLM is on the answer path, and no LLM scores an answer.
 
 | | |
 |---|---|
-| Live app | — not deployed yet |
+| Live app | https://trail-mend.vercel.app |
+| API | https://trailmend-production-ee2e07ff.up.railway.app — `GET /v1/ready` |
 | Loom | — |
 | Repo | this one |
 

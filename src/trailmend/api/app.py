@@ -1,7 +1,8 @@
+import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from trailmend.api import routes_ask, routes_evidence, routes_mend
@@ -9,6 +10,9 @@ from trailmend.api.state import Live, build_live
 from trailmend.errors import ERROR_SPECS, ErrorCode, TrailMendError
 from trailmend.graph.client import HydraClient
 from trailmend.settings import load_settings
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
+logger = logging.getLogger("trailmend.api")
 
 
 @asynccontextmanager
@@ -27,8 +31,17 @@ app.include_router(routes_evidence.router)
 
 
 @app.exception_handler(TrailMendError)
-async def trailmend_error(_: object, exc: TrailMendError) -> JSONResponse:
+async def trailmend_error(request: Request, exc: TrailMendError) -> JSONResponse:
     spec = ERROR_SPECS[exc.code]
+    logger.error(
+        "%s %s answered %s %s: %s",
+        request.method,
+        request.url.path,
+        spec.http_status,
+        exc.code.value,
+        exc.detail or "no detail given",
+        exc_info=exc,
+    )
     body = {
         "error": {
             "code": exc.code.value,

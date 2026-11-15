@@ -1,5 +1,5 @@
 import "server-only";
-import { apiBaseUrl } from "./env";
+import { adminToken, apiBaseUrl } from "./env";
 
 export type ApiError = { code: string; message: string };
 
@@ -143,12 +143,16 @@ export type Judgement = {
   changed_anything: boolean;
 };
 
-async function postJson(path: string, body: unknown): Promise<Fetched<unknown>> {
+async function postJson(
+  path: string,
+  body: unknown,
+  headers: Record<string, string> = {},
+): Promise<Fetched<unknown>> {
   let response: Response;
   try {
     response = await fetch(`${apiBaseUrl()}${path}`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", ...headers },
       body: JSON.stringify(body),
       cache: "no-store",
     });
@@ -228,8 +232,22 @@ export async function judgeAnswer(
   verdict: string,
   correctAnswerIds: number[] = [],
 ): Promise<Fetched<Judgement>> {
+  const token = adminToken();
+  if (token === null) {
+    return {
+      ok: false,
+      error: {
+        code: "admin_token_missing",
+        message: "Judging writes to the graph, so it needs TRAILMEND_ADMIN_TOKEN set on the server.",
+      },
+    };
+  }
   return shaped<Judgement>(
-    await postJson("/v1/judge", { question, verdict, correct_answer_ids: correctAnswerIds }),
+    await postJson(
+      "/v1/judge",
+      { question, verdict, correct_answer_ids: correctAnswerIds },
+      { "x-admin-token": token },
+    ),
     (body) => isObject(body) && Array.isArray(body.receipts),
     "/v1/judge",
   );

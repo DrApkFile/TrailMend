@@ -1,9 +1,9 @@
 import json
-import secrets
 from typing import cast
 
 from fastapi import APIRouter, Header, Request
 
+from trailmend.api.auth import require_admin
 from trailmend.api.models import (
     Hop,
     Neighbour,
@@ -30,12 +30,6 @@ router = APIRouter()
 def _live(request: Request) -> Live:
     live: Live = request.app.state.live
     return live
-
-
-def _require_admin(live: Live, token: str | None) -> None:
-    expected = live.settings.admin_token.get_secret_value()
-    if not token or not secrets.compare_digest(token, expected):
-        raise TrailMendError(ErrorCode.INVALID_REQUEST, "this endpoint needs a valid admin token")
 
 
 def _lines(live: Live) -> tuple[dict[str, object], ...]:
@@ -101,7 +95,7 @@ def rollback_receipt(
     receipt_id: str, request: Request, x_admin_token: str | None = Header(default=None)
 ) -> RollbackResponse:
     live = _live(request)
-    _require_admin(live, x_admin_token)
+    require_admin(live, x_admin_token)
     row, before = _before_state(live, receipt_id)
     done = rollback_to(
         live.client,
@@ -123,7 +117,7 @@ def rollback_receipt(
 @router.post("/v1/mend/round", response_model=RoundResponse)
 def mend_round(body: RoundRequest, request: Request, x_admin_token: str | None = Header(default=None)) -> RoundResponse:
     live = _live(request)
-    _require_admin(live, x_admin_token)
+    require_admin(live, x_admin_token)
     candidates = tuple(EdgeKey(e.src, e.rel_type.value, e.dst) for e in live.built.graph.edges)
     reweights = quarantines = promoted = retired = ingested = 0
     receipts: list[str] = []

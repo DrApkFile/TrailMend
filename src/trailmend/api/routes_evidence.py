@@ -13,6 +13,7 @@ SERVABLE: tuple[str, ...] = (
     "non_regression",
     "quarantine",
     "mechanisms",
+    "changes",
     "hypotheses",
     "run_manifest",
     "load",

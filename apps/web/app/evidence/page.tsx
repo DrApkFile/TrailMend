@@ -1,3 +1,4 @@
+import { Changes, toChangeRows } from "@/components/Changes";
 import { Failed, Panel } from "@/components/Shell";
 import { fetchCurve, fetchEvidence } from "@/lib/api";
 import { NOT_MEASURED } from "@/lib/curve";
@@ -8,6 +9,7 @@ const FILES = [
   "round_zero",
   "plain_store",
   "mechanisms",
+  "changes",
   "non_regression",
   "quarantine",
   "hypotheses",
@@ -17,14 +19,23 @@ const FILES = [
 ];
 
 export default async function EvidencePage() {
-  const [curve, ...files] = await Promise.all([fetchCurve(), ...FILES.map((name) => fetchEvidence(name))]);
+  const [curve, ...files] = await Promise.all([
+    fetchCurve(),
+    ...FILES.map((name) => fetchEvidence(name)),
+  ]);
+  const changes = files[FILES.indexOf("changes")];
+  const changeRows =
+    changes?.ok && changes.value.available
+      ? toChangeRows(changes.value.payload?.rows ?? [])
+      : [];
 
   return (
     <main>
       <h1 className="text-2xl font-semibold tracking-tight">Evidence</h1>
       <p className="mt-2 text-stone-400">
-        Every file here is written by code, never by hand, and carries the design it was measured under. The sha256
-        is of the file as served. A file that has not been produced says so.
+        Every file here is written by code, never by hand, and carries the
+        design it was measured under. The sha256 is of the file as served. A
+        file that has not been produced says so.
       </p>
 
       <Panel title="curve.jsonl">
@@ -32,16 +43,45 @@ export default async function EvidencePage() {
           <dl className="text-sm">
             <div className="flex justify-between border-b border-stone-800 py-2">
               <dt className="text-stone-400">rows</dt>
-              <dd className="font-mono">{curve.value.available ? curve.value.rows.length : NOT_MEASURED}</dd>
+              <dd className="font-mono">
+                {curve.value.available ? curve.value.rows.length : NOT_MEASURED}
+              </dd>
             </div>
             <div className="flex flex-col gap-1 border-b border-stone-800 py-2 sm:flex-row sm:justify-between">
               <dt className="text-stone-400">sha256</dt>
-              <dd className="font-mono text-xs break-all">{curve.value.sha256 ?? NOT_MEASURED}</dd>
+              <dd className="font-mono text-xs break-all">
+                {curve.value.sha256 ?? NOT_MEASURED}
+              </dd>
             </div>
           </dl>
         ) : (
           <Failed code={curve.error.code} message={curve.error.message} />
         )}
+      </Panel>
+
+      <Panel title="The controls, side by side">
+        <p className="text-sm text-stone-300">
+          Changes each arm applied, per seed and round:{" "}
+          <span className="font-mono">rw</span> reweights,{" "}
+          <span className="font-mono">qu</span> quarantines, and promotions,
+          retirements and ingests where there were any. Hover a cell for what
+          the Mend planned that round. A random control applies exactly as many
+          changes as the Mend planned in that same round of that same arm, of
+          the one mechanism it controls — that equality is checked before any of
+          these files is written, and a mismatch stops the analysis.
+        </p>
+        <p className="mt-2 text-xs text-stone-400">
+          The counts differ between arms because every arm resets the graph and
+          evolves on its own, so round 2 of full plans from full&apos;s graph
+          and round 2 of random_reweight plans from its own.
+        </p>
+        <div className="mt-4">
+          {changeRows.length === 0 ? (
+            <p className="text-sm text-stone-400">Not produced yet.</p>
+          ) : (
+            <Changes rows={changeRows} />
+          )}
+        </div>
       </Panel>
 
       {files.map((file, index) => (
@@ -53,19 +93,27 @@ export default async function EvidencePage() {
           ) : (
             <div className="text-sm">
               <p className="text-stone-300">{file.value.payload?.claim}</p>
-              <p className="mt-2 text-xs text-stone-400">{file.value.payload?.design}</p>
+              <p className="mt-2 text-xs text-stone-400">
+                {file.value.payload?.design}
+              </p>
               <dl className="mt-3">
                 <div className="flex justify-between border-t border-stone-800 py-2">
                   <dt className="text-stone-400">rows</dt>
-                  <dd className="font-mono">{file.value.payload?.rows.length ?? NOT_MEASURED}</dd>
+                  <dd className="font-mono">
+                    {file.value.payload?.rows.length ?? NOT_MEASURED}
+                  </dd>
                 </div>
                 <div className="flex justify-between border-t border-stone-800 py-2">
                   <dt className="text-stone-400">measured at</dt>
-                  <dd className="font-mono text-xs">{file.value.payload?.measured_at ?? NOT_MEASURED}</dd>
+                  <dd className="font-mono text-xs">
+                    {file.value.payload?.measured_at ?? NOT_MEASURED}
+                  </dd>
                 </div>
                 <div className="flex flex-col gap-1 border-t border-stone-800 py-2 sm:flex-row sm:justify-between">
                   <dt className="text-stone-400">sha256</dt>
-                  <dd className="font-mono text-xs break-all">{file.value.sha256 ?? NOT_MEASURED}</dd>
+                  <dd className="font-mono text-xs break-all">
+                    {file.value.sha256 ?? NOT_MEASURED}
+                  </dd>
                 </div>
               </dl>
             </div>

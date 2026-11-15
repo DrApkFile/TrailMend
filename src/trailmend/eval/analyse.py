@@ -221,6 +221,47 @@ def check_inv6(rows: Sequence[Mapping[str, object]]) -> int:
     return checked
 
 
+CHANGES_DESIGN = (
+    "One row per seed and round, with the change counts of every arm side by side: what the Mend planned that "
+    "round from that arm's own graph, what the arm applied, and what it promoted, retired or ingested. The random "
+    "controls exist to be read against `full` here: each applies exactly as many changes as the Mend planned in "
+    "that same round of that same arm, of the one mechanism it controls and no other (INV6, checked before any of "
+    "these files are written). The counts differ between arms because every arm resets the graph and evolves on its "
+    "own, so round 2 of `full` plans from full's graph and round 2 of `random_reweight` plans from its own."
+)
+
+
+def change_counts(rows: Sequence[Mapping[str, object]]) -> list[dict[str, object]]:
+    arms = [MendPolicy.FULL.value, *(arm.value for arm in ARMS if arm is not MendPolicy.FULL)]
+    out: list[dict[str, object]] = []
+    for seed in seeds_of(rows):
+        for round_index in range(1, last_round(rows) + 1):
+            per_arm: dict[str, object] = {}
+            for arm in arms:
+                found = [
+                    row
+                    for row in rows
+                    if row.get("arm") == arm and row.get("seed") == seed and row.get("round") == round_index
+                ]
+                if not found:
+                    continue
+                row = found[0]
+                per_arm[arm] = {
+                    "planned_reweights": _count(row, "planned_reweights"),
+                    "planned_quarantines": _count(row, "planned_quarantines"),
+                    "applied_reweights": _count(row, "applied_reweights"),
+                    "applied_quarantines": _count(row, "applied_quarantines"),
+                    "promoted": _count(row, "promoted"),
+                    "retired": _count(row, "retired"),
+                    "ingested": _count(row, "ingested"),
+                }
+            if per_arm:
+                out.append({"seed": seed, "round": round_index, "arms": per_arm})
+    if not out:
+        raise ValueError("no round carried change counts, so the matched controls cannot be published")
+    return out
+
+
 def main() -> int:
     rows = rows_of()
     run_id = str(rows[0]["run_id"])
@@ -230,6 +271,7 @@ def main() -> int:
     breaks = non_regression(rows, run_id)
     quarantines = quarantine_report(rows, run_id)
     table = mechanism_table(rows, final)
+    changes = change_counts(rows)
     verdicts = hypotheses(rows, breaks, quarantines, final)
     written = [
         write_chart(rows),
@@ -262,6 +304,7 @@ def main() -> int:
                 table,
             )
         ),
+        evidence.write(evidence.make("changes", CHANGES_DESIGN, changes)),
         evidence.write(
             evidence.make(
                 "hypotheses",

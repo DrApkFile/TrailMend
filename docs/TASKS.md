@@ -12,18 +12,23 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
 - [x] T05 API skeleton: `/healthz`, `/v1/ready` (verified live).
 
 ## Phase A — hosting first (PRD §5, deploy/railway/README.md)
-- [ ] A1 Railway: bucket + HydraDB service + API service. Acceptance: public `GET /v1/ready` → `graph_writable: true`;
+- [x] A1 Railway: bucket + HydraDB service + API service. Acceptance: public `GET /v1/ready` → `graph_writable: true`;
   restart the HydraDB service, then `/v1/ready` still true. Record image digest in REALITY_SPIKES.md.
-  BLOCKED 2026-11-15: `railway` CLI 5.74.0 is now installed, `railway whoami` says Unauthorized. Needs one
-  interactive `railway login` in this terminal (no token should be pasted anywhere); after that the account must
-  allow creating a bucket and two services. Everything that does not need the account is done: the image digest is recorded (REALITY_SPIKES S15) and
-  pinned in `deploy/railway/README.md`, and the same acceptance is proven locally — `/v1/ready` → `graph_writable:
-  true`, survives `docker compose restart`, writes after the restart still land (S17).
-- [ ] A2 Vercel: `apps/web` Next.js app (create with the current stable `create-next-app`, TypeScript strict,
+  DONE 2026-11-15, deployed by hand by the repo owner. `https://trailmend-production-ee2e07ff.up.railway.app/v1/ready`
+  → `{"graph_writable":true}` (HTTP 200 in 1.3s, verified from this machine), `/healthz` → `{"status":"ok"}`. The
+  restart test was run by the owner: the HydraDB service was restarted and `/v1/ready` still answered true with
+  writes still landing — the Railway bucket gives the conditional writes a local volume cannot (S32). The image is
+  the digest pinned in `docker-compose.yml` and recorded in S15. What the deployment needed that the docs did not
+  say: plaintext without TLS (S27), IPv6 listen addresses (S28), `/tmp` instead of a volume with the token written by
+  the start command (S29, S26), both services in one project and environment (S30), and
+  `TRAILMEND_HYDRA_URL=http://hydradb.railway.internal:8443` with the token as `${{hydradb.HYDRA_TOKEN}}` (S31).
+- [x] A2 Vercel: `apps/web` Next.js app (create with the current stable `create-next-app`, TypeScript strict,
   App Router). One page that server-fetches `/v1/ready` and shows the state. Acceptance: live URL works in a fresh
   browser; API never called from the browser.
-  App BUILT 2026-11-14, DEPLOY BLOCKED 2026-11-15: `vercel` CLI 65.16.0 is now installed, `vercel whoami` says
-  Logged out. Needs one interactive `vercel login` in this terminal (no token should be pasted anywhere). Built and proven locally: Next.js 16.4.6,
+  DONE 2026-11-15, deployed by hand by the repo owner: `https://trail-mend.vercel.app` answers HTTP 200 and its
+  server-rendered HTML carries `graph_writable true` with `source GET /v1/ready, server-side` (verified from this
+  machine with a plain HTTP client, so no browser JavaScript is involved). The deployment is from before F2-F5, so
+  `/ask`, `/mend`, `/evidence` and `/pricing` are still 404 there until the next push. Built and proven locally: Next.js 16.4.6,
   App Router, TypeScript strict plus `noUncheckedIndexedAccess`; `/` is a server component that fetches
   `GET /v1/ready` through `lib/api.ts` (guarded by `server-only`); against the live API it renders
   `graph_writable true`, and with the API down it renders `—` and the code `api_unreachable`, never a fake success.

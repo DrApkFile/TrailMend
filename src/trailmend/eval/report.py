@@ -85,6 +85,7 @@ FILES: tuple[tuple[str, str], ...] = (
     ("round_zero.json", "the frozen-graph baseline before any judging"),
     ("plain_store.json", "the document-only baseline, tuned to its own best score"),
     ("mechanisms.json", "one mechanism per arm, against full and against the random controls"),
+    ("changes.json", "change counts per seed, arm and round, full and every control side by side"),
     ("non_regression.json", "newly fixed, newly broken and net per round, each break traced to receipts"),
     ("quarantine.json", "quarantine precision and recall against the planted faults"),
     ("hypotheses.json", "H1-H5 with the rule each was decided by"),

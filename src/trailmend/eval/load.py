@@ -9,7 +9,7 @@ from typing import cast
 import httpx
 
 from trailmend.data import dataset
-from trailmend.eval import evidence
+from trailmend.eval import evidence, target
 
 DESIGN = (
     "Concurrent clients ask the product question mix over HTTP against a running API, one thread per client, each "
@@ -98,7 +98,7 @@ def main(base_url: str, clients: int = 8, per_client: int = 25, seed: int = 1) -
     first = run(base_url, questions, clients, per_client, "reads only")
     print(first.row(), flush=True)
     rows.append(first.row())
-    path = evidence.write(evidence.make("latency", DESIGN, rows))
+    path = evidence.write(evidence.make("latency", DESIGN, rows, measured_on=target.describe(base_url)))
     print(f"wrote {path} sha256={evidence.digest(path)}")
     return 0
 

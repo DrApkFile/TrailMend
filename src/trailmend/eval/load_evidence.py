@@ -2,9 +2,10 @@ import sys
 from collections.abc import Mapping
 
 from trailmend.data import dataset
-from trailmend.eval import evidence
+from trailmend.eval import evidence, target
 from trailmend.eval.session import client_from_settings
 from trailmend.graph.loader import count_graph, load
+from trailmend.settings import load_settings
 
 DESIGN = (
     "For each seed: build the generated Northwind dataset, count the store, write G0 into HydraDB with batch "
@@ -49,7 +50,9 @@ def main(seeds: tuple[int, ...]) -> int:
                     "store_edge_counts_after": dict(second.edge_counts),
                 }
             )
-    path = evidence.write(evidence.make("load", DESIGN, rows))
+    path = evidence.write(
+        evidence.make("load", DESIGN, rows, measured_on=target.describe(str(load_settings().hydra_url)))
+    )
     print(f"wrote {path} sha256={evidence.digest(path)}")
     return 0 if all(bool(row["reload_is_idempotent"]) for row in rows) else 1
 

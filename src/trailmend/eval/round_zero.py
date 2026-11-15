@@ -3,11 +3,12 @@ from pathlib import Path
 
 from trailmend.core.config import load_search_config
 from trailmend.data import dataset
-from trailmend.eval import evidence
+from trailmend.eval import evidence, target
 from trailmend.eval.session import client_from_settings
 from trailmend.graph.loader import load
 from trailmend.loop.evaluate import judge_all, score
 from trailmend.search.seed import build_index
+from trailmend.settings import load_settings
 
 DESIGN = (
     "Round 0 is the frozen ingested graph G0: every edge at cost 1.0, no Mend has run. For each seed, load G0, "
@@ -74,7 +75,11 @@ def main(seeds: tuple[int, ...]) -> int:
                 }
             )
             print(f"seed {seed}: {result.correct}/{result.n} = {result.accuracy:.4f}, set_f1 {result.set_f1:.4f}")
-    path = evidence.write(evidence.make("round_zero", DESIGN, [*rows, *SUPERSEDED]))
+    path = evidence.write(
+        evidence.make(
+            "round_zero", DESIGN, [*rows, *SUPERSEDED], measured_on=target.describe(str(load_settings().hydra_url))
+        )
+    )
     print(f"wrote {path} sha256={evidence.digest(path)}")
     return 0
 

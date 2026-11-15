@@ -7,3 +7,8 @@ export function apiBaseUrl(): string {
   }
   return raw.trim().replace(/\/+$/, "");
 }
+
+export function adminToken(): string | null {
+  const raw = process.env.TRAILMEND_ADMIN_TOKEN;
+  return raw === undefined || raw.trim() === "" ? null : raw.trim();
+}

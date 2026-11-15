@@ -5,12 +5,13 @@ from pathlib import Path
 
 from trailmend.core.config import load_run_config
 from trailmend.data import dataset
-from trailmend.eval import curve, measuring
+from trailmend.eval import curve, measuring, target
 from trailmend.eval.evidence import now_utc
 from trailmend.eval.run import ARMS, CONFIG, run_arm, run_id_for
 from trailmend.eval.session import client_from_settings
 from trailmend.loop.journal import RUNS_DIR
 from trailmend.loop.policy import MendPolicy
+from trailmend.settings import load_settings
 
 SUPERSEDED = Path("evidence/superseded")
 
@@ -89,10 +90,11 @@ def main(seed: int, arm_value: str, reason: str) -> int:
     written = 0
     measuring.acquire(f"{run_id}-s{seed}-{arm.value}-rerun")
     try:
+        where = target.describe(str(load_settings().hydra_url))
         with client_from_settings() as client:
             client.require_writable()
             for row in run_arm(client, built, arm, arm_index, run_id, run.rounds):
-                curve.append(row)
+                curve.append(row | {"hydradb": where})
                 written += 1
     finally:
         measuring.release()
