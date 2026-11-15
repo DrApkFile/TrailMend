@@ -5,10 +5,15 @@ from typing import cast
 
 from trailmend.eval import chart, curve, evidence, manifest, quarantine, regression
 from trailmend.eval.run import ARMS
+from trailmend.loop.journal import RUNS_DIR
 from trailmend.loop.policy import MendPolicy, mechanisms
 
 PLAIN = "plain_store"
 H1_MARGIN_RULE = "accuracy(round N) - accuracy(round 0) > the round-0 spread across seeds, for every seed"
+H2_RULE = "for each random control and each seed, accuracy(round N) - accuracy(round 0) <= the round-0 spread"
+H3_RULE = "the plain-store accuracy is identical at every round, for every seed"
+H4_RULE = "recall on planted wrong edges >= 0.7 for every seed, and false-quarantine rate <= 0.1 where defined"
+H5_RULE = "newly_broken / correct <= 0.02 in the worst round after round 0, full arm"
 
 
 def rows_of(path: Path = curve.CURVE) -> tuple[Mapping[str, object], ...]:
@@ -56,18 +61,31 @@ def write_chart(rows: Sequence[Mapping[str, object]], directory: Path = evidence
     return path
 
 
+def require_tape(run_id: str, root: Path = RUNS_DIR) -> Path:
+    path = root / run_id / "heldout.jsonl"
+    if not path.exists():
+        raise FileNotFoundError(f"{run_id} recorded curve rows but no held-out tape at {path}")
+    return path
+
+
 def non_regression(rows: Sequence[Mapping[str, object]], run_id: str) -> list[dict[str, object]]:
     out: list[dict[str, object]] = []
     for seed in seeds_of(rows):
         for arm in ARMS:
-            out.extend(regression.rows(f"{run_id}-s{seed}-{arm.value}", seed, arm.value))
+            run = f"{run_id}-s{seed}-{arm.value}"
+            require_tape(run)
+            out.extend(regression.rows(run, seed, arm.value))
     return out
 
 
 def quarantine_report(rows: Sequence[Mapping[str, object]], run_id: str) -> list[dict[str, object]]:
-    return [
-        quarantine.report(seed, arm.value, f"{run_id}-s{seed}-{arm.value}") for seed in seeds_of(rows) for arm in ARMS
-    ]
+    out: list[dict[str, object]] = []
+    for seed in seeds_of(rows):
+        for arm in ARMS:
+            run = f"{run_id}-s{seed}-{arm.value}"
+            require_tape(run)
+            out.append(quarantine.report(seed, arm.value, run))
+    return out
 
 
 def mechanism_table(rows: Sequence[Mapping[str, object]], final: int) -> list[dict[str, object]]:
@@ -101,6 +119,8 @@ def hypotheses(
     quarantines: Sequence[Mapping[str, object]],
     final: int,
 ) -> list[dict[str, object]]:
+    if not breaks or not quarantines:
+        raise ValueError("H4 and H5 cannot be decided without per-round break rows and quarantine reports")
     seeds = seeds_of(rows)
     baseline = [_at(rows, MendPolicy.FULL.value, seed, 0) for seed in seeds]
     spread = max(baseline) - min(baseline)
@@ -137,6 +157,7 @@ def hypotheses(
         {
             "id": "H2",
             "claim": "random controls do not rise beyond seed spread",
+            "rule": H2_RULE,
             "round_0_spread": round(spread, 4),
             "delta_per_arm": {arm: {str(s): round(d, 4) for s, d in per.items()} for arm, per in randoms.items()},
             "verdict": "PASS" if h2 else "FAIL",
@@ -144,6 +165,7 @@ def hypotheses(
         {
             "id": "H3",
             "claim": "the plain-store arm is flat across rounds",
+            "rule": H3_RULE,
             "note": "flat by construction: it is scored once per seed and cannot learn",
             "accuracy_per_seed": {str(s): round(next(iter(per.values())), 4) for s, per in plain.items()},
             "verdict": "PASS" if h3 else "FAIL",
@@ -151,6 +173,7 @@ def hypotheses(
         {
             "id": "H4",
             "claim": "quarantine recall on planted wrong edges >= 0.7 with false-quarantine rate <= 0.1",
+            "rule": H4_RULE,
             "recall_per_seed": recalls,
             "false_quarantine_rate_per_seed": false_rates,
             "verdict": "PASS" if h4 else "FAIL",
@@ -158,6 +181,7 @@ def hypotheses(
         {
             "id": "H5",
             "claim": "net regressions on previously-correct held-out questions <= 2% per round",
+            "rule": H5_RULE,
             "worst_round_break_share": round(worst, 4),
             "verdict": "PASS" if h5 else "FAIL",
         },
