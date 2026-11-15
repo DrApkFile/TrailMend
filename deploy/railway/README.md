@@ -45,6 +45,19 @@ Plaintext is acceptable only because traffic stays on Railway's private network.
 New → GitHub repo → Dockerfile path `deploy/railway/api.Dockerfile`. Public domain on. Variables from `.env.example`
 with `TRAILMEND_HYDRA_URL=http://hydradb.railway.internal:8443`. Check `GET /v1/ready` returns `graph_writable: true`.
 
+The image was built and run on 2026-11-15: it honours Railway's `$PORT`, answers `/healthz` 200, serves the
+`evidence/*.json` files it now copies in (without that copy `/v1/evidence/...` and the site's curve would have been
+empty on the deployment), and with an unreachable graph `/v1/ready` answers `graph_unavailable` rather than a fake
+success.
+
+## 3b. Load the demo graph
+HydraDB has no public domain, so the loader cannot reach it from a laptop. Run it inside the API service, which
+already carries `src` and `config`:
+```sh
+railway ssh --service api -- uv run --no-dev python -m trailmend.eval.load_evidence 1
+```
+Then `/v1/ask` has a graph to search. The live demo graph is the one the site writes to; measured runs are separate.
+
 ## 4. Web (Vercel)
 `apps/web`, env `TRAILMEND_API=https://<api>.up.railway.app`. All data fetched in server components (BFF);
 the browser never calls the API directly.

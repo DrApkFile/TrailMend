@@ -1,0 +1,12 @@
+.git
+.venv
+.next
+.pytest_cache
+.ruff_cache
+.hypothesis
+node_modules
+apps
+hydradb-data
+evidence/runs
+evidence/superseded
+evidence/demo
