@@ -62,6 +62,16 @@ Then `/v1/ask` has a graph to search. The live demo graph is the one the site wr
 `apps/web`, env `TRAILMEND_API=https://<api>.up.railway.app`. All data fetched in server components (BFF);
 the browser never calls the API directly.
 
+Once `vercel login` has been run (flags checked against Vercel CLI 65.16.0; `--dry` and everything else refuse
+without credentials):
+```sh
+vercel --cwd apps/web --project trailmend --create-if-missing --yes \
+  --env TRAILMEND_API=https://<api>.up.railway.app \
+  --build-env TRAILMEND_API=https://<api>.up.railway.app --prod
+```
+Then open the URL in a fresh browser, check it at 390px, and confirm the API url appears in no file under
+`.next/static` (A2's acceptance; it does not locally).
+
 ## CLI, once `railway login` has been run
 
 Flags checked against `railway` 5.74.0 on this machine. Nothing here prints a credential.
