@@ -66,12 +66,12 @@ The document-only baseline (BM25 over the same corpus, no graph) scores 24.6%, w
 | [`evidence/curve.jsonl`](evidence/curve.jsonl) | held-out and training accuracy per seed, arm and round | `eb886008a2906f65…` |
 | [`evidence/round_zero.json`](evidence/round_zero.json) | the frozen-graph baseline before any judging | `5639023839538d87…` |
 | [`evidence/plain_store.json`](evidence/plain_store.json) | the document-only baseline, tuned to its own best score | `e651fd53aec26236…` |
-| [`evidence/mechanisms.json`](evidence/mechanisms.json) | one mechanism per arm, against full and against the random controls | `1b6e39d34eaa9cdb…` |
-| [`evidence/changes.json`](evidence/changes.json) | change counts per seed, arm and round, full and every control side by side | `b14b4d9431df9f8b…` |
-| [`evidence/non_regression.json`](evidence/non_regression.json) | newly fixed, newly broken and net per round, each break traced to receipts | `ddc8dd735fbac782…` |
-| [`evidence/quarantine.json`](evidence/quarantine.json) | quarantine precision and recall against the planted faults | `469a904d687f9a53…` |
-| [`evidence/hypotheses.json`](evidence/hypotheses.json) | H1-H5 with the rule each was decided by | `adda1c68bb594490…` |
-| [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `b17958ea0db6a340…` |
+| [`evidence/mechanisms.json`](evidence/mechanisms.json) | one mechanism per arm, against full and against the random controls | `d80402a162f79b14…` |
+| [`evidence/changes.json`](evidence/changes.json) | change counts per seed, arm and round, full and every control side by side | `6ebbc0facb6233c1…` |
+| [`evidence/non_regression.json`](evidence/non_regression.json) | newly fixed, newly broken and net per round, each break traced to receipts | `a850cf278565d52d…` |
+| [`evidence/quarantine.json`](evidence/quarantine.json) | quarantine precision and recall against the planted faults | `dedd1780b2273e19…` |
+| [`evidence/hypotheses.json`](evidence/hypotheses.json) | H1-H5 with the rule each was decided by | `920ee235e0130614…` |
+| [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `a0c4e5cec36e2834…` |
 | [`evidence/load.json`](evidence/load.json) | loading G0 into HydraDB, and that a re-load adds nothing | `ef1c00b3507de398…` |
 | [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | `87a2921754f7ed09…` |
 <!-- numbers:end -->

@@ -1,7 +1,7 @@
 {
   "claim": "mechanisms",
   "design": "One row per arm: which mechanisms it runs and what held-out accuracy it reached from round 0 to round N, per seed and as a mean. Arms share seeds, splits, rounds and the same plan of changes; they differ only in which of those changes they apply.",
-  "measured_at": "2026-11-15T06:40:29+00:00",
+  "measured_at": "2026-11-15T07:36:30+00:00",
   "measured_on": null,
   "rows": [
     {

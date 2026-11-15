@@ -1,7 +1,7 @@
 {
   "claim": "quarantine",
   "design": "Every quarantine receipt in a run against the planted faults for that seed. Precision counts quarantined edges that a fault introduced; recall counts planted wrong edges quarantined; the false-quarantine rate counts quarantined edges that are in the truth graph. Gap-fill is counted the same way: an ingest is spurious if the edge it added is not in the truth graph.",
-  "measured_at": "2026-11-15T06:40:29+00:00",
+  "measured_at": "2026-11-15T07:36:30+00:00",
   "measured_on": null,
   "rows": [
     {

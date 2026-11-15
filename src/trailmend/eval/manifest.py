@@ -39,8 +39,15 @@ def dataset_digests(seed: int) -> dict[str, str]:
     }
 
 
+MEASURED_SUFFIXES = frozenset({".json", ".jsonl", ".svg"})
+
+
 def evidence_digests(directory: Path = evidence.EVIDENCE_DIR) -> dict[str, str]:
-    files = sorted(p for p in directory.iterdir() if p.is_file() and p.name != "run_manifest.json")
+    files = sorted(
+        p
+        for p in directory.iterdir()
+        if p.is_file() and p.name != "run_manifest.json" and p.suffix in MEASURED_SUFFIXES
+    )
     return {p.name: evidence.digest(p) for p in files}
 
 

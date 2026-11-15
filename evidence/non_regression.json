@@ -1,7 +1,7 @@
 {
   "claim": "non_regression",
   "design": "Per round, from evidence/runs/<run>/heldout.jsonl: which held-out questions turned correct and which turned away from correct, and for each break the receipts written that round that touched an edge on that question's previous correct path. A break with no such receipt means the path changed for another reason, such as a cheaper rival answer appearing.",
-  "measured_at": "2026-11-15T06:40:29+00:00",
+  "measured_at": "2026-11-15T07:36:30+00:00",
   "measured_on": null,
   "rows": [
     {

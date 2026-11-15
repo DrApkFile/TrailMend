@@ -1,7 +1,7 @@
 {
   "claim": "changes",
   "design": "One row per seed and round, with the change counts of every arm side by side: what the Mend planned that round from that arm's own graph, what the arm applied, and what it promoted, retired or ingested. The random controls exist to be read against `full` here: each applies exactly as many changes as the Mend planned in that same round of that same arm, of the one mechanism it controls and no other (INV6, checked before any of these files are written). The counts differ between arms because every arm resets the graph and evolves on its own, so round 2 of `full` plans from full's graph and round 2 of `random_reweight` plans from its own.",
-  "measured_at": "2026-11-15T06:40:29+00:00",
+  "measured_at": "2026-11-15T07:36:30+00:00",
   "measured_on": null,
   "rows": [
     {
