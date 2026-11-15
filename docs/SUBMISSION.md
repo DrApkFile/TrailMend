@@ -17,7 +17,7 @@ or the file that shows it is true.
 
 | # | Requirement | How it is shown | State |
 |---|---|---|---|
-| 1 | Clean clone → `make gate` passes | `scripts/presubmit.sh` clones HEAD and runs it | see "Pre-submit audit" below |
+| 1 | Clean clone → `make gate` passes | `scripts/presubmit.sh` clones HEAD and runs it | PASS at 588b2e5, live tests on, all 14 checks clean. Run it once more with the Loom link in place |
 | 2 | Live link works from a fresh browser | the Vercel URL | PASS: five pages 200, driven in Chromium at 390px, including asking, judging and rolling back |
 | 3 | Curve and controls published for 3 seeds | `evidence/curve.jsonl`, `evidence/curve.svg` | PASS: 162 rows, seeds 1, 7, 42, run `01f1f6f-06b10c13` |
 | 4 | Every README number links to an evidence file | the block between `numbers:start`/`numbers:end`, written by `trailmend.eval.report` | PASS: filled, each file linked with its sha256 |
