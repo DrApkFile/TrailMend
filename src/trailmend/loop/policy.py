@@ -8,6 +8,9 @@ from trailmend.core.model import Change, EdgeKey, Quarantine, Reweight, Signal
 
 class MendPolicy(StrEnum):
     FULL = "full"
+    FULL_V2 = "full_v2"
+    FULL_V1_RULE = "full_v1_rule"
+    GAPFILL_WIDE_ONLY = "gapfill_wide_only"
     REWEIGHT_ONLY = "reweight_only"
     QUARANTINE_ONLY = "quarantine_only"
     PROMOTE_ONLY = "promote_only"
@@ -35,6 +38,9 @@ class Mechanisms:
 
 MECHANISMS: Mapping[MendPolicy, Mechanisms] = {
     MendPolicy.FULL: Mechanisms(True, True, True, True),
+    MendPolicy.FULL_V2: Mechanisms(True, True, True, True),
+    MendPolicy.FULL_V1_RULE: Mechanisms(True, True, True, True),
+    MendPolicy.GAPFILL_WIDE_ONLY: Mechanisms(False, False, False, True),
     MendPolicy.REWEIGHT_ONLY: Mechanisms(True, False, False, False),
     MendPolicy.QUARANTINE_ONLY: Mechanisms(False, True, False, False),
     MendPolicy.PROMOTE_ONLY: Mechanisms(False, False, True, False),
@@ -49,6 +55,40 @@ def mechanisms(policy: MendPolicy) -> Mechanisms:
     found = MECHANISMS.get(policy)
     if found is None:
         raise KeyError(f"{policy} declares no mechanisms")
+    return found
+
+
+UPDATE_V1 = "v1"
+UPDATE_V2 = "v2"
+GAPFILL_NARROW = "narrow"
+GAPFILL_WIDE = "wide"
+
+
+@dataclass(frozen=True, slots=True)
+class Rules:
+    update: str
+    gapfill: str
+
+
+RULES: Mapping[MendPolicy, Rules] = {
+    MendPolicy.FULL: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.FULL_V2: Rules(UPDATE_V2, GAPFILL_WIDE),
+    MendPolicy.FULL_V1_RULE: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.GAPFILL_WIDE_ONLY: Rules(UPDATE_V2, GAPFILL_WIDE),
+    MendPolicy.REWEIGHT_ONLY: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.QUARANTINE_ONLY: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.PROMOTE_ONLY: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.GAPFILL_ONLY: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.FROZEN: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.RANDOM_REWEIGHT: Rules(UPDATE_V2, GAPFILL_NARROW),
+    MendPolicy.RANDOM_QUARANTINE: Rules(UPDATE_V2, GAPFILL_NARROW),
+}
+
+
+def rules(policy: MendPolicy) -> Rules:
+    found = RULES.get(policy)
+    if found is None:
+        raise KeyError(f"{policy} declares no update and gap-fill rules")
     return found
 
 
@@ -93,13 +133,13 @@ def shape(
     policy: MendPolicy, planned: Sequence[Change], candidates: Sequence[EdgeKey], rng: Random
 ) -> tuple[Change, ...]:
     match policy:
-        case MendPolicy.FULL:
+        case MendPolicy.FULL | MendPolicy.FULL_V2 | MendPolicy.FULL_V1_RULE:
             return tuple(planned)
         case MendPolicy.REWEIGHT_ONLY:
             return tuple(c for c in planned if isinstance(c, Reweight))
         case MendPolicy.QUARANTINE_ONLY:
             return tuple(c for c in planned if isinstance(c, Quarantine))
-        case MendPolicy.PROMOTE_ONLY | MendPolicy.GAPFILL_ONLY | MendPolicy.FROZEN:
+        case MendPolicy.PROMOTE_ONLY | MendPolicy.GAPFILL_ONLY | MendPolicy.GAPFILL_WIDE_ONLY | MendPolicy.FROZEN:
             return ()
         case MendPolicy.RANDOM_REWEIGHT:
             return _mirror_reweights(planned, candidates, rng)

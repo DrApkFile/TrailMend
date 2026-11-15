@@ -44,10 +44,17 @@ class MendConfig:
     quarantine_blame_share: float
     quarantine_confirm_ceiling: int
     promote_min_questions: int
+    eta_confirm: float | None = None
+
+    @property
+    def confirm_step(self) -> float:
+        return self.eta if self.eta_confirm is None else self.eta_confirm
 
     def __post_init__(self) -> None:
         if not 0 < self.eta <= 2:
             raise ValueError("eta must be in (0, 2]")
+        if self.eta_confirm is not None and not 0 < self.eta_confirm <= 2:
+            raise ValueError("eta_confirm must be in (0, 2] when it is set")
         if not 0 < self.cost_floor < 1 < self.cost_ceiling:
             raise ValueError("need 0 < cost_floor < 1 < cost_ceiling")
         if self.window < self.quarantine_min_blames or self.quarantine_min_blames < 2:
@@ -68,6 +75,16 @@ class SearchConfig:
             raise ValueError("max_len must be between 1 and 4")
         if not 1 <= self.result_limit <= 500:
             raise ValueError("result_limit must be between 1 and 500")
+
+
+@dataclass(frozen=True, slots=True)
+class GapfillRule:
+    waves: int
+    on_wrong: bool
+
+    def __post_init__(self) -> None:
+        if not 1 <= self.waves <= 3:
+            raise ValueError("gap-fill runs between 1 and 3 waves")
 
 
 @dataclass(frozen=True, slots=True)

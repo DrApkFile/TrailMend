@@ -18,7 +18,7 @@ MANIFEST = Path("evidence/run_manifest.json")
 def test_a_better_documented_edge_is_cheaper_to_walk() -> None:
     costs = [ingest_cost(support) for support in (1, 2, 3)]
     assert costs == sorted(costs, reverse=True)
-    assert costs[0] == pytest.approx(1.0)
+    assert costs[0] == 1.0
 
 
 def test_an_edge_no_document_asserts_cannot_be_priced() -> None:

@@ -19,7 +19,7 @@ from trailmend.graph.state import list_edge_keys, read_state
 from trailmend.loop.apply import apply
 from trailmend.loop.credit_round import outcome_for
 from trailmend.loop.evaluate import Verdict, judge, judge_all
-from trailmend.loop.gapfill import run_gapfill
+from trailmend.loop.gapfill import gap_of, run_gapfill
 from trailmend.loop.journal import Journal
 from trailmend.loop.ledger import Ledger
 from trailmend.loop.policy import CONTROL_OF, MendPolicy, profile, shape
@@ -259,7 +259,7 @@ def test_d5_a_gap_is_filled_from_pool_documents_and_the_question_becomes_answera
         0,
         loaded.documents,
         loaded.ingested.pool,
-        [gap],
+        [gap_of(gap)],
         mend_config,
     )
     if not filled.fills:
@@ -286,9 +286,13 @@ def test_d5_a_gap_already_in_the_graph_is_not_ingested_twice(
     if found is None:
         pytest.skip("this seed left no unreachable train question to fill")
     journal = Journal.for_run("round-gapfill-twice", tmp_path)
-    first = run_gapfill(hydra, journal, "run", 1, 0, loaded.documents, loaded.ingested.pool, [found[1]], mend_config)
+    first = run_gapfill(
+        hydra, journal, "run", 1, 0, loaded.documents, loaded.ingested.pool, [gap_of(found[1])], mend_config
+    )
     if not first.fills:
         pytest.skip("no pool document mentions this seed entity")
-    second = run_gapfill(hydra, journal, "run", 2, 0, loaded.documents, loaded.ingested.pool, [found[1]], mend_config)
+    second = run_gapfill(
+        hydra, journal, "run", 2, 0, loaded.documents, loaded.ingested.pool, [gap_of(found[1])], mend_config
+    )
     assert second.fills == ()
     assert second.receipts == ()

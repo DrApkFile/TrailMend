@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from random import Random
 
-from trailmend.core.credit import Outcome, Unreachable, assign_credit, confirmed_paths
+from trailmend.core.credit import Outcome, SetJudged, Unreachable, Wrong, assign_credit, confirmed_paths
 from trailmend.core.model import Change, Credit, EdgeKey, MendConfig, Quarantine, SearchConfig
 from trailmend.core.promote import Confirmation
 from trailmend.core.receipts import Receipt
@@ -16,7 +16,7 @@ from trailmend.graph.state import read_states
 from trailmend.loop.apply import apply
 from trailmend.loop.credit_round import outcome_for
 from trailmend.loop.evaluate import Judged, Score, judge_all, score
-from trailmend.loop.gapfill import Filled, run_gapfill
+from trailmend.loop.gapfill import NARROW, WRONG, Filled, Gap, GapfillRule, gap_of, run_gapfill
 from trailmend.loop.journal import Journal
 from trailmend.loop.ledger import Ledger
 from trailmend.loop.policy import ChangeProfile, MendPolicy, mechanisms, profile, shape
@@ -60,8 +60,19 @@ def confirmations_of(verdicts: Verdicts) -> tuple[Confirmation, ...]:
     )
 
 
-def gaps_of(verdicts: Verdicts) -> tuple[Unreachable, ...]:
-    return tuple(outcome for _, outcome in verdicts if isinstance(outcome, Unreachable))
+def gaps_of(verdicts: Verdicts, rule: GapfillRule = NARROW) -> tuple[Gap, ...]:
+    gaps: list[Gap] = []
+    for judged, outcome in verdicts:
+        match outcome:
+            case Unreachable():
+                gaps.append(gap_of(outcome))
+            case Wrong() if rule.on_wrong:
+                gaps.append(Gap(outcome.question_id, judged.seed_entity_id, WRONG))
+            case SetJudged(wrong_paths=wrong, missed_gold_paths=missed) if rule.on_wrong and (wrong or missed):
+                gaps.append(Gap(outcome.question_id, judged.seed_entity_id, WRONG))
+            case _:
+                continue
+    return tuple(gaps)
 
 
 def plan(client: HydraClient, verdicts: Verdicts, config: MendConfig) -> tuple[Change, ...]:
@@ -87,6 +98,7 @@ def run_round(
     search_config: SearchConfig,
     documents: DocumentSet | None = None,
     pool: Sequence[Edge] = (),
+    gapfill_rule: GapfillRule = NARROW,
 ) -> RoundOutcome:
     arms = mechanisms(policy)
     judged_train = judge_all(client, index, [item.question for item in train], search_config)
@@ -100,7 +112,7 @@ def run_round(
     shortcuts = ShortcutRound((), (), ())
     if arms.promote:
         shortcuts = run_shortcuts(client, journal, run_id, round_index, len(chosen), ledger.all(), mend_config)
-    gaps = gaps_of(verdicts)
+    gaps = gaps_of(verdicts, gapfill_rule if arms.gapfill else NARROW)
     filled = Filled(gaps, (), ())
     if arms.gapfill:
         if documents is None:
@@ -115,6 +127,7 @@ def run_round(
             pool,
             gaps,
             mend_config,
+            gapfill_rule,
         )
     judged_held_out = judge_all(client, index, [item.question for item in held_out], search_config)
     tape.record(round_index, judged_held_out)

@@ -25,7 +25,7 @@ def _clamp(value: float, cfg: MendConfig) -> float:
 
 
 def apply_signal(state: EdgeState, signal: Signal, cfg: MendConfig) -> EdgeState:
-    step = -cfg.eta if signal is Signal.CONFIRM else cfg.eta
+    step = -cfg.confirm_step if signal is Signal.CONFIRM else cfg.eta
     return replace(
         state,
         cost=_clamp(state.cost * math.exp(step), cfg),
