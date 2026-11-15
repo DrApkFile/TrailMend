@@ -14,16 +14,16 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
 ## Phase A — hosting first (PRD §5, deploy/railway/README.md)
 - [ ] A1 Railway: bucket + HydraDB service + API service. Acceptance: public `GET /v1/ready` → `graph_writable: true`;
   restart the HydraDB service, then `/v1/ready` still true. Record image digest in REALITY_SPIKES.md.
-  BLOCKED 2026-11-14: no Railway account reachable from this host — no `railway` CLI, no `RAILWAY_TOKEN`, no
-  `~/.railway` config. Needs a Railway API token (or a logged-in CLI) with permission to create a bucket and two
-  services. Everything that does not need the account is done: the image digest is recorded (REALITY_SPIKES S15) and
+  BLOCKED 2026-11-15: `railway` CLI 5.74.0 is now installed, `railway whoami` says Unauthorized. Needs one
+  interactive `railway login` in this terminal (no token should be pasted anywhere); after that the account must
+  allow creating a bucket and two services. Everything that does not need the account is done: the image digest is recorded (REALITY_SPIKES S15) and
   pinned in `deploy/railway/README.md`, and the same acceptance is proven locally — `/v1/ready` → `graph_writable:
   true`, survives `docker compose restart`, writes after the restart still land (S17).
 - [ ] A2 Vercel: `apps/web` Next.js app (create with the current stable `create-next-app`, TypeScript strict,
   App Router). One page that server-fetches `/v1/ready` and shows the state. Acceptance: live URL works in a fresh
   browser; API never called from the browser.
-  App BUILT 2026-11-14, DEPLOY BLOCKED: no Vercel account reachable — no `vercel` CLI, no `VERCEL_TOKEN`, no
-  `~/.vercel`. Needs a Vercel token with permission to create a project. Built and proven locally: Next.js 16.4.6,
+  App BUILT 2026-11-14, DEPLOY BLOCKED 2026-11-15: `vercel` CLI 65.16.0 is now installed, `vercel whoami` says
+  Logged out. Needs one interactive `vercel login` in this terminal (no token should be pasted anywhere). Built and proven locally: Next.js 16.4.6,
   App Router, TypeScript strict plus `noUncheckedIndexedAccess`; `/` is a server component that fetches
   `GET /v1/ready` through `lib/api.ts` (guarded by `server-only`); against the live API it renders
   `graph_writable true`, and with the API down it renders `—` and the code `api_unreachable`, never a fake success.
@@ -188,6 +188,17 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
 ## Phase G — submission (PRD §13, §17, §18)
 - [ ] G1 README: judge path in 60 seconds, the curve, how HydraDB is used, numbers each linked to evidence,
   limitations section, run-it-locally, attribution (HydraDB AGPL-3.0, used as a separate service).
-- [ ] G2 GTM: buyer, pain, status quo, price with a unit, pilot offer → README + `/pricing`.
+  PROSE WRITTEN 2026-11-15: all sections are in README.md. Every figure lives between `<!-- numbers:start -->` and
+  `<!-- numbers:end -->`, rewritten by `trailmend.eval.report` from `evidence/`; the block currently says it is
+  unfilled because the E1 sweep is still running. Ticks when the sweep finishes and the block holds real numbers.
+- [x] G2 GTM: buyer, pain, status quo, price with a unit, pilot offer → README + `/pricing`.
+  Evidence: README "Who this is for, and what it costs" and `apps/web/app/pricing/page.tsx` carry the same buyer
+  (platform/SRE lead who owns the rota), pain, status quo, unit price ($4 / service / month, minimum $400) and pilot
+  (6 weeks, $2,000, capped at 250 services, refunded if the agreed number does not move), plus what it is not and the
+  generated-data label.
 - [ ] G3 Loom (script in PRD §13). G4 Posts on X and LinkedIn tagging HydraDB → `evidence/posts.md`.
+  SCRIPT AND DRAFTS WRITTEN 2026-11-15: `docs/LOOM_SCRIPT.md` is the shot-by-shot recording script with the page each
+  spoken number is read off; `evidence/posts.md` holds the X thread and the LinkedIn post with a table saying which
+  evidence file fills each blank, and `@<hydradb-handle>` to be checked rather than guessed. Recording the Loom and
+  posting both need the hosted URLs (A1/A2) and the finished numbers.
 - [ ] G5 Pre-submit audit from a clean clone; submit before 09:00 IST Nov 16.

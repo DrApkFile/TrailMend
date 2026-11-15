@@ -90,6 +90,28 @@ an `UNWIND` write cannot `SET` a literal; `count(n)` is rejected but `count(*)` 
 carries is accepted and ignored; relationship properties do come back inside returned paths; and a repeated
 `query_id` is silently dropped after a restart.
 
+## Who this is for, and what it costs
+
+**Buyer.** The person who owns the on-call rota and the service catalogue: a platform or SRE lead at a company with
+enough services that nobody holds the whole map in their head.
+
+**Pain.** The catalogue is wrong in ways nobody notices until an incident. A service points at a team that no longer
+owns it, a rota entry is stale, two entries describe the same person. The page goes to the wrong human and the
+incident runs long. The map is maintained by hand, so it decays between audits.
+
+**Status quo.** A catalogue in a wiki or a Backstage entry plus a quarterly audit. Correctness depends on someone
+remembering to edit it, and nothing uses the one signal that is always available: whether the answer it just gave
+was right.
+
+**Price.** $4 per service in the catalogue per month, minimum $400 / month.
+
+**Pilot.** 6 weeks, $2,000, capped at 250 services. Judged on one number agreed up front: the share of "who owns
+this / who do I page" questions answered correctly on a held-out set your team writes, measured before and after six
+weeks of judging. If it does not improve, the pilot is refunded.
+
+**What it is not.** Not an incident-response tool, not a replacement for the catalogue as the place humans edit, and
+there is no LLM on the answer path. The same terms are on [/pricing](apps/web/app/pricing/page.tsx).
+
 ## Limitations
 
 These are real and they bound what the numbers can show.
