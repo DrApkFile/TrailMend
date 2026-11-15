@@ -42,9 +42,13 @@ alias duplicate, conflated entity, tie, other* is the one counted, and the rest 
 Three things move, and only three:
 
 - **The planted-wrong-edge count does not move at all** — 33, 35, 38 at both ends. What moves is where the wrong
-  edge sits: `wrong_edge_on_the_chosen_path` goes 28 → 0, 31 → 0, 33 → 0. The Mend quarantined every planted wrong
-  edge it was walking, and each of those questions went from a wrong answer to a refusal. The question is still
-  failing; it just fails politely now.
+  edge sits: `wrong_edge_on_the_chosen_path` goes 28 → 0, 31 → 0, 33 → 0. The Mend stopped walking the planted wrong
+  edges entirely, and not one of those questions became correct. Over the same interval the whole train split's
+  wrong answers fall 49 → 27, 44 → 25, 45 → 25 while unreachable rises 31 → 35, 53 → 42, 47 → 48, so some of this is
+  wrong-into-refusal and some is gap-fill below. This file counts causes and verdicts separately and does not
+  cross-tabulate them, so the split per cause is **not measured here**; §5 measures the conversion directly on
+  held-out, where quarantining every planted wrong edge moves seed 1 from 27 wrong and 23 unreachable to 14 wrong
+  and 36 unreachable at identical accuracy. Run 2's anatomy will carry the cross-tabulation.
 - **Missing-edge failures fall by about half** — 42 → 18, 59 → 22, 49 → 23. That is gap-fill, and it is the only
   cause the Mend actually repairs.
 - **`other` appears from nothing** — 0 → 6, 0 → 7, 0 → 7. These are train questions with no planted fault anywhere

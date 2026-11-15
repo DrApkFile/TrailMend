@@ -31,7 +31,9 @@ Boundary
 - Deterministic code decides every graph change.
 - The model never: writes or deletes edges, changes costs, merges entities, or scores answers. (Optional LLM use: phrasing the final answer sentence in the UI only.)
 
-## 3. Preregistered hypothesis (fixed before the first run)
+## 3. Preregistered hypotheses
+
+### 3.1 Run 1 — fixed before the first run, decided, published
 
 H1. On held-out questions, accuracy after round N of the Mend exceeds round 0 (frozen graph) by a margin larger than the spread across seeds, for every seed.
 H2. Random-reweight and random-quarantine controls, making the same number and size of changes for the same rounds, do not rise beyond seed spread.
@@ -41,6 +43,84 @@ H5. Net regressions on previously-correct held-out questions ≤ 2% per round.
 
 Primary metric (chosen now, not post hoc): held-out answer accuracy = exact match of the answer entity id set (Hits@1 for single-answer, set-F1 reported alongside for multi-answer).
 Any hypothesis that fails is published as failed.
+
+**Decided on run `01f1f6f-06b10c13`: H1 FAIL, H2 PASS, H3 PASS, H4 FAIL, H5 FAIL.** Published in `evidence/hypotheses.json`,
+in the README and on `/evidence`, and they stay there whatever run 2 shows. Why they came out that way is measured in
+`docs/RUN1_DIAGNOSIS.md`.
+
+### 3.2 Run 2 — preregistered 2026-11-15, before anything was built or run
+
+Every line below is fixed before the generator, the update rule or the arms are touched, and each is traced to the
+finding in `docs/RUN1_DIAGNOSIS.md` that motivates it. Run 1 is not re-run and not withdrawn. The two runs use
+different data (v1 and v2), so **only within-run arm comparisons are claims**; absolute accuracy across runs is not.
+
+**Versioning, so run 1 stays reproducible.** `data_version` ("v1", "v2") is part of the generated dataset's path and
+of the config digest. Run 1's dataset, its `faults.json` and its evidence files are not regenerated, not overwritten
+and not re-scored; both runs are served, each with its run id and its data version.
+
+**Dataset v2 — what changes and why.** Diagnosis §2 and §5: all three structural fault classes are unrepairable, the
+corpus corroborates the wrong version, and perfect quarantine is worth +0.0. The planted wrong edges are therefore
+split into three declared kinds, in the fault file, so that the mechanisms under test have something they can
+actually repair and something they provably cannot:
+
+| kind | share of planted wrong edges | what G0 holds | which mechanism can repair it |
+|---|---|---|---|
+| `contradicted` | 0.4 | the wrong edge at cost 1.0 **and** the true edge at cost 2.0 | reweight alone, after two blames |
+| `recoverable` | 0.3 | the wrong edge; the true edge is withheld into the pool with its document | gap-fill |
+| `destroyed` | 0.3 | the wrong edge only, exactly as in run 1 | none — it can only become a refusal |
+
+Everything else about the data is unchanged: missing-edge, alias-duplicate and conflation shares, sizes, templates,
+split share, and the rule that documents are rendered from G0 plus the pool.
+
+**Update rule v2 — what changes and why.** Diagnosis §6: 43 of 44 receipts behind the round-1 breaks carry only
+`confirm` signals, 31% of touched edges sit on the 0.05 floor by round 5 and 89% are below 0.2, and nothing is
+quarantined after round 3. The step becomes asymmetric and the floor rises: `eta_blame` 0.35, `eta_confirm` 0.10,
+`cost_floor` 0.5, `cost_ceiling` 20.0 unchanged. The old rule is kept as its own arm so the change is measured, not
+assumed.
+
+**Gap-fill v2 — what changes and why.** Diagnosis §5: +9.8 points are available and `gapfill_only` took +2.2.
+Gap-fill triggers on **wrong** answers as well as unreachable ones, and follows one extra wave from the nodes the
+first wave reached (REALITY_SPIKES S25 measured one wave reaching 35 of seed 1's 96 unreachable questions and two
+reaching 43). Kept as its own arm against the narrow rule.
+
+**Arms (10).** `frozen`, `plain_store`, `full_v2`, `full_v1_rule` (v2 data, run-1 update rule and narrow gap-fill),
+`reweight_only`, `quarantine_only`, `gapfill_only` (narrow), `gapfill_wide_only`, `random_reweight`,
+`random_quarantine`. The two random controls keep INV6: same number and size of changes as the arm they mirror, in
+the same round.
+
+**Seeds and rounds.** Seeds 1, 7, 42, 101, 404; 5 rounds. Preregistered fallback, so it is not a post-hoc choice: if
+the first seed's sweep takes longer than 70 minutes wall, the run drops to seeds 1, 7, 42 and the manifest records
+that it did.
+
+**Constants fixed now** (changing any of them changes the config digest and therefore the run id): `eta_blame` 0.35,
+`eta_confirm` 0.10, `cost_floor` 0.5, `cost_ceiling` 20.0, `window` 6, `quarantine_min_blames` 3,
+`quarantine_blame_share` 0.8, `quarantine_confirm_ceiling` 1, `promote_min_questions` 3, `max_len` 3,
+`result_limit` 200, `rounds` 5, `gapfill_waves` 2, `stale_true_edge_cost` 2.0, fault shares `wrong_edge_share` 0.08
+split 0.4 / 0.3 / 0.3, `missing_edge_share` 0.06, `alias_duplicate_share` 0.05, `conflated_people` 1.
+`plain_store_top_k` is tuned to the baseline's own best held-out score, as in run 1.
+
+**Primary metric.** Unchanged: held-out answer accuracy, exact match of the answer entity id set.
+**Secondary metric, preregistered now:** the held-out **wrong-answer rate** (wrong / n), because a refusal and a
+wrong page are not the same thing to the person being paged, and run 1 could only express the difference as a loss.
+
+**Hypotheses.**
+
+H1'. On every seed, `full_v2` beats `frozen` on the same held-out questions at round 5 under a two-sided exact
+McNemar test at p < 0.05, with a gain of ≥ 2.0 points on at least 4 of the 5 seeds. (Replaces run 1's H1, which
+compared a per-seed delta against the spread *between seeds* at round 0 — that spread measures how different three
+generated companies are, not the noise in the delta. Diagnosis finding 5.)
+H2'. Neither random control beats `frozen` under the same paired test on any seed.
+H3'. The `plain_store` arm is flat across rounds.
+H4'. Quarantine recall on planted wrong edges ≥ 0.7 with a false-quarantine rate ≤ 0.1, every seed. Unchanged from
+run 1, where it failed on the false-quarantine rate.
+H5'. Net regressions on previously-correct held-out questions ≤ 2% in every round. Unchanged from run 1, where it
+failed at 3.25%.
+H6'. In `full_v2`, the held-out wrong-answer rate falls by ≥ 40% from round 0 to round 5, on every seed.
+H7'. `full_v2` ingests ≥ 60% of the withheld edges its own rule can reach, every seed.
+H8'. `full_v2` beats `full_v1_rule` under the same paired test on at least 4 of the 5 seeds. This is the test of the
+update-rule change by itself, on identical data.
+
+Any hypothesis that fails is published as failed, beside run 1's.
 
 ## 4. Datasets
 
