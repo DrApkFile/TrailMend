@@ -46,7 +46,9 @@ MANIFESTS = frozenset({"run_manifest.json", "run_manifest_v2.json"})
 
 def evidence_digests(directory: Path = evidence.EVIDENCE_DIR) -> dict[str, str]:
     files = sorted(
-        p for p in directory.iterdir() if p.is_file() and p.name not in MANIFESTS and p.suffix in MEASURED_SUFFIXES
+        p
+        for p in directory.iterdir()
+        if p.is_file() and not p.name.startswith(".") and p.name not in MANIFESTS and p.suffix in MEASURED_SUFFIXES
     )
     return {p.name: evidence.digest(p) for p in files}
 
@@ -69,7 +71,12 @@ def _measured_on(path: Path) -> object:
 def hydradb_per_file(directory: Path = evidence.EVIDENCE_DIR) -> dict[str, object]:
     out: dict[str, object] = {}
     for path in sorted(directory.iterdir()):
-        if not path.is_file() or path.name == "run_manifest.json" or path.suffix not in {".json", ".jsonl"}:
+        if (
+            not path.is_file()
+            or path.name.startswith(".")
+            or path.name in MANIFESTS
+            or path.suffix not in {".json", ".jsonl"}
+        ):
             continue
         out[path.name] = _measured_on(path)
     return out

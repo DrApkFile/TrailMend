@@ -1,5 +1,6 @@
 from collections.abc import Mapping, Sequence
 
+from trailmend.data import dataset
 from trailmend.data.qtemplates import template
 from trailmend.eval import curve, evidence, paired
 from trailmend.eval.analyse import last_round, rows_of, seeds_of
@@ -14,8 +15,8 @@ FROZEN = MendPolicy.FROZEN.value
 DESIGN = (
     "The full Mend with a search that ignores cost (fewest hops) against run 2's full Mend that searches on cost, on "
     "the same seeds, data, constants and held-out questions. It was run at a later commit than run 2, so it is an "
-    "extension and enters no preregistered verdict; its frozen arm, run with the normal search, has to reproduce run "
-    "2's frozen rows exactly before anything here is written. Rows of kind `paired` count every held-out question "
+    "extension and enters no preregistered verdict. If its frozen arm fails to reproduce run 2, the mismatch is "
+    "published as provisional and no paired comparison is made. Rows of kind `paired` count every held-out question "
     "as a pair (two-sided exact McNemar). Rows of kind `by_answer_kind` split held-out accuracy by whether the "
     "question's template has one answer or a set, at round 0 and at the last round, because the two searches differ "
     "most there: with document-derived costs a set of true answers rarely ties, so the weighted search returns the "
@@ -52,11 +53,55 @@ def _by_kind(run_name: str, round_index: int) -> dict[str, tuple[int, int]]:
     return {kind: (right, total) for kind, (right, total) in tally.items()}
 
 
+def baseline_diagnostics(
+    extension: Sequence[Mapping[str, object]], run_two: Sequence[Mapping[str, object]]
+) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for seed in seeds_of(extension):
+        built = dataset.build(seed, data_version="v2")
+        keys = {(edge.src, edge.rel_type.value, edge.dst) for edge in built.graph.edges}
+        for label, rows in (("run_two", run_two), ("extension", extension)):
+            run_id = run_id_of(rows)
+            baseline = next(r for r in rows if r["arm"] == FROZEN and r["seed"] == seed and r["round"] == 0)
+            answers = [a for a in Tape.for_run(f"{run_id}-s{seed}-{FROZEN}").rounds() if a.round_index == 0]
+            extra = sorted(
+                {
+                    (h.src, h.rel_type, h.dst)
+                    for a in answers
+                    for path in a.paths
+                    for h in path
+                    if (h.src, h.rel_type, h.dst) not in keys
+                }
+            )
+            out.append(
+                {
+                    "kind": "baseline_diagnostic",
+                    "seed": seed,
+                    "source": label,
+                    "run_id": run_id,
+                    "held_out": baseline["held_out"],
+                    "edges_outside_g0": extra,
+                }
+            )
+    return out
+
+
 def main() -> int:
     extension = rows_of(curve.CURVE_V2_UNWEIGHTED)
     run_two = rows_of(curve.CURVE_V2)
     extension_run, run_two_id = run_id_of(extension), run_id_of(run_two)
-    print(f"frozen reproduces run 2 on {require_same_frozen(extension, run_two)} rows")
+    try:
+        checked = require_same_frozen(extension, run_two)
+    except ValueError as error:
+        reason = str(error)
+        diagnostic: list[dict[str, object]] = [
+            {"kind": "comparability", "classification": "provisional", "comparable": False, "reason": reason}
+        ]
+        diagnostic.extend(baseline_diagnostics(extension, run_two))
+        path = evidence.write(evidence.make("paired_v2_unweighted", DESIGN, diagnostic))
+        print(f"{path}: provisional; {reason}; no paired comparison published")
+        return 0
+    print(f"frozen reproduces run 2 on {checked} rows")
     final = last_round(extension)
     rows: list[dict[str, object]] = []
     for seed in seeds_of(extension):

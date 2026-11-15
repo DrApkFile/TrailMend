@@ -367,7 +367,9 @@ def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[d
         side = "below" if gap > 0 else "above"
         unweighted = (
             f"with unweighted search the same loop goes from {_pct(_as_float(north.get('unweighted_round_0')))} to "
-            f"{_pct(unweighted_end)}, {abs(gap):.1f} points {side} the loop that searches on cost"
+            f"{_pct(unweighted_end)}, {abs(gap):.1f} points {side} the loop that searches on cost "
+            "(provisional comparison: the frozen baselines differ, "
+            "so the difference cannot be attributed to search alone)"
         )
     add(
         "plain_and_unweighted",

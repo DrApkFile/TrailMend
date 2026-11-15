@@ -1,0 +1,168 @@
+{
+  "claim": "paired_v2_unweighted",
+  "design": "The full Mend with a search that ignores cost (fewest hops) against run 2's full Mend that searches on cost, on the same seeds, data, constants and held-out questions. It was run at a later commit than run 2, so it is an extension and enters no preregistered verdict. If its frozen arm fails to reproduce run 2, the mismatch is published as provisional and no paired comparison is made. Rows of kind `paired` count every held-out question as a pair (two-sided exact McNemar). Rows of kind `by_answer_kind` split held-out accuracy by whether the question's template has one answer or a set, at round 0 and at the last round, because the two searches differ most there: with document-derived costs a set of true answers rarely ties, so the weighted search returns the cheapest member and misses the set, while the hop-count search returns every answer at the same depth.",
+  "measured_at": "2026-11-15T22:01:51+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "classification": "provisional",
+      "comparable": false,
+      "kind": "comparability",
+      "reason": "the extension's frozen arm does not reproduce run 2 on seed 1"
+    },
+    {
+      "edges_outside_g0": [
+        [
+          1425948442990575050,
+          "ALERTS_ON",
+          3988343777877776924
+        ],
+        [
+          3254394748867616135,
+          "ALERTS_ON",
+          4041009403398165095
+        ]
+      ],
+      "held_out": {
+        "accuracy": 0.7705882352941177,
+        "correct": 262,
+        "n": 340,
+        "refused": 1,
+        "set_f1": 0.8269327731092436,
+        "unreachable": 26,
+        "wrong": 51
+      },
+      "kind": "baseline_diagnostic",
+      "run_id": "26b5469-580ae8dc",
+      "seed": 1,
+      "source": "run_two"
+    },
+    {
+      "edges_outside_g0": [],
+      "held_out": {
+        "accuracy": 0.7676470588235295,
+        "correct": 261,
+        "n": 340,
+        "refused": 0,
+        "set_f1": 0.8239915966386554,
+        "unreachable": 28,
+        "wrong": 51
+      },
+      "kind": "baseline_diagnostic",
+      "run_id": "9ae6601-580ae8dc",
+      "seed": 1,
+      "source": "extension"
+    },
+    {
+      "edges_outside_g0": [
+        [
+          1331196530241747419,
+          "ALERTS_ON",
+          4306642351956027175
+        ],
+        [
+          2024431317502525917,
+          "ALERTS_ON",
+          4181600774135078733
+        ],
+        [
+          2588986008672725486,
+          "ALERTS_ON",
+          967439710221046576
+        ],
+        [
+          3579948612075258839,
+          "ALERTS_ON",
+          341378275897301968
+        ]
+      ],
+      "held_out": {
+        "accuracy": 0.7735294117647059,
+        "correct": 263,
+        "n": 340,
+        "refused": 0,
+        "set_f1": 0.8272549019607842,
+        "unreachable": 28,
+        "wrong": 49
+      },
+      "kind": "baseline_diagnostic",
+      "run_id": "26b5469-580ae8dc",
+      "seed": 7,
+      "source": "run_two"
+    },
+    {
+      "edges_outside_g0": [],
+      "held_out": {
+        "accuracy": 0.7617647058823529,
+        "correct": 259,
+        "n": 340,
+        "refused": 0,
+        "set_f1": 0.8154901960784313,
+        "unreachable": 32,
+        "wrong": 49
+      },
+      "kind": "baseline_diagnostic",
+      "run_id": "9ae6601-580ae8dc",
+      "seed": 7,
+      "source": "extension"
+    },
+    {
+      "edges_outside_g0": [
+        [
+          71072970165799167,
+          "ALERTS_ON",
+          1293790895705249662
+        ],
+        [
+          1216134266511386480,
+          "ALERTS_ON",
+          680660011456245605
+        ],
+        [
+          1885851253824940655,
+          "ALERTS_ON",
+          1293790895705249662
+        ],
+        [
+          1929653220433116566,
+          "ALERTS_ON",
+          4598918626155698950
+        ],
+        [
+          3004185527271787652,
+          "ALERTS_ON",
+          395278249081009037
+        ]
+      ],
+      "held_out": {
+        "accuracy": 0.7923976608187134,
+        "correct": 271,
+        "n": 342,
+        "refused": 0,
+        "set_f1": 0.8378863826232248,
+        "unreachable": 31,
+        "wrong": 40
+      },
+      "kind": "baseline_diagnostic",
+      "run_id": "26b5469-580ae8dc",
+      "seed": 42,
+      "source": "run_two"
+    },
+    {
+      "edges_outside_g0": [],
+      "held_out": {
+        "accuracy": 0.7807017543859649,
+        "correct": 267,
+        "n": 342,
+        "refused": 0,
+        "set_f1": 0.8261904761904763,
+        "unreachable": 36,
+        "wrong": 39
+      },
+      "kind": "baseline_diagnostic",
+      "run_id": "9ae6601-580ae8dc",
+      "seed": 42,
+      "source": "extension"
+    }
+  ]
+}

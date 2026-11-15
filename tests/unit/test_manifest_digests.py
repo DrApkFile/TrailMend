@@ -19,5 +19,6 @@ def test_prose_in_the_evidence_directory_is_not_hashed_as_a_measurement(tmp_path
     (tmp_path / "curve.jsonl").write_text('{"a": 1}\n')
     (tmp_path / "posts.md").write_text("a draft that is edited after the run")
     (tmp_path / ".gitkeep").write_text("")
+    (tmp_path / ".measuring.json").write_text('{"pid": 123}')
 
     assert set(manifest.evidence_digests(tmp_path)) == {"curve.jsonl"}

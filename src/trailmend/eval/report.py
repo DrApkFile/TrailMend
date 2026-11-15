@@ -252,7 +252,8 @@ def unweighted() -> list[str]:
         "### The same loop with unweighted search (extension, not part of any preregistered verdict)",
         "",
         "Run 2's data and constants at a later commit. `full_unweighted` is the full Mend with a search that ignores "
-        "cost and takes the fewest hops; `frozen` is re-run with the normal search and must reproduce run 2's.",
+        "cost and takes the fewest hops. **Provisional:** the frozen arm does not reproduce run 2; "
+        "the diagnostic records edges outside G0 in run 2's frozen tape. No controlled paired comparison is claimed.",
         "",
         *arms_table(rows),
     ]
