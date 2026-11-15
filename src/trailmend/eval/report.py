@@ -20,13 +20,18 @@ def _rows(name: str) -> tuple[Mapping[str, object], ...]:
     return tuple(cast("list[Mapping[str, object]]", rows)) if isinstance(rows, list) else ()
 
 
-CURVE_V2 = Path("evidence/curve_v2.jsonl")
+CURVE_V2 = "curve_v2.jsonl"
 
 
-def _curve_rows(path: Path = curve.CURVE) -> tuple[Mapping[str, object], ...]:
-    if not path.exists():
+def _curve_v2() -> Path:
+    return evidence.EVIDENCE_DIR / CURVE_V2
+
+
+def _curve_rows(path: Path | None = None) -> tuple[Mapping[str, object], ...]:
+    found = path if path is not None else curve.CURVE
+    if not found.exists():
         return ()
-    return tuple(json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line)
+    return tuple(json.loads(line) for line in found.read_text(encoding="utf-8").splitlines() if line)
 
 
 def _accuracy(row: Mapping[str, object]) -> float | None:
@@ -151,7 +156,7 @@ def paired_table() -> list[str]:
 
 
 def run_two() -> list[str]:
-    rows = _curve_rows(CURVE_V2)
+    rows = _curve_rows(_curve_v2())
     if not rows:
         return [
             "### Run 2",

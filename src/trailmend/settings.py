@@ -3,6 +3,8 @@ from functools import lru_cache
 from pydantic import Field, HttpUrl, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from trailmend.data.faultmodel import V2
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="TRAILMEND_", env_file=".env", extra="forbid", frozen=True)
@@ -15,6 +17,7 @@ class Settings(BaseSettings):
     admin_token: SecretStr
     mend_config_path: str = "config/mend.toml"
     demo_seed: int = Field(default=1, ge=0)
+    demo_data_version: str = Field(default=V2, pattern="^v[12]$")
     live_run_id: str = Field(default="live", min_length=1)
     ask_rate_per_minute: int = Field(default=60, ge=1, le=10_000)
     judge_rate_per_minute: int = Field(default=20, ge=1, le=10_000)

@@ -13,7 +13,7 @@ pytestmark = pytest.mark.hydra
 
 @pytest.fixture(scope="module")
 def loaded(client: TestClient) -> dataset.Dataset:
-    built = dataset.build(1)
+    built = dataset.build(1, data_version=app.state.live.settings.demo_data_version)
     live: Live = app.state.live
     load(live.client, built.graph, built.support)
     return built

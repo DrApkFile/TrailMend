@@ -80,3 +80,14 @@ def test_filling_replaces_only_what_is_between_the_markers(recorded: Path, tmp_p
     assert "after" in text
     assert "stale" not in text
     assert "| `full` | 75.0% | 85.0% | +10.0 points |" in text
+
+
+def test_the_block_reads_the_curve_it_is_pointed_at_not_the_one_imported(recorded: Path) -> None:
+    (recorded / "curve_v2.jsonl").write_text(
+        "\n".join([_curve_row("full_v2", 1, 0, 0.60), _curve_row("full_v2", 1, 1, 0.75)]),
+        encoding="utf-8",
+    )
+    block = report.block()
+    assert "| `full_v2` | 60.0% | 75.0% | +15.0 points |" in block
+    assert "| `full` | 75.0% | 85.0% | +10.0 points |" in block
+    assert "not yet run" not in block

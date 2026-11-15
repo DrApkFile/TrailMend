@@ -65,7 +65,7 @@ def build_live(settings: Settings) -> Live:
         settings.hydra_cell_id,
         settings.hydra_timeout_s,
     )
-    built = dataset.build(settings.demo_seed)
+    built = dataset.build(settings.demo_seed, data_version=settings.demo_data_version)
     return Live(
         settings,
         client,
