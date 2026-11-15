@@ -26,7 +26,8 @@ No LLM is on the answer path, and no LLM scores an answer.
 1. `/ask` — run one of the listed questions. You see the path the graph walked and the cost of every hop.
 2. Press **wrong**. The edges on that path get more expensive and you are handed receipt ids.
 3. Ask again. If another route is now cheaper, the answer changes. Nothing else moved.
-4. `/mend` — watch blame build up on a planted bad link until it is quarantined, then roll it back.
+4. `/mend` — how often quarantine was right on the recorded runs, against the planted faults, and every change
+   the live demo graph has made. Each one has a **roll this back** button that undoes it and leaves its own receipt.
 5. `/evidence` — every number on the site, with the file that produced it and that file's sha256.
 
 ## The numbers

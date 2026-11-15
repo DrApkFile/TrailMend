@@ -7,60 +7,58 @@ or the file that shows it is true.
 
 | What | Where | State |
 |---|---|---|
-| Live app | Vercel URL | not deployed — needs `vercel login` (A2) |
-| API | Railway URL | not deployed — needs `railway login` (A1) |
-| Repo | public GitHub | — |
-| Loom | linked at the top of README.md | script in `docs/LOOM_SCRIPT.md`, not recorded |
-| Posts | `evidence/posts.md` with URLs | drafted, blanks unfilled, not posted |
+| Live app | https://trail-mend.vercel.app | DEPLOYED. All five pages answer 200; screenshots at 390px in `evidence/demo/f-*.png` |
+| API | https://trailmend-production-ee2e07ff.up.railway.app | DEPLOYED. `GET /v1/ready` → `{"graph_writable":true}`; serves the curve and every evidence file |
+| Repo | https://github.com/DrApkFile/TrailMend | public |
+| Loom | linked at the top of README.md | script in `docs/LOOM_SCRIPT.md`, NOT RECORDED |
+| Posts | `evidence/posts.md` with URLs | figures filled from the evidence; NOT POSTED |
 
 ## Definition of finished (PRD §17)
 
 | # | Requirement | How it is shown | State |
 |---|---|---|---|
-| 1 | Clean clone → `make gate` passes | `scripts/presubmit.sh` clones HEAD and runs it | PASS at 7fb58dc, `SKIP_LIVE=1` |
-| 2 | Live link works from a fresh browser | open the Vercel URL | blocked on A1/A2 |
-| 3 | Curve and controls published for 3 seeds | `evidence/curve.jsonl`, `evidence/curve.svg` | seeds 1 and 7 of 3 recorded; sweep running |
-| 4 | Every README number links to an evidence file | the block between `numbers:start`/`numbers:end`, written by `trailmend.eval.report` | fills when the sweep ends |
-| 5 | Loom recorded | the link at the top of README.md | pending |
-| 6 | Posts live and logged | the "Posted" table in `evidence/posts.md` | pending |
-| 7 | Submitted before 09:00 IST | the submission form | pending |
+| 1 | Clean clone → `make gate` passes | `scripts/presubmit.sh` clones HEAD and runs it | see "Pre-submit audit" below |
+| 2 | Live link works from a fresh browser | the Vercel URL | PASS: five pages 200, driven in Chromium at 390px, including asking, judging and rolling back |
+| 3 | Curve and controls published for 3 seeds | `evidence/curve.jsonl`, `evidence/curve.svg` | PASS: 162 rows, seeds 1, 7, 42, run `01f1f6f-06b10c13` |
+| 4 | Every README number links to an evidence file | the block between `numbers:start`/`numbers:end`, written by `trailmend.eval.report` | PASS: filled, each file linked with its sha256 |
+| 5 | Loom recorded | the link at the top of README.md | PENDING — needs the repo owner |
+| 6 | Posts live and logged | the "Posted" table in `evidence/posts.md` | PENDING — drafts are ready, the handle needs checking |
+| 7 | Submitted before 09:00 IST | the submission form | PENDING |
 
-## The order the rest has to happen in
+## What is left
 
-1. The E1 sweep finishes (3 seeds × 9 arms × 6 rounds into `evidence/curve.jsonl`).
-2. Re-run the two contaminated seed-arms. Seed 7 `random_quarantine` as well as seed 1 `reweight_only`: the live
-   and API suite was run against the same graph while that arm was in flight (02:11-02:16 on 2026-11-15), because a
-   hand-written lock carried a pid that had already exited. Every other arm resets the graph when it starts, so the
-   damage is confined to the arm that was running.
-   `uv run python -m trailmend.eval.rerun 7 random_quarantine "the live and API tests ran against this graph while this arm was in flight"`
-3. Re-run seed 1 `reweight_only`: its rows were written while the API tests wrote judge receipts and a rollback into
-   the same graph. One command, which keeps the contaminated rows on record under `evidence/superseded/` with the
-   reason and reuses the arm index the sweep used so the RNG stream is the same:
-   `uv run python -m trailmend.eval.rerun 1 reweight_only "the API tests wrote judge receipts and a rollback into the same graph during this arm"`
-4. `uv run python -m trailmend.eval.analyse` → curve.svg, non_regression.json, quarantine.json, mechanisms.json,
-   hypotheses.json, run_manifest.json. It refuses any seed-arm whose held-out tape is missing.
-5. `uv run python -m trailmend.eval.report` → the README numbers block.
-6. `railway login`, then A1: bucket, HydraDB service on the pinned digest, API service, `GET /v1/ready` →
-   `graph_writable: true`, restart HydraDB and check again. Steps in `deploy/railway/README.md`.
-7. `vercel login`, then A2: deploy `apps/web` with `TRAILMEND_API=<railway api url>`; check in a fresh browser and
-   at 390px wide; confirm no API URL appears in `.next/static`.
-8. E6 against the deployment, both passes. It needs the deployment's admin token in the environment and never
-   prints it: put it in `.env.prod` (gitignored) as `TRAILMEND_ADMIN_TOKEN=...`, then
-   `set -a; . ./.env.prod; set +a; uv run python -m trailmend.eval.load https://trailmend-production-ee2e07ff.up.railway.app`
-   → `evidence/latency.json`, then re-run report. Afterwards reset the demo graph with
-   `set -a; . ./.env.prod; set +a; ./scripts/demo_reset.sh` so judges start from the loaded graph.
-9. Record the Loom from `docs/LOOM_SCRIPT.md`; put the link at the top of the README.
-10. Fill the blanks in `evidence/posts.md` from the evidence files, check HydraDB's handle, post, log the URLs.
-11. `bash scripts/presubmit.sh` with the live tests on (needs `make hydra-up`), expect every check to pass.
-12. Submit.
+1. Record the Loom from `docs/LOOM_SCRIPT.md` and put the link in the README table and in `evidence/posts.md`.
+2. Check HydraDB's handle on the hackathon page, post both drafts from `evidence/posts.md`, log the URLs in its
+   "Posted" table.
+3. `make hydra-up` if the local HydraDB is down, then `bash scripts/presubmit.sh` with the live tests on, and expect
+   every check to pass.
+4. Submit.
+
+Optional, and not needed for any claim made: a larger E6 run. The one on record was sized to stay under the public
+60-asks-a-minute limit; a bigger one needs `TRAILMEND_ASK_RATE_PER_MINUTE` raised on the Railway API service first,
+and should be lowered again afterwards.
+
+If a judge has been judging on the hosted site and you want it clean again:
+`set -a; . ./.env.prod; set +a; ./scripts/demo_reset.sh`. The reset writes its own receipt and never touches the
+evaluation evidence. If the demo graph is ever empty — a fresh HydraDB, say — the API loads G0 itself at startup,
+so this is a convenience, not a dependency.
 
 ## What is published as a failure, not hidden
 
-The preregistered hypotheses are decided by the rules in `evidence/hypotheses.json`, and the ones that fail stay on
-the site with their numbers. On seed 1's finished rows, H4 fails on the false-quarantine rate (0.1176 against a
-threshold of 0.1, at recall 1.0) and H5 fails on the worst round's break share (0.0314 against 0.02). The final
-verdicts are over three seeds and are whatever the run says.
+Three of the five preregistered hypotheses failed on the finished run and stay on the site with the rule each was
+decided by, in `evidence/hypotheses.json`, in the README and on `/evidence`:
+
+- **H1 FAIL** — the full Mend ends round 5 at 84.2% against 83.9% at round 0, +0.4 points, inside the 2.9-point
+  spread between seeds at round 0. One of the three seeds did not move at all.
+- **H4 FAIL** — quarantine recall is 1.00, 0.92, 0.92, but the false-quarantine rate is 0.118, 0.188, 0.071 against
+  a budget of 0.1.
+- **H5 FAIL** — one round broke 3.25% of previously-correct held-out answers against a budget of 2%.
+
+What survives: gap-fill is the only mechanism that moves accuracy on its own (+2.2 points, every seed positive);
+targeted change beats random change on both levers with the controls matched on the number and size of changes per
+round (reweight −1.9 against −7.6, quarantine 0.0 against −2.5); and the graph answers 83.9% where the
+document-only baseline answers 24.6%.
 
 The limitation that bounds H1 is in the README: when a planted fault points a link at the wrong target, the true
 link is not in the corpus, so quarantining the bad edge turns a wrong answer into a refusal rather than a correct
-one.
+one. Only the withheld-edge faults have a document that gap-fill can find.

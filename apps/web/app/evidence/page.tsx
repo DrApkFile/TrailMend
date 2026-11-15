@@ -1,4 +1,5 @@
 import { Changes, toChangeRows } from "@/components/Changes";
+import { Latency, type LatencyRow } from "@/components/Latency";
 import { Manifest, type ManifestPayload } from "@/components/Manifest";
 import { Failed, Panel } from "@/components/Shell";
 import { fetchCurve, fetchEvidence } from "@/lib/api";
@@ -25,6 +26,11 @@ export default async function EvidencePage() {
     ...FILES.map((name) => fetchEvidence(name)),
   ]);
   const changes = files[FILES.indexOf("changes")];
+  const latency = files[FILES.indexOf("latency")];
+  const latencyRows =
+    latency?.ok && latency.value.available
+      ? ((latency.value.payload?.rows ?? []) as LatencyRow[])
+      : [];
   const changeRows =
     changes?.ok && changes.value.available
       ? toChangeRows(changes.value.payload?.rows ?? [])
@@ -83,6 +89,38 @@ export default async function EvidencePage() {
             <Changes rows={changeRows} />
           )}
         </div>
+      </Panel>
+
+      <Panel title="What it costs to answer">
+        <p className="text-sm text-stone-300">
+          Concurrent clients asking the product question mix over HTTP against
+          this deployment, then the same load again while a Mend round writes to
+          the same graph. The tail is connection setup, not the graph: the first
+          request on a fresh connection to the edge costs about six seconds and
+          later ones on it about half a second.
+        </p>
+        <div className="mt-4">
+          {latencyRows.length === 0 ? (
+            <p className="text-sm text-stone-400">Not produced yet.</p>
+          ) : (
+            <Latency rows={latencyRows} />
+          )}
+        </div>
+        {latencyRows[1]?.writer && (
+          <p className="mt-3 text-xs text-stone-400">
+            The writer in the second pass took{" "}
+            <span className="font-mono">{latencyRows[1].writer.seconds}s</span>{" "}
+            to apply{" "}
+            <span className="font-mono">{latencyRows[1].writer.reweights}</span>{" "}
+            reweights and{" "}
+            <span className="font-mono">
+              {latencyRows[1].writer.quarantines}
+            </span>{" "}
+            quarantines under{" "}
+            <span className="font-mono">{latencyRows[1].writer.receipts}</span>{" "}
+            receipts.
+          </p>
+        )}
       </Panel>
 
       {files.map((file, index) => (
