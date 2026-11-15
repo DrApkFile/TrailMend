@@ -211,3 +211,42 @@ def test_f1_a_started_api_loads_g0_when_the_demo_graph_is_empty(
     assert listed[0]["receipt_id"] == receipt.receipt_id
     answered = client.post("/v1/ask", json={"question": _a_question(loaded, "alert_owning_team")})
     assert answered.status_code == 200
+
+
+def test_f4_truth_lists_every_planted_fault_and_a_fresh_graph_has_repaired_none(
+    client: TestClient, loaded: dataset.Dataset
+) -> None:
+    client.post("/v1/demo/reset", headers={"X-Admin-Token": ADMIN})
+    body = client.get("/v1/truth").json()
+    faults = loaded.ingested.faults
+    planted = (
+        len(faults.wrong_edges) + len(faults.missing_edges) + len(faults.alias_duplicates) + len(faults.conflations)
+    )
+    assert len(body["faults"]) == planted
+    assert body["counts"] == {"still_wrong": planted}
+    assert {f["kind"] for f in body["faults"]} >= {"contradicted", "recoverable", "destroyed", "missing_edge"}
+    assert all(f["receipts"] == [] for f in body["faults"])
+
+
+def test_f4_blaming_a_stale_link_changes_its_fault_and_names_the_receipts_that_did_it(
+    client: TestClient, loaded: dataset.Dataset
+) -> None:
+    client.post("/v1/demo/reset", headers={"X-Admin-Token": ADMIN})
+    stale = next(f for f in loaded.ingested.faults.wrong_edges if f.kind.value == "contradicted")
+    fault_id = f"wrong-{stale.rel_type.value.lower()}-{stale.src}-{stale.wrong_dst}"
+    asked = next(q.text for q in loaded.questions.questions if q.seed_entity_id == stale.src and q.hops == 1)
+    written: list[str] = []
+    live: Live = app.state.live
+    for _ in range(4):
+        live.judge_limiter.seen.clear()
+        judged = client.post(
+            "/v1/judge", json={"question": asked, "verdict": "wrong"}, headers={"X-Admin-Token": ADMIN}
+        )
+        if judged.status_code != 200:
+            break
+        written.extend(judged.json()["receipts"])
+    fault = next(f for f in client.get("/v1/truth").json()["faults"] if f["fault_id"] == fault_id)
+    assert fault["status"] in {"corrected", "quarantined"}
+    assert written
+    assert {r["receipt_id"] for r in fault["receipts"]} >= set(written[:1])
+    client.post("/v1/demo/reset", headers={"X-Admin-Token": ADMIN})

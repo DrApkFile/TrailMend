@@ -1,5 +1,126 @@
 @import "tailwindcss";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+@theme {
+  --font-display: "Instrument Serif", "Iowan Old Style", "Times New Roman", serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+  --color-ink: #f4f1ea;
+  --color-night: #0a0a0b;
+  --color-bad: #ff5a47;
+  --color-mend: #6ee7b7;
+}
 
 :root {
   color-scheme: dark;
+  --line: rgb(255 255 255 / 0.09);
+}
+
+html {
+  background: #0a0a0b;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #ff5a47;
+  color: #0a0a0b;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: #0a0a0b;
+  animation: loader-out 0.55s ease 0.95s forwards;
+}
+
+.loader-line {
+  position: relative;
+  padding-bottom: 0.9rem;
+}
+
+.loader-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, #ff5a47, #6ee7b7);
+  transform-origin: left;
+  animation: loader-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes loader-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes loader-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 1.05s both;
+}
+
+.rise-late {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 1.25s both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    animation: loader-out 0.01s linear 0s forwards;
+  }
+  .loader-line::after,
+  .rise,
+  .rise-late {
+    animation: none;
+  }
+}
+
+.flight {
+  height: 240vh;
+}
+
+.flight-stick {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flight {
+    height: auto;
+  }
+  .flight-stick {
+    position: static;
+    min-height: 0;
+  }
 }

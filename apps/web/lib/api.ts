@@ -370,3 +370,89 @@ export async function judgeAnswer(
     "/v1/judge",
   );
 }
+
+export type TruthEdge = { hop: Hop; status: string };
+
+export type TruthFault = {
+  fault_id: string;
+  kind: string;
+  status: string;
+  repairable_by: string;
+  planted: TruthEdge | null;
+  truth: TruthEdge | null;
+  other_edges: number;
+  receipts: Receipt[];
+};
+
+export type Truth = {
+  dataset: string;
+  seed: number;
+  data_version: string;
+  counts: Record<string, number>;
+  receipts_recorded: number;
+  faults: TruthFault[];
+};
+
+export async function fetchTruth(): Promise<Fetched<Truth>> {
+  return shaped<Truth>(
+    await getJson("/v1/truth"),
+    (body) =>
+      isObject(body) && Array.isArray(body.faults) && isObject(body.counts),
+    "/v1/truth",
+  );
+}
+
+type MetaqaScore = {
+  n: number;
+  hits: number;
+  hits_at_1: number;
+  exact_set: number;
+  wrong: number;
+  wrong_rate: number;
+  unreachable: number;
+  refused: number;
+};
+
+export async function fetchCurveMetaqa(): Promise<Fetched<Curve>> {
+  const fetched = await shaped<{
+    rows: (Omit<CurveRow, "held_out"> & { held_out: MetaqaScore })[];
+    available: boolean;
+    sha256?: string;
+  }>(
+    await getJson("/v1/evidence/curve-metaqa"),
+    (body) =>
+      isObject(body) &&
+      Array.isArray(body.rows) &&
+      typeof body.available === "boolean",
+    "/v1/evidence/curve-metaqa",
+  );
+  if (!fetched.ok) {
+    return fetched;
+  }
+  return {
+    ok: true,
+    value: {
+      available: fetched.value.available,
+      sha256: fetched.value.sha256,
+      rows: fetched.value.rows.map((row) => ({
+        ...row,
+        train: null,
+        held_out: {
+          n: row.held_out.n,
+          correct: row.held_out.hits,
+          accuracy: row.held_out.hits_at_1,
+          set_f1: row.held_out.exact_set,
+          unreachable: row.held_out.unreachable,
+          refused: row.held_out.refused,
+          wrong: row.held_out.wrong,
+        },
+      })),
+    },
+  };
+}
+
+export type BenchmarkSentence = {
+  key: string;
+  text: string;
+  sources: string[];
+};

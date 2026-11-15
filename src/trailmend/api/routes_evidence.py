@@ -32,8 +32,22 @@ SERVABLE: tuple[str, ...] = (
     "oracle_v2",
     "fault_recoverability_v2",
     "run_manifest_v2",
+    "hypotheses_metaqa",
+    "paired_metaqa",
+    "captured_share_metaqa",
+    "non_regression_metaqa",
+    "oracle_metaqa",
+    "plain_store_metaqa",
+    "paired_v2_unweighted",
+    "benchmark",
 )
-CURVES: dict[str, Path] = {"curve": curve.CURVE, "curve-v2": curve.CURVE_V2}
+CURVE_METAQA = Path("evidence/curve_metaqa.jsonl")
+CURVES: dict[str, Path] = {
+    "curve": curve.CURVE,
+    "curve-v2": curve.CURVE_V2,
+    "curve-v2-unweighted": curve.CURVE_V2_UNWEIGHTED,
+    "curve-metaqa": CURVE_METAQA,
+}
 
 
 def _curve(path: Path) -> dict[str, object]:
@@ -51,6 +65,16 @@ def evidence_curve() -> dict[str, object]:
 @router.get("/v1/evidence/curve-v2")
 def evidence_curve_v2() -> dict[str, object]:
     return _curve(CURVES["curve-v2"])
+
+
+@router.get("/v1/evidence/curve-v2-unweighted")
+def evidence_curve_v2_unweighted() -> dict[str, object]:
+    return _curve(CURVES["curve-v2-unweighted"])
+
+
+@router.get("/v1/evidence/curve-metaqa")
+def evidence_curve_metaqa() -> dict[str, object]:
+    return _curve(CURVES["curve-metaqa"])
 
 
 @router.get("/v1/evidence/{name}")

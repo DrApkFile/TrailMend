@@ -18,5 +18,6 @@ export async function runRollback(_state: RollbackState | undefined, form: FormD
     return { error: done.error };
   }
   revalidatePath("/mend");
+  revalidatePath("/truth");
   return { undone: done.value };
 }

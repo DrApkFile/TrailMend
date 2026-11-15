@@ -112,3 +112,28 @@ class NeighbourhoodResponse(Strict):
     name: str
     label: str
     neighbours: tuple[Neighbour, ...]
+
+
+class TruthEdge(Strict):
+    hop: Hop
+    status: str
+
+
+class TruthFault(Strict):
+    fault_id: str
+    kind: str
+    status: str
+    repairable_by: str
+    planted: TruthEdge | None
+    truth: TruthEdge | None
+    other_edges: int
+    receipts: tuple[ReceiptSummary, ...]
+
+
+class TruthResponse(Strict):
+    dataset: str
+    seed: int
+    data_version: str
+    counts: dict[str, int]
+    receipts_recorded: int
+    faults: tuple[TruthFault, ...]
