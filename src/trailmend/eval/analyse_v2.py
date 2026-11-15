@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import cast
 
 from trailmend.data.faultmodel import V2
-from trailmend.eval import evidence, manifest, paired
+from trailmend.eval import curve, evidence, manifest, paired
 from trailmend.eval.analyse import (
     PLAIN,
     accuracy_at,
@@ -21,7 +21,7 @@ from trailmend.eval.analyse import (
 from trailmend.eval.run import RUN2_ARMS
 from trailmend.loop.policy import MendPolicy
 
-CURVE_V2 = Path("evidence/curve_v2.jsonl")
+CURVE_V2 = curve.CURVE_V2
 ORACLE_V2 = Path("evidence/oracle_v2.json")
 REACHABLE_STAGE = "and_ingest_withheld_edges"
 ALPHA = 0.05

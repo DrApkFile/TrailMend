@@ -80,17 +80,30 @@ Every figure above is written into this file by `trailmend.eval.report` from the
 typed by hand. The evaluation data is **generated**, and is labelled generated everywhere it appears; no customer data
 has been measured.
 
-**What this run showed.** The full Mend ends round 5 at 84.2% held-out, 0.4 points above its own round 0, and one of
-the three seeds did not move at all. That is well inside the 2.9-point spread between seeds at round 0, so **H1
-fails**: the lift is not bigger than the noise the seeds already carry. Three results survive that. Gap-fill is the
-only mechanism that moves accuracy on its own, +2.2 points with every seed positive. Targeted change beats random
-change by a wide margin on both levers measured separately — reweight −1.9 points against −7.6 for random reweight,
-quarantine 0.0 against −2.5 for random quarantine — where the controls made the same number and size of changes in
-the same round (`evidence/changes.json`). And the graph answers 83.9% of held-out questions against 24.6% for the
-document-only baseline, a 59-point gap. **H4 fails** on the false-quarantine rate (0.118, 0.188, 0.071 against a
-budget of 0.1) with recall at 0.92 or better on every seed, and **H5 fails** on one round where 3.25% of
-previously-correct answers broke against a 2% budget. The three failures are published with the rule each was decided
-by in `evidence/hypotheses.json`.
+**What run 1 showed, and why it failed.** The full Mend ended round 5 at 84.2% held-out, 0.4 points above its own
+round 0, and one of the three seeds did not move at all. That is well inside the 2.9-point spread between seeds at
+round 0, so **H1 failed**: the lift was not bigger than the noise the seeds already carried. Three results survived
+that. Gap-fill was the only mechanism that moved accuracy on its own, +2.2 points with every seed positive. Targeted
+change beat random change by a wide margin on both levers measured separately — reweight −1.9 points against −7.6 for
+random reweight, quarantine 0.0 against −2.5 for random quarantine — where the controls made the same number and size
+of changes in the same round (`evidence/changes.json`). And the graph answered 83.9% of held-out questions against
+24.6% for the document-only baseline, a 59-point gap. **H4 failed** on the false-quarantine rate (0.118, 0.188, 0.071
+against a budget of 0.1) with recall at 0.92 or better on every seed, and **H5 failed** on one round where 3.25% of
+previously-correct answers broke against a 2% budget. The failures are published with the rule each was decided by in
+`evidence/hypotheses.json`, and the diagnosis is in
+[docs/RUN1_DIAGNOSIS.md](docs/RUN1_DIAGNOSIS.md).
+
+**What run 2 changed, and why.** The diagnosis found the headline was capped by the data, not by the mechanism: every
+planted wrong edge destroyed its correct competitor, so reweighting and quarantine could only turn a wrong answer into
+a refusal, never into the right answer. An oracle that quarantined every planted wrong edge scored no better than the
+frozen graph. Run 2 therefore generates the faults so that repair is possible: 40% of them keep the correct edge in the
+graph but better-documented on the stale side, 30% withhold the correct edge into the pool with documents that describe
+it, 30% destroy it as before. Initial cost comes from one ingest rule applied to every edge — `1 / (1 + ln(support))`
+over the number of documents asserting it — so the frozen graph prefers the stale fact because it is better supported,
+not because anything labelled it. Blame now moves cost further than confirmation (0.35 against 0.10) with a floor at
+0.5, and gap-fill runs two waves and also fires on wrong answers, not only unreachable ones. The whole design,
+including every hypothesis and constant, was written into [PRD §3.2](docs/PRD.md) and `DECISIONS.md` before run 2 was
+built. Run 1 stays published beside it, failed, with its own evidence files untouched.
 
 ## How HydraDB is used
 

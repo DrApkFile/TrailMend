@@ -35,6 +35,7 @@ def recorded(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     )
     monkeypatch.setattr(evidence, "EVIDENCE_DIR", directory)
     monkeypatch.setattr(curve, "CURVE", directory / "curve.jsonl")
+    monkeypatch.setattr(curve, "CURVE_V2", directory / "curve_v2.jsonl")
     return directory
 
 

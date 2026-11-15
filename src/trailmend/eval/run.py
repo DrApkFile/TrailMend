@@ -190,7 +190,7 @@ def main(seeds: tuple[int, ...], arms: tuple[MendPolicy, ...] = ARMS, data_versi
         written = _sweep(seeds, arms, run_id, run.rounds, run.plain_store_top_k, data_version)
     finally:
         measuring.release()
-    print(f"wrote {written} rows to {curve.CURVE}")
+    print(f"wrote {written} rows to {curve.path_for(data_version)}")
     return 0
 
 
@@ -203,6 +203,7 @@ def _sweep(
     data_version: str,
 ) -> int:
     written = 0
+    out = curve.path_for(data_version)
     where = target.describe(str(load_settings().hydra_url))
     with client_from_settings() as client:
         client.require_writable()
@@ -210,11 +211,11 @@ def _sweep(
             built = dataset.build(seed, data_version=data_version)
             print(f"seed {seed}", flush=True)
             for row in plain_rows(run_id, built, rounds, plain_store_top_k):
-                curve.append(row | {"hydradb": where})
+                curve.append(row | {"hydradb": where}, out)
                 written += 1
             for arm_index, arm in enumerate(arms):
                 for row in run_arm(client, built, arm, arm_index, run_id, rounds):
-                    curve.append(row | {"hydradb": where})
+                    curve.append(row | {"hydradb": where}, out)
                     written += 1
     return written
 

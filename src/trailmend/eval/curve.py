@@ -3,9 +3,18 @@ import os
 from dataclasses import asdict
 from pathlib import Path
 
+from trailmend.data.faultmodel import V1, V2
 from trailmend.loop.round import RoundOutcome
 
 CURVE = Path("evidence/curve.jsonl")
+CURVE_V2 = Path("evidence/curve_v2.jsonl")
+BY_VERSION: dict[str, Path] = {V1: CURVE, V2: CURVE_V2}
+
+
+def path_for(data_version: str) -> Path:
+    if data_version not in BY_VERSION:
+        raise ValueError(f"no curve file for data version {data_version}")
+    return BY_VERSION[data_version]
 
 
 def row(dataset: str, seed: int, outcome: RoundOutcome) -> dict[str, object]:
@@ -32,6 +41,9 @@ def row(dataset: str, seed: int, outcome: RoundOutcome) -> dict[str, object]:
 
 
 def append(payload: dict[str, object], path: Path = CURVE) -> Path:
+    version = str(payload.get("data_version", V1))
+    if path_for(version) != path:
+        raise ValueError(f"a {version} row belongs in {path_for(version)}, not {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str) + "\n")

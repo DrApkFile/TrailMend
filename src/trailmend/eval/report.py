@@ -20,11 +20,10 @@ def _rows(name: str) -> tuple[Mapping[str, object], ...]:
     return tuple(cast("list[Mapping[str, object]]", rows)) if isinstance(rows, list) else ()
 
 
-CURVE_V2 = "curve_v2.jsonl"
 
 
 def _curve_v2() -> Path:
-    return evidence.EVIDENCE_DIR / CURVE_V2
+    return curve.CURVE_V2
 
 
 def _curve_rows(path: Path | None = None) -> tuple[Mapping[str, object], ...]:

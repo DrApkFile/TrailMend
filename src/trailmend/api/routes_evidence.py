@@ -33,7 +33,7 @@ SERVABLE: tuple[str, ...] = (
     "fault_recoverability_v2",
     "run_manifest_v2",
 )
-CURVES: dict[str, Path] = {"curve": curve.CURVE, "curve-v2": Path("evidence/curve_v2.jsonl")}
+CURVES: dict[str, Path] = {"curve": curve.CURVE, "curve-v2": curve.CURVE_V2}
 
 
 def _curve(path: Path) -> dict[str, object]:
