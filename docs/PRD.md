@@ -54,9 +54,11 @@ Every line below is fixed before the generator, the update rule or the arms are 
 finding in `docs/RUN1_DIAGNOSIS.md` that motivates it. Run 1 is not re-run and not withdrawn. The two runs use
 different data (v1 and v2), so **only within-run arm comparisons are claims**; absolute accuracy across runs is not.
 
-**Versioning, so run 1 stays reproducible.** `data_version` ("v1", "v2") is part of the generated dataset's path and
-of the config digest. Run 1's dataset, its `faults.json` and its evidence files are not regenerated, not overwritten
-and not re-scored; both runs are served, each with its run id and its data version.
+**Versioning, so run 1 stays reproducible.** A dataset is never stored: it is regenerated from its seed, and the run
+manifest records the sha256 of the generated graph, faults, documents, questions and split. `data_version` ("v1",
+"v2") therefore lives in the generation call, in the run manifest and in the config digest, not in a path. v1
+generation is left exactly as it is, so run 1's digests still reproduce; run 1's evidence files are not regenerated,
+not overwritten and not re-scored. Both runs are served, each with its run id and its data version.
 
 **Dataset v2 — what changes and why.** Diagnosis §2 and §5: all three structural fault classes are unrepairable, the
 corpus corroborates the wrong version, and perfect quarantine is worth +0.0. The planted wrong edges are therefore
@@ -65,9 +67,30 @@ actually repair and something they provably cannot:
 
 | kind | share of planted wrong edges | what G0 holds | which mechanism can repair it |
 |---|---|---|---|
-| `contradicted` | 0.4 | the wrong edge at cost 1.0 **and** the true edge at cost 2.0 | reweight alone, after two blames |
-| `recoverable` | 0.3 | the wrong edge; the true edge is withheld into the pool with its document | gap-fill |
+| `contradicted` | 0.4 | the stale wrong edge **and** the true edge, both priced by the ingest rule below | reweight alone |
+| `recoverable` | 0.3 | the wrong edge; the true edge is withheld into the pool with its documents | gap-fill |
 | `destroyed` | 0.3 | the wrong edge only, exactly as in run 1 | none — it can only become a refusal |
+
+A `contradicted` fault is a fact that *was* true and is now stale: the service was handed over, and the catalogue
+still carries the old owner. The stale edge wins at round 0 because it is better documented, not because anything
+labelled it. That is the ingest rule's job, not a constant:
+
+**One ingest rule, applied to every edge, knowing nothing about labels, faults or questions.** An edge's initial cost
+is derived from how many ingested documents assert it:
+
+> `cost(e) = INGEST_BASE / (1 + ln(support(e)))`, `INGEST_BASE = 1.0`, `support(e) ≥ 1`
+
+which gives 1.000, 0.591, 0.477, 0.419, 0.383 for support 1 to 5: better-attested links are cheaper to walk, by one
+monotone rule with no special case anywhere in it. Support is drawn for **every** edge in the graph from one declared
+distribution — P(1) 0.52, P(2) 0.26, P(3) 0.13, P(4) 0.06, P(5) 0.03 — and the corpus renders that many distinct
+documents per edge. A `contradicted` fault's stale edge draws from the upper tail of that same distribution
+(3, 4 or 5, renormalised) while the true edge it contradicts draws 1, so the frozen graph prefers the stale owner by
+the rule. Support ≥ 3 is not a fault detector: about 22% of ordinary edges have it. Gap-fill ingests at the same rule,
+from the number of pool documents supporting the edge it adds, where run 1 ingested everything at a flat 1.0.
+
+Two consequences, stated now rather than discovered later: round 0 is a different and stronger baseline than run 1's,
+where every edge cost 1.0; and the cost ties that the C3a tie rule was written for mostly disappear, since two routes
+now only tie when their support agrees exactly.
 
 Everything else about the data is unchanged: missing-edge, alias-duplicate and conflation shares, sizes, templates,
 split share, and the rule that documents are rendered from G0 plus the pool.
@@ -83,14 +106,16 @@ Gap-fill triggers on **wrong** answers as well as unreachable ones, and follows 
 first wave reached (REALITY_SPIKES S25 measured one wave reaching 35 of seed 1's 96 unreachable questions and two
 reaching 43). Kept as its own arm against the narrow rule.
 
-**Arms (10).** `frozen`, `plain_store`, `full_v2`, `full_v1_rule` (v2 data, run-1 update rule and narrow gap-fill),
-`reweight_only`, `quarantine_only`, `gapfill_only` (narrow), `gapfill_wide_only`, `random_reweight`,
-`random_quarantine`. The two random controls keep INV6: same number and size of changes as the arm they mirror, in
-the same round.
+**Arms (7).** `frozen`, `plain_store`, `full_v2`, `full_v1_rule` (v2 data, run-1 update rule and narrow gap-fill),
+`gapfill_wide_only`, `random_reweight`, `random_quarantine`. The two random controls keep INV6: the same number and
+size of changes as the arm they mirror, in the same round. Run 1's mechanism-ablation arms are not in this sweep, so
+each random control now mirrors **`full_v2`** — the arm whose claim it is there to attack — instead of a single
+mechanism arm, and `check_inv6` is re-pointed at that pairing before any curve is written.
 
-**Seeds and rounds.** Seeds 1, 7, 42, 101, 404; 5 rounds. Preregistered fallback, so it is not a post-hoc choice: if
-the first seed's sweep takes longer than 70 minutes wall, the run drops to seeds 1, 7, 42 and the manifest records
-that it did.
+**Seeds and rounds.** Seeds 1, 7, 42; 5 rounds. Seeds 101 and 404, and the mechanism-ablation arms
+(`reweight_only`, `quarantine_only`, `gapfill_only`, `promote_only`), run **only if the main sweep finishes early**
+and are published as a clearly separated extension. No extension row may enter a preregistered verdict: H1'–H8' are
+decided on seeds 1, 7, 42 and the seven arms above, whatever an extension shows.
 
 **Constants fixed now** (changing any of them changes the config digest and therefore the run id): `eta_blame` 0.35,
 `eta_confirm` 0.10, `cost_floor` 0.5, `cost_ceiling` 20.0, `window` 6, `quarantine_min_blames` 3,
@@ -105,10 +130,10 @@ wrong page are not the same thing to the person being paged, and run 1 could onl
 
 **Hypotheses.**
 
-H1'. On every seed, `full_v2` beats `frozen` on the same held-out questions at round 5 under a two-sided exact
-McNemar test at p < 0.05, with a gain of ≥ 2.0 points on at least 4 of the 5 seeds. (Replaces run 1's H1, which
-compared a per-seed delta against the spread *between seeds* at round 0 — that spread measures how different three
-generated companies are, not the noise in the delta. Diagnosis finding 5.)
+H1'. On **all 3 of 3 seeds**, `full_v2` beats `frozen` on the same held-out questions at round 5 under a two-sided
+exact McNemar test at p < 0.05, with a gain of ≥ 2.0 points. (Replaces run 1's H1, which compared a per-seed delta
+against the spread *between seeds* at round 0 — that spread measures how different three generated companies are, not
+the noise in the delta. Diagnosis finding 5.)
 H2'. Neither random control beats `frozen` under the same paired test on any seed.
 H3'. The `plain_store` arm is flat across rounds.
 H4'. Quarantine recall on planted wrong edges ≥ 0.7 with a false-quarantine rate ≤ 0.1, every seed. Unchanged from
@@ -117,8 +142,15 @@ H5'. Net regressions on previously-correct held-out questions ≤ 2% in every ro
 failed at 3.25%.
 H6'. In `full_v2`, the held-out wrong-answer rate falls by ≥ 40% from round 0 to round 5, on every seed.
 H7'. `full_v2` ingests ≥ 60% of the withheld edges its own rule can reach, every seed.
-H8'. `full_v2` beats `full_v1_rule` under the same paired test on at least 4 of the 5 seeds. This is the test of the
-update-rule change by itself, on identical data.
+H8'. `full_v2` beats `full_v1_rule` under the same paired test on at least 2 of the 3 seeds. This is the test of the
+update-rule and gap-fill changes together, on identical data.
+
+**The ladder is run on v2 too, and the captured share is published.** `trailmend.eval.oracle` walks the same
+cumulative ladder on dataset v2 into `evidence/oracle_v2.json`, and the analysis publishes, beside the curve,
+`full_v2`'s **captured share of the reachable gain**: (`full_v2` at round 5 − round 0) ÷ (the ladder rung that
+repairs every fault the arm's mechanisms can reach — contradicted, recoverable and withheld — minus round 0). Run 1
+captured 4% of its reachable gain and nothing on the page said so. This number is reported whatever it is, and it is
+not a hypothesis.
 
 Any hypothesis that fails is published as failed, beside run 1's.
 
@@ -266,3 +298,7 @@ Live link → Vercel URL. Repo → public GitHub. Loom → linked at top of READ
 - "Does it break what worked?" Per-round newly broken counts, each traced to a receipt.
 - "Is it just SelfGraph?" SelfGraph turns text into a graph; it doesn't learn from answers. The loop, search and evaluation are ours, in separate packages.
 - "The data is synthetic." Yes, by design so faults are known; D2 is public (or recorded as not_run).
+
+**Time boxes (Lagos time, 2026-11-15 into 16).** H1–H4 built and `make gate` green by **19:00**; the sweep finished
+by **23:30**; analysis, README numbers and live verification by **00:30**. A missed box is reported immediately with
+what is left, and scope is never cut silently to make one.
