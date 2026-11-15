@@ -55,6 +55,9 @@ if not present:
     print("evidence/run_manifest.json is missing")
     sys.exit(1)
 bad = []
+for curve, manifest in ((Path("evidence/curve.jsonl"), manifests[0]), (Path("evidence/curve_v2.jsonl"), manifests[1])):
+    if curve.exists() and not manifest.exists():
+        bad.append(f"{curve} is published without {manifest.name}: an unanalysed run is not a published run")
 for manifest in present:
     payload = json.loads(manifest.read_text(encoding="utf-8"))
     files = payload.get("evidence_sha256")
