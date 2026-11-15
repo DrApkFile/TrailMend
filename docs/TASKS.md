@@ -180,8 +180,12 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
 - [ ] E5 Mechanism decomposition table (one mechanism per arm).
 - [ ] E6 Load test (`eval/load.py`): concurrent clients on the product query mix, p50/p95/p99, QPS, errors by code;
   second run with a Mend round writing concurrently. Against the Railway deployment.
-  WRITTEN 2026-11-15, NOT RUN: `eval/load.py` writes `evidence/latency.json` (the claim is `latency`, not `load`,
-  because `evidence/load.json` already holds G0's load evidence). Needs a running API; against Railway it needs A1.
+  WRITTEN 2026-11-15, NOT RUN YET: `eval/load.py` writes `evidence/latency.json` (the claim is `latency`, not `load`,
+  because `evidence/load.json` already holds G0's load evidence) and records which HydraDB answered. Both passes are
+  implemented: reads only, then the same read load while a Mend round writes to the same graph, with the writer's
+  own wall time, code and change counts in the row. It runs against
+  `https://trailmend-production-ee2e07ff.up.railway.app` with `TRAILMEND_ADMIN_TOKEN` in the environment, and exits
+  with that instruction rather than silently skipping the second pass if it is unset.
 - [ ] E7 Preregistered hypotheses H1–H5 (PRD §3): write PASS / FAIL / INCONCLUSIVE with numbers. Failed ones stay.
 
 ## Phase F — product surface (PRD §11–§12)
