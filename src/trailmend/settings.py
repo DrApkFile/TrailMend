@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     hydra_timeout_s: float = Field(default=30.0, gt=0, le=120)
     admin_token: SecretStr
     mend_config_path: str = "config/mend.toml"
+    demo_seed: int = Field(default=1, ge=0)
+    live_run_id: str = Field(default="live", min_length=1)
+    ask_rate_per_minute: int = Field(default=60, ge=1, le=10_000)
 
 
 @lru_cache(maxsize=1)

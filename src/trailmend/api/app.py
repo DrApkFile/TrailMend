@@ -4,26 +4,26 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
+from trailmend.api import routes_ask, routes_evidence, routes_mend
+from trailmend.api.state import Live, build_live
 from trailmend.errors import ERROR_SPECS, ErrorCode, TrailMendError
 from trailmend.graph.client import HydraClient
 from trailmend.settings import load_settings
 
 
-def _client() -> HydraClient:
-    s = load_settings()
-    return HydraClient(
-        str(s.hydra_url), s.hydra_token.get_secret_value(), s.hydra_graph_id, s.hydra_cell_id, s.hydra_timeout_s
-    )
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    app.state.hydra = _client()
+    live = build_live(load_settings())
+    app.state.live = live
+    app.state.hydra = live.client
     yield
-    app.state.hydra.close()
+    live.close()
 
 
 app = FastAPI(title="TrailMend", lifespan=lifespan)
+app.include_router(routes_ask.router)
+app.include_router(routes_mend.router)
+app.include_router(routes_evidence.router)
 
 
 @app.exception_handler(TrailMendError)
@@ -47,7 +47,8 @@ def healthz() -> dict[str, str]:
 
 @app.get("/v1/ready")
 def ready() -> dict[str, bool]:
-    hydra: HydraClient = app.state.hydra
+    live: Live = app.state.live
+    hydra: HydraClient = live.client
     if not hydra.is_healthy():
         raise TrailMendError(ErrorCode.GRAPH_UNAVAILABLE, "healthz failed")
     hydra.require_writable()

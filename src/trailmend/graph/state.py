@@ -1,4 +1,5 @@
 from collections.abc import Iterable, Mapping
+from typing import cast
 
 from trailmend.core.model import EdgeKey, EdgeState, EdgeStatus, Signal
 from trailmend.graph import queries as q
@@ -41,6 +42,31 @@ def decode_via(raw: object) -> tuple[EdgeKey, ...]:
             raise ValueError(f"via_path hop {piece!r} is unreadable")
         hops.append(EdgeKey(int(src), rel_type, int(dst)))
     return tuple(hops)
+
+
+def state_from_row(row: Mapping[str, object]) -> EdgeState:
+    key = row["key"]
+    if not isinstance(key, dict):
+        raise TypeError("an edge state row needs a key")
+    parts = cast("dict[str, object]", key)
+    recent = row.get("recent")
+    via = row.get("via_path")
+    return EdgeState(
+        EdgeKey(int(str(parts["src"])), str(parts["rel_type"]), int(str(parts["dst"]))),
+        float(str(row["cost"])),
+        EdgeStatus(str(row["status"])),
+        int(str(row["confirms"])),
+        int(str(row["blames"])),
+        tuple(Signal(str(code)) for code in cast("list[object]", recent))
+        if isinstance(recent, list)
+        else decode_recent(recent),
+        tuple(
+            EdgeKey(int(str(h["src"])), str(h["rel_type"]), int(str(h["dst"])))
+            for h in cast("list[dict[str, object]]", via)
+        )
+        if isinstance(via, list)
+        else decode_via(via),
+    )
 
 
 def _labels(state: EdgeState) -> tuple[str, str]:

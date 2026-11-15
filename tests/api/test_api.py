@@ -1,0 +1,111 @@
+import pytest
+from fastapi.testclient import TestClient
+
+from tests.api.conftest import ADMIN
+from trailmend.api.app import app
+from trailmend.api.state import Live
+from trailmend.data import dataset
+from trailmend.graph.loader import load
+
+pytestmark = pytest.mark.hydra
+
+
+@pytest.fixture(scope="module")
+def loaded(client: TestClient) -> dataset.Dataset:
+    built = dataset.build(1)
+    live: Live = app.state.live
+    load(live.client, built.graph)
+    return built
+
+
+def _a_question(built: dataset.Dataset, template: str) -> str:
+    return next(q.text for q in built.questions.questions if q.template == template)
+
+
+def test_f1_healthz_and_ready_say_the_graph_is_writable(client: TestClient) -> None:
+    assert client.get("/healthz").json() == {"status": "ok"}
+    assert client.get("/v1/ready").json() == {"graph_writable": True}
+
+
+def test_f1_ask_answers_with_the_path_it_walked(client: TestClient, loaded: dataset.Dataset) -> None:
+    response = client.post("/v1/ask", json={"question": _a_question(loaded, "alert_owning_team")})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["answer_ids"]
+    assert body["answer_names"][0]
+    assert body["paths"]
+    assert body["paths"][0][0]["src_name"]
+    assert body["cost"] > 0
+    assert body["changed_anything"] is False
+
+
+def test_f1_ask_refuses_a_question_that_matches_no_template(client: TestClient, loaded: dataset.Dataset) -> None:
+    response = client.post("/v1/ask", json={"question": "What is the capital of France?"})
+    assert response.status_code == 400
+    assert response.json()["error"]["code"] == "invalid_request"
+
+
+def test_f1_ask_rejects_an_unknown_field(client: TestClient) -> None:
+    assert client.post("/v1/ask", json={"question": "Who do I page for X?", "extra": 1}).status_code == 422
+
+
+def test_f1_judging_an_answer_correct_writes_receipts(client: TestClient, loaded: dataset.Dataset) -> None:
+    question = _a_question(loaded, "alert_owning_team")
+    response = client.post("/v1/judge", json={"question": question, "verdict": "correct"})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["changed_anything"] is True
+    assert body["receipts"]
+    assert body["confirmed"]
+    held = client.get(f"/v1/receipts/{body['receipts'][0]}")
+    assert held.status_code == 200
+    assert held.json()["kind"] == "reweight"
+    assert held.json()["edge"]["rel_type"]
+
+
+def test_f1_receipts_are_listed_newest_first(client: TestClient, loaded: dataset.Dataset) -> None:
+    client.post("/v1/judge", json={"question": _a_question(loaded, "service_owner_team"), "verdict": "correct"})
+    rows = client.get("/v1/receipts", params={"limit": 5}).json()
+    assert rows
+    assert all(row["digest"] for row in rows)
+
+
+def test_f1_rollback_needs_the_admin_token(client: TestClient, loaded: dataset.Dataset) -> None:
+    receipts = client.get("/v1/receipts", params={"limit": 1}).json()
+    receipt_id = receipts[0]["receipt_id"]
+    assert client.post(f"/v1/rollback/{receipt_id}").status_code == 400
+    done = client.post(f"/v1/rollback/{receipt_id}", headers={"X-Admin-Token": ADMIN})
+    assert done.status_code == 200
+    assert done.json()["changed_anything"] is True
+    assert done.json()["undone_by"] != receipt_id
+
+
+def test_f1_a_mend_round_needs_the_admin_token(client: TestClient) -> None:
+    assert client.post("/v1/mend/round", json={"rounds": 1}).status_code == 400
+
+
+def test_f1_the_neighbourhood_of_an_entity_shows_its_edges_and_their_costs(
+    client: TestClient, loaded: dataset.Dataset
+) -> None:
+    service = loaded.graph.nodes_with_label(loaded.graph.nodes[0].label)[0]
+    anchor = next(e.src for e in loaded.graph.edges)
+    body = client.get(f"/v1/graph/neighbourhood/{anchor}").json()
+    assert body["name"]
+    assert body["neighbours"]
+    assert all(n["status"] in {"active", "quarantined"} for n in body["neighbours"])
+    assert service.id
+
+
+def test_f1_an_unknown_entity_is_refused(client: TestClient) -> None:
+    assert client.get("/v1/graph/neighbourhood/12345").status_code == 400
+
+
+def test_f1_the_evidence_index_lists_what_can_be_served(client: TestClient) -> None:
+    body = client.get("/v1/evidence").json()
+    assert "round_zero" in body["servable"]
+
+
+def test_f1_an_evidence_file_that_does_not_exist_says_so_rather_than_inventing_one(client: TestClient) -> None:
+    body = client.get("/v1/evidence/mechanisms").json()
+    assert body["name"] == "mechanisms"
+    assert "available" in body
