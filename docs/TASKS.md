@@ -186,6 +186,12 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
 - [ ] F3 Web `/ask`: ask, see the path drawn, judge it, see receipts.
 - [ ] F4 Web `/mend`: the planted bad link — blame building up, quarantine, accuracy rising; rollback button.
 - [ ] F5 Web `/evidence` and `/pricing`.
+  BUILT; RENDER CHECKED AGAINST A STUB 2026-11-15: all five pages return 200 with no `api_unreachable`,
+  `unreadable_response` or framework error, served by `next start` against a stand-in API that replayed the real
+  curve rows and the real analysis files. `/evidence` now lists `load` and `latency` as well. Nothing long can
+  overflow at 390px: the only table is wrapped in `overflow-x-auto`, the curve is a `viewBox` SVG at `w-full`, and
+  every sha256, run id and path line carries `break-all`. No API url appears in `.next/static` or `.next/server/app`.
+  Ticks when the same five pages are rendered against the live API in a real browser at 390px (task #3).
 
 ## Phase G — submission (PRD §13, §17, §18)
 - [ ] G1 README: judge path in 60 seconds, the curve, how HydraDB is used, numbers each linked to evidence,

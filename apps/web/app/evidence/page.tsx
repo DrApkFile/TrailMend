@@ -4,7 +4,17 @@ import { NOT_MEASURED } from "@/lib/curve";
 
 export const dynamic = "force-dynamic";
 
-const FILES = ["round_zero", "plain_store", "mechanisms", "non_regression", "quarantine", "hypotheses", "run_manifest"];
+const FILES = [
+  "round_zero",
+  "plain_store",
+  "mechanisms",
+  "non_regression",
+  "quarantine",
+  "hypotheses",
+  "run_manifest",
+  "load",
+  "latency",
+];
 
 export default async function EvidencePage() {
   const [curve, ...files] = await Promise.all([fetchCurve(), ...FILES.map((name) => fetchEvidence(name))]);
