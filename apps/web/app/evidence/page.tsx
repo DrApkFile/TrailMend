@@ -1,4 +1,5 @@
 import { Changes, toChangeRows } from "@/components/Changes";
+import { Manifest, type ManifestPayload } from "@/components/Manifest";
 import { Failed, Panel } from "@/components/Shell";
 import { fetchCurve, fetchEvidence } from "@/lib/api";
 import { NOT_MEASURED } from "@/lib/curve";
@@ -90,6 +91,8 @@ export default async function EvidencePage() {
             <Failed code={file.error.code} message={file.error.message} />
           ) : !file.value.available ? (
             <p className="text-sm text-stone-400">Not produced yet.</p>
+          ) : FILES[index] === "run_manifest" ? (
+            <Manifest payload={file.value.payload as ManifestPayload | undefined} />
           ) : (
             <div className="text-sm">
               <p className="text-stone-300">{file.value.payload?.claim}</p>
@@ -100,7 +103,7 @@ export default async function EvidencePage() {
                 <div className="flex justify-between border-t border-stone-800 py-2">
                   <dt className="text-stone-400">rows</dt>
                   <dd className="font-mono">
-                    {file.value.payload?.rows.length ?? NOT_MEASURED}
+                    {file.value.payload?.rows?.length ?? NOT_MEASURED}
                   </dd>
                 </div>
                 <div className="flex justify-between border-t border-stone-800 py-2">

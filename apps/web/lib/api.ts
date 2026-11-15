@@ -21,16 +21,24 @@ function errorFrom(status: number, body: unknown): ApiError {
   return { code: `http_${status}`, message: `The API answered HTTP ${status}.` };
 }
 
-async function getJson(path: string): Promise<Fetched<unknown>> {
-  let response: Response;
+async function once(url: string): Promise<Response | Error> {
   try {
-    response = await fetch(`${apiBaseUrl()}${path}`, { cache: "no-store" });
+    return await fetch(url, { cache: "no-store" });
   } catch (cause) {
-    return {
-      ok: false,
-      error: { code: "api_unreachable", message: cause instanceof Error ? cause.message : "fetch failed" },
-    };
+    return cause instanceof Error ? cause : new Error("fetch failed");
   }
+}
+
+async function getJson(path: string): Promise<Fetched<unknown>> {
+  const url = `${apiBaseUrl()}${path}`;
+  let attempt = await once(url);
+  if (attempt instanceof Error) {
+    attempt = await once(url);
+  }
+  if (attempt instanceof Error) {
+    return { ok: false, error: { code: "api_unreachable", message: attempt.message } };
+  }
+  const response: Response = attempt;
   let body: unknown = null;
   try {
     body = await response.json();
@@ -110,7 +118,7 @@ export type EvidenceFile = {
   name: string;
   available: boolean;
   sha256?: string;
-  payload?: { claim: string; design: string; measured_at: string; rows: unknown[] };
+  payload?: { claim?: string; design?: string; measured_at?: string; rows?: unknown[] };
 };
 
 export type Receipt = {
