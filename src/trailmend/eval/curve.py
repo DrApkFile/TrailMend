@@ -8,7 +8,9 @@ from trailmend.loop.round import RoundOutcome
 
 CURVE = Path("evidence/curve.jsonl")
 CURVE_V2 = Path("evidence/curve_v2.jsonl")
+CURVE_V2_UNWEIGHTED = Path("evidence/curve_v2_unweighted.jsonl")
 BY_VERSION: dict[str, Path] = {V1: CURVE, V2: CURVE_V2}
+EXTENSIONS: dict[str, tuple[Path, ...]] = {V1: (), V2: (CURVE_V2_UNWEIGHTED,)}
 
 
 def path_for(data_version: str) -> Path:
@@ -42,7 +44,7 @@ def row(dataset: str, seed: int, outcome: RoundOutcome) -> dict[str, object]:
 
 def append(payload: dict[str, object], path: Path = CURVE) -> Path:
     version = str(payload.get("data_version", V1))
-    if path_for(version) != path:
+    if path_for(version) != path and path not in EXTENSIONS[version]:
         raise ValueError(f"a {version} row belongs in {path_for(version)}, not {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:

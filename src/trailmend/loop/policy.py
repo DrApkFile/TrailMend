@@ -10,6 +10,7 @@ class MendPolicy(StrEnum):
     FULL = "full"
     FULL_V2 = "full_v2"
     FULL_V1_RULE = "full_v1_rule"
+    FULL_UNWEIGHTED = "full_unweighted"
     GAPFILL_WIDE_ONLY = "gapfill_wide_only"
     REWEIGHT_ONLY = "reweight_only"
     QUARANTINE_ONLY = "quarantine_only"
@@ -40,6 +41,7 @@ MECHANISMS: Mapping[MendPolicy, Mechanisms] = {
     MendPolicy.FULL: Mechanisms(True, True, True, True),
     MendPolicy.FULL_V2: Mechanisms(True, True, True, True),
     MendPolicy.FULL_V1_RULE: Mechanisms(True, True, True, True),
+    MendPolicy.FULL_UNWEIGHTED: Mechanisms(True, True, True, True),
     MendPolicy.GAPFILL_WIDE_ONLY: Mechanisms(False, False, False, True),
     MendPolicy.REWEIGHT_ONLY: Mechanisms(True, False, False, False),
     MendPolicy.QUARANTINE_ONLY: Mechanisms(False, True, False, False),
@@ -74,6 +76,7 @@ RULES: Mapping[MendPolicy, Rules] = {
     MendPolicy.FULL: Rules(UPDATE_V1, GAPFILL_NARROW),
     MendPolicy.FULL_V2: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.FULL_V1_RULE: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.FULL_UNWEIGHTED: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.GAPFILL_WIDE_ONLY: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.REWEIGHT_ONLY: Rules(UPDATE_V1, GAPFILL_NARROW),
     MendPolicy.QUARANTINE_ONLY: Rules(UPDATE_V1, GAPFILL_NARROW),
@@ -97,6 +100,13 @@ class ChangeProfile:
     reweights: int
     reweight_signals: tuple[tuple[Signal, ...], ...]
     quarantines: int
+
+
+UNWEIGHTED_SEARCH: frozenset[MendPolicy] = frozenset({MendPolicy.FULL_UNWEIGHTED})
+
+
+def searches_on_cost(policy: MendPolicy) -> bool:
+    return policy not in UNWEIGHTED_SEARCH
 
 
 def profile(changes: Sequence[Change]) -> ChangeProfile:
@@ -133,7 +143,7 @@ def shape(
     policy: MendPolicy, planned: Sequence[Change], candidates: Sequence[EdgeKey], rng: Random
 ) -> tuple[Change, ...]:
     match policy:
-        case MendPolicy.FULL | MendPolicy.FULL_V2 | MendPolicy.FULL_V1_RULE:
+        case MendPolicy.FULL | MendPolicy.FULL_V2 | MendPolicy.FULL_V1_RULE | MendPolicy.FULL_UNWEIGHTED:
             return tuple(planned)
         case MendPolicy.REWEIGHT_ONLY:
             return tuple(c for c in planned if isinstance(c, Reweight))

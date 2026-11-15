@@ -109,7 +109,10 @@ def answer(
     *,
     multi_answer: bool = False,
 ) -> AnswerOutcome:
-    result = client.run(q.weighted_paths_from(rel_types, config.max_len, config.result_limit), {"src": seed_id})
+    result = client.run(
+        q.weighted_paths_from(rel_types, config.max_len, config.result_limit, weighted=config.weighted),
+        {"src": seed_id},
+    )
     if len(result.rows) >= config.result_limit:
         return AnswerRefused(ErrorCode.BUDGET_EXCEEDED)
     return pick_answer(score_paths(result.rows), expected, multi_answer=multi_answer)

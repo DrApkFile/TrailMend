@@ -1,5 +1,6 @@
 import subprocess
 import sys
+from dataclasses import replace
 from pathlib import Path
 from random import Random
 
@@ -22,7 +23,7 @@ from trailmend.loop.evaluate import judge_all, score
 from trailmend.loop.gapfill import NARROW
 from trailmend.loop.journal import Journal
 from trailmend.loop.ledger import Ledger
-from trailmend.loop.policy import GAPFILL_WIDE, MendPolicy, rules
+from trailmend.loop.policy import GAPFILL_WIDE, MendPolicy, rules, searches_on_cost
 from trailmend.loop.round import run_round
 from trailmend.loop.tape import Tape
 from trailmend.search.seed import build_index
@@ -98,12 +99,13 @@ def run_arm(
     arm_rules = rules(arm)
     mend = load_mend_config(CONFIG, arm_rules.update)
     gapfill = gapfill_rule_for(arm)
-    search = load_search_config(CONFIG)
+    search = replace(load_search_config(CONFIG), weighted=searches_on_cost(arm))
     stamp: dict[str, object] = {
         "run_id": run_id,
         "arm_run": "",
         "data_version": built.data_version,
-        "rules": {"update": arm_rules.update, "gapfill": arm_rules.gapfill},
+        "rules": {"update": arm_rules.update, "gapfill": arm_rules.gapfill}
+        | ({} if search.weighted else {"search": "unweighted"}),
     }
     pool = tuple((e.src, e.rel_type.value, e.dst) for e in built.ingested.pool)
     reset_to_ingested(client, built.graph, pool, built.support)
@@ -179,7 +181,12 @@ def run_arm(
     return rows
 
 
-def main(seeds: tuple[int, ...], arms: tuple[MendPolicy, ...] = ARMS, data_version: str = V1) -> int:
+UNWEIGHTED_ARMS: tuple[MendPolicy, ...] = (MendPolicy.FROZEN, MendPolicy.FULL_UNWEIGHTED)
+
+
+def main(
+    seeds: tuple[int, ...], arms: tuple[MendPolicy, ...] = ARMS, data_version: str = V1, out: Path | None = None
+) -> int:
     run = load_run_config(CONFIG)
     run_id = run_id_for()
     print(
@@ -187,10 +194,10 @@ def main(seeds: tuple[int, ...], arms: tuple[MendPolicy, ...] = ARMS, data_versi
     )
     measuring.acquire(run_id)
     try:
-        written = _sweep(seeds, arms, run_id, run.rounds, run.plain_store_top_k, data_version)
+        written = _sweep(seeds, arms, run_id, run.rounds, run.plain_store_top_k, data_version, out)
     finally:
         measuring.release()
-    print(f"wrote {written} rows to {curve.path_for(data_version)}")
+    print(f"wrote {written} rows to {out or curve.path_for(data_version)}")
     return 0
 
 
@@ -201,16 +208,17 @@ def _sweep(
     rounds: int,
     plain_store_top_k: int,
     data_version: str,
+    extension: Path | None = None,
 ) -> int:
     written = 0
-    out = curve.path_for(data_version)
+    out = extension or curve.path_for(data_version)
     where = target.describe(str(load_settings().hydra_url))
     with client_from_settings() as client:
         client.require_writable()
         for seed in seeds:
             built = dataset.build(seed, data_version=data_version)
             print(f"seed {seed}", flush=True)
-            for row in plain_rows(run_id, built, rounds, plain_store_top_k):
+            for row in plain_rows(run_id, built, rounds, plain_store_top_k) if extension is None else ():
                 curve.append(row | {"hydradb": where}, out)
                 written += 1
             for arm_index, arm in enumerate(arms):
@@ -224,4 +232,6 @@ if __name__ == "__main__":
     _args = sys.argv[1:]
     _run2 = "--v2" in _args
     _seeds = tuple(int(a) for a in _args if a.isdigit()) or (1, 7, 42)
+    if "--unweighted" in _args:
+        raise SystemExit(main(_seeds, UNWEIGHTED_ARMS, V2, curve.CURVE_V2_UNWEIGHTED))
     raise SystemExit(main(_seeds, RUN2_ARMS if _run2 else ARMS, V2 if _run2 else V1))

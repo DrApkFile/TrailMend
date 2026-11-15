@@ -69,6 +69,7 @@ class MendConfig:
 class SearchConfig:
     max_len: int
     result_limit: int
+    weighted: bool = True
 
     def __post_init__(self) -> None:
         if not 1 <= self.max_len <= 4:

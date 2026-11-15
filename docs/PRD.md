@@ -204,8 +204,8 @@ Known ceiling, measured offline: walking the *full* knowledge base along the qty
 exactly for 81% of questions and as a strict superset for the rest (3-hop paths that pass back through the topic
 movie, and same-titled films merged under one name), so a perfect graph does not score 100%.
 
-**Arms (4).** `frozen`; `plain_store` (BM25 over the documents G0 was ingested from, its `top_k` tuned to its own best
-held-out Hits@1 on seed 1); `full_v2` (update rule v2 with quarantine, and gap-fill on wrong and unreachable train
+**Arms (4).** `frozen`; `plain_store` (BM25 over the documents G0 was ingested from, its `top_k` swept on seed 1's
+held-out questions and fixed at its own best Hits@1); `full_v2` (update rule v2 with quarantine, and gap-fill on wrong and unreachable train
 answers); `random_reweight` (INV6: as many reweights as `full_v2`'s rule plans on its own graph each round, with the
 same signals, on edges drawn at random from the G0 edges that lie on a qtype path of some train question — the
 edges the Mend itself could have touched — and nothing else). Constants are `config/mend.toml` unchanged plus

@@ -9,6 +9,7 @@ from trailmend.core.model import EdgeKey
 from trailmend.data.faultmodel import WrongKind
 from trailmend.data.faults import FaultPlan, wrong_kinds
 from trailmend.data.support import CONTRADICTED_SUPPORT, SupportPlan, draw, draw_stale
+from trailmend.graph.ids import entity_id
 from trailmend.graph.schema import NodeLabel
 from trailmend.metaqa.kb import KnowledgeBase, Triple, node_id, reverse_of
 
@@ -125,3 +126,11 @@ def faults_json(world: World) -> str:
         "wrong_edges": [{"kind": f.kind.value, "true": row(f.true), "wrong": row(f.wrong)} for f in world.faults],
     }
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+def document_ids(world: World, fact: Fact) -> tuple[int, ...]:
+    forward, _ = world.edges_of(fact.triple)
+    return tuple(
+        entity_id(f"doc:{world.scope}-{forward.rel_type.lower()}-{forward.src}-{forward.dst}-c{copy}")
+        for copy in range(fact.support)
+    )

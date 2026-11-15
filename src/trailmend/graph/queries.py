@@ -154,28 +154,34 @@ def _rel_list(rel_types: Sequence[str]) -> str:
     return "[" + ", ".join(f"'{require_searchable(t)}'" for t in rel_types) + "]"
 
 
-def weighted_paths_from(rel_types: Sequence[str], max_len: int, result_limit: int) -> NamedQuery:
+def _weight_clause(weighted: bool) -> str:
+    return ", weightProp: 'cost'" if weighted else ""
+
+
+def weighted_paths_from(
+    rel_types: Sequence[str], max_len: int, result_limit: int, *, weighted: bool = True
+) -> NamedQuery:
     if not 1 <= max_len <= 4:
         raise ValueError("max_len must be between 1 and 4")
     if not 1 <= result_limit <= 500:
         raise ValueError("result_limit must be between 1 and 500")
     return NamedQuery(
-        "weighted_paths_from",
+        "weighted_paths_from" if weighted else "unweighted_paths_from",
         Operation.READ,
         "CALL algo.SSpaths({sourceNode: $src, relTypes: " + _rel_list(rel_types) + ", relDirection: 'outgoing', "
-        f"maxLen: {max_len}, pathCount: {result_limit}, weightProp: 'cost'}}) "
+        f"maxLen: {max_len}, pathCount: {result_limit}{_weight_clause(weighted)}}}) "
         "YIELD path, pathWeight RETURN path, pathWeight",
     )
 
 
-def weighted_path_between(rel_types: Sequence[str], max_len: int) -> NamedQuery:
+def weighted_path_between(rel_types: Sequence[str], max_len: int, *, weighted: bool = True) -> NamedQuery:
     if not 1 <= max_len <= 4:
         raise ValueError("max_len must be between 1 and 4")
     return NamedQuery(
-        "weighted_path_between",
+        "weighted_path_between" if weighted else "unweighted_path_between",
         Operation.READ,
         "CALL algo.SPpaths({sourceNode: $src, targetNode: $dst, relTypes: " + _rel_list(rel_types) + ", "
-        f"relDirection: 'outgoing', maxLen: {max_len}, pathCount: 0, weightProp: 'cost'}}) "
+        f"relDirection: 'outgoing', maxLen: {max_len}, pathCount: 0{_weight_clause(weighted)}}}) "
         "YIELD path, pathWeight RETURN path, pathWeight",
     )
 

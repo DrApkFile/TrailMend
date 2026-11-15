@@ -20,8 +20,6 @@ def _rows(name: str) -> tuple[Mapping[str, object], ...]:
     return tuple(cast("list[Mapping[str, object]]", rows)) if isinstance(rows, list) else ()
 
 
-
-
 def _curve_v2() -> Path:
     return curve.CURVE_V2
 

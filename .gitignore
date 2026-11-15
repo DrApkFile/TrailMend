@@ -12,3 +12,4 @@ evidence/.measuring.json
 .env.prod
 
 data/external/metaqa/
+evidence/metaqa/*.partial.json
