@@ -2,12 +2,25 @@ import { Changes, toChangeRows } from "@/components/Changes";
 import { Latency, type LatencyRow } from "@/components/Latency";
 import { Manifest, type ManifestPayload } from "@/components/Manifest";
 import { Failed, Panel } from "@/components/Shell";
-import { fetchCurve, fetchEvidence } from "@/lib/api";
+import { fetchCurve, fetchCurveV2, fetchEvidence } from "@/lib/api";
 import { NOT_MEASURED } from "@/lib/curve";
 
 export const dynamic = "force-dynamic";
 
-const FILES = [
+const RUN2_FILES = [
+  "mechanisms_v2",
+  "paired_v2",
+  "captured_share_v2",
+  "oracle_v2",
+  "changes_v2",
+  "non_regression_v2",
+  "quarantine_v2",
+  "hypotheses_v2",
+  "plain_store_v2",
+  "fault_recoverability_v2",
+  "run_manifest_v2",
+];
+const RUN1_FILES = [
   "round_zero",
   "plain_store",
   "mechanisms",
@@ -15,14 +28,18 @@ const FILES = [
   "non_regression",
   "quarantine",
   "hypotheses",
+  "anatomy",
+  "oracle",
+  "fault_recoverability",
   "run_manifest",
-  "load",
-  "latency",
 ];
+const SHARED_FILES = ["load", "latency"];
+const FILES = [...RUN2_FILES, ...RUN1_FILES, ...SHARED_FILES];
 
 export default async function EvidencePage() {
-  const [curve, ...files] = await Promise.all([
+  const [curve, curveV2, ...files] = await Promise.all([
     fetchCurve(),
+    fetchCurveV2(),
     ...FILES.map((name) => fetchEvidence(name)),
   ]);
   const changes = files[FILES.indexOf("changes")];
@@ -42,8 +59,33 @@ export default async function EvidencePage() {
       <p className="mt-2 text-stone-400">
         Every file here is written by code, never by hand, and carries the
         design it was measured under. The sha256 is of the file as served. A
-        file that has not been produced says so.
+        file that has not been produced says so. Files ending{" "}
+        <span className="font-mono">_v2</span> are run 2; the rest are run 1,
+        which failed and is kept exactly as it was published.
       </p>
+
+      <Panel title="curve_v2.jsonl">
+        {curveV2.ok ? (
+          <dl className="text-sm">
+            <div className="flex justify-between border-b border-stone-800 py-2">
+              <dt className="text-stone-400">rows</dt>
+              <dd className="font-mono">
+                {curveV2.value.available
+                  ? curveV2.value.rows.length
+                  : NOT_MEASURED}
+              </dd>
+            </div>
+            <div className="flex flex-col gap-1 border-b border-stone-800 py-2 sm:flex-row sm:justify-between">
+              <dt className="text-stone-400">sha256</dt>
+              <dd className="font-mono text-xs break-all">
+                {curveV2.value.sha256 ?? NOT_MEASURED}
+              </dd>
+            </div>
+          </dl>
+        ) : (
+          <Failed code={curveV2.error.code} message={curveV2.error.message} />
+        )}
+      </Panel>
 
       <Panel title="curve.jsonl">
         {curve.ok ? (
@@ -130,7 +172,9 @@ export default async function EvidencePage() {
           ) : !file.value.available ? (
             <p className="text-sm text-stone-400">Not produced yet.</p>
           ) : FILES[index] === "run_manifest" ? (
-            <Manifest payload={file.value.payload as ManifestPayload | undefined} />
+            <Manifest
+              payload={file.value.payload as ManifestPayload | undefined}
+            />
           ) : (
             <div className="text-sm">
               <p className="text-stone-300">{file.value.payload?.claim}</p>

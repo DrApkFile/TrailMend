@@ -49,24 +49,26 @@ evidence_digests_match() {
 import hashlib, json, sys
 from pathlib import Path
 
-manifest = Path("evidence/run_manifest.json")
-if not manifest.exists():
+manifests = [Path("evidence/run_manifest.json"), Path("evidence/run_manifest_v2.json")]
+present = [m for m in manifests if m.exists()]
+if not present:
     print("evidence/run_manifest.json is missing")
     sys.exit(1)
-payload = json.loads(manifest.read_text(encoding="utf-8"))
-files = payload.get("evidence_sha256")
-if not isinstance(files, dict) or not files:
-    print("run_manifest.json records no evidence_sha256 map")
-    sys.exit(1)
 bad = []
-for name, digest in files.items():
-    path = Path("evidence") / name
-    if not path.exists():
-        bad.append(f"{name}: recorded but absent")
+for manifest in present:
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    files = payload.get("evidence_sha256")
+    if not isinstance(files, dict) or not files:
+        bad.append(f"{manifest.name} records no evidence_sha256 map")
         continue
-    actual = hashlib.sha256(path.read_bytes()).hexdigest()
-    if actual != digest:
-        bad.append(f"{name}: manifest {digest[:12]} but file {actual[:12]}")
+    for name, digest in files.items():
+        path = Path("evidence") / name
+        if not path.exists():
+            bad.append(f"{manifest.name} -> {name}: recorded but absent")
+            continue
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != digest:
+            bad.append(f"{manifest.name} -> {name}: manifest {digest[:12]} but file {actual[:12]}")
 for line in bad:
     print(line)
 sys.exit(1 if bad else 0)

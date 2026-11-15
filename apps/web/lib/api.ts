@@ -3,7 +3,8 @@ import { adminToken, apiBaseUrl } from "./env";
 
 export type ApiError = { code: string; message: string };
 
-export type Fetched<T> = { ok: true; value: T } | { ok: false; error: ApiError };
+export type Fetched<T> =
+  { ok: true; value: T } | { ok: false; error: ApiError };
 
 export type Readiness = { graph_writable: boolean };
 
@@ -14,11 +15,15 @@ function errorFrom(status: number, body: unknown): ApiError {
       const shape = inner as { code: unknown; message?: unknown };
       return {
         code: String(shape.code),
-        message: typeof shape.message === "string" ? shape.message : `HTTP ${status}`,
+        message:
+          typeof shape.message === "string" ? shape.message : `HTTP ${status}`,
       };
     }
   }
-  return { code: `http_${status}`, message: `The API answered HTTP ${status}.` };
+  return {
+    code: `http_${status}`,
+    message: `The API answered HTTP ${status}.`,
+  };
 }
 
 async function once(url: string): Promise<Response | Error> {
@@ -36,7 +41,10 @@ async function getJson(path: string): Promise<Fetched<unknown>> {
     attempt = await once(url);
   }
   if (attempt instanceof Error) {
-    return { ok: false, error: { code: "api_unreachable", message: attempt.message } };
+    return {
+      ok: false,
+      error: { code: "api_unreachable", message: attempt.message },
+    };
   }
   const response: Response = attempt;
   let body: unknown = null;
@@ -57,10 +65,23 @@ export async function fetchReadiness(): Promise<Fetched<Readiness>> {
     return result;
   }
   const body = result.value;
-  if (typeof body !== "object" || body === null || typeof (body as Readiness).graph_writable !== "boolean") {
-    return { ok: false, error: { code: "unreadable_response", message: "/v1/ready did not return graph_writable." } };
+  if (
+    typeof body !== "object" ||
+    body === null ||
+    typeof (body as Readiness).graph_writable !== "boolean"
+  ) {
+    return {
+      ok: false,
+      error: {
+        code: "unreadable_response",
+        message: "/v1/ready did not return graph_writable.",
+      },
+    };
   }
-  return { ok: true, value: { graph_writable: (body as Readiness).graph_writable } };
+  return {
+    ok: true,
+    value: { graph_writable: (body as Readiness).graph_writable },
+  };
 }
 
 export type Hop = {
@@ -122,7 +143,12 @@ export type EvidenceFile = {
   name: string;
   available: boolean;
   sha256?: string;
-  payload?: { claim?: string; design?: string; measured_at?: string; rows?: unknown[] };
+  payload?: {
+    claim?: string;
+    design?: string;
+    measured_at?: string;
+    rows?: unknown[];
+  };
 };
 
 export type Receipt = {
@@ -144,7 +170,12 @@ export type Neighbour = {
   status: string;
 };
 
-export type Neighbourhood = { entity_id: number; name: string; label: string; neighbours: Neighbour[] };
+export type Neighbourhood = {
+  entity_id: number;
+  name: string;
+  label: string;
+  neighbours: Neighbour[];
+};
 
 export type Judgement = {
   question: string;
@@ -171,7 +202,10 @@ async function postJson(
   } catch (cause) {
     return {
       ok: false,
-      error: { code: "api_unreachable", message: cause instanceof Error ? cause.message : "fetch failed" },
+      error: {
+        code: "api_unreachable",
+        message: cause instanceof Error ? cause.message : "fetch failed",
+      },
     };
   }
   let parsed: unknown = null;
@@ -186,12 +220,22 @@ async function postJson(
   return { ok: true, value: parsed };
 }
 
-function shaped<T>(result: Fetched<unknown>, guard: (body: unknown) => boolean, what: string): Fetched<T> {
+function shaped<T>(
+  result: Fetched<unknown>,
+  guard: (body: unknown) => boolean,
+  what: string,
+): Fetched<T> {
   if (!result.ok) {
     return result;
   }
   if (!guard(result.value)) {
-    return { ok: false, error: { code: "unreadable_response", message: `${what} did not return what we expect.` } };
+    return {
+      ok: false,
+      error: {
+        code: "unreadable_response",
+        message: `${what} did not return what we expect.`,
+      },
+    };
   }
   return { ok: true, value: result.value as T };
 }
@@ -202,7 +246,10 @@ const isObject = (body: unknown): body is Record<string, unknown> =>
 export async function fetchCurve(): Promise<Fetched<Curve>> {
   return shaped<Curve>(
     await getJson("/v1/evidence/curve"),
-    (body) => isObject(body) && Array.isArray(body.rows) && typeof body.available === "boolean",
+    (body) =>
+      isObject(body) &&
+      Array.isArray(body.rows) &&
+      typeof body.available === "boolean",
     "/v1/evidence/curve",
   );
 }
@@ -210,12 +257,17 @@ export async function fetchCurve(): Promise<Fetched<Curve>> {
 export async function fetchCurveV2(): Promise<Fetched<Curve>> {
   return shaped<Curve>(
     await getJson("/v1/evidence/curve-v2"),
-    (body) => isObject(body) && Array.isArray(body.rows) && typeof body.available === "boolean",
+    (body) =>
+      isObject(body) &&
+      Array.isArray(body.rows) &&
+      typeof body.available === "boolean",
     "/v1/evidence/curve-v2",
   );
 }
 
-export async function fetchEvidence(name: string): Promise<Fetched<EvidenceFile>> {
+export async function fetchEvidence(
+  name: string,
+): Promise<Fetched<EvidenceFile>> {
   return shaped<EvidenceFile>(
     await getJson(`/v1/evidence/${name}`),
     (body) => isObject(body) && typeof body.available === "boolean",
@@ -224,14 +276,24 @@ export async function fetchEvidence(name: string): Promise<Fetched<EvidenceFile>
 }
 
 export async function fetchExamples(): Promise<Fetched<Example[]>> {
-  return shaped<Example[]>(await getJson("/v1/examples"), Array.isArray, "/v1/examples");
+  return shaped<Example[]>(
+    await getJson("/v1/examples"),
+    Array.isArray,
+    "/v1/examples",
+  );
 }
 
 export async function fetchReceipts(limit = 20): Promise<Fetched<Receipt[]>> {
-  return shaped<Receipt[]>(await getJson(`/v1/receipts?limit=${limit}`), Array.isArray, "/v1/receipts");
+  return shaped<Receipt[]>(
+    await getJson(`/v1/receipts?limit=${limit}`),
+    Array.isArray,
+    "/v1/receipts",
+  );
 }
 
-export async function fetchNeighbourhood(id: number): Promise<Fetched<Neighbourhood>> {
+export async function fetchNeighbourhood(
+  id: number,
+): Promise<Fetched<Neighbourhood>> {
   return shaped<Neighbourhood>(
     await getJson(`/v1/graph/neighbourhood/${id}`),
     (body) => isObject(body) && Array.isArray(body.neighbours),
@@ -242,7 +304,10 @@ export async function fetchNeighbourhood(id: number): Promise<Fetched<Neighbourh
 export async function askQuestion(question: string): Promise<Fetched<Answer>> {
   return shaped<Answer>(
     await postJson("/v1/ask", { question }),
-    (body) => isObject(body) && Array.isArray(body.answer_ids) && Array.isArray(body.paths),
+    (body) =>
+      isObject(body) &&
+      Array.isArray(body.answer_ids) &&
+      Array.isArray(body.paths),
     "/v1/ask",
   );
 }
@@ -254,19 +319,26 @@ export type Rollback = {
   changed_anything: boolean;
 };
 
-export async function rollbackReceipt(receiptId: string): Promise<Fetched<Rollback>> {
+export async function rollbackReceipt(
+  receiptId: string,
+): Promise<Fetched<Rollback>> {
   const token = adminToken();
   if (token === null) {
     return {
       ok: false,
       error: {
         code: "admin_token_missing",
-        message: "Rolling back writes to the graph, so it needs TRAILMEND_ADMIN_TOKEN set on the server.",
+        message:
+          "Rolling back writes to the graph, so it needs TRAILMEND_ADMIN_TOKEN set on the server.",
       },
     };
   }
   return shaped<Rollback>(
-    await postJson(`/v1/rollback/${encodeURIComponent(receiptId)}`, {}, { "x-admin-token": token }),
+    await postJson(
+      `/v1/rollback/${encodeURIComponent(receiptId)}`,
+      {},
+      { "x-admin-token": token },
+    ),
     (body) => isObject(body) && typeof body.undone_by === "string",
     "/v1/rollback",
   );
@@ -283,7 +355,8 @@ export async function judgeAnswer(
       ok: false,
       error: {
         code: "admin_token_missing",
-        message: "Judging writes to the graph, so it needs TRAILMEND_ADMIN_TOKEN set on the server.",
+        message:
+          "Judging writes to the graph, so it needs TRAILMEND_ADMIN_TOKEN set on the server.",
       },
     };
   }
