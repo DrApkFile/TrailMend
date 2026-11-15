@@ -41,6 +41,7 @@ class RoundOutcome:
     retired: tuple[EdgeKey, ...]
     gaps: int
     ingested: tuple[EdgeKey, ...]
+    reached: tuple[EdgeKey, ...]
     receipt_ids: tuple[str, ...]
 
 
@@ -144,5 +145,6 @@ def run_round(
         tuple(r.edge for r in shortcuts.retired),
         len(gaps),
         tuple(f.edge for f in filled.fills),
+        filled.reached,
         tuple(r.receipt_id for r in (*receipts, *shortcuts.receipts, *filled.receipts)),
     )

@@ -36,6 +36,7 @@ class Filled:
     gaps: tuple[Gap, ...]
     fills: tuple[Fill, ...]
     receipts: tuple[Receipt, ...]
+    reached: tuple[EdgeKey, ...] = ()
 
 
 def _key(edge: Edge) -> EdgeKey:
@@ -89,7 +90,8 @@ def run_gapfill(
 ) -> Filled:
     applied: list[Fill] = []
     receipts: list[Receipt] = []
-    for change in candidate_edges(documents, pool, gaps, rule).values():
+    candidates = candidate_edges(documents, pool, gaps, rule)
+    for change in candidates.values():
         if read_state(client, change.edge) is not None:
             continue
         done = apply(
@@ -100,4 +102,4 @@ def run_gapfill(
             raise RuntimeError(f"receipt {done.receipt.receipt_id} claims {change.edge} was ingested, but it is absent")
         applied.append(change)
         receipts.append(done.receipt)
-    return Filled(tuple(gaps), tuple(applied), tuple(receipts))
+    return Filled(tuple(gaps), tuple(applied), tuple(receipts), tuple(candidates))

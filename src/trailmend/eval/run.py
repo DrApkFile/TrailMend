@@ -134,9 +134,13 @@ def run_arm(
                 "wrong": baseline.wrong,
             },
             "train": None,
+            "gapfill_reached": 0,
+            "gapfill_ingested": 0,
         }
         | stamp
     ]
+    reached: set[EdgeKey] = set()
+    ingested: set[EdgeKey] = set()
     print(f"  {arm.value} round 0: held-out {baseline.correct}/{baseline.n} = {baseline.accuracy:.4f}", flush=True)
     for round_index in range(1, rounds + 1):
         outcome = run_round(
@@ -158,7 +162,13 @@ def run_arm(
             built.ingested.pool,
             gapfill,
         )
-        rows.append(curve.row(DATASET, built.seed, outcome) | stamp)
+        reached.update(outcome.reached)
+        ingested.update(outcome.ingested)
+        rows.append(
+            curve.row(DATASET, built.seed, outcome)
+            | stamp
+            | {"gapfill_reached": len(reached), "gapfill_ingested": len(ingested)}
+        )
         print(
             f"  {arm.value} round {round_index}: held-out {outcome.held_out.correct}/{outcome.held_out.n} = "
             f"{outcome.held_out.accuracy:.4f}  train {outcome.train.accuracy:.4f}  "

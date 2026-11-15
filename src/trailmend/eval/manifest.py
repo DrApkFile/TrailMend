@@ -7,6 +7,7 @@ from typing import cast
 from trailmend.core.config import config_digest
 from trailmend.data import dataset
 from trailmend.data.documents import to_json as documents_json
+from trailmend.data.faultmodel import V1
 from trailmend.data.faultmodel import to_json as faults_json
 from trailmend.eval import evidence, target
 from trailmend.eval.splits import to_json as split_json
@@ -30,8 +31,8 @@ def sha256_of(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def dataset_digests(seed: int) -> dict[str, str]:
-    built = dataset.build(seed)
+def dataset_digests(seed: int, data_version: str = V1) -> dict[str, str]:
+    built = dataset.build(seed, data_version=data_version)
     return {
         "documents": sha256_of(documents_json(built.documents)),
         "faults": sha256_of(faults_json(built.ingested.faults)),
@@ -40,13 +41,12 @@ def dataset_digests(seed: int) -> dict[str, str]:
 
 
 MEASURED_SUFFIXES = frozenset({".json", ".jsonl", ".svg"})
+MANIFESTS = frozenset({"run_manifest.json", "run_manifest_v2.json"})
 
 
 def evidence_digests(directory: Path = evidence.EVIDENCE_DIR) -> dict[str, str]:
     files = sorted(
-        p
-        for p in directory.iterdir()
-        if p.is_file() and p.name != "run_manifest.json" and p.suffix in MEASURED_SUFFIXES
+        p for p in directory.iterdir() if p.is_file() and p.name not in MANIFESTS and p.suffix in MEASURED_SUFFIXES
     )
     return {p.name: evidence.digest(p) for p in files}
 
@@ -75,7 +75,7 @@ def hydradb_per_file(directory: Path = evidence.EVIDENCE_DIR) -> dict[str, objec
     return out
 
 
-def build(seeds: tuple[int, ...], run_id: str) -> dict[str, object]:
+def build(seeds: tuple[int, ...], run_id: str, data_version: str = V1) -> dict[str, object]:
     return {
         "run_id": run_id,
         "code_commit": commit(),
@@ -83,12 +83,21 @@ def build(seeds: tuple[int, ...], run_id: str) -> dict[str, object]:
         "config": {"path": str(CONFIG), "sha256": config_digest(CONFIG), "text": CONFIG.read_text()},
         "hydradb": hydradb_image(),
         "hydradb_per_evidence_file": hydradb_per_file(),
-        "seeds": {str(seed): dataset_digests(seed) for seed in seeds},
+        "data_version": data_version,
+        "seeds": {str(seed): dataset_digests(seed, data_version) for seed in seeds},
         "evidence_sha256": evidence_digests(),
     }
 
 
-def write(seeds: tuple[int, ...], run_id: str, directory: Path = evidence.EVIDENCE_DIR) -> Path:
-    path = directory / "run_manifest.json"
-    path.write_text(json.dumps(build(seeds, run_id), indent=2, sort_keys=True) + "\n")
+def write(
+    seeds: tuple[int, ...],
+    run_id: str,
+    directory: Path = evidence.EVIDENCE_DIR,
+    name: str = "run_manifest.json",
+    data_version: str = V1,
+) -> Path:
+    if name not in MANIFESTS:
+        raise ValueError(f"a manifest is written as one of {sorted(MANIFESTS)}, not {name!r}")
+    path = directory / name
+    path.write_text(json.dumps(build(seeds, run_id, data_version), indent=2, sort_keys=True) + "\n")
     return path

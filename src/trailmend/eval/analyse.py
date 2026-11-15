@@ -3,6 +3,7 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import cast
 
+from trailmend.data.faultmodel import V1
 from trailmend.eval import chart, curve, evidence, manifest, quarantine, regression
 from trailmend.eval.run import ARMS
 from trailmend.loop.journal import RUNS_DIR
@@ -32,7 +33,7 @@ def _accuracy(row: Mapping[str, object]) -> float:
     return float(value)
 
 
-def _at(rows: Sequence[Mapping[str, object]], arm: str, seed: int, round_index: int) -> float:
+def accuracy_at(rows: Sequence[Mapping[str, object]], arm: str, seed: int, round_index: int) -> float:
     for row in rows:
         if row.get("arm") == arm and row.get("seed") == seed and row.get("round") == round_index:
             return _accuracy(row)
@@ -47,16 +48,21 @@ def last_round(rows: Sequence[Mapping[str, object]]) -> int:
     return max(int(str(row["round"])) for row in rows)
 
 
-def write_chart(rows: Sequence[Mapping[str, object]], directory: Path = evidence.EVIDENCE_DIR) -> Path:
+def write_chart(
+    rows: Sequence[Mapping[str, object]],
+    directory: Path = evidence.EVIDENCE_DIR,
+    arms: Sequence[MendPolicy] = ARMS,
+    name: str = "curve.svg",
+) -> Path:
     series = [
         chart.Series(arm.value, chart.mean_by_round(rows, arm.value))
-        for arm in ARMS
+        for arm in arms
         if chart.mean_by_round(rows, arm.value)
     ]
     plain = chart.mean_by_round(rows, PLAIN)
     if plain:
         series.append(chart.Series(PLAIN, plain))
-    path = directory / "curve.svg"
+    path = directory / name
     path.write_text(chart.render(series, "Held-out accuracy by round, mean of 3 seeds", low=0.0, high=1.0))
     return path
 
@@ -68,31 +74,42 @@ def require_tape(run_id: str, root: Path = RUNS_DIR) -> Path:
     return path
 
 
-def non_regression(rows: Sequence[Mapping[str, object]], run_id: str) -> list[dict[str, object]]:
+def non_regression(
+    rows: Sequence[Mapping[str, object]], run_id: str, arms: Sequence[MendPolicy] = ARMS
+) -> list[dict[str, object]]:
     out: list[dict[str, object]] = []
     for seed in seeds_of(rows):
-        for arm in ARMS:
+        for arm in arms:
             run = f"{run_id}-s{seed}-{arm.value}"
             require_tape(run)
             out.extend(regression.rows(run, seed, arm.value))
     return out
 
 
-def quarantine_report(rows: Sequence[Mapping[str, object]], run_id: str) -> list[dict[str, object]]:
+def quarantine_report(
+    rows: Sequence[Mapping[str, object]],
+    run_id: str,
+    arms: Sequence[MendPolicy] = ARMS,
+    data_version: str = V1,
+) -> list[dict[str, object]]:
     out: list[dict[str, object]] = []
     for seed in seeds_of(rows):
-        for arm in ARMS:
+        for arm in arms:
             run = f"{run_id}-s{seed}-{arm.value}"
             require_tape(run)
-            out.append(quarantine.report(seed, arm.value, run))
+            out.append(quarantine.report(seed, arm.value, run, data_version=data_version))
     return out
 
 
-def mechanism_table(rows: Sequence[Mapping[str, object]], final: int) -> list[dict[str, object]]:
+def mechanism_table(
+    rows: Sequence[Mapping[str, object]], final: int, arms: Sequence[MendPolicy] = ARMS
+) -> list[dict[str, object]]:
     out: list[dict[str, object]] = []
-    for arm in ARMS:
+    for arm in arms:
         parts = mechanisms(arm)
-        deltas = [_at(rows, arm.value, seed, final) - _at(rows, arm.value, seed, 0) for seed in seeds_of(rows)]
+        deltas = [
+            accuracy_at(rows, arm.value, seed, final) - accuracy_at(rows, arm.value, seed, 0) for seed in seeds_of(rows)
+        ]
         out.append(
             {
                 "arm": arm.value,
@@ -101,10 +118,10 @@ def mechanism_table(rows: Sequence[Mapping[str, object]], final: int) -> list[di
                 "promote": parts.promote,
                 "gapfill": parts.gapfill,
                 "round_0_mean": round(
-                    sum(_at(rows, arm.value, seed, 0) for seed in seeds_of(rows)) / len(seeds_of(rows)), 4
+                    sum(accuracy_at(rows, arm.value, seed, 0) for seed in seeds_of(rows)) / len(seeds_of(rows)), 4
                 ),
                 "round_n_mean": round(
-                    sum(_at(rows, arm.value, seed, final) for seed in seeds_of(rows)) / len(seeds_of(rows)), 4
+                    sum(accuracy_at(rows, arm.value, seed, final) for seed in seeds_of(rows)) / len(seeds_of(rows)), 4
                 ),
                 "delta_per_seed": [round(d, 4) for d in deltas],
                 "delta_mean": round(sum(deltas) / len(deltas), 4),
@@ -122,19 +139,21 @@ def hypotheses(
     if not breaks or not quarantines:
         raise ValueError("H4 and H5 cannot be decided without per-round break rows and quarantine reports")
     seeds = seeds_of(rows)
-    baseline = [_at(rows, MendPolicy.FULL.value, seed, 0) for seed in seeds]
+    baseline = [accuracy_at(rows, MendPolicy.FULL.value, seed, 0) for seed in seeds]
     spread = max(baseline) - min(baseline)
     full_deltas = {
-        seed: _at(rows, MendPolicy.FULL.value, seed, final) - _at(rows, MendPolicy.FULL.value, seed, 0)
+        seed: accuracy_at(rows, MendPolicy.FULL.value, seed, final) - accuracy_at(rows, MendPolicy.FULL.value, seed, 0)
         for seed in seeds
     }
     h1 = all(delta > spread for delta in full_deltas.values())
     randoms = {
-        arm.value: {seed: _at(rows, arm.value, seed, final) - _at(rows, arm.value, seed, 0) for seed in seeds}
+        arm.value: {
+            seed: accuracy_at(rows, arm.value, seed, final) - accuracy_at(rows, arm.value, seed, 0) for seed in seeds
+        }
         for arm in (MendPolicy.RANDOM_REWEIGHT, MendPolicy.RANDOM_QUARANTINE)
     }
     h2 = all(delta <= spread for arm in randoms.values() for delta in arm.values())
-    plain = {seed: {r: _at(rows, PLAIN, seed, r) for r in range(final + 1)} for seed in seeds}
+    plain = {seed: {r: accuracy_at(rows, PLAIN, seed, r) for r in range(final + 1)} for seed in seeds}
     h3 = all(len(set(per_round.values())) == 1 for per_round in plain.values())
     full_q = [q for q in quarantines if q["arm"] == MendPolicy.FULL.value]
     recalls = [q["recall_on_planted_wrong_edges"] for q in full_q]
@@ -231,8 +250,10 @@ CHANGES_DESIGN = (
 )
 
 
-def change_counts(rows: Sequence[Mapping[str, object]]) -> list[dict[str, object]]:
-    arms = [MendPolicy.FULL.value, *(arm.value for arm in ARMS if arm is not MendPolicy.FULL)]
+def change_counts(
+    rows: Sequence[Mapping[str, object]], arms_in_order: Sequence[MendPolicy] = ARMS
+) -> list[dict[str, object]]:
+    arms = [arm.value for arm in arms_in_order]
     out: list[dict[str, object]] = []
     for seed in seeds_of(rows):
         for round_index in range(1, last_round(rows) + 1):

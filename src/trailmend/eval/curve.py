@@ -26,6 +26,7 @@ def row(dataset: str, seed: int, outcome: RoundOutcome) -> dict[str, object]:
         "retired": len(outcome.retired),
         "gaps": outcome.gaps,
         "ingested": len(outcome.ingested),
+        "gapfill_reached_this_round": len(outcome.reached),
         "receipts": len(outcome.receipt_ids),
     }
 
