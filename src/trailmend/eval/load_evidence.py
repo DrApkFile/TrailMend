@@ -3,9 +3,8 @@ from collections.abc import Mapping
 
 from trailmend.data import dataset
 from trailmend.eval import evidence
-from trailmend.graph.client import HydraClient
+from trailmend.eval.session import client_from_settings
 from trailmend.graph.loader import count_graph, load
-from trailmend.settings import load_settings
 
 DESIGN = (
     "For each seed: build the generated Northwind dataset, count the store, write G0 into HydraDB with batch "
@@ -17,24 +16,13 @@ DESIGN = (
 )
 
 
-def _client() -> HydraClient:
-    settings = load_settings()
-    return HydraClient(
-        str(settings.hydra_url),
-        settings.hydra_token.get_secret_value(),
-        settings.hydra_graph_id,
-        settings.hydra_cell_id,
-        settings.hydra_timeout_s,
-    )
-
-
 def _total(counts: Mapping[str, int]) -> int:
     return sum(counts.values())
 
 
 def main(seeds: tuple[int, ...]) -> int:
     rows: list[dict[str, object]] = []
-    with _client() as client:
+    with client_from_settings() as client:
         client.require_writable()
         for seed in seeds:
             built = dataset.build(seed)

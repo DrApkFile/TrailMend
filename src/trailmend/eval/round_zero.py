@@ -4,11 +4,10 @@ from pathlib import Path
 from trailmend.core.config import load_search_config
 from trailmend.data import dataset
 from trailmend.eval import evidence
-from trailmend.graph.client import HydraClient
+from trailmend.eval.session import client_from_settings
 from trailmend.graph.loader import load
 from trailmend.loop.evaluate import judge_all, score
 from trailmend.search.seed import build_index
-from trailmend.settings import load_settings
 
 DESIGN = (
     "Round 0 is the frozen ingested graph G0: every edge at cost 1.0, no Mend has run. For each seed, load G0, "
@@ -47,21 +46,10 @@ SUPERSEDED: tuple[dict[str, object], ...] = (
 )
 
 
-def _client() -> HydraClient:
-    settings = load_settings()
-    return HydraClient(
-        str(settings.hydra_url),
-        settings.hydra_token.get_secret_value(),
-        settings.hydra_graph_id,
-        settings.hydra_cell_id,
-        settings.hydra_timeout_s,
-    )
-
-
 def main(seeds: tuple[int, ...]) -> int:
     config = load_search_config(Path("config/mend.toml"))
     rows: list[dict[str, object]] = []
-    with _client() as client:
+    with client_from_settings() as client:
         client.require_writable()
         for seed in seeds:
             built = dataset.build(seed)

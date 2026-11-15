@@ -29,7 +29,9 @@ or the file that shows it is true.
 
 1. The E1 sweep finishes (3 seeds × 9 arms × 6 rounds into `evidence/curve.jsonl`).
 2. Re-run seed 1 `reweight_only`: its rows were written while the API tests wrote judge receipts and a rollback into
-   the same graph. Delete those six rows, re-run the one seed-arm, append the clean rows.
+   the same graph. One command, which keeps the contaminated rows on record under `evidence/superseded/` with the
+   reason and reuses the arm index the sweep used so the RNG stream is the same:
+   `uv run python -m trailmend.eval.rerun 1 reweight_only "the API tests wrote judge receipts and a rollback into the same graph during this arm"`
 3. `uv run python -m trailmend.eval.analyse` → curve.svg, non_regression.json, quarantine.json, mechanisms.json,
    hypotheses.json, run_manifest.json. It refuses any seed-arm whose held-out tape is missing.
 4. `uv run python -m trailmend.eval.report` → the README numbers block.

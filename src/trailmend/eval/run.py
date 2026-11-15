@@ -8,6 +8,7 @@ from trailmend.core.model import EdgeKey
 from trailmend.data import dataset
 from trailmend.eval import curve
 from trailmend.eval.plain_store import build_store, judge_all_plain
+from trailmend.eval.session import client_from_settings
 from trailmend.graph.client import HydraClient
 from trailmend.graph.reset import reset_to_ingested
 from trailmend.loop.evaluate import judge_all, score
@@ -17,7 +18,6 @@ from trailmend.loop.policy import MendPolicy
 from trailmend.loop.round import run_round
 from trailmend.loop.tape import Tape
 from trailmend.search.seed import build_index
-from trailmend.settings import load_settings
 
 CONFIG = Path("config/mend.toml")
 ARMS: tuple[MendPolicy, ...] = (
@@ -41,17 +41,6 @@ def commit() -> str:
 
 def run_id_for(config: Path = CONFIG) -> str:
     return f"{commit()}-{config_digest(config)[:8]}"
-
-
-def _client() -> HydraClient:
-    settings = load_settings()
-    return HydraClient(
-        str(settings.hydra_url),
-        settings.hydra_token.get_secret_value(),
-        settings.hydra_graph_id,
-        settings.hydra_cell_id,
-        settings.hydra_timeout_s,
-    )
 
 
 def plain_rows(run_id: str, built: dataset.Dataset, rounds: int, top_k: int) -> list[dict[str, object]]:
@@ -153,7 +142,7 @@ def main(seeds: tuple[int, ...], arms: tuple[MendPolicy, ...] = ARMS) -> int:
     run_id = run_id_for()
     print(f"run {run_id}: {len(seeds)} seeds x {len(arms)} arms x {run.rounds} rounds", flush=True)
     written = 0
-    with _client() as client:
+    with client_from_settings() as client:
         client.require_writable()
         for seed in seeds:
             built = dataset.build(seed)
