@@ -6,7 +6,7 @@ from typing import cast
 from trailmend.eval import chart, curve, evidence, manifest, quarantine, regression
 from trailmend.eval.run import ARMS
 from trailmend.loop.journal import RUNS_DIR
-from trailmend.loop.policy import MendPolicy, mechanisms
+from trailmend.loop.policy import CONTROL_OF, MendPolicy, mechanisms
 
 PLAIN = "plain_store"
 H1_MARGIN_RULE = "accuracy(round N) - accuracy(round 0) > the round-0 spread across seeds, for every seed"
@@ -188,9 +188,43 @@ def hypotheses(
     ]
 
 
+def _count(row: Mapping[str, object], field: str) -> int:
+    value = row.get(field)
+    if not isinstance(value, int) or isinstance(value, bool):
+        raise TypeError(f"{row.get('arm')} seed {row.get('seed')} round {row.get('round')} has no integer {field}")
+    return value
+
+
+def check_inv6(rows: Sequence[Mapping[str, object]]) -> int:
+    checked = 0
+    for row in rows:
+        arm = str(row.get("arm"))
+        if arm not in CONTROL_OF or int(str(row.get("round"))) == 0:
+            continue
+        mirrored = mechanisms(MendPolicy(arm))
+        planned_reweights = _count(row, "planned_reweights")
+        planned_quarantines = _count(row, "planned_quarantines")
+        applied_reweights = _count(row, "applied_reweights")
+        applied_quarantines = _count(row, "applied_quarantines")
+        expected_reweights = planned_reweights if mirrored.reweight else 0
+        expected_quarantines = planned_quarantines if mirrored.quarantine else 0
+        where = f"{arm} seed {row.get('seed')} round {row.get('round')}"
+        if applied_reweights != expected_reweights or applied_quarantines != expected_quarantines:
+            raise ValueError(
+                f"INV6 fails at {where}: planned {planned_reweights} reweights and {planned_quarantines} "
+                f"quarantines, so the control had to make {expected_reweights} and {expected_quarantines}, "
+                f"but it made {applied_reweights} and {applied_quarantines}"
+            )
+        checked += 1
+    if not checked:
+        raise ValueError("INV6 cannot be checked: the run recorded no rounds for the random control arms")
+    return checked
+
+
 def main() -> int:
     rows = rows_of()
     run_id = str(rows[0]["run_id"])
+    print(f"INV6 holds for {check_inv6(rows)} recorded control rounds")
     final = last_round(rows)
     seeds = seeds_of(rows)
     breaks = non_regression(rows, run_id)

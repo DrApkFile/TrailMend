@@ -77,3 +77,44 @@ def test_no_hypothesis_is_decided_from_an_empty_set_of_breaks_or_quarantines() -
     ]
     with pytest.raises(ValueError, match="cannot be decided without"):
         analyse.hypotheses(rows, (), (), 1)
+
+
+def _control_row(arm: str, planned_rw: int, planned_qu: int, applied_rw: int, applied_qu: int) -> dict[str, object]:
+    return {
+        "arm": arm,
+        "seed": 1,
+        "round": 1,
+        "planned_reweights": planned_rw,
+        "planned_quarantines": planned_qu,
+        "applied_reweights": applied_rw,
+        "applied_quarantines": applied_qu,
+    }
+
+
+def test_inv6_holds_when_each_control_mirrors_only_its_own_mechanism() -> None:
+    rows = [
+        _control_row("random_reweight", 572, 6, 572, 0),
+        _control_row("random_quarantine", 571, 5, 0, 5),
+        {"arm": "full", "seed": 1, "round": 1, "applied_reweights": 587, "applied_quarantines": 8},
+    ]
+    assert analyse.check_inv6(rows) == 2
+
+
+def test_inv6_fails_when_a_control_makes_fewer_changes_than_the_mend_planned() -> None:
+    with pytest.raises(ValueError, match="INV6 fails at random_reweight"):
+        analyse.check_inv6([_control_row("random_reweight", 572, 6, 400, 0)])
+
+
+def test_inv6_fails_when_a_control_also_makes_the_other_mechanisms_changes() -> None:
+    with pytest.raises(ValueError, match="INV6 fails at random_quarantine"):
+        analyse.check_inv6([_control_row("random_quarantine", 571, 5, 571, 5)])
+
+
+def test_a_run_with_no_control_rounds_cannot_claim_inv6() -> None:
+    with pytest.raises(ValueError, match="INV6 cannot be checked"):
+        analyse.check_inv6([{"arm": "full", "seed": 1, "round": 1}])
+
+
+def test_round_zero_is_not_an_inv6_round_because_nothing_was_applied() -> None:
+    with pytest.raises(ValueError, match="INV6 cannot be checked"):
+        analyse.check_inv6([_control_row("random_reweight", 0, 0, 0, 0) | {"round": 0}])
