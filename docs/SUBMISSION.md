@@ -44,7 +44,11 @@ or the file that shows it is true.
    `graph_writable: true`, restart HydraDB and check again. Steps in `deploy/railway/README.md`.
 7. `vercel login`, then A2: deploy `apps/web` with `TRAILMEND_API=<railway api url>`; check in a fresh browser and
    at 390px wide; confirm no API URL appears in `.next/static`.
-8. `uv run python -m trailmend.eval.load <railway api url>` → `evidence/latency.json` (E6), then re-run report.
+8. E6 against the deployment, both passes. It needs the deployment's admin token in the environment and never
+   prints it: put it in `.env.prod` (gitignored) as `TRAILMEND_ADMIN_TOKEN=...`, then
+   `set -a; . ./.env.prod; set +a; uv run python -m trailmend.eval.load https://trailmend-production-ee2e07ff.up.railway.app`
+   → `evidence/latency.json`, then re-run report. Afterwards reset the demo graph with
+   `set -a; . ./.env.prod; set +a; ./scripts/demo_reset.sh` so judges start from the loaded graph.
 9. Record the Loom from `docs/LOOM_SCRIPT.md`; put the link at the top of the README.
 10. Fill the blanks in `evidence/posts.md` from the evidence files, check HydraDB's handle, post, log the URLs.
 11. `bash scripts/presubmit.sh` with the live tests on (needs `make hydra-up`), expect every check to pass.

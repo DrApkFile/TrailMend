@@ -1,0 +1,128 @@
+{
+  "claim": "mechanisms",
+  "design": "One row per arm: which mechanisms it runs and what held-out accuracy it reached from round 0 to round N, per seed and as a mean. Arms share seeds, splits, rounds and the same plan of changes; they differ only in which of those changes they apply.",
+  "measured_at": "2026-11-15T02:35:11+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full",
+      "delta_mean": 0.0039,
+      "delta_per_seed": [
+        0.0059,
+        0.0,
+        0.0058
+      ],
+      "gapfill": true,
+      "promote": true,
+      "quarantine": true,
+      "reweight": true,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.8425
+    },
+    {
+      "arm": "frozen",
+      "delta_mean": 0.0,
+      "delta_per_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": false,
+      "reweight": false,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.8386
+    },
+    {
+      "arm": "reweight_only",
+      "delta_mean": -0.0186,
+      "delta_per_seed": [
+        -0.0147,
+        -0.0176,
+        -0.0234
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": false,
+      "reweight": true,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.82
+    },
+    {
+      "arm": "quarantine_only",
+      "delta_mean": 0.0,
+      "delta_per_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": true,
+      "reweight": false,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.8386
+    },
+    {
+      "arm": "promote_only",
+      "delta_mean": 0.0,
+      "delta_per_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gapfill": false,
+      "promote": true,
+      "quarantine": false,
+      "reweight": false,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.8386
+    },
+    {
+      "arm": "gapfill_only",
+      "delta_mean": 0.0225,
+      "delta_per_seed": [
+        0.0176,
+        0.0206,
+        0.0292
+      ],
+      "gapfill": true,
+      "promote": false,
+      "quarantine": false,
+      "reweight": false,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.861
+    },
+    {
+      "arm": "random_reweight",
+      "delta_mean": -0.0763,
+      "delta_per_seed": [
+        -0.0882,
+        -0.0676,
+        -0.0731
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": false,
+      "reweight": true,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.7622
+    },
+    {
+      "arm": "random_quarantine",
+      "delta_mean": -0.0254,
+      "delta_per_seed": [
+        -0.0206,
+        -0.0265,
+        -0.0292
+      ],
+      "gapfill": false,
+      "promote": false,
+      "quarantine": true,
+      "reweight": false,
+      "round_0_mean": 0.8386,
+      "round_n_mean": 0.8131
+    }
+  ]
+}

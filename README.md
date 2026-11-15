@@ -36,38 +36,60 @@ No LLM is on the answer path, and no LLM scores an answer.
 
 | arm | round 0 | round 5 | change |
 |---|---|---|---|
-| `frozen` | 85.3% | 85.3% | +0.0 points |
-| `full` | 85.3% | 85.9% | +0.6 points |
-| `gapfill_only` | 85.3% | 87.1% | +1.8 points |
-| `plain_store` | 26.5% | 26.5% | +0.0 points |
-| `promote_only` | 85.3% | 85.3% | +0.0 points |
-| `quarantine_only` | 85.3% | 85.3% | +0.0 points |
-| `reweight_only` | 85.3% | 82.6% | -2.6 points |
+| `frozen` | 83.9% | 83.9% | +0.0 points |
+| `full` | 83.9% | 84.2% | +0.4 points |
+| `gapfill_only` | 83.9% | 86.1% | +2.2 points |
+| `plain_store` | 24.6% | 24.6% | +0.0 points |
+| `promote_only` | 83.9% | 83.9% | +0.0 points |
+| `quarantine_only` | 83.9% | 83.9% | +0.0 points |
+| `random_quarantine` | 83.9% | 81.3% | -2.5 points |
+| `random_reweight` | 83.9% | 76.2% | -7.6 points |
+| `reweight_only` | 83.9% | 82.0% | -1.9 points |
 
 The document-only baseline (BM25 over the same corpus, no graph) scores 24.6%, with its one hyperparameter tuned to its own best held-out score.
 
 ### Preregistered hypotheses
 
-Not decided yet.
+| id | claim | verdict |
+|---|---|---|
+| H1 | held-out accuracy after round N exceeds round 0 by more than the seed spread, every seed | **FAIL** |
+| H2 | random controls do not rise beyond seed spread | **PASS** |
+| H3 | the plain-store arm is flat across rounds | **PASS** |
+| H4 | quarantine recall on planted wrong edges >= 0.7 with false-quarantine rate <= 0.1 | **FAIL** |
+| H5 | net regressions on previously-correct held-out questions <= 2% per round | **FAIL** |
 
 ### Evidence files
 
-| file | sha256 (first 16) |
-|---|---|
-| [`evidence/curve.jsonl`](evidence/curve.jsonl) | `6fb955cfad1a19f0…` |
-| [`evidence/round_zero.json`](evidence/round_zero.json) | `5639023839538d87…` |
-| [`evidence/plain_store.json`](evidence/plain_store.json) | `e651fd53aec26236…` |
-| [`evidence/mechanisms.json`](evidence/mechanisms.json) | not measured |
-| [`evidence/non_regression.json`](evidence/non_regression.json) | not measured |
-| [`evidence/quarantine.json`](evidence/quarantine.json) | not measured |
-| [`evidence/hypotheses.json`](evidence/hypotheses.json) | not measured |
-| [`evidence/run_manifest.json`](evidence/run_manifest.json) | not measured |
-| [`evidence/load.json`](evidence/load.json) | `ef1c00b3507de398…` |
+| file | what it is | sha256 (first 16) |
+|---|---|---|
+| [`evidence/curve.jsonl`](evidence/curve.jsonl) | held-out and training accuracy per seed, arm and round | `eb886008a2906f65…` |
+| [`evidence/round_zero.json`](evidence/round_zero.json) | the frozen-graph baseline before any judging | `5639023839538d87…` |
+| [`evidence/plain_store.json`](evidence/plain_store.json) | the document-only baseline, tuned to its own best score | `e651fd53aec26236…` |
+| [`evidence/mechanisms.json`](evidence/mechanisms.json) | one mechanism per arm, against full and against the random controls | `c79782dbe2a25ca7…` |
+| [`evidence/changes.json`](evidence/changes.json) | change counts per seed, arm and round, full and every control side by side | `348eb3bf01c0ba59…` |
+| [`evidence/non_regression.json`](evidence/non_regression.json) | newly fixed, newly broken and net per round, each break traced to receipts | `88d568ab001fb012…` |
+| [`evidence/quarantine.json`](evidence/quarantine.json) | quarantine precision and recall against the planted faults | `2014ff07700c0354…` |
+| [`evidence/hypotheses.json`](evidence/hypotheses.json) | H1-H5 with the rule each was decided by | `f47b54018efe3721…` |
+| [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `657f6dc9a3b12817…` |
+| [`evidence/load.json`](evidence/load.json) | loading G0 into HydraDB, and that a re-load adds nothing | `ef1c00b3507de398…` |
+| [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | not measured |
 <!-- numbers:end -->
 
 Every figure above is written into this file by `trailmend.eval.report` from the files in `evidence/`. None of them is
 typed by hand. The evaluation data is **generated**, and is labelled generated everywhere it appears; no customer data
 has been measured.
+
+**What this run showed.** The full Mend ends round 5 at 84.2% held-out, 0.4 points above its own round 0, and one of
+the three seeds did not move at all. That is well inside the 2.9-point spread between seeds at round 0, so **H1
+fails**: the lift is not bigger than the noise the seeds already carry. Three results survive that. Gap-fill is the
+only mechanism that moves accuracy on its own, +2.2 points with every seed positive. Targeted change beats random
+change by a wide margin on both levers measured separately — reweight −1.9 points against −7.6 for random reweight,
+quarantine 0.0 against −2.5 for random quarantine — where the controls made the same number and size of changes in
+the same round (`evidence/changes.json`). And the graph answers 83.9% of held-out questions against 24.6% for the
+document-only baseline, a 59-point gap. **H4 fails** on the false-quarantine rate (0.118, 0.188, 0.071 against a
+budget of 0.1) with recall at 0.92 or better on every seed, and **H5 fails** on one round where 3.25% of
+previously-correct answers broke against a 2% budget. The three failures are published with the rule each was decided
+by in `evidence/hypotheses.json`.
 
 ## How HydraDB is used
 

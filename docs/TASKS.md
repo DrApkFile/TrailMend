@@ -171,13 +171,35 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   It is scored once and the same number stands for every round, because it cannot learn.
 
 ## Phase E — measurement (PRD §9–§10, docs/UPGRADES.md 1–5)
-- [ ] E1 Run 3 seeds × arms × N rounds (N fixed in config before the first run). Constants frozen in
+- [x] E1 Run 3 seeds × arms × N rounds (N fixed in config before the first run). Constants frozen in
   `config/mend.toml`; changing them = new run id.
-- [ ] E2 Curve chart + `evidence/curve.jsonl` + `evidence/run_manifest.json` (commit, HydraDB digest, config hash,
+  Evidence: run `01f1f6f-06b10c13` = commit `01f1f6f` + config digest `06b10c13`, seeds 1, 7 and 42, eight graph arms
+  plus `plain_store`, 5 rounds, 162 rows in `evidence/curve.jsonl`, measured against the pinned local HydraDB
+  (`sha256:ab71d651…`) recorded per row. Two (seed, arm) pairs were re-run with `trailmend.eval.rerun` after
+  `pytest -m hydra` wrote to the same graph mid-sweep: seed 1 `reweight_only` and seed 7 `random_quarantine`. The
+  contaminated rows and their journals are kept under `evidence/superseded/` with a `why.json` each, and
+  `evidence/.measuring.json` now makes that collision impossible (DECISIONS.md, S31).
+- [x] E2 Curve chart + `evidence/curve.jsonl` + `evidence/run_manifest.json` (commit, HydraDB digest, config hash,
   dataset hashes, sha256 of every evidence file).
-- [ ] E3 Non-regression per round: newly fixed / newly broken / net; each break traced to receipt ids.
-- [ ] E4 Quarantine precision/recall vs `faults.json`; false-quarantine rate; gaps filled vs spurious ingests.
-- [ ] E5 Mechanism decomposition table (one mechanism per arm).
+  Evidence: `evidence/curve.svg` (all arms, seed bands), `evidence/curve.jsonl`, and `evidence/run_manifest.json`
+  carrying the code commit, the HydraDB image and digest, the config text and its sha256, per-seed dataset/split/fault
+  hashes, the sha256 of every evidence file, and `hydradb_per_evidence_file`, which shows the whole curve came from
+  one HydraDB.
+- [x] E3 Non-regression per round: newly fixed / newly broken / net; each break traced to receipt ids.
+  Evidence: `evidence/non_regression.json`, 144 rows. Full arm over 15 measured rounds: 33 newly fixed, 29 newly
+  broken, and the breaks concentrate in round 1 (9 per seed) as the first blame lands. 171 of the 172 breaks across
+  all arms name the receipts written that round on the question's old correct path; 1 has none, which the file
+  reports as a path that changed for another reason rather than hiding it.
+- [x] E4 Quarantine precision/recall vs `faults.json`; false-quarantine rate; gaps filled vs spurious ingests.
+  Evidence: `evidence/quarantine.json`. Full arm, per seed: precision 0.88 / 0.81 / 0.93, recall on planted wrong
+  edges 1.00 / 0.92 / 0.92, false-quarantine rate 0.118 / 0.188 / 0.071, gaps filled 31 / 35 / 25 — every one of them
+  a withheld truth edge — and 0 spurious ingests. The random control quarantines the truth graph instead:
+  precision 0.09 / 0.00 / 0.00, false-quarantine rate 0.91 / 1.00 / 1.00.
+- [x] E5 Mechanism decomposition table (one mechanism per arm).
+  Evidence: `evidence/mechanisms.json` and the README table. Mean held-out change from round 0 to round 5:
+  `gapfill_only` +2.2, `full` +0.4, `frozen` / `quarantine_only` / `promote_only` 0.0, `reweight_only` −1.9,
+  `random_quarantine` −2.5, `random_reweight` −7.6. Targeted beats random on both levers measured separately, with
+  the controls matched on the number and size of changes per round (`evidence/changes.json`, INV6).
 - [ ] E6 Load test (`eval/load.py`): concurrent clients on the product query mix, p50/p95/p99, QPS, errors by code;
   second run with a Mend round writing concurrently. Against the Railway deployment.
   WRITTEN 2026-11-15, NOT RUN YET: `eval/load.py` writes `evidence/latency.json` (the claim is `latency`, not `load`,
@@ -186,7 +208,14 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   own wall time, code and change counts in the row. It runs against
   `https://trailmend-production-ee2e07ff.up.railway.app` with `TRAILMEND_ADMIN_TOKEN` in the environment, and exits
   with that instruction rather than silently skipping the second pass if it is unset.
-- [ ] E7 Preregistered hypotheses H1–H5 (PRD §3): write PASS / FAIL / INCONCLUSIVE with numbers. Failed ones stay.
+- [x] E7 Preregistered hypotheses H1–H5 (PRD §3): write PASS / FAIL / INCONCLUSIVE with numbers. Failed ones stay.
+  Evidence: `evidence/hypotheses.json` and the README table. H1 **FAIL** (full arm +0.0059 / +0.0000 / +0.0058 per
+  seed against a round-0 seed spread of 0.0294), H2 **PASS** (both random controls fall, −0.021 to −0.088),
+  H3 **PASS** (flat by construction), H4 **FAIL** (recall 1.00 / 0.92 / 0.92 but false-quarantine rate 0.118 / 0.188 /
+  0.071 against a 0.1 budget), H5 **FAIL** (worst round breaks 3.25% of previously-correct answers against a 2%
+  budget). The three failures are published as failures with the rule each was decided by, in the file, in the README
+  and on `/evidence`. `trailmend.eval.analyse` refuses to decide H4 or H5 without per-round break rows and quarantine
+  reports, and refuses to write anything if INV6 fails; this run printed `INV6 holds for 30 recorded control rounds`.
 
 ## Phase F — product surface (PRD §11–§12)
 - [ ] F1 API: `/v1/ask`, `/v1/judge`, `/v1/mend/round` (admin token), `/v1/receipts`, `/v1/receipts/{id}`,
@@ -203,11 +232,13 @@ Work top to bottom. Each task lists its PRD section and acceptance. Tick `[x]` o
   Ticks when the same five pages are rendered against the live API in a real browser at 390px (task #3).
 
 ## Phase G — submission (PRD §13, §17, §18)
-- [ ] G1 README: judge path in 60 seconds, the curve, how HydraDB is used, numbers each linked to evidence,
+- [x] G1 README: judge path in 60 seconds, the curve, how HydraDB is used, numbers each linked to evidence,
   limitations section, run-it-locally, attribution (HydraDB AGPL-3.0, used as a separate service).
-  PROSE WRITTEN 2026-11-15: all sections are in README.md. Every figure lives between `<!-- numbers:start -->` and
-  `<!-- numbers:end -->`, rewritten by `trailmend.eval.report` from `evidence/`; the block currently says it is
-  unfilled because the E1 sweep is still running. Ticks when the sweep finishes and the block holds real numbers.
+  Evidence: README.md. Every figure between `<!-- numbers:start -->` and `<!-- numbers:end -->` was written by
+  `trailmend.eval.report` from the finished run — the per-arm accuracy table, the H1–H5 verdicts including the three
+  failures, and every evidence file with its sha256. "What this run showed" states plainly that the full Mend's lift
+  is inside the seed spread, which mechanism carries it, and what the two other failures were. `latency` shows
+  `not measured` until E6 runs.
 - [x] G2 GTM: buyer, pain, status quo, price with a unit, pilot offer → README + `/pricing`.
   Evidence: README "Who this is for, and what it costs" and `apps/web/app/pricing/page.tsx` carry the same buyer
   (platform/SRE lead who owns the rota), pain, status quo, unit price ($4 / service / month, minimum $400) and pilot

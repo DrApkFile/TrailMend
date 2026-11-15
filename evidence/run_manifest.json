@@ -1,0 +1,63 @@
+{
+  "code_commit": "d6945c115121caab8438e019a9b69863a9f690fe",
+  "config": {
+    "path": "config/mend.toml",
+    "sha256": "06b10c13cda629027a14baaebef070106ec27c2646a72cea44a13b3167636e7c",
+    "text": "[mend]\neta = 0.35\ncost_floor = 0.05\ncost_ceiling = 20.0\nwindow = 6\nquarantine_min_blames = 3\nquarantine_blame_share = 0.8\nquarantine_confirm_ceiling = 1\npromote_min_questions = 3\n\n[search]\nmax_len = 3\nresult_limit = 200\n\n[run]\nrounds = 5\nplain_store_top_k = 15\n"
+  },
+  "evidence_sha256": {
+    ".gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "changes.json": "348eb3bf01c0ba5989a3071cfa9b601e8a76e85f7ce878b52c8a734ae6c15a07",
+    "curve.jsonl": "eb886008a2906f65f377726b231e7f5a80e2152332bbc5e057850cb555c112ca",
+    "curve.svg": "eefd76a8ee3eac5fd99db1a745b40630917e6456143cf0414d258c020ddce7cf",
+    "hypotheses.json": "f47b54018efe37215c53375e39580614b6edee67865ffc8d94799498cddef92f",
+    "load.json": "ef1c00b3507de398559b7b7a5759042fa710718ff60b2b5800d2a5a0ba063769",
+    "mechanisms.json": "c79782dbe2a25ca77dcbcc86fbdd8474c6d72261ea3b8a273be9d29da22b21c5",
+    "non_regression.json": "88d568ab001fb0121602d1011d9a1ee112a06ed0e9d0e53c9cff563bf1ac77d3",
+    "plain_store.json": "e651fd53aec262361d368a35e5140852403619fa8fc2487f5debb0bca388421a",
+    "posts.md": "b2f671da50a8a217071d5589058c8bc96797754271fad8a50c1239f63ba9d98c",
+    "quarantine.json": "2014ff07700c0354988ee03e118041d6f423648f746cab45207d3dfc3a4ce65a",
+    "round_zero.json": "5639023839538d87886018eac70fcacc75b6c072c72a88d3a90a5eda26b12da0"
+  },
+  "hydradb": {
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+    "image": "ghcr.io/hydra-db/hydradb"
+  },
+  "hydradb_per_evidence_file": {
+    "changes.json": null,
+    "curve.jsonl": [
+      {
+        "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+        "host": "127.0.0.1",
+        "image": "ghcr.io/hydra-db/hydradb",
+        "kind": "local"
+      }
+    ],
+    "hypotheses.json": null,
+    "load.json": null,
+    "mechanisms.json": null,
+    "non_regression.json": null,
+    "plain_store.json": null,
+    "quarantine.json": null,
+    "round_zero.json": null
+  },
+  "run_id": "01f1f6f-06b10c13",
+  "seeds": {
+    "1": {
+      "documents": "52baffbeb95f223ecb8325758cb4f35950274d9d45dcb9a7fc486a4aaa8dd73f",
+      "faults": "f21f56153714e44a8150fd158dd638344937949479b26ca8203daa88bb6c57a3",
+      "split": "c93ca2e073fc9c7f8220c4c0d4af5a80f3b8a67bf6955a957183ae8de0c0e12d"
+    },
+    "42": {
+      "documents": "bf6747c7ffc77e19a0d1ced4f43e8c94a1cb56fd43958c569db17d7896a54315",
+      "faults": "460213c0a7542c2c6b3d3388083ad206aaf18158a190f02ff6d02ba941f78839",
+      "split": "9fa7c171394ad8cefc45b96a75b55645a80c65634196c0a4c01a676d49a036f6"
+    },
+    "7": {
+      "documents": "2a36e65fd99062fd2e83ecdcaa4a3c970337599ad73bd256de54ef09a720d704",
+      "faults": "108e10bb12c058dd70feb906c9a4b50592cea2a3868558a8d40256b16874c814",
+      "split": "d749758fa362c126c49773ec9a4e6006a568cf390090926507ff43673a479b4d"
+    }
+  },
+  "working_tree_clean": false
+}

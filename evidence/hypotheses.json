@@ -1,0 +1,74 @@
+{
+  "claim": "hypotheses",
+  "design": "The five hypotheses preregistered in PRD section 3, decided from the curve, the non-regression rows and the quarantine report of this run. A failed hypothesis is published as failed.",
+  "measured_at": "2026-11-15T02:35:11+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "claim": "held-out accuracy after round N exceeds round 0 by more than the seed spread, every seed",
+      "full_delta_per_seed": {
+        "1": 0.0059,
+        "42": 0.0058,
+        "7": 0.0
+      },
+      "id": "H1",
+      "round_0_spread": 0.0294,
+      "rule": "accuracy(round N) - accuracy(round 0) > the round-0 spread across seeds, for every seed",
+      "verdict": "FAIL"
+    },
+    {
+      "claim": "random controls do not rise beyond seed spread",
+      "delta_per_arm": {
+        "random_quarantine": {
+          "1": -0.0206,
+          "42": -0.0292,
+          "7": -0.0265
+        },
+        "random_reweight": {
+          "1": -0.0882,
+          "42": -0.0731,
+          "7": -0.0676
+        }
+      },
+      "id": "H2",
+      "round_0_spread": 0.0294,
+      "rule": "for each random control and each seed, accuracy(round N) - accuracy(round 0) <= the round-0 spread",
+      "verdict": "PASS"
+    },
+    {
+      "accuracy_per_seed": {
+        "1": 0.2647,
+        "42": 0.2368,
+        "7": 0.2353
+      },
+      "claim": "the plain-store arm is flat across rounds",
+      "id": "H3",
+      "note": "flat by construction: it is scored once per seed and cannot learn",
+      "rule": "the plain-store accuracy is identical at every round, for every seed",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "quarantine recall on planted wrong edges >= 0.7 with false-quarantine rate <= 0.1",
+      "false_quarantine_rate_per_seed": [
+        0.1176,
+        0.1875,
+        0.0714
+      ],
+      "id": "H4",
+      "recall_per_seed": [
+        1.0,
+        0.9231,
+        0.9231
+      ],
+      "rule": "recall on planted wrong edges >= 0.7 for every seed, and false-quarantine rate <= 0.1 where defined",
+      "verdict": "FAIL"
+    },
+    {
+      "claim": "net regressions on previously-correct held-out questions <= 2% per round",
+      "id": "H5",
+      "rule": "newly_broken / correct <= 0.02 in the worst round after round 0, full arm",
+      "verdict": "FAIL",
+      "worst_round_break_share": 0.0325
+    }
+  ]
+}

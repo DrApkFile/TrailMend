@@ -1,0 +1,2930 @@
+{
+  "claim": "non_regression",
+  "design": "Per round, from evidence/runs/<run>/heldout.jsonl: which held-out questions turned correct and which turned away from correct, and for each break the receipts written that round that touched an edge on that question's previous correct path. A break with no such receipt means the path changed for another reason, such as a cheaper rival answer appearing.",
+  "measured_at": "2026-11-15T02:35:11+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 9,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-1704270567819489794",
+        "q-customer_affected_by_incident-2237471701045116099",
+        "q-customer_affected_by_incident-2444546253654239838",
+        "q-customer_affected_by_incident-3568709886579896656",
+        "q-incident_pager-1364090146618999268",
+        "q-incident_pager-1634219437261185223",
+        "q-incident_pager-2237471701045116099",
+        "q-incident_pager-2382898677689745817",
+        "q-incident_pager-491650223965225695"
+      ],
+      "correct": 287,
+      "net": -3,
+      "newly_broken": 9,
+      "newly_fixed": 6,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-1704270567819489794": [
+          "rcpt-ba349bceeb8f2977",
+          "rcpt-7f96d79af3a93533",
+          "rcpt-474da654661c18db",
+          "rcpt-0b826315651b9176",
+          "rcpt-73300df8bd9567ca",
+          "rcpt-d39b9d6f10a5251b"
+        ],
+        "q-customer_affected_by_incident-2237471701045116099": [
+          "rcpt-b19f5a8e72292acf",
+          "rcpt-a15110eec829ef40",
+          "rcpt-5ea237ad925decb8"
+        ],
+        "q-customer_affected_by_incident-2444546253654239838": [
+          "rcpt-87d0d4d2cf2cb27d",
+          "rcpt-e3f385280cfd7171",
+          "rcpt-458df139e72630a7",
+          "rcpt-0d1777d875943d59",
+          "rcpt-2ecb0775ce47a156",
+          "rcpt-b21d4133004591dd"
+        ],
+        "q-customer_affected_by_incident-3568709886579896656": [
+          "rcpt-269732c8f2b590bf",
+          "rcpt-644f413d6a87875b",
+          "rcpt-f9b7782609310414",
+          "rcpt-d30a580a843c1d8e",
+          "rcpt-953ec189b47ce3f8"
+        ],
+        "q-incident_pager-1364090146618999268": [
+          "rcpt-91dc2a192d7e716d",
+          "rcpt-fa318ac29e302414",
+          "rcpt-23636f2441476a4b",
+          "rcpt-787c63c25cf4d445"
+        ],
+        "q-incident_pager-1634219437261185223": [
+          "rcpt-6b6c6199da2a1bda",
+          "rcpt-23636f2441476a4b",
+          "rcpt-514067e0cb7ad3aa",
+          "rcpt-c065c7604a591be6"
+        ],
+        "q-incident_pager-2237471701045116099": [
+          "rcpt-42da3aa1e0e525c3",
+          "rcpt-314ccfadab8c5228",
+          "rcpt-075bfb4630970d36",
+          "rcpt-a8a7b25d95e61467",
+          "rcpt-88a7330fc2969654",
+          "rcpt-fac67572ca28686d"
+        ],
+        "q-incident_pager-2382898677689745817": [
+          "rcpt-4139ed5e1a699056",
+          "rcpt-ace7e960631851df",
+          "rcpt-075bfb4630970d36",
+          "rcpt-5493985d712cf482",
+          "rcpt-0225dbdfbad4f34c",
+          "rcpt-3565ebc328e8eb77",
+          "rcpt-9d017f9e92867b68",
+          "rcpt-c065c7604a591be6"
+        ],
+        "q-incident_pager-491650223965225695": [
+          "rcpt-4e4e98ab3f6ecd0c",
+          "rcpt-abce0cab2c4135c3",
+          "rcpt-6238807593c93708",
+          "rcpt-b6ae394c02c32df4",
+          "rcpt-c5188f6feb2f3474"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 288,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 2,
+      "newly_broken": 0,
+      "newly_fixed": 2,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-incident_pager-1364090146618999268"
+      ],
+      "correct": 289,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-incident_pager-1364090146618999268": [
+          "rcpt-6a7328025aa946fd",
+          "rcpt-36e9fcb53c20e3e1",
+          "rcpt-36efe9eef6763b66",
+          "rcpt-5c433e0900609dc3"
+        ]
+      },
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 292,
+      "net": 3,
+      "newly_broken": 0,
+      "newly_fixed": 3,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 9,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-1704270567819489794",
+        "q-customer_affected_by_incident-2237471701045116099",
+        "q-customer_affected_by_incident-2444546253654239838",
+        "q-customer_affected_by_incident-3568709886579896656",
+        "q-incident_pager-1364090146618999268",
+        "q-incident_pager-1634219437261185223",
+        "q-incident_pager-2237471701045116099",
+        "q-incident_pager-2382898677689745817",
+        "q-incident_pager-491650223965225695"
+      ],
+      "correct": 281,
+      "net": -9,
+      "newly_broken": 9,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-1704270567819489794": [
+          "rcpt-e2333aae3ee76198",
+          "rcpt-541f79848e189504",
+          "rcpt-2475250d2eb9b4a3",
+          "rcpt-c9155610601aea16",
+          "rcpt-581bdb31b029fe5e",
+          "rcpt-4a93584b4ae76a77"
+        ],
+        "q-customer_affected_by_incident-2237471701045116099": [
+          "rcpt-acc3b1428e5d089e",
+          "rcpt-efd82b6d17593d55",
+          "rcpt-98bee636c3fdeb73"
+        ],
+        "q-customer_affected_by_incident-2444546253654239838": [
+          "rcpt-3250b776f3231dfa",
+          "rcpt-172c0c9907753e80",
+          "rcpt-39cce03a2a88eed6",
+          "rcpt-3f8df752056f9021",
+          "rcpt-f6a706a390008195",
+          "rcpt-34cd00ba8c93c4dd"
+        ],
+        "q-customer_affected_by_incident-3568709886579896656": [
+          "rcpt-8cf2da80da410858",
+          "rcpt-a9a639b627c6d699",
+          "rcpt-f4e62cda34c070fc",
+          "rcpt-084c15855a1f5dd0",
+          "rcpt-e7e699f6109496d5"
+        ],
+        "q-incident_pager-1364090146618999268": [
+          "rcpt-53b3611e445daa61",
+          "rcpt-805f9635024dbd18",
+          "rcpt-1594564f5529f373",
+          "rcpt-8c6f0dcc12a297cc"
+        ],
+        "q-incident_pager-1634219437261185223": [
+          "rcpt-29e33ff0fb19624b",
+          "rcpt-1594564f5529f373",
+          "rcpt-367f49a464546690",
+          "rcpt-23542291443f34ad"
+        ],
+        "q-incident_pager-2237471701045116099": [
+          "rcpt-c364360fc4d59685",
+          "rcpt-10cb3579695b7340",
+          "rcpt-33e8a3afb1c01ba4",
+          "rcpt-c8283d394e8a6765",
+          "rcpt-89dfe9e2daf91f49",
+          "rcpt-f26248c3a5ca4bcd"
+        ],
+        "q-incident_pager-2382898677689745817": [
+          "rcpt-2114de62cdc6b4d6",
+          "rcpt-73bd24d9ffc84adc",
+          "rcpt-33e8a3afb1c01ba4",
+          "rcpt-9d9a493d3d7fc0f5",
+          "rcpt-5c236336e9a2b7ed",
+          "rcpt-9e44ae245c4fb3ed",
+          "rcpt-335d690136bf43b9",
+          "rcpt-23542291443f34ad"
+        ],
+        "q-incident_pager-491650223965225695": [
+          "rcpt-75fad5553b972c6b",
+          "rcpt-86929a0375c7b8ed",
+          "rcpt-0869f49f4ea5d93e",
+          "rcpt-304384d106c23de1",
+          "rcpt-13bcb3c1b08929b5"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 281,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 285,
+      "net": 4,
+      "newly_broken": 0,
+      "newly_fixed": 4,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 296,
+      "net": 6,
+      "newly_broken": 0,
+      "newly_fixed": 6,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 296,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 296,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 296,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 296,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 22,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-1321638642834356734",
+        "q-customer_affected_by_incident-1458476663024218791",
+        "q-customer_affected_by_incident-1704270567819489794",
+        "q-customer_affected_by_incident-2237471701045116099",
+        "q-customer_affected_by_incident-2444546253654239838",
+        "q-customer_affected_by_incident-331118626898406495",
+        "q-customer_affected_by_incident-3568709886579896656",
+        "q-customer_affected_by_incident-4225582561296889440",
+        "q-incident_pager-1364090146618999268",
+        "q-incident_pager-1634219437261185223",
+        "q-incident_pager-2237471701045116099",
+        "q-incident_pager-2382898677689745817",
+        "q-incident_pager-3398449064462738231",
+        "q-service_customers-1033464602371665513",
+        "q-service_customers-2881312198619506133",
+        "q-service_customers-2960338721168468544",
+        "q-service_customers-2960606111913947613",
+        "q-service_customers-3294037519282380016",
+        "q-service_customers-3583171871202777501",
+        "q-service_customers-4365210714105279483",
+        "q-service_customers-4529191469167199143",
+        "q-service_customers-531400240736237492"
+      ],
+      "correct": 268,
+      "net": -22,
+      "newly_broken": 22,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-1321638642834356734": [
+          "rcpt-491833872fa77293"
+        ],
+        "q-customer_affected_by_incident-1458476663024218791": [
+          "rcpt-580fec75a011d739",
+          "rcpt-9ca56173358844f6",
+          "rcpt-6e37e8dfee4a7914",
+          "rcpt-d2f8941f19056d4f"
+        ],
+        "q-customer_affected_by_incident-1704270567819489794": [
+          "rcpt-16351e7820f72f7d"
+        ],
+        "q-customer_affected_by_incident-2237471701045116099": [
+          "rcpt-6fead88916789d89",
+          "rcpt-f948dea1705962e8",
+          "rcpt-85fe5fc1f6bdbe96",
+          "rcpt-9ca56173358844f6",
+          "rcpt-d2f8941f19056d4f"
+        ],
+        "q-customer_affected_by_incident-2444546253654239838": [
+          "rcpt-e0f2fb68539a48fe",
+          "rcpt-c9e2ae311aa91788"
+        ],
+        "q-customer_affected_by_incident-331118626898406495": [
+          "rcpt-bef82a50ca99ccf7",
+          "rcpt-f914f883a4ad82c9",
+          "rcpt-18a0ed54250b6a99",
+          "rcpt-c591b1fa9d783ef4",
+          "rcpt-fa0e2f3fdf1f5263"
+        ],
+        "q-customer_affected_by_incident-3568709886579896656": [
+          "rcpt-24c5e0242ab37bd3",
+          "rcpt-491833872fa77293"
+        ],
+        "q-customer_affected_by_incident-4225582561296889440": [
+          "rcpt-16351e7820f72f7d"
+        ],
+        "q-incident_pager-1364090146618999268": [
+          "rcpt-33a7394cf9abdff6"
+        ],
+        "q-incident_pager-1634219437261185223": [
+          "rcpt-45084e656ec7edce"
+        ],
+        "q-incident_pager-2237471701045116099": [
+          "rcpt-6fead88916789d89",
+          "rcpt-85fe5fc1f6bdbe96"
+        ],
+        "q-incident_pager-2382898677689745817": [
+          "rcpt-45084e656ec7edce",
+          "rcpt-5fc3f8006638ff65",
+          "rcpt-6befaa451886e9cf",
+          "rcpt-89b084084bd2c54e",
+          "rcpt-21894969968acb6b"
+        ],
+        "q-incident_pager-3398449064462738231": [
+          "rcpt-817ca4a8e68bf0ca"
+        ],
+        "q-service_customers-1033464602371665513": [
+          "rcpt-2aaadf4b3d350711"
+        ],
+        "q-service_customers-2881312198619506133": [
+          "rcpt-479e6254da36ce02"
+        ],
+        "q-service_customers-2960338721168468544": [
+          "rcpt-c988ebfe72ff27ad"
+        ],
+        "q-service_customers-2960606111913947613": [
+          "rcpt-fa0e2f3fdf1f5263"
+        ],
+        "q-service_customers-3294037519282380016": [
+          "rcpt-45cec3283db86ac9"
+        ],
+        "q-service_customers-3583171871202777501": [
+          "rcpt-048a1a96f67adca4"
+        ],
+        "q-service_customers-4365210714105279483": [
+          "rcpt-491833872fa77293"
+        ],
+        "q-service_customers-4529191469167199143": [
+          "rcpt-fc3602274f5501a1"
+        ],
+        "q-service_customers-531400240736237492": [
+          "rcpt-c59dcaf9762c9db7"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-2302278771834809154",
+        "q-service_customers-3612064562181322183"
+      ],
+      "correct": 266,
+      "net": -2,
+      "newly_broken": 2,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-service_customers-2302278771834809154": [
+          "rcpt-8040953f5b409e55"
+        ],
+        "q-service_customers-3612064562181322183": [
+          "rcpt-edebd5ba658e9e39",
+          "rcpt-36a57aa7d873a3cb"
+        ]
+      },
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 6,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-4328389305259018388",
+        "q-incident_pager-491650223965225695",
+        "q-service_customers-2080715418339906451",
+        "q-service_customers-3681934721661956636",
+        "q-service_customers-3988343777877776924",
+        "q-service_customers-517166255173953067"
+      ],
+      "correct": 261,
+      "net": -5,
+      "newly_broken": 6,
+      "newly_fixed": 1,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-4328389305259018388": [
+          "rcpt-4f3b73d333f4d6d3",
+          "rcpt-22a7973ffe859328"
+        ],
+        "q-incident_pager-491650223965225695": [
+          "rcpt-5bf55f100e882514",
+          "rcpt-7308beb41317354e",
+          "rcpt-2da7c1b08058ba38"
+        ],
+        "q-service_customers-2080715418339906451": [
+          "rcpt-7d5e409e60ffbfde"
+        ],
+        "q-service_customers-3681934721661956636": [
+          "rcpt-d05380883e41f402"
+        ],
+        "q-service_customers-3988343777877776924": [
+          "rcpt-22a7973ffe859328"
+        ],
+        "q-service_customers-517166255173953067": [
+          "rcpt-f846da87ddc0666b",
+          "rcpt-b036d67146907679"
+        ]
+      },
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-4529191469167199143"
+      ],
+      "correct": 260,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-service_customers-4529191469167199143": [
+          "rcpt-3718940bed04996f",
+          "rcpt-ef9212c8cf14641c"
+        ]
+      },
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-34379501779898177"
+      ],
+      "correct": 260,
+      "net": 0,
+      "newly_broken": 1,
+      "newly_fixed": 1,
+      "receipts_blamed": {
+        "q-service_customers-34379501779898177": [
+          "rcpt-89fd62d61bf28d82",
+          "rcpt-827f898cbfc4ff39"
+        ]
+      },
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 290,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-4546867814124394667",
+        "q-page_owner-3433036350468978301",
+        "q-page_owner-4546867814124394667"
+      ],
+      "correct": 287,
+      "net": -3,
+      "newly_broken": 3,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-4546867814124394667": [
+          "rcpt-4d50502107f8abac"
+        ],
+        "q-page_owner-3433036350468978301": [
+          "rcpt-f33b399c4771c863"
+        ],
+        "q-page_owner-4546867814124394667": [
+          "rcpt-4d50502107f8abac"
+        ]
+      },
+      "round": 1,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-4225582561296889440",
+        "q-incident_pager-2356061966858808059",
+        "q-incident_pager-4225582561296889440"
+      ],
+      "correct": 284,
+      "net": -3,
+      "newly_broken": 3,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-4225582561296889440": [
+          "rcpt-bd7e2e8084c3d2d8"
+        ],
+        "q-incident_pager-2356061966858808059": [
+          "rcpt-1d91d39ce54cec39"
+        ],
+        "q-incident_pager-4225582561296889440": [
+          "rcpt-bd7e2e8084c3d2d8"
+        ]
+      },
+      "round": 2,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 284,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-292492345904433310"
+      ],
+      "correct": 283,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-292492345904433310": [
+          "rcpt-b07ca0a3d649758f"
+        ]
+      },
+      "round": 4,
+      "seed": 1
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 283,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 9,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-3923226048966231868",
+        "q-incident_pager-1939958541434452474",
+        "q-incident_pager-2577011360017832582",
+        "q-incident_pager-3227484973055574910",
+        "q-incident_pager-389343665451392004",
+        "q-incident_pager-425470035622375914",
+        "q-incident_pager-4489652887707887881",
+        "q-incident_pager-781847713471181988",
+        "q-incident_pager-802465133262860331"
+      ],
+      "correct": 277,
+      "net": -3,
+      "newly_broken": 9,
+      "newly_fixed": 6,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-3923226048966231868": [
+          "rcpt-2daa3395e57acbea",
+          "rcpt-688a7b552820c78b",
+          "rcpt-c52efbeb3c0db2c9",
+          "rcpt-28cf396e3b799e32"
+        ],
+        "q-incident_pager-1939958541434452474": [
+          "rcpt-662fb9993a99eb35",
+          "rcpt-e2f51c72260a7ac7",
+          "rcpt-d0f68ac0cee6fc42",
+          "rcpt-9d4a044dbb080109",
+          "rcpt-9ba9218ad306e912"
+        ],
+        "q-incident_pager-2577011360017832582": [
+          "rcpt-242839ef758a8ebe",
+          "rcpt-bb61f1d147c8e819",
+          "rcpt-b04742bfa3582d4e",
+          "rcpt-d7caf5d540e6da5a"
+        ],
+        "q-incident_pager-3227484973055574910": [
+          "rcpt-76d2ea33b1eefca8",
+          "rcpt-aea931ba0d9b2376",
+          "rcpt-bdd415b39a42a2a6",
+          "rcpt-f913aed5881e9897",
+          "rcpt-d0f68ac0cee6fc42",
+          "rcpt-9b2bb610853f1886",
+          "rcpt-8b7233789c8d9fc2"
+        ],
+        "q-incident_pager-389343665451392004": [
+          "rcpt-f143c54d2b6ab0a5",
+          "rcpt-038e588b55ba6054",
+          "rcpt-67781188ba245f62",
+          "rcpt-52575d9a3bd50744",
+          "rcpt-b04742bfa3582d4e",
+          "rcpt-875fe8ab3e0a5544"
+        ],
+        "q-incident_pager-425470035622375914": [
+          "rcpt-cc124c7e0d63fc1f",
+          "rcpt-0f06d371b66bda35",
+          "rcpt-cca45c9a93bd43b6",
+          "rcpt-193ff1ddf90898df"
+        ],
+        "q-incident_pager-4489652887707887881": [
+          "rcpt-1cdbc8daa2c8181c",
+          "rcpt-0f06d371b66bda35",
+          "rcpt-c5f8c570d476fad1",
+          "rcpt-1ce38288ff22aab2",
+          "rcpt-d0751f40fc67bc7e",
+          "rcpt-cabf93efc85fd934",
+          "rcpt-7f8c0adde88381da",
+          "rcpt-68b33a3c5b5f1fa9"
+        ],
+        "q-incident_pager-781847713471181988": [
+          "rcpt-f656b7460983ec32",
+          "rcpt-45f4d4aa8ddb3b04",
+          "rcpt-3b3f6a83a5e7cdfc",
+          "rcpt-4350fc6a1952425e",
+          "rcpt-68858fccedd00eae"
+        ],
+        "q-incident_pager-802465133262860331": [
+          "rcpt-5f761f7676975bdf",
+          "rcpt-038e588b55ba6054",
+          "rcpt-28fb2af0af72ab1b",
+          "rcpt-67781188ba245f62"
+        ]
+      },
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 277,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_service-2547268379014076899"
+      ],
+      "correct": 278,
+      "net": 1,
+      "newly_broken": 1,
+      "newly_fixed": 2,
+      "receipts_blamed": {
+        "q-alert_service-2547268379014076899": [
+          "rcpt-08b07c03b42f9168",
+          "rcpt-2235c6cc9875f838"
+        ]
+      },
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 2,
+      "newly_broken": 0,
+      "newly_fixed": 2,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 9,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-3923226048966231868",
+        "q-incident_pager-1939958541434452474",
+        "q-incident_pager-2577011360017832582",
+        "q-incident_pager-3227484973055574910",
+        "q-incident_pager-389343665451392004",
+        "q-incident_pager-425470035622375914",
+        "q-incident_pager-4489652887707887881",
+        "q-incident_pager-781847713471181988",
+        "q-incident_pager-802465133262860331"
+      ],
+      "correct": 271,
+      "net": -9,
+      "newly_broken": 9,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-3923226048966231868": [
+          "rcpt-cd6a4348dbf54b36",
+          "rcpt-b3605cc7662111bf",
+          "rcpt-81a9a252bcbdd025",
+          "rcpt-d98cf1749a11154d"
+        ],
+        "q-incident_pager-1939958541434452474": [
+          "rcpt-6e9920d0b9d61298",
+          "rcpt-38e8282e6f72c7a3",
+          "rcpt-50047a1c427b6ce0",
+          "rcpt-39e226b2980c49b8",
+          "rcpt-79b6de54da7ff7e8"
+        ],
+        "q-incident_pager-2577011360017832582": [
+          "rcpt-26deb56c7f3adab4",
+          "rcpt-c819d7cbb3417e23",
+          "rcpt-be8a8661035c3626",
+          "rcpt-83046d657c5b055c"
+        ],
+        "q-incident_pager-3227484973055574910": [
+          "rcpt-884e88f1938a8479",
+          "rcpt-692f69606542e4b8",
+          "rcpt-ab42ce802d27c265",
+          "rcpt-1bdb7732be1dfea7",
+          "rcpt-50047a1c427b6ce0",
+          "rcpt-3ca4e933c3bd1b09",
+          "rcpt-1c9eef25b2b1cbe9"
+        ],
+        "q-incident_pager-389343665451392004": [
+          "rcpt-4048932b1bf28baa",
+          "rcpt-4df46498dee284ba",
+          "rcpt-cbc4254f772c3e18",
+          "rcpt-96d946c61c63e13f",
+          "rcpt-be8a8661035c3626",
+          "rcpt-177fef05a0e95e61"
+        ],
+        "q-incident_pager-425470035622375914": [
+          "rcpt-c293c1e770c21333",
+          "rcpt-3e94a6b78989ffda",
+          "rcpt-d56948f799a0b5ad",
+          "rcpt-69dcd920cfe448a2"
+        ],
+        "q-incident_pager-4489652887707887881": [
+          "rcpt-b437cfa11ffc519a",
+          "rcpt-3e94a6b78989ffda",
+          "rcpt-e9e3d072dec941d6",
+          "rcpt-0e0a67229a6a4582",
+          "rcpt-00f8523eeb83f21c",
+          "rcpt-fbc6b3cb8da3a813",
+          "rcpt-b0d2543d6533da26",
+          "rcpt-2fbf667470a2895d"
+        ],
+        "q-incident_pager-781847713471181988": [
+          "rcpt-6b0bb06c5f5b54be",
+          "rcpt-ecd1e0484e95fea1",
+          "rcpt-615280133f989cf3",
+          "rcpt-234cfde6e9cd9d40",
+          "rcpt-f58d0208587b5ce5"
+        ],
+        "q-incident_pager-802465133262860331": [
+          "rcpt-030de8d6b27a0ad1",
+          "rcpt-4df46498dee284ba",
+          "rcpt-0ab117a842f75d98",
+          "rcpt-cbc4254f772c3e18"
+        ]
+      },
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 271,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 274,
+      "net": 3,
+      "newly_broken": 0,
+      "newly_fixed": 3,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 7,
+      "newly_broken": 0,
+      "newly_fixed": 7,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 17,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-389343665451392004",
+        "q-customer_affected_by_incident-3923226048966231868",
+        "q-incident_pager-1939958541434452474",
+        "q-incident_pager-3227484973055574910",
+        "q-incident_pager-389343665451392004",
+        "q-incident_pager-425470035622375914",
+        "q-incident_pager-4489652887707887881",
+        "q-incident_pager-802465133262860331",
+        "q-service_customers-1106875951826854878",
+        "q-service_customers-1707911656671496818",
+        "q-service_customers-1755790034816942494",
+        "q-service_customers-2528406596139213434",
+        "q-service_customers-2942148739869048450",
+        "q-service_customers-3245614039634330797",
+        "q-service_customers-3309516435073451372",
+        "q-service_customers-3729389021146970540",
+        "q-service_customers-4418459411347102027"
+      ],
+      "correct": 263,
+      "net": -17,
+      "newly_broken": 17,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-389343665451392004": [
+          "rcpt-ca288f1a8793bbaa",
+          "rcpt-aab46269487d227c"
+        ],
+        "q-customer_affected_by_incident-3923226048966231868": [
+          "rcpt-0ee0ca5c0c366194",
+          "rcpt-9c173a28d233aaf1"
+        ],
+        "q-incident_pager-1939958541434452474": [
+          "rcpt-59f337088bbdee88",
+          "rcpt-62c60982927f823f"
+        ],
+        "q-incident_pager-3227484973055574910": [
+          "rcpt-8be8cfdbafe160b7",
+          "rcpt-59f337088bbdee88",
+          "rcpt-c36fed6be1c1fca8",
+          "rcpt-f60da2db3c279c9e",
+          "rcpt-46f2cb752adb8577"
+        ],
+        "q-incident_pager-389343665451392004": [
+          "rcpt-72bb680761b6eff2",
+          "rcpt-f3afa097c5ff8cb6",
+          "rcpt-ca288f1a8793bbaa",
+          "rcpt-fe1de4bc79edbfe5",
+          "rcpt-41e060bb530f326d"
+        ],
+        "q-incident_pager-425470035622375914": [
+          "rcpt-b9b9fede8fe98a83"
+        ],
+        "q-incident_pager-4489652887707887881": [
+          "rcpt-9f8b873ca86208ee"
+        ],
+        "q-incident_pager-802465133262860331": [
+          "rcpt-72bb680761b6eff2",
+          "rcpt-dc2a24161c901bef",
+          "rcpt-41e060bb530f326d"
+        ],
+        "q-service_customers-1106875951826854878": [
+          "rcpt-d38c6af406383221",
+          "rcpt-4aa9b1d65857f847"
+        ],
+        "q-service_customers-1707911656671496818": [
+          "rcpt-9ce97ca1da35a387"
+        ],
+        "q-service_customers-1755790034816942494": [
+          "rcpt-3023a3109c47fe98"
+        ],
+        "q-service_customers-2528406596139213434": [
+          "rcpt-15a28a0edcdaf001"
+        ],
+        "q-service_customers-2942148739869048450": [
+          "rcpt-4684ea76601216dd",
+          "rcpt-1c2632f2db782f69",
+          "rcpt-e14a532f264a34ff"
+        ],
+        "q-service_customers-3245614039634330797": [
+          "rcpt-460976b604ddade0"
+        ],
+        "q-service_customers-3309516435073451372": [
+          "rcpt-0c5f2eb8a6ce729d"
+        ],
+        "q-service_customers-3729389021146970540": [
+          "rcpt-aab46269487d227c"
+        ],
+        "q-service_customers-4418459411347102027": [
+          "rcpt-86a21e242c4f7b27"
+        ]
+      },
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 5,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-678395002420586503",
+        "q-incident_pager-2577011360017832582",
+        "q-incident_pager-781847713471181988",
+        "q-service_customers-1462353489713492991",
+        "q-service_customers-75075250099266258"
+      ],
+      "correct": 259,
+      "net": -4,
+      "newly_broken": 5,
+      "newly_fixed": 1,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-678395002420586503": [
+          "rcpt-03acad739d10b3f8"
+        ],
+        "q-incident_pager-2577011360017832582": [
+          "rcpt-fd7c6c04422a69d3"
+        ],
+        "q-incident_pager-781847713471181988": [
+          "rcpt-5182b03460df873b",
+          "rcpt-0bff4476a1c1b356"
+        ],
+        "q-service_customers-1462353489713492991": [
+          "rcpt-0a301cadb2d123ce"
+        ],
+        "q-service_customers-75075250099266258": [
+          "rcpt-aeb6143b8780dfaa"
+        ]
+      },
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 264,
+      "net": 5,
+      "newly_broken": 0,
+      "newly_fixed": 5,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 4,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-incident_pager-781847713471181988",
+        "q-service_customers-1707911656671496818",
+        "q-service_customers-3245614039634330797",
+        "q-service_customers-75075250099266258"
+      ],
+      "correct": 260,
+      "net": -4,
+      "newly_broken": 4,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-incident_pager-781847713471181988": [
+          "rcpt-c811b670fc55c6d8",
+          "rcpt-5937e71b248b2d65",
+          "rcpt-1b4e4d114a360f7f"
+        ],
+        "q-service_customers-1707911656671496818": [
+          "rcpt-fbfeedb2892876ab"
+        ],
+        "q-service_customers-3245614039634330797": [
+          "rcpt-a950f730462ec78e"
+        ],
+        "q-service_customers-75075250099266258": [
+          "rcpt-e1fa836ee1e43bec",
+          "rcpt-abb12a1ca0e1af39"
+        ]
+      },
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_with_no_receipt_on_the_old_path": 1,
+      "broken_question_ids": [
+        "q-escalation_contact-1261208139715268661",
+        "q-service_customers-1243901906723706637",
+        "q-service_customers-1877955532301218005",
+        "q-service_customers-3729389021146970540"
+      ],
+      "correct": 257,
+      "net": -3,
+      "newly_broken": 4,
+      "newly_fixed": 1,
+      "receipts_blamed": {
+        "q-service_customers-1243901906723706637": [
+          "rcpt-90d1b13fdbd0fca7"
+        ],
+        "q-service_customers-1877955532301218005": [
+          "rcpt-c4e7f41fcbb9f0a0"
+        ],
+        "q-service_customers-3729389021146970540": [
+          "rcpt-e0afdfa7ed34ed3b"
+        ]
+      },
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 280,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-3318773859044621144"
+      ],
+      "correct": 279,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-3318773859044621144": [
+          "rcpt-401da339f2f449ba"
+        ]
+      },
+      "round": 2,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_service-3569839705343512622"
+      ],
+      "correct": 278,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_service-3569839705343512622": [
+          "rcpt-b3298d4c6cb6d2ce"
+        ]
+      },
+      "round": 3,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 6,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-incident_pager-2527515688896287815",
+        "q-incident_pager-418011796511120206",
+        "q-incident_pager-425470035622375914",
+        "q-incident_pager-4489652887707887881",
+        "q-page_owner-3136542472665281962",
+        "q-service_owner_team-3553520598885356787"
+      ],
+      "correct": 272,
+      "net": -6,
+      "newly_broken": 6,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-incident_pager-2527515688896287815": [
+          "rcpt-0935158a38f999c6"
+        ],
+        "q-incident_pager-418011796511120206": [
+          "rcpt-0935158a38f999c6"
+        ],
+        "q-incident_pager-425470035622375914": [
+          "rcpt-0935158a38f999c6"
+        ],
+        "q-incident_pager-4489652887707887881": [
+          "rcpt-0935158a38f999c6"
+        ],
+        "q-page_owner-3136542472665281962": [
+          "rcpt-0935158a38f999c6"
+        ],
+        "q-service_owner_team-3553520598885356787": [
+          "rcpt-6ce5d0bb8ff130c0"
+        ]
+      },
+      "round": 4,
+      "seed": 7
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-escalation_contact-3219497571499106732"
+      ],
+      "correct": 271,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-escalation_contact-3219497571499106732": [
+          "rcpt-54e1b07a167a72d4"
+        ]
+      },
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 9,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-152240607277754241",
+        "q-customer_affected_by_incident-2202276291249840529",
+        "q-customer_affected_by_incident-3155184331225872017",
+        "q-customer_affected_by_incident-3820597578495035295",
+        "q-customer_affected_by_incident-903650928171609499",
+        "q-incident_pager-2771511256832413237",
+        "q-incident_pager-3701302637443243490",
+        "q-incident_pager-3777277501968055749",
+        "q-incident_pager-3933698752305046667"
+      ],
+      "correct": 288,
+      "net": 1,
+      "newly_broken": 9,
+      "newly_fixed": 10,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-152240607277754241": [
+          "rcpt-999b7c623805d669",
+          "rcpt-fe95af4b5b678905",
+          "rcpt-aa2852aeea45d274",
+          "rcpt-6050d1f94c5e948e",
+          "rcpt-bdccc637646cab2d"
+        ],
+        "q-customer_affected_by_incident-2202276291249840529": [
+          "rcpt-1015ba673499c878",
+          "rcpt-ddccdb9d43ae4b19",
+          "rcpt-5243c1f0b9ed5545",
+          "rcpt-d319f7f214d4b8c9",
+          "rcpt-720fdcad990b5b2c"
+        ],
+        "q-customer_affected_by_incident-3155184331225872017": [
+          "rcpt-c31227f5e0145902",
+          "rcpt-89ba7e766d500a06",
+          "rcpt-d57522e2702af38d",
+          "rcpt-505e6040ffae281a",
+          "rcpt-62e93612a9d991ff",
+          "rcpt-2a6ab959c295fa0f",
+          "rcpt-a8fec88196c07699",
+          "rcpt-c59d4c16df9e68ee"
+        ],
+        "q-customer_affected_by_incident-3820597578495035295": [
+          "rcpt-e5b8b53f5c7391f8",
+          "rcpt-5f2bece3f8e3fc29",
+          "rcpt-25e7cbdc8ec370ff",
+          "rcpt-d719f8370c701f36",
+          "rcpt-ab22d396f083795b"
+        ],
+        "q-customer_affected_by_incident-903650928171609499": [
+          "rcpt-2bce0bf287a6f93d",
+          "rcpt-a60e4f5512a1eeb0",
+          "rcpt-004b58792729f68a",
+          "rcpt-1da982d387aa1ebf"
+        ],
+        "q-incident_pager-2771511256832413237": [
+          "rcpt-280a0bcf570bfed8",
+          "rcpt-2e20f746a2f39aea",
+          "rcpt-ec9d4893f125f765",
+          "rcpt-384c543b0506082f",
+          "rcpt-a287ff2923a9ec5e"
+        ],
+        "q-incident_pager-3701302637443243490": [
+          "rcpt-3c53a44de75c4503",
+          "rcpt-aca677b9a9232b07",
+          "rcpt-c298b4885d21d286",
+          "rcpt-e32bb19a286bb47d",
+          "rcpt-26e944aa6d2400dc"
+        ],
+        "q-incident_pager-3777277501968055749": [
+          "rcpt-3c53a44de75c4503",
+          "rcpt-3ac562a387d6776d",
+          "rcpt-e847046cffdc4e7e",
+          "rcpt-e65dd4006ce51593",
+          "rcpt-5f2c7be32942c8a0",
+          "rcpt-d384b16ee6aedd8e"
+        ],
+        "q-incident_pager-3933698752305046667": [
+          "rcpt-d7c42c9c9d54cca3",
+          "rcpt-9912bd3502a15c8b",
+          "rcpt-d95c0afe2a3555c4",
+          "rcpt-a22490914fef0761",
+          "rcpt-599f2c136cdb6b66"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 288,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 288,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 288,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "full",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 289,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "frozen",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 9,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-152240607277754241",
+        "q-customer_affected_by_incident-2202276291249840529",
+        "q-customer_affected_by_incident-3155184331225872017",
+        "q-customer_affected_by_incident-3820597578495035295",
+        "q-customer_affected_by_incident-903650928171609499",
+        "q-incident_pager-2771511256832413237",
+        "q-incident_pager-3701302637443243490",
+        "q-incident_pager-3777277501968055749",
+        "q-incident_pager-3933698752305046667"
+      ],
+      "correct": 278,
+      "net": -9,
+      "newly_broken": 9,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-152240607277754241": [
+          "rcpt-4ab524df16440326",
+          "rcpt-4715748b90da0780",
+          "rcpt-2975562f5f80814f",
+          "rcpt-f1e4d4e0e8d857e6",
+          "rcpt-0468a684c3c8234b"
+        ],
+        "q-customer_affected_by_incident-2202276291249840529": [
+          "rcpt-e38ec5668fbc7853",
+          "rcpt-db7666698d2c37aa",
+          "rcpt-52a143d8e8294b22",
+          "rcpt-48183a7c8b5999bd",
+          "rcpt-3637d3bd42de04b4"
+        ],
+        "q-customer_affected_by_incident-3155184331225872017": [
+          "rcpt-f1dcbbad7d03de65",
+          "rcpt-51005b6c5495f4ec",
+          "rcpt-1927b1dae48dd694",
+          "rcpt-669cafe6bf1a58b6",
+          "rcpt-83e7abdf56c697e4",
+          "rcpt-3eb064205ebaf4a7",
+          "rcpt-0f55b3883f0e9220",
+          "rcpt-089f88f7b06df9fe"
+        ],
+        "q-customer_affected_by_incident-3820597578495035295": [
+          "rcpt-126143039d79b642",
+          "rcpt-9aa1281ca93e27e7",
+          "rcpt-482762d440ade0ed",
+          "rcpt-4be8b7879139c005",
+          "rcpt-637e48196996e753"
+        ],
+        "q-customer_affected_by_incident-903650928171609499": [
+          "rcpt-8a9693fd00ce3e02",
+          "rcpt-fc444b8492dd4fc1",
+          "rcpt-91fb68dd07d366f7",
+          "rcpt-8c9f9a8580a24e95"
+        ],
+        "q-incident_pager-2771511256832413237": [
+          "rcpt-f377305b88c057c3",
+          "rcpt-60eea8aefd8a97f2",
+          "rcpt-ba2af54e50cb1d74",
+          "rcpt-841001fba93cd484",
+          "rcpt-5df16cd2feba9573"
+        ],
+        "q-incident_pager-3701302637443243490": [
+          "rcpt-09ba8e47fb92704b",
+          "rcpt-f496ab1ef9d6f3f2",
+          "rcpt-dbdad7b31ce9998d",
+          "rcpt-6b144cccd738b166",
+          "rcpt-a6dcfa2187081e9c"
+        ],
+        "q-incident_pager-3777277501968055749": [
+          "rcpt-09ba8e47fb92704b",
+          "rcpt-d8954ea54aeb8bb1",
+          "rcpt-6a605186669459b9",
+          "rcpt-38b0da90be8e2297",
+          "rcpt-4a53657ba81d804b",
+          "rcpt-0592856354d19128"
+        ],
+        "q-incident_pager-3933698752305046667": [
+          "rcpt-ca9ef12332279d5b",
+          "rcpt-fbc090ea94f70ec0",
+          "rcpt-84cac42827baba1c",
+          "rcpt-d7b24a0fb25e1d7b",
+          "rcpt-b73da27ed16a28eb"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 278,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 278,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 278,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "reweight_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 279,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "quarantine_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "promote_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 297,
+      "net": 10,
+      "newly_broken": 0,
+      "newly_fixed": 10,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 297,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 297,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 297,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "gapfill_only",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 297,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 22,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-1330904406689879255",
+        "q-customer_affected_by_incident-152240607277754241",
+        "q-customer_affected_by_incident-2202276291249840529",
+        "q-customer_affected_by_incident-3820597578495035295",
+        "q-customer_affected_by_incident-490265742204470255",
+        "q-customer_affected_by_incident-855542654976936053",
+        "q-customer_affected_by_incident-903650928171609499",
+        "q-incident_pager-2771511256832413237",
+        "q-incident_pager-3701302637443243490",
+        "q-incident_pager-3777277501968055749",
+        "q-incident_pager-3933698752305046667",
+        "q-service_customers-1191293796009504668",
+        "q-service_customers-1629932179530116111",
+        "q-service_customers-1814503152202195863",
+        "q-service_customers-2220516493332025309",
+        "q-service_customers-2269188203228586144",
+        "q-service_customers-3145352401940284432",
+        "q-service_customers-4039299895861161158",
+        "q-service_customers-4147144995175443331",
+        "q-service_customers-4254307574424166482",
+        "q-service_customers-4424711746138934930",
+        "q-service_customers-978252728145437848"
+      ],
+      "correct": 265,
+      "net": -22,
+      "newly_broken": 22,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-1330904406689879255": [
+          "rcpt-5628d489ded58494"
+        ],
+        "q-customer_affected_by_incident-152240607277754241": [
+          "rcpt-95d41202b9e7ee23",
+          "rcpt-fa0d47a78afd042e",
+          "rcpt-27d809371bfbdbb5"
+        ],
+        "q-customer_affected_by_incident-2202276291249840529": [
+          "rcpt-4fd08c2e54f2d5b5",
+          "rcpt-437b7a2ef4415cc2",
+          "rcpt-121f92dd30f31cd4",
+          "rcpt-4c1c8946c86dad97",
+          "rcpt-4957a5ff427ceaf0"
+        ],
+        "q-customer_affected_by_incident-3820597578495035295": [
+          "rcpt-d01b5269c10f6a92"
+        ],
+        "q-customer_affected_by_incident-490265742204470255": [
+          "rcpt-081a4028bf4e2344"
+        ],
+        "q-customer_affected_by_incident-855542654976936053": [
+          "rcpt-4db802b3c8e2b83a",
+          "rcpt-ec8aba8af3959e95"
+        ],
+        "q-customer_affected_by_incident-903650928171609499": [
+          "rcpt-60edfda5be09aee5",
+          "rcpt-bf13258799be2b89",
+          "rcpt-948ed0262884c00d",
+          "rcpt-78c4bc88c30eea12"
+        ],
+        "q-incident_pager-2771511256832413237": [
+          "rcpt-a5b1d0a69bcd2c97",
+          "rcpt-f6bb5d2d145df456",
+          "rcpt-c1738a07a3b5e837"
+        ],
+        "q-incident_pager-3701302637443243490": [
+          "rcpt-9dd50f2b42c82e57",
+          "rcpt-fa125916929e3634",
+          "rcpt-b3a4859d0eca72f2"
+        ],
+        "q-incident_pager-3777277501968055749": [
+          "rcpt-a4376f83ff14c93e",
+          "rcpt-a72b5eb50a414ac8"
+        ],
+        "q-incident_pager-3933698752305046667": [
+          "rcpt-b2cc8f29cee5c524",
+          "rcpt-eba353d9fc203ce4"
+        ],
+        "q-service_customers-1191293796009504668": [
+          "rcpt-736e07a6339d9374"
+        ],
+        "q-service_customers-1629932179530116111": [
+          "rcpt-5e6e90caaa0a35ef",
+          "rcpt-a9afeaf1f14a0508"
+        ],
+        "q-service_customers-1814503152202195863": [
+          "rcpt-a37c21a6300e57c9",
+          "rcpt-f7a70f9187f82303"
+        ],
+        "q-service_customers-2220516493332025309": [
+          "rcpt-e2edee7f0438677d"
+        ],
+        "q-service_customers-2269188203228586144": [
+          "rcpt-0fc0a18456419d3a",
+          "rcpt-ee8911de179a840b"
+        ],
+        "q-service_customers-3145352401940284432": [
+          "rcpt-081a4028bf4e2344"
+        ],
+        "q-service_customers-4039299895861161158": [
+          "rcpt-4c1c8946c86dad97"
+        ],
+        "q-service_customers-4147144995175443331": [
+          "rcpt-4f0ff1fb3bafbf5f"
+        ],
+        "q-service_customers-4254307574424166482": [
+          "rcpt-bf13258799be2b89"
+        ],
+        "q-service_customers-4424711746138934930": [
+          "rcpt-ad61b66063a3936b"
+        ],
+        "q-service_customers-978252728145437848": [
+          "rcpt-8603642097e8eed3"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 4,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-196920250657446327",
+        "q-customer_affected_by_incident-3041720670845305311",
+        "q-customer_affected_by_incident-3155184331225872017",
+        "q-service_customers-2838774568312463076"
+      ],
+      "correct": 261,
+      "net": -4,
+      "newly_broken": 4,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-196920250657446327": [
+          "rcpt-38cba3de9d54421a",
+          "rcpt-03a005fe04c3aff1"
+        ],
+        "q-customer_affected_by_incident-3041720670845305311": [
+          "rcpt-3975fcb315857ab7",
+          "rcpt-01a92cf3c960060b"
+        ],
+        "q-customer_affected_by_incident-3155184331225872017": [
+          "rcpt-6ab9a3535b772dae",
+          "rcpt-7b9cc5f8d1f03aa6"
+        ],
+        "q-service_customers-2838774568312463076": [
+          "rcpt-e1d8e66bb1684800"
+        ]
+      },
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 1,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-service_customers-4254307574424166482",
+        "q-service_customers-460525064257276727"
+      ],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 2,
+      "newly_fixed": 2,
+      "receipts_blamed": {
+        "q-service_customers-4254307574424166482": [
+          "rcpt-2abc7be890cd84cc"
+        ],
+        "q-service_customers-460525064257276727": [
+          "rcpt-a915f651c64eab0f"
+        ]
+      },
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 262,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [],
+      "correct": 287,
+      "net": 0,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 0,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-4135589030264386180",
+        "q-page_owner-3113676233620003694"
+      ],
+      "correct": 285,
+      "net": -2,
+      "newly_broken": 2,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-4135589030264386180": [
+          "rcpt-fa5bfbd2be15f63f"
+        ],
+        "q-page_owner-3113676233620003694": [
+          "rcpt-44dd0d8707c13bd2"
+        ]
+      },
+      "round": 1,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 2,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-customer_affected_by_incident-3611427708228315971",
+        "q-escalation_contact-2977204210647925082"
+      ],
+      "correct": 283,
+      "net": -2,
+      "newly_broken": 2,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-customer_affected_by_incident-3611427708228315971": [
+          "rcpt-651f5837324da6d1"
+        ],
+        "q-escalation_contact-2977204210647925082": [
+          "rcpt-6c743ae22e20abd1"
+        ]
+      },
+      "round": 2,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_service-1097510966588015328"
+      ],
+      "correct": 282,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_service-1097510966588015328": [
+          "rcpt-137c35d949600fe0"
+        ]
+      },
+      "round": 3,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 4,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-alert_owning_team-595508332788063683",
+        "q-alert_service-1086681902446441965",
+        "q-customer_affected_by_incident-2202276291249840529",
+        "q-page_owner-3916864730034931781"
+      ],
+      "correct": 278,
+      "net": -4,
+      "newly_broken": 4,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-alert_owning_team-595508332788063683": [
+          "rcpt-ab38a7d306873d7c"
+        ],
+        "q-alert_service-1086681902446441965": [
+          "rcpt-a7de0813ca11b2e5"
+        ],
+        "q-customer_affected_by_incident-2202276291249840529": [
+          "rcpt-536d250bbc21ad09"
+        ],
+        "q-page_owner-3916864730034931781": [
+          "rcpt-46b665ef146939e2"
+        ]
+      },
+      "round": 4,
+      "seed": 42
+    },
+    {
+      "arm": "random_quarantine",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_with_no_receipt_on_the_old_path": 0,
+      "broken_question_ids": [
+        "q-page_owner-3309464886660649443"
+      ],
+      "correct": 277,
+      "net": -1,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "q-page_owner-3309464886660649443": [
+          "rcpt-b32cd60dcfee18d1"
+        ]
+      },
+      "round": 5,
+      "seed": 42
+    }
+  ]
+}
