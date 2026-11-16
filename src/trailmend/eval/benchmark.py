@@ -5,7 +5,7 @@ from typing import cast
 
 from trailmend.data import dataset
 from trailmend.data.faultmodel import V2
-from trailmend.eval import curve, evidence, paired
+from trailmend.eval import curve, evidence, paired, replication_facts
 from trailmend.loop.policy import MendPolicy
 
 EVIDENCE = evidence.EVIDENCE_DIR
@@ -302,7 +302,10 @@ def _control(facts: Mapping[str, object], unit: str) -> str:
     return f"{_pct(random_end)} on {unit} against {_pct(frozen_end)} for the untouched graph"
 
 
-def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[dict[str, object]]:
+def sentences(
+    north: Mapping[str, object], meta: Mapping[str, object], clean: Mapping[str, object] | None = None
+) -> list[dict[str, object]]:
+    clean = clean or {}
     out: list[dict[str, object]] = []
 
     def add(key: str, text: str, sources: Sequence[str]) -> None:
@@ -323,7 +326,13 @@ def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[d
         f"and {metaqa_clause}.",
         ("dataset_summary_v2.json", "metaqa/dataset_s*.json"),
     )
-    if any(row.get("comparable") is False for row in _file("paired_v2_unweighted")):
+    if clean:
+        add(
+            "comparability",
+            replication_facts.comparability(clean),
+            ("curve_v2_clean.jsonl", "replication_v2_clean.json"),
+        )
+    elif any(row.get("comparable") is False for row in _file("paired_v2_unweighted")):
         add(
             "comparability",
             "The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, "
@@ -368,7 +377,10 @@ def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[d
     )
     unweighted_end = _as_float(north.get("unweighted_round_n"))
     weighted_end = _as_float(north.get("accuracy_round_n"))
-    if unweighted_end is None or weighted_end is None:
+    clean_clause = replication_facts.unweighted_clause(clean)
+    if clean_clause is not None:
+        unweighted = clean_clause
+    elif unweighted_end is None or weighted_end is None:
         unweighted = "the unweighted-search arm has not been run"
     else:
         gap = 100 * (weighted_end - unweighted_end)
@@ -384,7 +396,8 @@ def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[d
         f"A plain document store over the same corpus stays flat at {_pct(_as_float(north.get('plain_store')))}"
         + (f" ({_pct(_as_float(meta.get('plain_store')))} on MetaQA)" if meta else "")
         + f" because it has no links for the loop to repair, and {unweighted}.",
-        ("plain_store_v2.json", "plain_store_metaqa.json", "curve_v2_unweighted.jsonl"),
+        ("plain_store_v2.json", "plain_store_metaqa.json", "curve_v2_unweighted.jsonl")
+        + (("curve_v2_clean.jsonl", "replication_v2_clean.json") if clean else ()),
     )
     north_wrong, _ = _wrong_change(_as_int(north.get("wrong_round_0")), _as_int(north.get("wrong_round_n")))
     meta_wrong, _ = _wrong_change(_as_int(meta.get("wrong_round_0")), _as_int(meta.get("wrong_round_n")))
@@ -434,11 +447,11 @@ def write() -> tuple[Path, str]:
     rows = _jsonl(curve.CURVE_V2)
     if rows:
         evidence.write(evidence.make("dataset_summary_v2", SUMMARY_DESIGN, dataset_summary(_seeds(rows))))
-    north, meta = northwind_facts(), metaqa_facts()
-    lines = sentences(north, meta)
+    north, meta, clean = northwind_facts(), metaqa_facts(), replication_facts.facts()
+    lines = sentences(north, meta, clean)
     payload = evidence.make("benchmark", DESIGN, lines)
     path = evidence.write(payload)
-    facts = {"northwind_run_2": north, "metaqa": meta}
+    facts = {"northwind_run_2": north, "metaqa": meta} | ({"northwind_clean_replication": clean} if clean else {})
     (EVIDENCE / "benchmark_facts.json").write_text(json.dumps(facts, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return path, " ".join(str(line["text"]) for line in lines)
 

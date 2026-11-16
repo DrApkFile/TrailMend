@@ -3,7 +3,7 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import cast
 
-from trailmend.eval import benchmark, curve, evidence
+from trailmend.eval import benchmark, curve, evidence, replication_facts
 
 README = Path("README.md")
 START = "<!-- numbers:start -->"
@@ -168,9 +168,7 @@ def run_two() -> list[str]:
     return [
         "### Run 2, on dataset v2",
         "",
-        "**Provisional conclusions:** the later extension failed to reproduce this run's frozen baseline. "
-        "Its recorded paths include edges outside the intended G0. Historical scores and hypothesis outputs are "
-        "preserved; see [the replication diagnostic](evidence/paired_v2_unweighted.json).",
+        *_run_two_status(),
         "",
         *arms_table(rows),
         "",
@@ -192,6 +190,68 @@ def run_two() -> list[str]:
     ]
 
 
+def _run_two_status() -> list[str]:
+    clean = replication_facts.facts()
+    if not clean:
+        return [
+            "**Provisional conclusions:** the later extension failed to reproduce this run's frozen baseline. "
+            "Its recorded paths include edges outside the intended G0. Historical scores and hypothesis outputs are "
+            "preserved; see [the replication diagnostic](evidence/paired_v2_unweighted.json)."
+        ]
+    return [
+        f"**Replicated on a clean graph.** {replication_facts.comparability(clean)} The replication and its "
+        "comparison with this run are in [the next section](#clean-replication-of-run-2)."
+    ]
+
+
+def _paired_rows_table(rows: Sequence[Mapping[str, object]]) -> list[str]:
+    lines = ["| seed | arm | against | change | p (exact McNemar) |", "|---|---|---|---|---|"]
+    for row in rows:
+        lines.append(
+            f"| {row.get('seed')} | `{row.get('arm')}` | `{row.get('reference')}` | "
+            f"{float(str(row.get('delta_points'))):+.1f} points | {float(str(row.get('p_value'))):.4f} |"
+        )
+    return lines
+
+
+def replication() -> list[str]:
+    analysed = _rows(replication_facts.CLAIM)
+    rows = _curve_rows(curve.CURVE_V2_CLEAN)
+    if not analysed or not rows:
+        return []
+    against = [r for r in analysed if r.get("kind") == "against_run_two"]
+    pairs = [r for r in analysed if r.get("kind") == "paired"]
+    outside = [r for r in analysed if r.get("kind") == "outside_g0"]
+    stray = sum(len(cast("list[object]", r.get("edges_outside_g0") or [])) for r in outside)
+    lines = [
+        "### Clean replication of run 2",
+        "",
+        "Run 2's arms and config digest, plus `full_unweighted` and `plain_store`, on a HydraDB emptied before the "
+        "run. It decides nothing preregistered and run 2 is not replaced. Edges outside G0 on the clean frozen arm's "
+        f"round-0 paths: {stray}.",
+        "",
+        *arms_table(rows),
+        "",
+        "Held-out questions right, clean replication against run 2 as recorded:",
+        "",
+        "| seed | arm | round | clean | run 2 | difference |",
+        "|---|---|---|---|---|---|",
+    ]
+    for row in against:
+        lines.append(
+            f"| {row.get('seed')} | `{row.get('arm')}` | {row.get('round')} | "
+            f"{row.get('clean_correct')}/{row.get('n')} | {row.get('run_two_correct')}/{row.get('n')} | "
+            f"{int(str(row.get('clean_minus_run_two'))):+d} |"
+        )
+    return [
+        *lines,
+        "",
+        "Question by question at the last round, on the clean graph:",
+        "",
+        *_paired_rows_table(pairs),
+    ]
+
+
 FILES_METAQA: tuple[tuple[str, str], ...] = (
     ("curve_metaqa.jsonl", "MetaQA: held-out Hits@1, exact-set and wrong-answer rate per seed, arm and round"),
     ("paired_metaqa.json", "MetaQA: every held-out question as a pair against the frozen arm, with its p-value"),
@@ -206,6 +266,8 @@ FILES_METAQA: tuple[tuple[str, str], ...] = (
 FILES_EXTENSION: tuple[tuple[str, str], ...] = (
     ("curve_v2_unweighted.jsonl", "run 2 data, later commit: the same loop with search that ignores cost"),
     ("paired_v2_unweighted.json", "the unweighted loop against run 2's weighted loop and frozen graph, paired"),
+    ("curve_v2_clean.jsonl", "the clean replication of run 2, with the unweighted arm on the same graph"),
+    ("replication_v2_clean.json", "the clean replication against run 2, and both searches paired on one graph"),
     ("dataset_summary_v2.json", "run 2: nodes, edges and planted faults per generated company"),
     ("benchmark.json", "the benchmark paragraph, one sentence per row with its sources"),
     ("benchmark_facts.json", "every number the benchmark paragraph uses"),
@@ -252,6 +314,17 @@ def unweighted() -> list[str]:
     rows = _curve_rows(curve.CURVE_V2_UNWEIGHTED)
     if not rows:
         return ["### The same loop with unweighted search", "", "Not run yet."]
+    clause = replication_facts.unweighted_clause(replication_facts.facts())
+    if clause is not None:
+        return [
+            "### The same loop with unweighted search",
+            "",
+            "`full_unweighted` is the full Mend with a search that ignores cost and takes the fewest hops. The first "
+            "extension (below) ran at a later commit than run 2 and its frozen arm did not reproduce run 2's, so it "
+            f"was provisional. The clean replication settles it: {clause}.",
+            "",
+            *arms_table(rows),
+        ]
     return [
         "### The same loop with unweighted search (extension, not part of any preregistered verdict)",
         "",
@@ -286,6 +359,8 @@ def run_one() -> list[str]:
 def block() -> str:
     parts: list[str] = [
         *run_two(),
+        "",
+        *replication(),
         "",
         *metaqa(),
         "",
