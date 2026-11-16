@@ -1,0 +1,11 @@
+{
+  "run_id": "v4-b65058c-8b296c04",
+  "measurement_commit": "b65058c3917a9eb117221e63080e26444d51d390",
+  "gate": "passed",
+  "unit_passed": 295,
+  "live_passed": 54,
+  "hydra_url": "http://127.0.0.1:8444",
+  "scope": "repaired implementation and publication working tree after rebase",
+  "landing_page_changed": false,
+  "hosted_demo_reset": false
+}

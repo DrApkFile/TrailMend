@@ -46,6 +46,11 @@ SERVABLE: tuple[str, ...] = (
     "paired_v3",
     "summary_v3",
     "run_manifest_v3",
+    "calibration_v4",
+    "hypotheses_v4",
+    "paired_v4",
+    "summary_v4",
+    "run_manifest_v4",
 )
 CURVE_METAQA = Path("evidence/curve_metaqa.jsonl")
 CURVES: dict[str, Path] = {
@@ -55,6 +60,7 @@ CURVES: dict[str, Path] = {
     "curve-v2-clean": curve.CURVE_V2_CLEAN,
     "curve-metaqa": CURVE_METAQA,
     "curve-v3-northwind": Path("evidence/curve_v3_northwind.jsonl"),
+    "curve-v4-northwind": Path("evidence/curve_v4_northwind.jsonl"),
 }
 
 
@@ -93,6 +99,11 @@ def evidence_curve_metaqa() -> dict[str, object]:
 @router.get("/v1/evidence/curve-v3-northwind")
 def evidence_curve_v3() -> dict[str, object]:
     return _curve(CURVES["curve-v3-northwind"])
+
+
+@router.get("/v1/evidence/curve-v4-northwind")
+def evidence_curve_v4() -> dict[str, object]:
+    return _curve(CURVES["curve-v4-northwind"])
 
 
 @router.get("/v1/evidence/{name}")

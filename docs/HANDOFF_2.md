@@ -149,3 +149,9 @@ README, benchmark paragraph and the site's run-2 status line now come from the r
 
 **C.** One pitch line everywhere; landing rebuilt in the Canon layout (repair-receipt hero, result fractions, replay, how it
 works, why HydraDB); `/pricing` became `/go-to-market` with no prices (old URL redirects). Nothing failed.
+
+## Codex follow-up repair — completed 2026-11-16
+
+Measured `v4-b65058c-8b296c04` after separate preregistration: R1 PASS; R2 PASS; R3 PASS on all Northwind seeds. Retained ungated training audits; fixed set membership with base-only hop-count queries. Matched gated/ungated outputs share the exact learner trajectory. MetaQA not_run; run 3 remains failed as originally measured. The original run-4 code is preserved on `origin/run4`. New figures and all comparisons are generated in `evidence/summary_v4.json`; no old evidence files are rewritten. No landing-page or hosted-demo change was made for this later measurement publication.
+
+Run-4 publication checks: gate passed, 295 unit tests and 54 live tests on `:8444`; `evidence/verification_v4.json` records the result. Gated mean accuracy and all control comparisons are in `summary_v4.json`. The matched no-gate output has identical final wrong counts and better accuracy, so no separate steady-state benefit is claimed for the refusal gate.

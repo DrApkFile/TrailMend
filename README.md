@@ -314,6 +314,27 @@ Run 1, and the two files that describe the deployment both runs used:
 | [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `a0c4e5cec36e2834…` |
 | [`evidence/load.json`](evidence/load.json) | loading G0 into HydraDB, and that a re-load adds nothing | `ef1c00b3507de398…` |
 | [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | `87a2921754f7ed09…` |
+<!-- run4:start -->
+### Run 4: preserve feedback and complete answer sets
+
+Generated Northwind v2, run `v4-b65058c-8b296c04`, seeds [1, 7, 42]; 5 rounds. Training-only cutoffs were frozen before held-out scoring. The table shows means across seeds; full_v4 and full_v4_no_gate share exactly the same learner trajectory. They are paired answer policies, not independent training interventions. Refusals count as neither correct nor wrong, and remain in the denominator.
+
+| arm | accuracy r0 → r5 | wrong/n r0 → r5 | refused/n r0 → r5 | coverage r0 → r5 |
+|---|---|---|---|---|
+| `frozen_v4` | 83.3% → 83.3% | 7.3% → 7.3% | 0.0% → 0.0% | 90.6% → 90.6% |
+| `full_v4` | 83.3% → 89.7% | 7.3% → 2.8% | 0.0% → 1.3% | 90.6% → 92.6% |
+| `full_v4_no_gate` | 83.3% → 91.0% | 7.3% → 2.8% | 0.0% → 0.0% | 90.6% → 93.8% |
+| `full_v2` | 77.0% → 84.6% | 13.6% → 9.5% | 0.0% → 0.0% | 90.6% → 94.1% |
+
+At the final round the matched no-gate policy has the same wrong-answer counts and higher accuracy. This run shows no extra end-of-run benefit from the refusal gate itself; the repaired learner drives the gain.
+
+Preregistered verdicts: **R1 PASS**; **R2 PASS**; **R3 PASS**.
+R1 tests the wrong-answer reduction; R2 limits accuracy lost against both the matched ungated hybrid and the independent weighted full Mend. Each preregistered verdict is reported as measured. R3 only checks that frozen is not significantly better; it is not an equivalence or improvement claim. Run 3 R1/R2, H6' and M4 remain failed in their original experiments.
+
+**MetaQA run 4: not_run.** Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-4 results were measured.
+
+Sources: [curve](evidence/curve_v4_northwind.jsonl), [training calibration](evidence/calibration_v4.json), [hypotheses](evidence/hypotheses_v4.json), [paired questions](evidence/paired_v4.json), [summary](evidence/summary_v4.json), [manifest and receipts](evidence/run_manifest_v4.json).
+<!-- run4:end -->
 <!-- numbers:end -->
 
 Every figure above is written into this file by `trailmend.eval.report` from the files in `evidence/`. None of them is

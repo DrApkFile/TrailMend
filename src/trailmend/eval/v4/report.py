@@ -39,6 +39,21 @@ def generate() -> None:
                 for row in picked
             )
         arms.append(metrics)
+    final = {
+        (int(str(r["seed"])), str(r["arm"])): cast("Mapping[str, object]", r["held_out"])
+        for r in rows
+        if r["round"] == files.ROUNDS
+    }
+    same_wrong = all(
+        final[(seed, "full_v4")]["wrong"] == final[(seed, "full_v4_no_gate")]["wrong"] for seed in files.SEEDS
+    )
+    finding = (
+        "At the final round the matched no-gate policy has the same wrong-answer counts and higher accuracy. "
+        "This run shows no extra end-of-run benefit from the refusal gate itself; the repaired learner drives the gain."
+        if same_wrong
+        else "The matched no-gate policy isolates the answer gate from the repaired learner; "
+        "both outputs are published."
+    )
     row: dict[str, object] = {
         "dataset": "northwind_generated",
         "data_version": "v2",
@@ -50,6 +65,8 @@ def generate() -> None:
         "aggregation": "unweighted mean of seed-level rates; denominator includes every held-out question",
         "verdicts": {str(h["id"]): h["verdict"] for h in hypotheses if h["dataset"] == "northwind_generated"},
         "arms": arms,
+        "gate_finding": finding,
+        "per_seed": {str(h["id"]): h["per_seed"] for h in hypotheses if h["dataset"] == "northwind_generated"},
         "shared_trajectory": {"full_v4": "full_v4_no_gate"},
         "training_feedback": "ungated_internal_audit",
         "metaqa": {"classification": "not_run", "reason": METAQA_REASON},
@@ -86,6 +103,8 @@ def section() -> list[str]:
             cells.append(f"{100 * float(str(arm[f'{key}_0'])):.1f}% → {100 * float(str(arm[f'{key}_5'])):.1f}%")
         lines.append("| " + " | ".join(cells) + " |")
     lines += [
+        "",
+        str(summary.get("gate_finding", "")),
         "",
         "Preregistered verdicts: " + "; ".join(f"**{key} {value}**" for key, value in verdicts.items()) + ".",
         "R1 tests the wrong-answer reduction; R2 limits accuracy lost against both the matched ungated hybrid "

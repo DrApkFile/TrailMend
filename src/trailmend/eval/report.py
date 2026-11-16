@@ -5,6 +5,7 @@ from typing import cast
 
 from trailmend.eval import benchmark, curve, evidence, replication_facts
 from trailmend.eval.v3 import report as run3_report
+from trailmend.eval.v4 import report as run4_report
 
 README = Path("README.md")
 START = "<!-- numbers:start -->"
@@ -368,6 +369,8 @@ def block() -> str:
         *unweighted(),
         "",
         *run3_report.section(),
+        "",
+        *run4_report.section(),
         "",
         *run_one(),
         "",
