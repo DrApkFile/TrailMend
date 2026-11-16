@@ -70,7 +70,8 @@ def section() -> list[str]:
         "",
         f"Generated Northwind v2, run `{summary['run_id']}`, seeds {summary['seeds']}; "
         f"{summary['rounds']} rounds. Training-only cutoffs were frozen before held-out scoring. "
-        "The table shows means across seeds; refusals count as neither correct nor wrong, and remain in the denominator.",
+        "The table shows means across seeds; refusals count as neither correct nor wrong, "
+        "and remain in the denominator.",
         "",
         "| arm | accuracy r0 → r5 | wrong/n r0 → r5 | refused/n r0 → r5 | coverage r0 → r5 |",
         "|---|---|---|---|---|",

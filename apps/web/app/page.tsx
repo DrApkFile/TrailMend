@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RunThree } from "@/components/site/RunThree";
 import { Curve } from "@/components/Curve";
 import { Failed } from "@/components/Shell";
 import { Replay } from "@/components/site/Replay";
@@ -575,6 +576,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      <RunThree />
     </main>
   );
 }

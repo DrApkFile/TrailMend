@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import cast
 
 from trailmend.eval import benchmark, curve, evidence, replication_facts
+from trailmend.eval.v3 import report as run3_report
 
 README = Path("README.md")
 START = "<!-- numbers:start -->"
@@ -365,6 +366,8 @@ def block() -> str:
         *metaqa(),
         "",
         *unweighted(),
+        "",
+        *run3_report.section(),
         "",
         *run_one(),
         "",

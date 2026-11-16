@@ -1,0 +1,8 @@
+{
+  "run_id": "v3-9fe1e3a-aab4f1f7",
+  "gate": "passed",
+  "unit_passed": 288,
+  "live_passed": 53,
+  "hydra_url": "http://127.0.0.1:8444",
+  "measuring_lock_free": true
+}

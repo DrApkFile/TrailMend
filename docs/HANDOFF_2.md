@@ -125,3 +125,9 @@ failed; run 3 does not rewrite them.
 - Commit small, behavioural subjects; push; if the push is rejected, `git pull --rebase origin master` and retry.
 - Leave the hosted demo graph as it is (Codex reset it) unless the replay needs nothing from it — it does not.
 - At the end, each writes a short status at the bottom of this file: what finished, run ids, what failed.
+
+## Codex status — run 3 completed, 2026-11-16
+
+Separate worktree `trailmend-run3`, isolated HydraDB `:8444` and S3 `:5001`. Measured `v3-9fe1e3a-aab4f1f7`; the complete curve and training-only calibration are published with R1 FAIL; R2 FAIL; R3 PASS. MetaQA run 3 is explicitly `not_run`. No historical run files or hosted demo graph were changed. Original measurement code is preserved on `origin/run3`; integration rebases onto Claude's commits. API/report/landing-line wiring is included. The owner requested a follow-up repair of feedback starvation and set-answer selection; that requires a new preregistration and measurement, preserving this run's failures.
+
+Run-3 integration checks: gate passed, 288 unit tests and 53 live tests on the isolated instance; original measured commit remains on `origin/run3`. Verification: `evidence/verification_v3.json`.
