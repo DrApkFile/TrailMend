@@ -1,87 +1,19 @@
-# Loom script (~3–4 min)
+# Loom script (~4 minutes)
 
-Recorded against the hosted app. Every number spoken is on the screen while it is said, and the shot list names the
-page that shows it. The figures below are from run `01f1f6f-06b10c13`; if the run is ever redone, read them off the
-page again rather than from here.
+Record against https://trail-mend.vercel.app. Reset the demo with `scripts/demo_reset.sh` using `.env.prod` before recording; never expose the token. Open `/ask`, `/truth`, `/mend` and `/evidence` in tabs.
 
-Setup before recording: `GET /v1/ready` on the API returns `graph_writable: true`; the demo graph is at its loaded
-state (`set -a; . ./.env.prod; set +a; ./scripts/demo_reset.sh`); browser at 1280 wide; second tab on `/evidence`.
+**0:00 — the problem.** A stale ownership link pages the wrong person. TrailMend answers by traversing HydraDB and repairs relationships from explicit feedback. No LLM writes to the graph or grades an answer. This demo uses generated data.
 
----
+**0:25 — the live repair.** On `/ask`, ask **"Who is on call for the Delta team?"** Point to Selin Tadesse and the path. Press **wrong** three times, waiting for each response. The answer flips to Bao Maeda. Show the receipts written before graph changes.
 
-**0:00 — the problem.** One wrong ownership link sends every page to the wrong team.
+**1:05 — inspect the fault.** On `/truth`, find the Delta on-call fault. Show the planted wrong edge's current status, the true target and the receipts. On `/mend`, open a receipt and demonstrate rollback; check the resulting state instead of promising a particular cost after multiple changes.
 
-> "This is a service catalogue. One link in it is wrong — this service points at a team that handed it over months
-> ago. Nobody notices until 3am, when the page goes to the wrong humans and the incident runs long. The catalogue is
-> maintained by hand, so it decays between audits."
+**1:40 — measured results.** Open the README benchmark block and `/evidence`. The following text is copied directly from `evidence/benchmark.json`; each number is derived by code. Read the gain, failed-hypothesis and limitation sentences while their sources are visible:
 
-Shot: `/` hero, then scroll past the curve without explaining it yet.
+I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 planted faults each) and on MetaQA, a public movie knowledge graph (134,741 triples, 360 held-out questions per seed, 3 seeds, half the triples withheld). The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, whose recorded paths include edges outside the intended G0 graph. The historical scores and verdicts remain published; this is not a clean replication. After 5 rounds of learning from its own answers, held-out accuracy on the company graphs rose from 77.9% to 85.7% (p < 0.001 on a paired test, every seed), and held-out Hits@1 on MetaQA rose from 55.3% to 71.5% (p < 0.001 on a paired test, every seed). It captured 69% of the gain that perfect repairs would give on the company graphs and 38% on MetaQA. Random reweighting, matched to its own targeted plan's number and size of cost changes each round, ends at 76.6% on the company graphs against 77.9% for the untouched graph, and at 55.6% on MetaQA against 55.3% for the untouched graph, and random reweighting did not significantly beat the untouched graph on any seed. The random arm reads no new documents; gap-fill alone, with no reweighting, reaches 82.9% on the company graphs. A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and with unweighted search the same loop goes from 83.3% to 89.9%, 4.2 points above the loop that searches on cost (provisional comparison: the frozen baselines differ, so the difference cannot be attributed to search alone). Wrong answers fell 30% on the company graphs and fell 9% on MetaQA, and 1,386 of 1,393 held-out questions that were right at the start were still right at the end, with every break along the way traced to a receipt. The graph did get bigger, but only by reading: the company graphs gained 158 links (3.2%), each from a withheld document and each under a receipt, and MetaQA read back 5,684 withheld triples. Reweighting and quarantine also change the graph; these results do not isolate their gain from gap-fill.
 
-**0:30 — ask it live, see the path and the cost of every hop.**
+**3:05 — say the failures.** MetaQA: M1 PASS; M2 PASS; M3 PASS; M4 FAIL; M5 PASS, from `evidence/hypotheses_metaqa.json`. M4 asked for a larger wrong-answer reduction and failed. Run 2 retains H4' and H6' as failures. Its historical verdict outputs are provisional because the frozen baseline did not replicate; the diagnostic records residual edges outside G0. The higher unweighted result stays published with that caveat. Run 1's failures also remain published.
 
-> "TrailMend answers this as a weighted path search inside HydraDB. Who do I page for this alert? There's the path
-> it walked, and the cost of every hop. No model wrote that answer and no model is about to score it."
+**3:35 — buyer and offer.** Show `/pricing` and read the current unit price and pilot terms from the screen. End on `/evidence` with source files and digests visible. No customer data has been measured.
 
-Shot: `/ask`, run the first listed question, point at the drawn path and the per-hop costs.
-
-**1:00 — judge it, and watch the graph move.**
-
-> "I press wrong. That writes a receipt before it touches the graph, and it makes every edge on that path more
-> expensive — bounded, so one judgement can't swing it. Here's the receipt id, and here's the same edge, now at
-> 1.419 instead of 1.000."
-
-Shot: `/ask` → **wrong** → the judgement panel with the receipt id, then the re-drawn path with the new cost. Say
-plainly that one blame moves a cost; quarantine needs blame to concentrate across rounds, which the next shot shows
-from the recorded runs rather than live.
-
-**1:40 — quarantine, measured against the planted faults.**
-
-> "When an edge keeps being blamed, with a high enough share of its recent judgements and almost no confirmations,
-> it is quarantined: moved to a type the search cannot traverse. Here is how often that was right, against faults we
-> planted and therefore know: precision 0.88, 0.81 and 0.93 across the three seeds, recall 1.0, 0.92 and 0.92. And
-> here is what it cost: a false-quarantine rate of 0.118, 0.188 and 0.071, against a budget of 0.1. That budget is
-> one of the hypotheses, and it failed."
-
-Shot: `/mend`, the quarantine table.
-
-**2:10 — the curve, against frozen, plain store and the random controls.**
-
-> "Held-out questions, never judged, scored every round. The full Mend goes from 83.9% to 84.2%. Frozen — the same
-> graph with learning off — stays at 83.9%. Documents only, no graph, scores 24.6%. And the random controls, which
-> make the same number and size of changes as the real Mend in the same round, fall to 81.3% and 76.2%. That
-> matching is checked as an invariant before any of these files is written, not asserted."
-
-Shot: `/` curve and the arm table, then the controls table on `/evidence`.
-
-Say the honest part out loud:
-
-> "H1 asked for a lift bigger than the spread between seeds. Plus 0.4 points against a 2.9-point spread is not that,
-> so H1 failed, and so did two others. They are all still on the page with the rule each was decided by. Here is the
-> limitation behind it: when the planted fault points a link at the wrong target, the true link isn't in the corpus
-> at all, so quarantining the bad edge turns a wrong answer into a refusal rather than a correct one. The one
-> mechanism that does move accuracy on its own is gap-fill, at plus 2.2 points on every seed."
-
-Shot: the hypotheses table on `/`, then the mechanisms table.
-
-**2:50 — roll the fix back.**
-
-> "Every change is a receipt, and every receipt inverts. This is the judgement I made a minute ago. Roll it back,
-> and the cost is exactly where it was — and the rollback leaves its own receipt, so nothing is erased."
-
-Shot: `/mend`, **roll this back** on that receipt, the `undone by rcpt-…` line, then `/ask` again showing cost 1.0.
-
-**3:10 — what it costs to answer.**
-
-> "Eight concurrent clients on the product question mix against this deployment: p50 553 milliseconds, and the same
-> load again while a Mend round writes 572 reweights and 5 quarantines to the same graph — p50 516 milliseconds.
-> Reads don't degrade under the writer. The p95 is TLS setup on a new connection, which is written down too."
-
-Shot: `/evidence`, the "What it costs to answer" panel.
-
-**3:30 — who pays.**
-
-> "Platform or SRE lead who owns the rota. $4 per service per month, minimum $400. Six-week pilot at $2,000, judged
-> on one number your team picks, refunded if it doesn't move. The data in this demo is generated and labelled
-> generated — no customer data has been measured."
-
-Shot: `/pricing`, end on `/evidence` with the sha256 column visible.
+Runs: company `26b5469-580ae8dc`, public MetaQA `ddf430f-2260187b`, unweighted extension `9ae6601-580ae8dc`. Use README evidence links for seeds, arm, round, denominator, image digest and config provenance. Recording, uploading and adding the Loom URL remain with the repo owner.

@@ -1,0 +1,41 @@
+{
+  "dataset": "metaqa",
+  "eligible_dev_questions": 1200,
+  "eligible_test_questions": 1232,
+  "faults": {
+    "contradicted": 2137,
+    "destroyed": 1603,
+    "recoverable": 1603
+  },
+  "faults_file": "evidence/metaqa/faults_s1.json",
+  "faults_sha256": "36f3984ec7f811a77ea7bab79f6139b4b921122854cc295cc3872931612e2138",
+  "g0_edges": 137856,
+  "g0_triples": 68928,
+  "held_out": 360,
+  "held_out_by_hop": {
+    "1": 72,
+    "2": 194,
+    "3": 94
+  },
+  "held_out_qtypes": 46,
+  "kb_distinct_triples": 133582,
+  "kb_lines": 134741,
+  "load_seconds": 331.7,
+  "loaded_edges": 137856,
+  "loaded_nodes": 43280,
+  "nodes": 43280,
+  "pool_triples": 68394,
+  "question_ids_sha256": "90165d89a61ad62b932c250e0cdf7436641277d5db3a70e7918cde45e1c7c19e",
+  "region_movies": 300,
+  "region_people": 877,
+  "region_start_movie": "The New Daughter",
+  "seed": 1,
+  "test_questions_dropped_for_sharing_topic_and_qtype_with_train": 0,
+  "train": 480,
+  "train_by_hop": {
+    "1": 89,
+    "2": 261,
+    "3": 130
+  },
+  "train_qtypes": 45
+}

@@ -216,7 +216,9 @@ def test_f1_a_started_api_loads_g0_when_the_demo_graph_is_empty(
 def test_f4_truth_lists_every_planted_fault_and_a_fresh_graph_has_repaired_none(
     client: TestClient, loaded: dataset.Dataset
 ) -> None:
-    client.post("/v1/demo/reset", headers={"X-Admin-Token": ADMIN})
+    before = {fault["fault_id"]: fault["receipts"] for fault in client.get("/v1/truth").json()["faults"]}
+    reset = client.post("/v1/demo/reset", headers={"X-Admin-Token": ADMIN})
+    assert reset.status_code == 200
     body = client.get("/v1/truth").json()
     faults = loaded.ingested.faults
     planted = (
@@ -225,7 +227,7 @@ def test_f4_truth_lists_every_planted_fault_and_a_fresh_graph_has_repaired_none(
     assert len(body["faults"]) == planted
     assert body["counts"] == {"still_wrong": planted}
     assert {f["kind"] for f in body["faults"]} >= {"contradicted", "recoverable", "destroyed", "missing_edge"}
-    assert all(f["receipts"] == [] for f in body["faults"])
+    assert all(f["receipts"] == before[f["fault_id"]] for f in body["faults"])
 
 
 def test_f4_blaming_a_stale_link_changes_its_fault_and_names_the_receipts_that_did_it(

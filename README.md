@@ -24,6 +24,7 @@ No LLM is on the answer path, and no LLM scores an answer.
 ## The benchmark in one paragraph
 
 <!-- benchmark:start -->
+I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 planted faults each) and on MetaQA, a public movie knowledge graph (134,741 triples, 360 held-out questions per seed, 3 seeds, half the triples withheld). The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, whose recorded paths include edges outside the intended G0 graph. The historical scores and verdicts remain published; this is not a clean replication. After 5 rounds of learning from its own answers, held-out accuracy on the company graphs rose from 77.9% to 85.7% (p < 0.001 on a paired test, every seed), and held-out Hits@1 on MetaQA rose from 55.3% to 71.5% (p < 0.001 on a paired test, every seed). It captured 69% of the gain that perfect repairs would give on the company graphs and 38% on MetaQA. Random reweighting, matched to its own targeted plan's number and size of cost changes each round, ends at 76.6% on the company graphs against 77.9% for the untouched graph, and at 55.6% on MetaQA against 55.3% for the untouched graph, and random reweighting did not significantly beat the untouched graph on any seed. The random arm reads no new documents; gap-fill alone, with no reweighting, reaches 82.9% on the company graphs. A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and with unweighted search the same loop goes from 83.3% to 89.9%, 4.2 points above the loop that searches on cost (provisional comparison: the frozen baselines differ, so the difference cannot be attributed to search alone). Wrong answers fell 30% on the company graphs and fell 9% on MetaQA, and 1,386 of 1,393 held-out questions that were right at the start were still right at the end, with every break along the way traced to a receipt. The graph did get bigger, but only by reading: the company graphs gained 158 links (3.2%), each from a withheld document and each under a receipt, and MetaQA read back 5,684 withheld triples. Reweighting and quarantine also change the graph; these results do not isolate their gain from gap-fill.
 <!-- benchmark:end -->
 
 That paragraph is written by `trailmend.eval.benchmark` from the evidence files and from nothing else: each sentence
@@ -60,6 +61,8 @@ says what happened instead.
 
 <!-- numbers:start -->
 ### Run 2, on dataset v2
+
+**Provisional conclusions:** the later extension failed to reproduce this run's frozen baseline. Its recorded paths include edges outside the intended G0. Historical scores and hypothesis outputs are preserved; see [the replication diagnostic](evidence/paired_v2_unweighted.json).
 
 | arm | round 0 | round 5 | change |
 |---|---|---|---|
@@ -111,6 +114,53 @@ How much of the repairable damage the full arm repaired, with the denominator me
 | H7' | gap-fill ingests most of what its own rule reaches | **PASS** |
 | H8' | the run-2 update and gap-fill rules beat the run-1 rules on the same data | **PASS** |
 
+### MetaQA, public data, half the triples withheld
+
+Held-out Hits@1 (the top-ranked answer is a gold answer), mean of the seeds. Questions are a stratified sample of the official test split inside a seeded region of the graph; the Mend sees only questions from the official dev split. Design and reasons: [PRD §3.3](docs/PRD.md).
+
+| arm | round 0 | round 5 | change |
+|---|---|---|---|
+| `frozen` | 55.3% | 55.3% | +0.0 points |
+| `full_v2` | 55.3% | 71.5% | +16.2 points |
+| `plain_store` | 15.5% | 15.5% | +0.0 points |
+| `random_reweight` | 55.3% | 55.6% | +0.4 points |
+
+| seed | arm | gain over frozen | p (exact McNemar) |
+|---|---|---|---|
+| 1 | `full_v2` | +14.7 points | 0.0000 |
+| 7 | `full_v2` | +20.0 points | 0.0000 |
+| 42 | `full_v2` | +13.9 points | 0.0000 |
+| 1 | `random_reweight` | +0.3 points | 1.0000 |
+| 7 | `random_reweight` | +0.8 points | 0.2500 |
+| 42 | `random_reweight` | +0.0 points | 1.0000 |
+
+Captured share of the gain the oracle ladder says was reachable:
+
+| seed | round 0 | last round | gained | reachable | captured |
+|---|---|---|---|---|---|
+| 1 | 55.6% | 70.3% | +14.7 points | 43.6 points | 34% |
+| 7 | 54.2% | 74.2% | +20.0 points | 43.9 points | 46% |
+| 42 | 56.1% | 70.0% | +13.9 points | 40.3 points | 34% |
+
+#### Hypotheses, fixed before any MetaQA question was answered
+
+| id | claim | verdict |
+|---|---|---|
+| M1 | on MetaQA the full Mend beats the frozen graph on the same held-out questions, every seed | **PASS** |
+| M2 | random reweighting does not beat the frozen graph | **PASS** |
+| M3 | the plain-store arm is flat across rounds | **PASS** |
+| M4 | the held-out wrong-answer rate falls by at least 40% | **FAIL** |
+| M5 | at most 2% of held-out hits are lost from one round to the next | **PASS** |
+
+### The same loop with unweighted search (extension, not part of any preregistered verdict)
+
+Run 2's data and constants at a later commit. `full_unweighted` is the full Mend with a search that ignores cost and takes the fewest hops. **Provisional:** the frozen arm does not reproduce run 2; the diagnostic records edges outside G0 in run 2's frozen tape. No controlled paired comparison is claimed.
+
+| arm | round 0 | round 5 | change |
+|---|---|---|---|
+| `frozen` | 77.0% | 77.0% | +0.0 points |
+| `full_unweighted` | 83.3% | 89.9% | +6.7 points |
+
 ### Run 1, which failed and stays published
 
 Its headline hypothesis asked for a lift larger than the spread between seeds and did not get one. It is kept here exactly as it was published, next to run 2. The two runs use different generated data, so only comparisons inside a run are claims. Why it failed is measured in [docs/RUN1_DIAGNOSIS.md](docs/RUN1_DIAGNOSIS.md).
@@ -139,6 +189,30 @@ Document-only baseline on run 1's data: 24.6%.
 
 ### Evidence files
 
+MetaQA:
+
+| file | what it is | sha256 (first 16) |
+|---|---|---|
+| [`evidence/curve_metaqa.jsonl`](evidence/curve_metaqa.jsonl) | MetaQA: held-out Hits@1, exact-set and wrong-answer rate per seed, arm and round | `a981c9d80598b22d…` |
+| [`evidence/paired_metaqa.json`](evidence/paired_metaqa.json) | MetaQA: every held-out question as a pair against the frozen arm, with its p-value | `ca3a70ff05a63bea…` |
+| [`evidence/captured_share_metaqa.json`](evidence/captured_share_metaqa.json) | MetaQA: what the full arm gained over what the ladder says was reachable | `7b131e169539f67a…` |
+| [`evidence/oracle_metaqa.json`](evidence/oracle_metaqa.json) | MetaQA: the oracle ladder on held-out, answered through HydraDB | `db6646364a4dafc9…` |
+| [`evidence/non_regression_metaqa.json`](evidence/non_regression_metaqa.json) | MetaQA: hits kept and lost per round, each break traced to receipts | `7f6923cbc2c32ee6…` |
+| [`evidence/plain_store_metaqa.json`](evidence/plain_store_metaqa.json) | MetaQA: the document-only baseline and the top_k sweep it was tuned by | `e8c72d824a89b792…` |
+| [`evidence/hypotheses_metaqa.json`](evidence/hypotheses_metaqa.json) | MetaQA: M1 to M5 with the rule each was decided by | `d610151912558bc3…` |
+| [`evidence/metaqa/dataset_s1.json`](evidence/metaqa/dataset_s1.json) | MetaQA seed 1: sizes, region, sample and digests (seeds 7 and 42 beside it) | `6e52fd8ac4e8ceec…` |
+| [`evidence/metaqa/faults_s1.json`](evidence/metaqa/faults_s1.json) | MetaQA seed 1: every planted wrong triple with its kind (seeds 7 and 42 beside it) | `36f3984ec7f811a7…` |
+
+The unweighted-search extension and the benchmark paragraph:
+
+| file | what it is | sha256 (first 16) |
+|---|---|---|
+| [`evidence/curve_v2_unweighted.jsonl`](evidence/curve_v2_unweighted.jsonl) | run 2 data, later commit: the same loop with search that ignores cost | `938d599e7e50fc6c…` |
+| [`evidence/paired_v2_unweighted.json`](evidence/paired_v2_unweighted.json) | the unweighted loop against run 2's weighted loop and frozen graph, paired | `738afeb09414ebb4…` |
+| [`evidence/dataset_summary_v2.json`](evidence/dataset_summary_v2.json) | run 2: nodes, edges and planted faults per generated company | `aec631ed06e31b33…` |
+| [`evidence/benchmark.json`](evidence/benchmark.json) | the benchmark paragraph, one sentence per row with its sources | `77b40db5822d5572…` |
+| [`evidence/benchmark_facts.json`](evidence/benchmark_facts.json) | every number the benchmark paragraph uses | `d556d35371a48963…` |
+
 Run 2:
 
 | file | what it is | sha256 (first 16) |
@@ -154,7 +228,7 @@ Run 2:
 | [`evidence/hypotheses_v2.json`](evidence/hypotheses_v2.json) | run 2: H1' to H8' with the rule each was decided by | `0ed5c1c99fd749d9…` |
 | [`evidence/plain_store_v2.json`](evidence/plain_store_v2.json) | run 2: the document-only baseline, re-tuned on v2 to its own best score | `ffb5b6dcdde73a9a…` |
 | [`evidence/fault_recoverability_v2.json`](evidence/fault_recoverability_v2.json) | run 2: where the truth behind each planted fault is, by fault kind | `deaa67c20abbc6c8…` |
-| [`evidence/run_manifest_v2.json`](evidence/run_manifest_v2.json) | run 2: commit, HydraDB digest, config hash, data version, seeds and every digest | `10aa21ff747fd434…` |
+| [`evidence/run_manifest_v2.json`](evidence/run_manifest_v2.json) | run 2: commit, HydraDB digest, config hash, data version, seeds and every digest | `9fcad8626e0e01a9…` |
 
 Run 1, and the two files that describe the deployment both runs used:
 
@@ -263,6 +337,7 @@ how much of the repairable damage the Mend left on the table. Run 2 is preregist
   gap-fill can find.
 - **That was run 1's data.** Run 2 keeps 30% of its wrong edges exactly like that, on purpose, so a refusal stays
   the honest outcome for them; the rest have a true link the Mend can find, and gap-fill follows a second wave.
+- **Run 2 did not replicate on a fresh baseline.** The unweighted extension found residual edges outside G0 in run 2’s frozen answer paths. Its historical scores and verdicts remain published with provisional conclusions; the reset was tightened between runs. See [`paired_v2_unweighted.json`](evidence/paired_v2_unweighted.json).
 - **Run 2 still failed two of its eight hypotheses.** Quarantine recall and its false-quarantine rate missed their
   thresholds (H4'), and the wrong-answer rate fell by about 30%, not the 40% that was preregistered (H6').
 - **MetaQA is a sample inside a region, not the whole benchmark.** 360 held-out questions per seed, drawn from a

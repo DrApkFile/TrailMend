@@ -1,0 +1,83 @@
+{
+  "metaqa": {
+    "breaks": 5,
+    "breaks_traced": 5,
+    "captured_share": 0.3804194709657223,
+    "exact_round_0": 0.08055555555555556,
+    "exact_round_n": 0.17314814814814813,
+    "frozen_round_n": 0.5527777777777777,
+    "g0_triples": [
+      68928,
+      68928,
+      68928
+    ],
+    "held_out_questions": [
+      360,
+      360,
+      360
+    ],
+    "hits_round_0": 0.5527777777777777,
+    "hits_round_n": 0.7148148148148148,
+    "kb_lines": 134741,
+    "plain_store": 0.15462962962962964,
+    "random_reweight_round_n": 0.5564814814814815,
+    "random_reweight_seeds_beating_frozen": 0,
+    "right_at_round_0": 597,
+    "rounds": 5,
+    "run_id": "ddf430f-2260187b",
+    "seeds": [
+      1,
+      7,
+      42
+    ],
+    "seeds_significant": 3,
+    "seeds_tested": 3,
+    "still_right_at_round_n": 592,
+    "triples_ingested": 5684,
+    "worst_p": 0.0,
+    "wrong_round_0": 78,
+    "wrong_round_n": 71
+  },
+  "northwind_run_2": {
+    "accuracy_round_0": 0.778838435959179,
+    "accuracy_round_n": 0.8571322096089897,
+    "breaks": 2,
+    "breaks_traced": 2,
+    "captured_share": 0.6896652965355254,
+    "edges_ingested": 158,
+    "frozen_round_n": 0.778838435959179,
+    "g0_edges": 5001,
+    "gapfill_only_round_n": 0.8287352367847723,
+    "held_out_questions": 1022,
+    "nodes": [
+      1165,
+      1165,
+      1165
+    ],
+    "plain_store": 0.2828001375988992,
+    "planted_faults": [
+      124,
+      125,
+      126
+    ],
+    "random_reweight_round_n": 0.7661334709322326,
+    "random_reweight_seeds_beating_frozen": 0,
+    "right_at_round_0": 796,
+    "rounds": 5,
+    "run_id": "26b5469-580ae8dc",
+    "seeds": [
+      1,
+      7,
+      42
+    ],
+    "seeds_significant": 3,
+    "seeds_tested": 3,
+    "still_right_at_round_n": 794,
+    "unweighted_round_0": 0.8326740052746245,
+    "unweighted_round_n": 0.8992260061919505,
+    "unweighted_run_id": "9ae6601-580ae8dc",
+    "worst_p": 1e-06,
+    "wrong_round_0": 140,
+    "wrong_round_n": 98
+  }
+}

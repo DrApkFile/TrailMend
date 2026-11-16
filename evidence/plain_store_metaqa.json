@@ -1,0 +1,64 @@
+{
+  "claim": "plain_store_metaqa",
+  "design": "MetaQA document-only baseline: every triple in G0 rendered as the sentences it was ingested from (one per supporting document), BM25 over them, and the answer is the entity of the expected type mentioned most often in the top_k documents (ties by entity id; the topic entity itself is never an answer). No graph, no learning, so every round is the same number. top_k is swept on seed 1's held-out questions and the best is fixed for every seed - an advantage the graph arms are not given.",
+  "measured_at": "2026-11-16T01:15:04+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "dataset": "metaqa",
+      "documents": 115242,
+      "exact": 1,
+      "exact_set": 0.002777777777777778,
+      "hits": 66,
+      "hits_at_1": 0.18333333333333332,
+      "n": 360,
+      "refused": 0,
+      "run_id": "ddf430f-2260187b",
+      "seed": 1,
+      "top_k": 15,
+      "top_k_sweep_hits_at_1": {
+        "1": 0.1278,
+        "10": 0.175,
+        "15": 0.1833,
+        "3": 0.1361,
+        "30": 0.1417,
+        "5": 0.1528
+      },
+      "unreachable": 103,
+      "wrong": 191,
+      "wrong_rate": 0.5305555555555556
+    },
+    {
+      "dataset": "metaqa",
+      "documents": 115096,
+      "exact": 5,
+      "exact_set": 0.013888888888888888,
+      "hits": 53,
+      "hits_at_1": 0.14722222222222223,
+      "n": 360,
+      "refused": 0,
+      "run_id": "ddf430f-2260187b",
+      "seed": 7,
+      "top_k": 15,
+      "unreachable": 88,
+      "wrong": 219,
+      "wrong_rate": 0.6083333333333333
+    },
+    {
+      "dataset": "metaqa",
+      "documents": 114792,
+      "exact": 2,
+      "exact_set": 0.005555555555555556,
+      "hits": 48,
+      "hits_at_1": 0.13333333333333333,
+      "n": 360,
+      "refused": 0,
+      "run_id": "ddf430f-2260187b",
+      "seed": 42,
+      "top_k": 15,
+      "unreachable": 105,
+      "wrong": 207,
+      "wrong_rate": 0.575
+    }
+  ]
+}

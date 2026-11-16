@@ -286,6 +286,12 @@ export default async function Home() {
             <h3 className="text-sm text-stone-300">
               Generated company graphs, run 2
             </h3>
+            <p className="mt-3 text-sm text-stone-400">
+              Provisional conclusions: the later frozen baseline did not replicate.
+              Recorded paths include edges outside the intended starting graph.
+              Historical scores and verdicts remain published; see the replication
+              diagnostic on /evidence.
+            </p>
             <div className="mt-4">
               {curveV2.ok ? (
                 <Curve rows={rowsV2} arms={RUN2_ARMS} band="full_v2" />

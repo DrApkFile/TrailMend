@@ -1,80 +1,36 @@
 # Submission
 
-Deadline: **2026-11-16 09:00 IST** (03:30 UTC). Nothing here is ticked from intention — each line names the command
-or the file that shows it is true.
+Deadline: **2026-11-16 09:00 IST (03:30 UTC)**.
 
-## Mapping (PRD §18)
-
-| What | Where | State |
+| Item | Location | State |
 |---|---|---|
-| Live app | https://trail-mend.vercel.app | DEPLOYED. All five pages answer 200; screenshots at 390px in `evidence/demo/f-*.png` |
-| API | https://trailmend-production-ee2e07ff.up.railway.app | DEPLOYED. `GET /v1/ready` → `{"graph_writable":true}`; serves the curve and every evidence file |
-| Repo | https://github.com/DrApkFile/TrailMend | public |
-| Loom | linked at the top of README.md | script in `docs/LOOM_SCRIPT.md`, NOT RECORDED |
-| Posts | `evidence/posts.md` with URLs | figures filled from the evidence; NOT POSTED |
+| Live app | https://trail-mend.vercel.app | Deployed; final post-push verification pending |
+| API | https://trailmend-production-ee2e07ff.up.railway.app | Deployed; final evidence verification pending |
+| Public repo | https://github.com/DrApkFile/TrailMend | Push final measured evidence after gate and live checks |
+| Loom | README table and `TRAILMEND_DEMO_URL` on Vercel | Owner must record and add URL; script: `docs/LOOM_SCRIPT.md` |
+| Posts | `evidence/posts.md` | Owner must check handle, post and log URLs |
+| Submission | Hackathon submission form | Owner must submit before deadline |
 
-## Definition of finished (PRD §17)
+## Recorded results
 
-| # | Requirement | How it is shown | State |
-|---|---|---|---|
-| 1 | Clean clone → `make gate` passes | `scripts/presubmit.sh` clones HEAD and runs it | PASS at f94a9d9, live tests on, all 14 checks clean. Run it once more with the Loom link in place |
-| 2 | Live link works from a fresh browser | the Vercel URL | PASS: five pages 200, driven in Chromium at 390px, including asking, judging and rolling back |
-| 3 | Curve and controls published for 3 seeds | `evidence/curve.jsonl`, `evidence/curve_v2.jsonl` and both SVGs | PASS for run 1: 162 rows, seeds 1, 7, 42, run `01f1f6f-06b10c13`. Run 2 is run `2b192cc-580ae8dc` on dataset v2, seeds 1, 7, 42, seven arms |
-| 4 | Every README number links to an evidence file | the block between `numbers:start`/`numbers:end`, written by `trailmend.eval.report` | PASS: filled, each file linked with its sha256 |
-| 5 | Loom recorded | the link at the top of README.md | PENDING — needs the repo owner |
-| 6 | Posts live and logged | the "Posted" table in `evidence/posts.md` | PENDING — drafts are ready, the handle needs checking |
-| 7 | Submitted before 09:00 IST | the submission form | PENDING |
+Run 1 remains published as a failure, with its original evidence bytes. Run 2 `26b5469-580ae8dc` is published beside it, with its original hypothesis outputs, including H4' and H6' FAIL. Its conclusions are **provisional**: the later frozen baseline did not replicate, and the recorded run-2 frozen paths contain edges outside the intended G0. The reset was subsequently tightened. Do not present this as a clean replication or as an isolated weighted-versus-unweighted comparison.
 
-## What is left
+MetaQA `ddf430f-2260187b` completed its graph arms and oracle ladders, followed by the document-only baseline and analysis. Verdicts: **M1 PASS; M2 PASS; M3 PASS; M4 FAIL; M5 PASS**. Its held-out sample is regional, not the official full test set; comparisons with published full-test MetaQA scores are inappropriate. Design: PRD §3.3; input hashes: `data/external/metaqa.manifest.json`.
 
-1. Finish run 2: the sweep, then `trailmend.eval.oracle_run`, `trailmend.eval.analyse_v2`,
-   `trailmend.eval.plain_run --v2` and `trailmend.eval.report`, then push so Railway and Vercel serve the new files.
-2. Reset the hosted demo graph once, so it carries dataset v2 like the published run:
-   `set -a; . ./.env.prod; set +a; ./scripts/demo_reset.sh`.
-3. Record the Loom from `docs/LOOM_SCRIPT.md` and put the link in the README table and in `evidence/posts.md`. The
-   script's figures are run 1's and need re-reading off the page for run 2.
-4. Check HydraDB's handle on the hackathon page, post both drafts from `evidence/posts.md`, log the URLs in its
-   "Posted" table. Their figures are run 1's and need the same treatment.
-5. `make hydra-up` if the local HydraDB is down, then `bash scripts/presubmit.sh` with the live tests on, and expect
-   every check to pass.
-6. Submit.
+The unweighted extension `9ae6601-580ae8dc` uses the same config digest and pinned HydraDB image as run 2, on a second local instance. It finished, was copied into this repo and is published as provisional because its frozen baseline differs. The second instance, S3 stand-in and temporary worktree were removed after copying. Diagnostics: `evidence/paired_v2_unweighted.json`.
 
-Optional, and not needed for any claim made: a larger E6 run. The one on record was sized to stay under the public
-60-asks-a-minute limit; a bigger one needs `TRAILMEND_ASK_RATE_PER_MINUTE` raised on the Railway API service first,
-and should be lowered again afterwards.
+The generated benchmark, copied from `evidence/benchmark.json`:
 
-If a judge has been judging on the hosted site and you want it clean again:
-`set -a; . ./.env.prod; set +a; ./scripts/demo_reset.sh`. The reset writes its own receipt and never touches the
-evaluation evidence. If the demo graph is ever empty — a fresh HydraDB, say — the API loads G0 itself at startup,
-so this is a convenience, not a dependency.
+I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 planted faults each) and on MetaQA, a public movie knowledge graph (134,741 triples, 360 held-out questions per seed, 3 seeds, half the triples withheld). The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, whose recorded paths include edges outside the intended G0 graph. The historical scores and verdicts remain published; this is not a clean replication. After 5 rounds of learning from its own answers, held-out accuracy on the company graphs rose from 77.9% to 85.7% (p < 0.001 on a paired test, every seed), and held-out Hits@1 on MetaQA rose from 55.3% to 71.5% (p < 0.001 on a paired test, every seed). It captured 69% of the gain that perfect repairs would give on the company graphs and 38% on MetaQA. Random reweighting, matched to its own targeted plan's number and size of cost changes each round, ends at 76.6% on the company graphs against 77.9% for the untouched graph, and at 55.6% on MetaQA against 55.3% for the untouched graph, and random reweighting did not significantly beat the untouched graph on any seed. The random arm reads no new documents; gap-fill alone, with no reweighting, reaches 82.9% on the company graphs. A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and with unweighted search the same loop goes from 83.3% to 89.9%, 4.2 points above the loop that searches on cost (provisional comparison: the frozen baselines differ, so the difference cannot be attributed to search alone). Wrong answers fell 30% on the company graphs and fell 9% on MetaQA, and 1,386 of 1,393 held-out questions that were right at the start were still right at the end, with every break along the way traced to a receipt. The graph did get bigger, but only by reading: the company graphs gained 158 links (3.2%), each from a withheld document and each under a receipt, and MetaQA read back 5,684 withheld triples. Reweighting and quarantine also change the graph; these results do not isolate their gain from gap-fill.
 
-## Two runs, both published
+## Verification
 
-Run 1 is on record as a failure and is not re-run, re-scored or withdrawn. Run 2 is a second run beside it, on
-dataset v2, with its own hypotheses fixed in PRD §3.2 **before** any of it was built, each change traced to
-`docs/RUN1_DIAGNOSIS.md`. The two runs use different generated data, so only comparisons inside a run are claims;
-the front page, the README and `/evidence` all say so, and both curves are drawn.
+`make gate` passed, including strict Python checks, unit tests and the production web build. Live `make verify` passed, including both `/v1/truth` tests; deployed pages/evidence, screenshots, hosted demo reset and clean-clone `scripts/presubmit.sh` remain pending final verification. H6 is ticked only after those acceptance checks. All figures above are generated from evidence rather than manually transcribed.
 
-The sweep ran at commit `2b192cc` (the commit is in the run id). Commits after it changed the website, the README
-writer, the submission docs and the demo's data version — never the measurement code or the config, whose digest is
-the second half of the run id.
+## Owner actions
 
-## What is published as a failure, not hidden
+1. Record `docs/LOOM_SCRIPT.md`, upload it and add the URL to the README table and Vercel `TRAILMEND_DEMO_URL`.
+2. Check the current HydraDB handle, publish the post drafts and log their URLs.
+3. Run the clean-clone pre-submit audit again after adding the Loom URL, then submit.
 
-Three of the five hypotheses preregistered for run 1 failed and stay on the site with the rule each was decided by,
-in `evidence/hypotheses.json`, in the README and on `/evidence`:
-
-- **H1 FAIL** — the full Mend ends round 5 at 84.2% against 83.9% at round 0, +0.4 points, inside the 2.9-point
-  spread between seeds at round 0. One of the three seeds did not move at all.
-- **H4 FAIL** — quarantine recall is 1.00, 0.92, 0.92, but the false-quarantine rate is 0.118, 0.188, 0.071 against
-  a budget of 0.1.
-- **H5 FAIL** — one round broke 3.25% of previously-correct held-out answers against a budget of 2%.
-
-What survives: gap-fill is the only mechanism that moves accuracy on its own (+2.2 points, every seed positive);
-targeted change beats random change on both levers with the controls matched on the number and size of changes per
-round (reweight −1.9 against −7.6, quarantine 0.0 against −2.5); and the graph answers 83.9% where the
-document-only baseline answers 24.6%.
-
-The limitation that bounds H1 is in the README: when a planted fault points a link at the wrong target, the true
-link is not in the corpus, so quarantining the bad edge turns a wrong answer into a refusal rather than a correct
-one. Only the withheld-edge faults have a document that gap-fill can find.
+For a clean demo: `set -a; . ./.env.prod; set +a; ./scripts/demo_reset.sh`. Never print the token. Ask the Delta on-call question, press wrong three times, watch Selin Tadesse change to Bao Maeda, and inspect the fault on `/truth`.

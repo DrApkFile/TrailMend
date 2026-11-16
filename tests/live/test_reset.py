@@ -39,10 +39,12 @@ def test_a_reset_removes_an_edge_the_ingested_graph_does_not_have(hydra: HydraCl
     load(hydra, replace(built.graph, edges=(*built.graph.edges, extra)), built.support)
     key = EdgeKey(extra.src, extra.rel_type.value, extra.dst)
     assert read_state(hydra, key) is not None
+    wanted = {EdgeKey(edge.src, edge.rel_type.value, edge.dst) for edge in built.graph.edges}
+    before = {edge for rel_type in NORTHWIND_REL_TYPES for edge in list_edge_keys(hydra, rel_type.value)}
 
     report = reset_to_ingested(hydra, built.graph, (), built.support)
 
-    assert report.edges_pruned == 1
+    assert report.edges_pruned == len(before - wanted)
     assert read_state(hydra, key) is None
 
 

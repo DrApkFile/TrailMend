@@ -168,6 +168,10 @@ def run_two() -> list[str]:
     return [
         "### Run 2, on dataset v2",
         "",
+        "**Provisional conclusions:** the later extension failed to reproduce this run's frozen baseline. "
+        "Its recorded paths include edges outside the intended G0. Historical scores and hypothesis outputs are "
+        "preserved; see [the replication diagnostic](evidence/paired_v2_unweighted.json).",
+        "",
         *arms_table(rows),
         "",
         f"The document-only baseline (BM25 over the same corpus, no graph) scores {_percent(plain_mean)}, "

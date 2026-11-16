@@ -1,0 +1,83 @@
+{
+  "claim": "benchmark",
+  "design": "The benchmark paragraph, one sentence per row, composed by trailmend.eval.benchmark from the evidence files named in each row's sources and from nothing else. A sentence is only written in its strong form when the numbers support it; otherwise it states what was measured. `facts` holds every number a sentence uses.",
+  "measured_at": "2026-11-16T01:16:58+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "key": "setup",
+      "sources": [
+        "dataset_summary_v2.json",
+        "metaqa/dataset_s*.json"
+      ],
+      "text": "I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 planted faults each) and on MetaQA, a public movie knowledge graph (134,741 triples, 360 held-out questions per seed, 3 seeds, half the triples withheld)."
+    },
+    {
+      "key": "comparability",
+      "sources": [
+        "paired_v2_unweighted.json"
+      ],
+      "text": "The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, whose recorded paths include edges outside the intended G0 graph. The historical scores and verdicts remain published; this is not a clean replication."
+    },
+    {
+      "key": "gain",
+      "sources": [
+        "curve_v2.jsonl",
+        "paired_v2.json",
+        "curve_metaqa.jsonl",
+        "paired_metaqa.json"
+      ],
+      "text": "After 5 rounds of learning from its own answers, held-out accuracy on the company graphs rose from 77.9% to 85.7% (p < 0.001 on a paired test, every seed), and held-out Hits@1 on MetaQA rose from 55.3% to 71.5% (p < 0.001 on a paired test, every seed)."
+    },
+    {
+      "key": "captured",
+      "sources": [
+        "captured_share_v2.json",
+        "oracle_v2.json",
+        "captured_share_metaqa.json",
+        "oracle_metaqa.json"
+      ],
+      "text": "It captured 69% of the gain that perfect repairs would give on the company graphs and 38% on MetaQA."
+    },
+    {
+      "key": "random_control",
+      "sources": [
+        "curve_v2.jsonl",
+        "paired_v2.json",
+        "changes_v2.json",
+        "curve_metaqa.jsonl",
+        "paired_metaqa.json"
+      ],
+      "text": "Random reweighting, matched to its own targeted plan's number and size of cost changes each round, ends at 76.6% on the company graphs against 77.9% for the untouched graph, and at 55.6% on MetaQA against 55.3% for the untouched graph, and random reweighting did not significantly beat the untouched graph on any seed. The random arm reads no new documents; gap-fill alone, with no reweighting, reaches 82.9% on the company graphs."
+    },
+    {
+      "key": "plain_and_unweighted",
+      "sources": [
+        "plain_store_v2.json",
+        "plain_store_metaqa.json",
+        "curve_v2_unweighted.jsonl"
+      ],
+      "text": "A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and with unweighted search the same loop goes from 83.3% to 89.9%, 4.2 points above the loop that searches on cost (provisional comparison: the frozen baselines differ, so the difference cannot be attributed to search alone)."
+    },
+    {
+      "key": "wrong_and_kept",
+      "sources": [
+        "curve_v2.jsonl",
+        "curve_metaqa.jsonl",
+        "non_regression_v2.json",
+        "non_regression_metaqa.json",
+        "runs/*/heldout.jsonl"
+      ],
+      "text": "Wrong answers fell 30% on the company graphs and fell 9% on MetaQA, and 1,386 of 1,393 held-out questions that were right at the start were still right at the end, with every break along the way traced to a receipt."
+    },
+    {
+      "key": "closing",
+      "sources": [
+        "curve_v2.jsonl",
+        "dataset_summary_v2.json",
+        "curve_metaqa.jsonl"
+      ],
+      "text": "The graph did get bigger, but only by reading: the company graphs gained 158 links (3.2%), each from a withheld document and each under a receipt, and MetaQA read back 5,684 withheld triples. Reweighting and quarantine also change the graph; these results do not isolate their gain from gap-fill."
+    }
+  ]
+}

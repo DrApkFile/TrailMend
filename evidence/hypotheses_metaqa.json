@@ -1,0 +1,93 @@
+{
+  "claim": "hypotheses_metaqa",
+  "design": "The five MetaQA hypotheses preregistered in PRD section 3.3 before any MetaQA question was answered through HydraDB, decided from this run's rows, paired held-out verdicts and break rows. A failed one stays published.",
+  "measured_at": "2026-11-16T01:15:18+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "claim": "on MetaQA the full Mend beats the frozen graph on the same held-out questions, every seed",
+      "id": "M1",
+      "per_seed": [
+        {
+          "delta_points": 14.7222,
+          "p_value": 0.0,
+          "seed": 1
+        },
+        {
+          "delta_points": 20.0,
+          "p_value": 0.0,
+          "seed": 7
+        },
+        {
+          "delta_points": 13.8889,
+          "p_value": 0.0,
+          "seed": 42
+        }
+      ],
+      "rule": "full_v2 beats frozen on the same held-out questions at round 5 under a two-sided exact McNemar test at p < 0.05, with a gain of at least 2.0 points of Hits@1, on all 3 seeds",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "random reweighting does not beat the frozen graph",
+      "id": "M2",
+      "per_seed": [
+        {
+          "delta_points": 0.2778,
+          "p_value": 1.0,
+          "seed": 1
+        },
+        {
+          "delta_points": 0.8333,
+          "p_value": 0.25,
+          "seed": 7
+        },
+        {
+          "delta_points": 0.0,
+          "p_value": 1.0,
+          "seed": 42
+        }
+      ],
+      "rule": "random_reweight does not beat frozen under the same paired test on any seed",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "the plain-store arm is flat across rounds",
+      "hits_at_1_per_seed": {
+        "1": 0.1833,
+        "42": 0.1333,
+        "7": 0.1472
+      },
+      "id": "M3",
+      "note": "flat by construction: it is scored once per seed and cannot learn",
+      "rule": "the plain-store Hits@1 is identical at every round, for every seed",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "the held-out wrong-answer rate falls by at least 40%",
+      "id": "M4",
+      "per_seed": {
+        "1": {
+          "round_0": 0.0639,
+          "round_n": 0.0667
+        },
+        "42": {
+          "round_0": 0.0694,
+          "round_n": 0.0639
+        },
+        "7": {
+          "round_0": 0.0833,
+          "round_n": 0.0667
+        }
+      },
+      "rule": "the held-out wrong-answer rate of full_v2 falls by at least 40% from round 0 to round 5, every seed",
+      "verdict": "FAIL"
+    },
+    {
+      "claim": "at most 2% of held-out hits are lost from one round to the next",
+      "id": "M5",
+      "rule": "at most 2% of the held-out hits after one round are not hits after the next, every round and seed, full_v2",
+      "verdict": "PASS",
+      "worst_round_break_share": 0.015
+    }
+  ]
+}

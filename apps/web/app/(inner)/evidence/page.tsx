@@ -33,7 +33,11 @@ const RUN1_FILES = [
   "fault_recoverability",
   "run_manifest",
 ];
-const SHARED_FILES = ["load", "latency"];
+const SHARED_FILES = [
+  "load", "latency", "benchmark", "paired_v2_unweighted",
+  "hypotheses_metaqa", "paired_metaqa", "captured_share_metaqa",
+  "oracle_metaqa", "non_regression_metaqa", "plain_store_metaqa",
+];
 const FILES = [...RUN2_FILES, ...RUN1_FILES, ...SHARED_FILES];
 
 export default async function EvidencePage() {
@@ -60,8 +64,16 @@ export default async function EvidencePage() {
         Every file here is written by code, never by hand, and carries the
         design it was measured under. The sha256 is of the file as served. A
         file that has not been produced says so. Files ending{" "}
-        <span className="font-mono">_v2</span> are run 2; the rest are run 1,
-        which failed and is kept exactly as it was published.
+        <span className="font-mono">_v2</span> are run 2; MetaQA and the
+        unweighted extension are named separately. Run 1 failed and is kept
+        exactly as it was published.
+      </p>
+      <p className="mt-3 text-sm text-stone-300">
+        Run 2 conclusions are provisional: the extension failed to reproduce
+        its frozen baseline. Recorded run-2 paths include edges outside the
+        intended starting graph. Historical results remain published. See
+        paired_v2_unweighted below for the diagnostic; no controlled comparison
+        between weighted and unweighted search is claimed.
       </p>
 
       <Panel title="curve_v2.jsonl">

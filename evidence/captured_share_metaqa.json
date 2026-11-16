@@ -1,0 +1,35 @@
+{
+  "claim": "captured_share_metaqa",
+  "design": "MetaQA: what full_v2 gained in held-out Hits@1 from round 0 to the last round, over what the oracle ladder says was reachable on the same seed (every withheld triple ingested and every contradicted and recoverable fault repaired, minus round 0).",
+  "measured_at": "2026-11-16T01:15:18+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full_v2",
+      "captured_share": 0.3376,
+      "gained_points": 14.72,
+      "reachable_points": 43.61,
+      "round_0": 0.5556,
+      "round_n": 0.7028,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "captured_share": 0.4557,
+      "gained_points": 20.0,
+      "reachable_points": 43.89,
+      "round_0": 0.5417,
+      "round_n": 0.7417,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "captured_share": 0.3448,
+      "gained_points": 13.89,
+      "reachable_points": 40.28,
+      "round_0": 0.5611,
+      "round_n": 0.7,
+      "seed": 42
+    }
+  ]
+}

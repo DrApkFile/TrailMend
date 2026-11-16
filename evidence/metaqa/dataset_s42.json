@@ -1,0 +1,41 @@
+{
+  "dataset": "metaqa",
+  "eligible_dev_questions": 1444,
+  "eligible_test_questions": 1459,
+  "faults": {
+    "contradicted": 2137,
+    "destroyed": 1603,
+    "recoverable": 1603
+  },
+  "faults_file": "evidence/metaqa/faults_s42.json",
+  "faults_sha256": "fba8abce0eb933d696f13d0000f617269c0423ca323a49246ff0f361255eac12",
+  "g0_edges": 137856,
+  "g0_triples": 68928,
+  "held_out": 360,
+  "held_out_by_hop": {
+    "1": 70,
+    "2": 202,
+    "3": 88
+  },
+  "held_out_qtypes": 46,
+  "kb_distinct_triples": 133582,
+  "kb_lines": 134741,
+  "load_seconds": 548.1,
+  "loaded_edges": 137856,
+  "loaded_nodes": 43280,
+  "nodes": 43280,
+  "pool_triples": 68394,
+  "question_ids_sha256": "879d9dcddc106d3aadc717d5421d6e0531742dcdeaa69fb6595278aa425a5fe4",
+  "region_movies": 300,
+  "region_people": 1113,
+  "region_start_movie": "The Witches",
+  "seed": 42,
+  "test_questions_dropped_for_sharing_topic_and_qtype_with_train": 1,
+  "train": 480,
+  "train_by_hop": {
+    "1": 94,
+    "2": 283,
+    "3": 103
+  },
+  "train_qtypes": 46
+}

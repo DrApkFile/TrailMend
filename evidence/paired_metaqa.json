@@ -1,0 +1,86 @@
+{
+  "claim": "paired_metaqa",
+  "design": "MetaQA: every held-out question answered by two arms on the same seed at the last round, counted as a pair on Hits@1. The p-value is a two-sided exact McNemar test on the discordant pairs.",
+  "measured_at": "2026-11-16T01:15:18+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full_v2",
+      "both_correct": 197,
+      "delta_points": 14.7222,
+      "n": 360,
+      "neither_correct": 104,
+      "only_arm_correct": 56,
+      "only_reference_correct": 3,
+      "p_value": 0.0,
+      "reference": "frozen",
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "random_reweight",
+      "both_correct": 199,
+      "delta_points": 0.2778,
+      "n": 360,
+      "neither_correct": 158,
+      "only_arm_correct": 2,
+      "only_reference_correct": 1,
+      "p_value": 1.0,
+      "reference": "frozen",
+      "round": 5,
+      "seed": 1
+    },
+    {
+      "arm": "full_v2",
+      "both_correct": 194,
+      "delta_points": 20.0,
+      "n": 360,
+      "neither_correct": 92,
+      "only_arm_correct": 73,
+      "only_reference_correct": 1,
+      "p_value": 0.0,
+      "reference": "frozen",
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "random_reweight",
+      "both_correct": 195,
+      "delta_points": 0.8333,
+      "n": 360,
+      "neither_correct": 162,
+      "only_arm_correct": 3,
+      "only_reference_correct": 0,
+      "p_value": 0.25,
+      "reference": "frozen",
+      "round": 5,
+      "seed": 7
+    },
+    {
+      "arm": "full_v2",
+      "both_correct": 201,
+      "delta_points": 13.8889,
+      "n": 360,
+      "neither_correct": 107,
+      "only_arm_correct": 51,
+      "only_reference_correct": 1,
+      "p_value": 0.0,
+      "reference": "frozen",
+      "round": 5,
+      "seed": 42
+    },
+    {
+      "arm": "random_reweight",
+      "both_correct": 201,
+      "delta_points": 0.0,
+      "n": 360,
+      "neither_correct": 157,
+      "only_arm_correct": 1,
+      "only_reference_correct": 1,
+      "p_value": 1.0,
+      "reference": "frozen",
+      "round": 5,
+      "seed": 42
+    }
+  ]
+}

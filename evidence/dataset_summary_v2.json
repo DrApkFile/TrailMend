@@ -1,0 +1,50 @@
+{
+  "claim": "dataset_summary_v2",
+  "design": "The generated company graphs of run 2, one row per seed: nodes and edges in G0, withheld edges, and the planted faults by kind. Regenerated from the seed by the dataset code, whose digests are in run_manifest_v2.json.",
+  "measured_at": "2026-11-16T01:16:58+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "alias_duplicates": 6,
+      "conflations": 1,
+      "data_version": "v2",
+      "dataset": "northwind_generated",
+      "edges": 1654,
+      "held_out_questions": 340,
+      "missing_edges": 104,
+      "nodes": 1165,
+      "planted_faults": 124,
+      "seed": 1,
+      "withheld_edges": 108,
+      "wrong_edges": 13
+    },
+    {
+      "alias_duplicates": 6,
+      "conflations": 1,
+      "data_version": "v2",
+      "dataset": "northwind_generated",
+      "edges": 1666,
+      "held_out_questions": 340,
+      "missing_edges": 105,
+      "nodes": 1165,
+      "planted_faults": 125,
+      "seed": 7,
+      "withheld_edges": 109,
+      "wrong_edges": 13
+    },
+    {
+      "alias_duplicates": 6,
+      "conflations": 1,
+      "data_version": "v2",
+      "dataset": "northwind_generated",
+      "edges": 1681,
+      "held_out_questions": 342,
+      "missing_edges": 106,
+      "nodes": 1165,
+      "planted_faults": 126,
+      "seed": 42,
+      "withheld_edges": 110,
+      "wrong_edges": 13
+    }
+  ]
+}

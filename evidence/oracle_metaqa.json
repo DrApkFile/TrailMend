@@ -1,0 +1,283 @@
+{
+  "claim": "oracle_metaqa",
+  "design": "Cumulative oracle ladder on MetaQA held-out questions, answered through HydraDB with the run's own search. Each rung adds one repair an oracle with the fault file could make and keeps the ones before it: g0 (nothing); contradicted_removed (every contradicted fault's stale triple deleted); recoverable_restored (every recoverable fault's wrong triple deleted and its true triple ingested); pool_ingested (every withheld triple ingested - the top of what reweighting, quarantine and gap-fill could reach); destroyed_removed (every destroyed fault's wrong triple deleted, which no mechanism can turn into a right answer). Costs come from the same ingest rule.",
+  "measured_at": "2026-11-16T01:02:48+00:00",
+  "measured_on": {
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+    "host": "127.0.0.1",
+    "image": "ghcr.io/hydra-db/hydradb",
+    "kind": "local"
+  },
+  "rows": [
+    {
+      "dataset": "metaqa",
+      "edges_changed": 0,
+      "held_out": {
+        "exact": 32,
+        "exact_set": 0.08888888888888889,
+        "hits": 200,
+        "hits_at_1": 0.5555555555555556,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 137,
+        "wrong": 23,
+        "wrong_rate": 0.06388888888888888
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "g0",
+      "seed": 1
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 4274,
+      "held_out": {
+        "exact": 33,
+        "exact_set": 0.09166666666666666,
+        "hits": 210,
+        "hits_at_1": 0.5833333333333334,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 138,
+        "wrong": 12,
+        "wrong_rate": 0.03333333333333333
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "contradicted_removed",
+      "seed": 1
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 3206,
+      "held_out": {
+        "exact": 33,
+        "exact_set": 0.09166666666666666,
+        "hits": 219,
+        "hits_at_1": 0.6083333333333333,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 137,
+        "wrong": 4,
+        "wrong_rate": 0.011111111111111112
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "recoverable_restored",
+      "seed": 1
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 133582,
+      "held_out": {
+        "exact": 294,
+        "exact_set": 0.8166666666666667,
+        "hits": 357,
+        "hits_at_1": 0.9916666666666667,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 2,
+        "wrong": 1,
+        "wrong_rate": 0.002777777777777778
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "pool_ingested",
+      "seed": 1
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 3206,
+      "held_out": {
+        "exact": 308,
+        "exact_set": 0.8555555555555555,
+        "hits": 357,
+        "hits_at_1": 0.9916666666666667,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 2,
+        "wrong": 1,
+        "wrong_rate": 0.002777777777777778
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "destroyed_removed",
+      "seed": 1
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 0,
+      "held_out": {
+        "exact": 28,
+        "exact_set": 0.07777777777777778,
+        "hits": 195,
+        "hits_at_1": 0.5416666666666666,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 135,
+        "wrong": 30,
+        "wrong_rate": 0.08333333333333333
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "g0",
+      "seed": 7
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 4274,
+      "held_out": {
+        "exact": 29,
+        "exact_set": 0.08055555555555556,
+        "hits": 213,
+        "hits_at_1": 0.5916666666666667,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 135,
+        "wrong": 12,
+        "wrong_rate": 0.03333333333333333
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "contradicted_removed",
+      "seed": 7
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 3206,
+      "held_out": {
+        "exact": 31,
+        "exact_set": 0.08611111111111111,
+        "hits": 220,
+        "hits_at_1": 0.6111111111111112,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 134,
+        "wrong": 6,
+        "wrong_rate": 0.016666666666666666
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "recoverable_restored",
+      "seed": 7
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 133582,
+      "held_out": {
+        "exact": 293,
+        "exact_set": 0.8138888888888889,
+        "hits": 353,
+        "hits_at_1": 0.9805555555555555,
+        "n": 360,
+        "refused": 1,
+        "unreachable": 2,
+        "wrong": 4,
+        "wrong_rate": 0.011111111111111112
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "pool_ingested",
+      "seed": 7
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 3206,
+      "held_out": {
+        "exact": 304,
+        "exact_set": 0.8444444444444444,
+        "hits": 355,
+        "hits_at_1": 0.9861111111111112,
+        "n": 360,
+        "refused": 1,
+        "unreachable": 3,
+        "wrong": 1,
+        "wrong_rate": 0.002777777777777778
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "destroyed_removed",
+      "seed": 7
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 0,
+      "held_out": {
+        "exact": 27,
+        "exact_set": 0.075,
+        "hits": 202,
+        "hits_at_1": 0.5611111111111111,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 133,
+        "wrong": 25,
+        "wrong_rate": 0.06944444444444445
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "g0",
+      "seed": 42
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 4274,
+      "held_out": {
+        "exact": 27,
+        "exact_set": 0.075,
+        "hits": 208,
+        "hits_at_1": 0.5777777777777777,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 135,
+        "wrong": 17,
+        "wrong_rate": 0.04722222222222222
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "contradicted_removed",
+      "seed": 42
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 3206,
+      "held_out": {
+        "exact": 30,
+        "exact_set": 0.08333333333333333,
+        "hits": 216,
+        "hits_at_1": 0.6,
+        "n": 360,
+        "refused": 0,
+        "unreachable": 132,
+        "wrong": 12,
+        "wrong_rate": 0.03333333333333333
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "recoverable_restored",
+      "seed": 42
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 133582,
+      "held_out": {
+        "exact": 285,
+        "exact_set": 0.7916666666666666,
+        "hits": 347,
+        "hits_at_1": 0.9638888888888889,
+        "n": 360,
+        "refused": 3,
+        "unreachable": 1,
+        "wrong": 9,
+        "wrong_rate": 0.025
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "pool_ingested",
+      "seed": 42
+    },
+    {
+      "dataset": "metaqa",
+      "edges_changed": 3206,
+      "held_out": {
+        "exact": 293,
+        "exact_set": 0.8138888888888889,
+        "hits": 348,
+        "hits_at_1": 0.9666666666666667,
+        "n": 360,
+        "refused": 3,
+        "unreachable": 4,
+        "wrong": 5,
+        "wrong_rate": 0.013888888888888888
+      },
+      "run_id": "ddf430f-2260187b",
+      "rung": "destroyed_removed",
+      "seed": 42
+    }
+  ]
+}

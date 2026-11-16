@@ -323,6 +323,14 @@ def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[d
         f"and {metaqa_clause}.",
         ("dataset_summary_v2.json", "metaqa/dataset_s*.json"),
     )
+    if any(row.get("comparable") is False for row in _file("paired_v2_unweighted")):
+        add(
+            "comparability",
+            "The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, "
+            "whose recorded paths include edges outside the intended G0 graph. The historical scores and verdicts "
+            "remain published; this is not a clean replication.",
+            ("paired_v2_unweighted.json",),
+        )
     rounds = _as_int(north.get("rounds"))
     add(
         "gain",
@@ -345,14 +353,14 @@ def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[d
         _as_int(meta.get("random_reweight_seeds_beating_frozen")) or 0
     )
     verdict = (
-        "so the gain comes from repairing the right links, not from perturbing the graph"
+        "and random reweighting did not significantly beat the untouched graph on any seed"
         if wins == 0
         else f"though it beat the untouched graph on {wins} seed(s), so part of the gain is perturbation"
     )
     add(
         "random_control",
-        "With the same graph, the same questions, the same search and the same number and size of cost changes each "
-        f"round, random reweighting ends at {_control(north, 'the company graphs')}"
+        "Random reweighting, matched to its own targeted plan's number and size of cost changes each "
+        f"round, ends at {_control(north, 'the company graphs')}"
         + (f", and at {_control(meta, 'MetaQA')}" if meta else "")
         + f", {verdict}. The random arm reads no new documents; gap-fill alone, with no reweighting, reaches "
         f"{_pct(_as_float(north.get('gapfill_only_round_n')))} on the company graphs.",
@@ -415,7 +423,8 @@ def sentences(north: Mapping[str, object], meta: Mapping[str, object]) -> list[d
                 if meta
                 else ""
             )
-            + ". The rest of the gain is the same links, priced more correctly."
+            + ". Reweighting and quarantine also change the graph; "
+            "these results do not isolate their gain from gap-fill."
         )
     add("closing", closing, ("curve_v2.jsonl", "dataset_summary_v2.json", "curve_metaqa.jsonl"))
     return out

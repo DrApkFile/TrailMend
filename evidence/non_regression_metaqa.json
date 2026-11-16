@@ -1,0 +1,230 @@
+{
+  "claim": "non_regression_metaqa",
+  "design": "MetaQA, full_v2, per round from the held-out tape: how many hits stayed hits, which broke, and for each break the receipts written that round on an edge of the answer path before or after it.",
+  "measured_at": "2026-11-16T01:15:18+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 3,
+      "breaks_untraced": 0,
+      "broken_question_ids": [
+        "mq-2hop-test-2287",
+        "mq-2hop-test-2665",
+        "mq-2hop-test-8136"
+      ],
+      "hits_before": 200,
+      "newly_broken": 3,
+      "newly_fixed": 55,
+      "receipts_blamed": {
+        "mq-2hop-test-2287": [
+          "rcpt-9ea508da338a2f8f"
+        ],
+        "mq-2hop-test-2665": [
+          "rcpt-7adeb03857ec95b2"
+        ],
+        "mq-2hop-test-8136": [
+          "rcpt-7896711e3a143478",
+          "rcpt-e7cafea8d945b066"
+        ]
+      },
+      "round": 1,
+      "seed": 1,
+      "stayed_hits": 197
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 252,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 1,
+      "stayed_hits": 252
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 253,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 1,
+      "stayed_hits": 253
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 253,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 1,
+      "stayed_hits": 253
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 253,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 1,
+      "stayed_hits": 253
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 195,
+      "newly_broken": 0,
+      "newly_fixed": 71,
+      "receipts_blamed": {},
+      "round": 1,
+      "seed": 7,
+      "stayed_hits": 195
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_untraced": 0,
+      "broken_question_ids": [
+        "mq-2hop-test-2065"
+      ],
+      "hits_before": 266,
+      "newly_broken": 1,
+      "newly_fixed": 0,
+      "receipts_blamed": {
+        "mq-2hop-test-2065": [
+          "rcpt-774ad78f45bf95e7"
+        ]
+      },
+      "round": 2,
+      "seed": 7,
+      "stayed_hits": 265
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 265,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 7,
+      "stayed_hits": 265
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 265,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 7,
+      "stayed_hits": 265
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 266,
+      "newly_broken": 0,
+      "newly_fixed": 1,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 7,
+      "stayed_hits": 266
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 1,
+      "breaks_untraced": 0,
+      "broken_question_ids": [
+        "mq-1hop-test-7501"
+      ],
+      "hits_before": 202,
+      "newly_broken": 1,
+      "newly_fixed": 51,
+      "receipts_blamed": {
+        "mq-1hop-test-7501": [
+          "rcpt-90d9709c93a77923"
+        ]
+      },
+      "round": 1,
+      "seed": 42,
+      "stayed_hits": 201
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 252,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 2,
+      "seed": 42,
+      "stayed_hits": 252
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 252,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 3,
+      "seed": 42,
+      "stayed_hits": 252
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 252,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 4,
+      "seed": 42,
+      "stayed_hits": 252
+    },
+    {
+      "arm": "full_v2",
+      "breaks_traced_to_a_receipt": 0,
+      "breaks_untraced": 0,
+      "broken_question_ids": [],
+      "hits_before": 252,
+      "newly_broken": 0,
+      "newly_fixed": 0,
+      "receipts_blamed": {},
+      "round": 5,
+      "seed": 42,
+      "stayed_hits": 252
+    }
+  ]
+}

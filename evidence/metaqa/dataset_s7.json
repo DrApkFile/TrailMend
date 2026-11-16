@@ -1,0 +1,41 @@
+{
+  "dataset": "metaqa",
+  "eligible_dev_questions": 1277,
+  "eligible_test_questions": 1382,
+  "faults": {
+    "contradicted": 2137,
+    "destroyed": 1603,
+    "recoverable": 1603
+  },
+  "faults_file": "evidence/metaqa/faults_s7.json",
+  "faults_sha256": "1e1db7bd2210a06a2e475aea27f094452b8a176d45a165bd16460a45e0359561",
+  "g0_edges": 137856,
+  "g0_triples": 68928,
+  "held_out": 360,
+  "held_out_by_hop": {
+    "1": 71,
+    "2": 192,
+    "3": 97
+  },
+  "held_out_qtypes": 46,
+  "kb_distinct_triples": 133582,
+  "kb_lines": 134741,
+  "load_seconds": 423.4,
+  "loaded_edges": 137856,
+  "loaded_nodes": 43280,
+  "nodes": 43280,
+  "pool_triples": 68394,
+  "question_ids_sha256": "11a587b1703822ba256a33dfccc20e4c5c1c3eefb76e0abf52a058e9d981dc5e",
+  "region_movies": 300,
+  "region_people": 1037,
+  "region_start_movie": "The Ballad of Cable Hogue",
+  "seed": 7,
+  "test_questions_dropped_for_sharing_topic_and_qtype_with_train": 3,
+  "train": 480,
+  "train_by_hop": {
+    "1": 93,
+    "2": 271,
+    "3": 116
+  },
+  "train_qtypes": 45
+}
