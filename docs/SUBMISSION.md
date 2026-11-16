@@ -25,7 +25,7 @@ I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 plante
 
 ## Verification
 
-`make gate` passed, including strict Python checks, unit tests and the production web build. Live `make verify` passed, including both `/v1/truth` tests; deployed pages/evidence and their hashes, both screenshots, hosted demo reset and local preview shutdown are verified. Evidence: `evidence/demo/final-deployment-check.json`, `landing-final-*-check.json` and `final-demo-reset.txt`. The clean-clone `scripts/presubmit.sh` audit passed at `a1b997a`: all 14 checks, including 52 live tests, with no skips. Evidence: `evidence/demo/final-verification.json` and `final-presubmit.txt`. H6 is complete with the replication limitation explicitly recorded. All figures above are generated from evidence rather than manually transcribed.
+`make gate` passed, including strict Python checks, unit tests and the production web build. Live `make verify` passed, including both `/v1/truth` tests; deployed pages/evidence and their hashes, both screenshots, hosted demo reset and local preview shutdown are verified. Evidence: `evidence/demo/final-deployment-check.json`, `landing-final-*-check.json` and `final-demo-reset.txt`. The clean-clone `scripts/presubmit.sh` audit passed at `e92146a`: all 14 checks, including 52 live tests, with no skips. Evidence: `evidence/demo/final-verification.json` and `final-presubmit.txt`. H6 is complete with the replication limitation explicitly recorded. All figures above are generated from evidence rather than manually transcribed.
 
 ## Owner actions
 

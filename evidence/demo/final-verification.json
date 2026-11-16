@@ -1,5 +1,5 @@
 {
-  "checked_commit": "a1b997a",
+  "checked_commit": "e92146a",
   "presubmit_checks": [
     "no .env in the clone",
     "no credential-shaped strings",
@@ -21,5 +21,6 @@
   "gate": "passed",
   "verify": "passed",
   "presubmit": "clean",
-  "run_one_evidence": "all original manifest hashes match"
+  "run_one_evidence": "all original manifest hashes match",
+  "scope": "Audit applies to this commit; concurrent later work is excluded."
 }
