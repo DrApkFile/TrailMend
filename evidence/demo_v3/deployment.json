@@ -1,0 +1,21 @@
+{
+  "summary_v3": {
+    "available": true,
+    "sha256": "31e50a822b85fabcd0e9237600a6884562f5b3727bf77f62b4e32d28d4bbdcbd",
+    "expected_sha256": "31e50a822b85fabcd0e9237600a6884562f5b3727bf77f62b4e32d28d4bbdcbd"
+  },
+  "hypotheses_v3": {
+    "available": true,
+    "sha256": "2fb65585ef8515019249fed1f8b958b884479659bc2ac0b0ee96cd34ad292eb7",
+    "expected_sha256": "2fb65585ef8515019249fed1f8b958b884479659bc2ac0b0ee96cd34ad292eb7"
+  },
+  "curve-v3-northwind": {
+    "available": true,
+    "sha256": "a0c33b2ec917b5c598423ea659ecaf298ad868021e884380f1cb8cd921fb5a4a",
+    "expected_sha256": "a0c33b2ec917b5c598423ea659ecaf298ad868021e884380f1cb8cd921fb5a4a"
+  },
+  "landing": {
+    "status": 200,
+    "run3_visible": true
+  }
+}

@@ -131,3 +131,5 @@ failed; run 3 does not rewrite them.
 Separate worktree `trailmend-run3`, isolated HydraDB `:8444` and S3 `:5001`. Measured `v3-9fe1e3a-aab4f1f7`; the complete curve and training-only calibration are published with R1 FAIL; R2 FAIL; R3 PASS. MetaQA run 3 is explicitly `not_run`. No historical run files or hosted demo graph were changed. Original measurement code is preserved on `origin/run3`; integration rebases onto Claude's commits. API/report/landing-line wiring is included. The owner requested a follow-up repair of feedback starvation and set-answer selection; that requires a new preregistration and measurement, preserving this run's failures.
 
 Run-3 integration checks: gate passed, 288 unit tests and 53 live tests on the isolated instance; original measured commit remains on `origin/run3`. Verification: `evidence/verification_v3.json`.
+
+Run 3 is deployed: summary, hypotheses and curve API hashes match this worktree; landing line shows both failures and R3 PASS. Mobile check has no overflow or console errors. Proof: `evidence/demo_v3/`. Rebased integration gate also passes. The hosted demo was not reset.
