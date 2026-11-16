@@ -250,6 +250,24 @@ Run 1, and the two files that describe the deployment both runs used:
 | [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `a0c4e5cec36e2834…` |
 | [`evidence/load.json`](evidence/load.json) | loading G0 into HydraDB, and that a re-load adds nothing | `ef1c00b3507de398…` |
 | [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | `87a2921754f7ed09…` |
+<!-- run3:start -->
+### Run 3: abstain instead of guessing
+
+Generated Northwind v2, run `v3-9fe1e3a-aab4f1f7`, seeds [1, 7, 42]; 5 rounds. Training-only cutoffs were frozen before held-out scoring. The table shows means across seeds; refusals count as neither correct nor wrong, and remain in the denominator.
+
+| arm | accuracy r0 → r5 | wrong/n r0 → r5 | refused/n r0 → r5 | coverage r0 → r5 |
+|---|---|---|---|---|
+| `frozen_abstain` | 77.0% → 77.0% | 13.6% → 13.6% | 0.0% → 0.0% | 90.6% → 90.6% |
+| `full_v2_abstain` | 77.0% → 80.0% | 13.6% → 9.3% | 0.0% → 5.4% | 90.6% → 89.3% |
+| `full_v2` | 77.0% → 84.6% | 13.6% → 9.5% | 0.0% → 0.0% | 90.6% → 94.1% |
+
+Preregistered verdicts: **R1 FAIL**; **R2 FAIL**; **R3 PASS**.
+R1 tests the wrong-answer reduction; R2 limits accuracy lost against the concurrent non-abstaining full Mend. This variant did not meet those safeguards. R3 only checks that frozen is not significantly better; it is not an equivalence or improvement claim. H6' and M4 remain failed in their original experiments.
+
+**MetaQA run 3: not_run.** Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-3 results were measured.
+
+Sources: [curve](evidence/curve_v3_northwind.jsonl), [training calibration](evidence/calibration_v3.json), [hypotheses](evidence/hypotheses_v3.json), [paired questions](evidence/paired_v3.json), [summary](evidence/summary_v3.json), [manifest and receipts](evidence/run_manifest_v3.json).
+<!-- run3:end -->
 <!-- numbers:end -->
 
 Every figure above is written into this file by `trailmend.eval.report` from the files in `evidence/`. None of them is

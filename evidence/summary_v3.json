@@ -1,0 +1,79 @@
+{
+  "claim": "summary_v3",
+  "design": "Run 3 means from complete curves and preregistered verdicts; PRD 3.4.",
+  "measured_at": "2026-11-16T05:27:10+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "aggregation": "unweighted mean of seed-level rates; denominator includes every held-out question",
+      "arms": [
+        {
+          "accuracy_0": 0.7700378396972823,
+          "accuracy_5": 0.7700378396972823,
+          "arm": "frozen_abstain",
+          "coverage_0": 0.9060887512899897,
+          "coverage_5": 0.9060887512899897,
+          "low_confidence_0": 0.0,
+          "low_confidence_5": 0.0,
+          "refused_0": 0.0,
+          "refused_5": 0.0,
+          "unreachable_0": 0.09391124871001032,
+          "unreachable_5": 0.09391124871001032,
+          "wrong_0": 0.13605091159270724,
+          "wrong_5": 0.13605091159270724
+        },
+        {
+          "accuracy_0": 0.7700378396972823,
+          "accuracy_5": 0.8003841302602912,
+          "arm": "full_v2_abstain",
+          "coverage_0": 0.9060887512899897,
+          "coverage_5": 0.8933723196881092,
+          "low_confidence_0": 0.0,
+          "low_confidence_5": 0.05382410274051141,
+          "refused_0": 0.0,
+          "refused_5": 0.05382410274051141,
+          "unreachable_0": 0.09391124871001032,
+          "unreachable_5": 0.052803577571379434,
+          "wrong_0": 0.13605091159270724,
+          "wrong_5": 0.0929881894278179
+        },
+        {
+          "accuracy_0": 0.7700378396972823,
+          "accuracy_5": 0.8463708290333677,
+          "arm": "full_v2",
+          "coverage_0": 0.9060887512899897,
+          "coverage_5": 0.9413140694874441,
+          "low_confidence_0": 0.0,
+          "low_confidence_5": 0.0,
+          "refused_0": 0.0,
+          "refused_5": 0.0,
+          "unreachable_0": 0.09391124871001032,
+          "unreachable_5": 0.058685930512555905,
+          "wrong_0": 0.13605091159270724,
+          "wrong_5": 0.09494324045407637
+        }
+      ],
+      "classification": "measured",
+      "config_sha256": "aab4f1f7ced35b2fa9bf5c8691029344978ec5d4612f097ec718233ba464781f",
+      "data_version": "v2",
+      "dataset": "northwind_generated",
+      "limitation": "R3 is a weak non-superiority check; its pass does not establish equivalence or improvement.",
+      "metaqa": {
+        "classification": "not_run",
+        "reason": "not_run: Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-3 results were measured."
+      },
+      "rounds": 5,
+      "run_id": "v3-9fe1e3a-aab4f1f7",
+      "seeds": [
+        1,
+        7,
+        42
+      ],
+      "verdicts": {
+        "R1": "FAIL",
+        "R2": "FAIL",
+        "R3": "PASS"
+      }
+    }
+  ]
+}

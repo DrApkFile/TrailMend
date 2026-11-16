@@ -1,0 +1,47 @@
+{
+  "claim": "paired_v3",
+  "design": "Run 3, paired exact McNemar on held-out correctness; PRD 3.4.",
+  "measured_at": "2026-11-16T05:10:35+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "arm": "full_v2_abstain",
+      "dataset": "northwind_generated",
+      "delta_points": 4.705882352941177,
+      "n": 340,
+      "only_frozen_correct": 6,
+      "only_full_correct": 22,
+      "p_value": 0.0037191659212112427,
+      "reference": "frozen_abstain",
+      "round": 5,
+      "run_id": "v3-9fe1e3a-aab4f1f7",
+      "seed": 1
+    },
+    {
+      "arm": "full_v2_abstain",
+      "dataset": "northwind_generated",
+      "delta_points": 2.0588235294117645,
+      "n": 340,
+      "only_frozen_correct": 2,
+      "only_full_correct": 9,
+      "p_value": 0.0654296875,
+      "reference": "frozen_abstain",
+      "round": 5,
+      "run_id": "v3-9fe1e3a-aab4f1f7",
+      "seed": 7
+    },
+    {
+      "arm": "full_v2_abstain",
+      "dataset": "northwind_generated",
+      "delta_points": 2.3391812865497075,
+      "n": 342,
+      "only_frozen_correct": 2,
+      "only_full_correct": 10,
+      "p_value": 0.03857421875,
+      "reference": "frozen_abstain",
+      "round": 5,
+      "run_id": "v3-9fe1e3a-aab4f1f7",
+      "seed": 42
+    }
+  ]
+}

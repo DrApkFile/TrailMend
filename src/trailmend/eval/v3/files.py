@@ -30,6 +30,11 @@ def append(row: dict[str, object]) -> None:
 
 def write_manifest(run_id: str) -> None:
     paths = [CURVE, Path("evidence/calibration_v3.json")]
+    paths.extend(
+        Path("evidence") / name
+        for name in ("hypotheses_v3.json", "paired_v3.json", "summary_v3.json")
+        if (Path("evidence") / name).exists()
+    )
     paths.extend(sorted(Path("evidence/runs").glob(f"{run_id}-*/**/*.jsonl")))
     payload = {
         "run_id": run_id,
