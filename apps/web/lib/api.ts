@@ -474,6 +474,7 @@ export type ReplayExample = {
     src_name: string;
     dst_name: string;
     truth: string;
+    true_dst_name?: string;
   };
   before: { cost: number; status: string };
   after: { cost: number; status: string };

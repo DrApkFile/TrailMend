@@ -23,8 +23,15 @@ def _verdicts(live: Live) -> dict[tuple[int, str, int], str]:
     return truth | wrong
 
 
+def _true_dst(live: Live) -> dict[tuple[int, str, int], int]:
+    return {(w.src, w.rel_type.value, w.wrong_dst): w.true_dst for w in live.built.ingested.faults.wrong_edges}
+
+
 def _named(
-    example: Mapping[str, object], names: Mapping[int, str], verdicts: Mapping[tuple[int, str, int], str]
+    example: Mapping[str, object],
+    names: Mapping[int, str],
+    verdicts: Mapping[tuple[int, str, int], str],
+    true_dst: Mapping[tuple[int, str, int], int],
 ) -> dict[str, object]:
     edge = example["edge"]
     assert isinstance(edge, dict)
@@ -38,6 +45,11 @@ def _named(
             "dst_name": names.get(dst, str(dst)),
             "truth": SHORTCUT if rel.startswith(SHORTCUT_PREFIX) else verdicts.get((src, rel, dst), NOT_IN_TRUTH),
         }
+        | (
+            {"true_dst_name": names.get(true_dst[(src, rel, dst)], str(true_dst[(src, rel, dst)]))}
+            if (src, rel, dst) in true_dst
+            else {}
+        )
     }
 
 
@@ -58,8 +70,9 @@ def replay_run(dataset: str, seed: int, request: Request) -> dict[str, object]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     names = {node.id: node.name for node in live.built.truth.nodes} | live.names
     verdicts = _verdicts(live)
+    true_dst = _true_dst(live)
     rounds = [
-        row | {"examples": [_named(example, names, verdicts) for example in row["examples"]]}
+        row | {"examples": [_named(example, names, verdicts, true_dst) for example in row["examples"]]}
         for row in payload["rounds"]
     ]
     return payload | {"available": True, "sha256": evidence.digest(path), "rounds": rounds}

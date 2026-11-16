@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { Curve } from "@/components/Curve";
 import { Failed } from "@/components/Shell";
-import {
-  ReceiptFlight,
-  type FlightCard,
-} from "@/components/site/ReceiptFlight";
 import { Replay } from "@/components/site/Replay";
 import { TrailCanvas } from "@/components/site/TrailCanvas";
+import {
+  AskCta,
+  Figure,
+  Fraction,
+  Kicker,
+  RepairCard,
+  Steps,
+  pickRepair,
+} from "@/components/site/Landing";
 import {
   fetchCurve,
   fetchCurveMetaqa,
@@ -195,13 +200,6 @@ function pts(value: number | undefined): string {
   return typeof value === "number" ? (value * 100).toFixed(1) : NOT_MEASURED;
 }
 
-function shift(rows: CurveRow[], arm: string): string {
-  const points = meanByRound(rows, arm);
-  return points.length
-    ? `${pts(points[0]?.accuracy)} › ${pts(points.at(-1)?.accuracy)}`
-    : NOT_MEASURED;
-}
-
 function last(rows: CurveRow[], arm: string): string {
   const points = meanByRound(rows, arm);
   return points.length ? `${pts(points.at(-1)?.accuracy)}%` : NOT_MEASURED;
@@ -209,221 +207,6 @@ function last(rows: CurveRow[], arm: string): string {
 
 function count(value: number | null): string {
   return value === null ? NOT_MEASURED : value.toLocaleString("en-US");
-}
-
-const ICONS: Record<string, React.ReactNode> = {
-  up: <path d="M3 13l4-4 3 3 6-6M12 6h4v4" />,
-  book: (
-    <path d="M4 4h5a2 2 0 0 1 2 2v10a2 2 0 0 0-2-2H4zM18 4h-5a2 2 0 0 0-2 2v10a2 2 0 0 1 2-2h5z" />
-  ),
-  dice: <path d="M4 4h12v12H4zM8 8h.01M12 12h.01" />,
-  doc: <path d="M5 3h7l4 4v10H5zM12 3v4h4M8 11h6M8 14h4" />,
-};
-
-function StatCard({
-  icon,
-  value,
-  label,
-  note,
-}: {
-  icon: string;
-  value: string;
-  label: string;
-  note: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm">
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        stroke="#a8a29e"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        {ICONS[icon]}
-      </svg>
-      <p className="mt-5 font-mono text-2xl text-ink sm:text-3xl">{value}</p>
-      <p className="mt-3 font-mono text-[11px] tracking-wider text-stone-500 uppercase">
-        {label}
-      </p>
-      <p className="mt-2 text-sm text-stone-400">{note}</p>
-    </div>
-  );
-}
-
-const FAULTS: {
-  tag: string;
-  title: string;
-  before: string;
-  after: string;
-  outcome: string;
-}[] = [
-  {
-    tag: "contradicted",
-    title: "A stale owner, better documented",
-    before: "old on-call",
-    after: "current on-call",
-    outcome: "repaired by blame: the true link becomes the cheaper one",
-  },
-  {
-    tag: "recoverable",
-    title: "The true link is in an unread document",
-    before: "wrong team",
-    after: "team from the document",
-    outcome: "repaired by gap-fill reading the withheld document",
-  },
-  {
-    tag: "missing",
-    title: "A link that was never ingested",
-    before: "no path",
-    after: "path restored",
-    outcome: "repaired by gap-fill",
-  },
-  {
-    tag: "destroyed",
-    title: "The truth is in no document at all",
-    before: "wrong answer",
-    after: "refusal",
-    outcome: "cannot be repaired; quarantine can only stop the wrong answer",
-  },
-];
-
-function Comparison({ rows }: { rows: CurveRow[] }) {
-  const round = finalRound(rows);
-  const n = pooled(rows, "frozen", round, "n");
-  const frozenRight = pooled(rows, "frozen", round, "correct");
-  const mendRight = pooled(rows, "full_v2", round, "correct");
-  const table: [string, string, string][] = [
-    [
-      "Wrong answers",
-      count(pooled(rows, "frozen", round, "wrong")),
-      count(pooled(rows, "full_v2", round, "wrong")),
-    ],
-    [
-      "Unreachable",
-      count(pooled(rows, "frozen", round, "unreachable")),
-      count(pooled(rows, "full_v2", round, "unreachable")),
-    ],
-    [
-      "Random reweight, same budget",
-      last(rows, "frozen"),
-      last(rows, "random_reweight"),
-    ],
-    ["Plain document store", "—", last(rows, "plain_store")],
-  ];
-  return (
-    <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm sm:p-8">
-      <h2 className="text-2xl text-ink sm:text-3xl">
-        Same questions. Different graph.
-      </h2>
-      <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1fr_1.3fr]">
-        <div>
-          <p className="font-mono text-[11px] tracking-wider text-stone-500 uppercase">
-            Frozen graph, round {round ?? NOT_MEASURED}
-          </p>
-          <p className="mt-4 font-mono text-5xl text-bad sm:text-6xl">
-            {count(frozenRight)}
-            <span className="text-stone-600">/{count(n)}</span>
-          </p>
-          <p className="mt-4 text-sm text-stone-400">
-            Held-out questions right, never repaired.
-          </p>
-        </div>
-        <div>
-          <p className="font-mono text-[11px] tracking-wider text-stone-500 uppercase">
-            After the Mend, round {round ?? NOT_MEASURED}
-          </p>
-          <p className="mt-4 font-mono text-5xl text-mend sm:text-6xl">
-            {count(mendRight)}
-            <span className="text-stone-600">/{count(n)}</span>
-          </p>
-          <p className="mt-4 text-sm text-stone-400">
-            The same questions after it learned from its own training answers.
-          </p>
-        </div>
-        <div className="lg:border-l lg:border-white/10 lg:pl-8">
-          <p className="flex justify-between font-mono text-[11px] tracking-wider text-stone-300 uppercase">
-            <span>Run 2, all seeds</span>
-            <span>frozen / mend</span>
-          </p>
-          <dl className="mt-4">
-            {table.map(([label, before, after]) => (
-              <div
-                key={label}
-                className="flex items-baseline justify-between gap-4 border-b border-white/10 py-2.5"
-              >
-                <dt className="text-xs text-stone-400">{label}</dt>
-                <dd className="font-mono text-xs text-ink">
-                  {before} / {after}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </div>
-      <p className="mt-8 text-xs text-stone-500">
-        Generated company graphs, 3 seeds, held-out questions the Mend never
-        saw. Counts are summed over seeds; read from the recorded run, not
-        typed.
-      </p>
-    </div>
-  );
-}
-
-function FaultRows() {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm sm:p-8">
-      <p className="font-mono text-[11px] tracking-wider text-mend uppercase">
-        Planted faults
-      </p>
-      <h2 className="mt-2 text-2xl text-ink sm:text-3xl">
-        What is wrong in each graph, on purpose.
-      </h2>
-      <ul className="mt-6">
-        {FAULTS.map((fault) => (
-          <li
-            key={fault.tag}
-            className="grid gap-3 border-t border-white/10 py-5 sm:grid-cols-[1.3fr_1fr_1.2fr] sm:items-center"
-          >
-            <div className="flex items-center gap-3">
-              <span
-                className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] tracking-wider uppercase ${fault.tag === "destroyed" ? "border-stone-600 text-stone-400" : "border-bad/50 text-bad"}`}
-              >
-                {fault.tag}
-              </span>
-              <span className="text-sm text-ink">{fault.title}</span>
-            </div>
-            <p className="font-mono text-xs">
-              <span className="text-bad line-through">{fault.before}</span>
-              <span className="text-stone-500"> › </span>
-              <span className="text-mend">{fault.after}</span>
-            </p>
-            <p className="font-mono text-[11px] text-stone-500 sm:text-right">
-              {fault.outcome}
-            </p>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Link
-          href="/truth"
-          className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-night hover:opacity-85"
-        >
-          See every fault live →
-        </Link>
-        <Link
-          href="/evidence"
-          className="rounded-full border border-white/15 px-5 py-2.5 text-sm text-ink hover:bg-white/5"
-        >
-          Read every result
-        </Link>
-      </div>
-    </div>
-  );
 }
 
 export default async function Home() {
@@ -458,32 +241,10 @@ export default async function Home() {
   const rowsMetaqa =
     curveMetaqa.ok && curveMetaqa.value.available ? curveMetaqa.value.rows : [];
   const sentences = rowsOf<BenchmarkSentence>(benchmark);
-  const rounds = rowsV2.length
-    ? Math.max(...rowsV2.map((row) => row.round))
-    : null;
-  const cards: FlightCard[] = [
-    {
-      kind: "reweight",
-      value: total(rowsV2, "full_v2", "applied_reweights"),
-      note: "a link repriced by an answer",
-    },
-    {
-      kind: "quarantine",
-      value: total(rowsV2, "full_v2", "applied_quarantines"),
-      note: "a link search may no longer walk",
-    },
-    {
-      kind: "promote",
-      value: total(rowsV2, "full_v2", "promoted"),
-      note: "a confirmed path made one hop",
-    },
-    {
-      kind: "gap-fill",
-      value: total(rowsV2, "full_v2", "ingested"),
-      note: "a withheld link read from a document",
-    },
-  ];
 
+  const final = finalRound(rowsV2);
+  const metaFinal = finalRound(rowsMetaqa);
+  const repair = pickRepair(replayed?.rounds ?? null);
   return (
     <main>
       <div className="loader" aria-hidden="true">
@@ -492,48 +253,107 @@ export default async function Home() {
         </p>
       </div>
 
-      <section className="relative flex min-h-svh flex-col justify-end overflow-hidden">
+      <section className="relative overflow-hidden">
         <TrailCanvas />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-night via-night/70 to-transparent" />
-        <div className="relative flex flex-col gap-8 px-4 pb-8 sm:px-8 sm:pb-10 lg:flex-row lg:items-end lg:justify-between">
-          <h1 className="rise font-display text-[clamp(3.5rem,13.5vw,11.5rem)] leading-[0.86] tracking-tight text-ink">
-            Every answer
-            <br />
-            <span className="italic">leaves a trail.</span>
-          </h1>
-          <div className="rise-late max-w-sm lg:pb-4">
-            <p className="text-base text-stone-300 sm:text-lg">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-night/70 via-night/85 to-night lg:from-night/40 lg:via-night/80" />
+        <div className="relative mx-auto grid max-w-6xl gap-12 px-4 pt-32 pb-16 sm:px-8 sm:pt-40 lg:grid-cols-[1.05fr_1fr] lg:items-end">
+          <div className="rise">
+            <p className="font-mono text-[11px] tracking-[0.18em] text-mend uppercase">
+              TrailMend
+            </p>
+            <p className="mt-2 font-mono text-[11px] tracking-wider text-stone-500">
+              Self-repairing graph · HydraDB OSS · MetaQA + generated company
+              graphs
+            </p>
+            <h1 className="mt-6 font-display text-[clamp(3.2rem,9vw,7rem)] leading-[0.9] tracking-tight text-ink">
+              A wrong link
+              <br />
+              shouldn&apos;t keep
+              <br />
+              <span className="italic">getting walked.</span>
+            </h1>
+            <p className="mt-6 max-w-lg text-base text-stone-300 sm:text-lg">
               Your service catalogue is quietly wrong. TrailMend finds out from
               its own answers and fixes it, with a receipt for every change.
             </p>
-            <Link
-              href="/ask"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-night transition-opacity hover:opacity-85"
-            >
-              Try it yourself
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                aria-hidden="true"
+            <p className="mt-3 max-w-lg text-sm text-stone-500">
+              Search takes the cheapest path, so a wrong link that is cheap
+              keeps being walked and the same wrong answer keeps coming back.
+              TrailMend reprices the links inside HydraDB from whether each
+              answer was right.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link
+                href="/ask"
+                className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-night hover:opacity-85"
               >
-                <path
-                  d="M2 7h10M8 3l4 4-4 4"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
+                Try it yourself →
+              </Link>
+              <Link
+                href="/truth"
+                className="rounded-full border border-white/15 px-5 py-3 text-sm text-ink hover:bg-white/5"
+              >
+                Inspect a repair
+              </Link>
+            </div>
+          </div>
+          <div className="rise-late">
+            <RepairCard
+              repair={repair}
+              runId={replayed?.run_id ?? null}
+              seed={REPLAY_SEED}
+              heldOut={replayed?.rounds?.[0]?.full_v2.n ?? null}
+            />
           </div>
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-4 pt-16 sm:px-8 sm:pt-24">
+        <Kicker>The result</Kicker>
+        <h2 className="mt-3 max-w-3xl text-4xl leading-tight tracking-tight text-ink sm:text-6xl">
+          Same questions. Same graph. Same search.
+        </h2>
+        <p className="mt-4 max-w-2xl text-stone-400">
+          Only the link costs change. Held-out questions the Mend never saw, on{" "}
+          {rowsV2.length ? seedsOf(rowsV2).length : NOT_MEASURED} generated
+          company graphs, after {final ?? NOT_MEASURED} rounds of learning from
+          its own training answers. Summed over seeds, read from the recorded
+          run.
+        </p>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          <Fraction
+            value={count(pooled(rowsV2, "frozen", final, "correct"))}
+            of={count(pooled(rowsV2, "frozen", final, "n"))}
+            tone="bad"
+            label="Frozen graph"
+            note="Never repaired. The planted faults keep answering."
+          />
+          <Fraction
+            value={count(pooled(rowsV2, "full_v2", final, "correct"))}
+            of={count(pooled(rowsV2, "full_v2", final, "n"))}
+            tone="mend"
+            label="After the Mend"
+            note={`Up from ${count(pooled(rowsV2, "full_v2", 0, "correct"))} at round 0. Random reweighting with the same budget ends at ${last(rowsV2, "random_reweight")}.`}
+          />
+          <Fraction
+            value={count(pooled(rowsMetaqa, "full_v2", metaFinal, "correct"))}
+            of={count(pooled(rowsMetaqa, "full_v2", metaFinal, "n"))}
+            tone="mend"
+            label="MetaQA · public data · Hits@1"
+            note={`Up from ${count(pooled(rowsMetaqa, "full_v2", 0, "correct"))}, on a public movie graph with half its triples withheld.`}
+          />
+        </div>
+        <Link
+          href="/evidence"
+          className="mt-6 inline-block text-sm text-stone-300 underline hover:text-ink"
+        >
+          See the full benchmark →
+        </Link>
+      </section>
+
       <section
         id="replay"
-        className="mx-auto max-w-6xl px-4 pt-16 sm:px-8 sm:pt-24"
+        className="mx-auto max-w-6xl px-4 pt-20 sm:px-8 sm:pt-28"
       >
         <Replay
           rounds={replayed?.rounds ?? null}
@@ -543,58 +363,55 @@ export default async function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pt-20 sm:px-8 sm:pt-28">
-        <p className="font-mono text-xs tracking-wider text-mend uppercase">
-          Self-repairing graph · HydraDB
-        </p>
-        <h2 className="mt-3 max-w-3xl text-4xl leading-tight tracking-tight text-ink sm:text-6xl">
-          The graph was wrong. It found out from its own answers.
+        <Kicker>How it works</Kicker>
+        <h2 className="mt-3 max-w-3xl text-4xl leading-tight tracking-tight text-ink sm:text-5xl">
+          A loop between the answer and the graph.
         </h2>
         <p className="mt-4 max-w-2xl text-stone-400">
-          Generated company graphs with planted faults, and MetaQA, a public
-          movie knowledge graph with half its links withheld. No LLM writes to
-          the graph or scores an answer.
+          A service catalogue is a graph of claims about who owns what, and some
+          of them are wrong. TrailMend uses the one signal that is always there:
+          whether the answer was right.
         </p>
-        <div className="mt-8 border-t border-white/10 pt-4 font-mono text-xs text-stone-500">
-          {rowsV2.length
-            ? `${seedsOf(rowsV2).length} company graphs`
-            : NOT_MEASURED}{" "}
-          ·{" "}
-          {rowsMetaqa.length
-            ? `MetaQA, ${seedsOf(rowsMetaqa).length} seeds`
-            : "MetaQA —"}{" "}
-          · {rounds ?? NOT_MEASURED} rounds · held-out questions only · every
-          number from a recorded run
+        <Steps />
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pt-20 sm:px-8 sm:pt-28">
+        <Kicker>Why HydraDB</Kicker>
+        <h2 className="mt-3 max-w-3xl text-4xl leading-tight tracking-tight text-ink sm:text-5xl">
+          The graph is the thing that learns.
+        </h2>
+        <p className="mt-4 max-w-2xl text-stone-400">
+          Not a visualisation layer. Every answer is a weighted path search
+          inside HydraDB, and every repair is a write to it. No LLM writes to
+          the graph or scores an answer. Run 2, all seeds,{" "}
+          {final ?? NOT_MEASURED} rounds:
+        </p>
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <Figure
+            value={total(rowsV2, "full_v2", "receipts")}
+            label="Receipts"
+            note="Every change, written before it touched the graph."
+          />
+          <Figure
+            value={total(rowsV2, "full_v2", "applied_quarantines")}
+            label="Quarantines"
+            note="Links moved to a type the search cannot walk."
+          />
+          <Figure
+            value={total(rowsV2, "full_v2", "promoted")}
+            label="Shortcuts"
+            note="Paths confirmed again and again, made one hop."
+          />
+          <Figure
+            value={total(rowsV2, "full_v2", "ingested")}
+            label="Gap-filled links"
+            note="Read from withheld documents, never guessed."
+          />
         </div>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard
-            icon="book"
-            value={shift(rowsMetaqa, "full_v2")}
-            label="MetaQA · Hits@1 %"
-            note="Public data, questions from the official test split."
-          />
-          <StatCard
-            icon="up"
-            value={shift(rowsV2, "full_v2")}
-            label="Company graphs · accuracy %"
-            note="Round 0 to the last round, mean of seeds."
-          />
-          <StatCard
-            icon="dice"
-            value={last(rowsV2, "random_reweight")}
-            label="Random reweight"
-            note="Same number and size of changes, on random links."
-          />
-          <StatCard
-            icon="doc"
-            value={last(rowsV2, "plain_store")}
-            label="Plain store"
-            note="The same documents with no graph to repair."
-          />
-        </div>
-        <div className="mt-10 flex flex-col gap-10">
-          <Comparison rows={rowsV2} />
-          <FaultRows />
-        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pt-20 sm:px-8 sm:pt-28">
+        <AskCta />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pt-24 sm:px-8 sm:pt-32">
@@ -664,20 +481,6 @@ export default async function Home() {
           </Link>
           .
         </p>
-      </section>
-
-      <section className="pt-16 sm:pt-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-8">
-          <Eyebrow>
-            What {rounds ?? NOT_MEASURED} rounds left behind, run 2, all seeds
-          </Eyebrow>
-        </div>
-        <ReceiptFlight
-          cards={cards}
-          lead="The graph did not get bigger by guessing. It wrote down"
-          joins={["repricings,", "quarantines,", "shortcuts and", "ingests."]}
-          tail={`${total(rowsV2, "full_v2", "receipts")} receipts, and any one of them can be rolled back.`}
-        />
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-4 pb-8 sm:px-8 lg:grid-cols-2">
