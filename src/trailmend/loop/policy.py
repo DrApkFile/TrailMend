@@ -8,6 +8,8 @@ from trailmend.core.model import Change, EdgeKey, Quarantine, Reweight, Signal
 
 class MendPolicy(StrEnum):
     FULL = "full"
+    FROZEN_V4 = "frozen_v4"
+    FULL_V4_NO_GATE = "full_v4_no_gate"
     FULL_V2_ABSTAIN = "full_v2_abstain"
     FROZEN_ABSTAIN = "frozen_abstain"
     FULL_V2 = "full_v2"
@@ -41,6 +43,8 @@ class Mechanisms:
 
 MECHANISMS: Mapping[MendPolicy, Mechanisms] = {
     MendPolicy.FULL: Mechanisms(True, True, True, True),
+    MendPolicy.FROZEN_V4: Mechanisms(False, False, False, False),
+    MendPolicy.FULL_V4_NO_GATE: Mechanisms(True, True, True, True),
     MendPolicy.FULL_V2_ABSTAIN: Mechanisms(True, True, True, True),
     MendPolicy.FROZEN_ABSTAIN: Mechanisms(False, False, False, False),
     MendPolicy.FULL_V2: Mechanisms(True, True, True, True),
@@ -78,6 +82,8 @@ class Rules:
 
 RULES: Mapping[MendPolicy, Rules] = {
     MendPolicy.FULL: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.FROZEN_V4: Rules(UPDATE_V2, GAPFILL_WIDE),
+    MendPolicy.FULL_V4_NO_GATE: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.FULL_V2_ABSTAIN: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.FROZEN_ABSTAIN: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.FULL_V2: Rules(UPDATE_V2, GAPFILL_WIDE),
@@ -151,6 +157,7 @@ def shape(
     match policy:
         case (
             MendPolicy.FULL
+            | MendPolicy.FULL_V4_NO_GATE
             | MendPolicy.FULL_V2
             | MendPolicy.FULL_V2_ABSTAIN
             | MendPolicy.FULL_V1_RULE
@@ -167,6 +174,7 @@ def shape(
             | MendPolicy.GAPFILL_WIDE_ONLY
             | MendPolicy.FROZEN
             | MendPolicy.FROZEN_ABSTAIN
+            | MendPolicy.FROZEN_V4
         ):
             return ()
         case MendPolicy.RANDOM_REWEIGHT:

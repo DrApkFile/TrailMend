@@ -1,4 +1,5 @@
 from collections.abc import Sequence
+from dataclasses import replace
 
 from trailmend.core.credit import Correct, Outcome, Refused, SetJudged, Unreachable, Wrong
 from trailmend.core.model import EdgeKey, SearchConfig
@@ -12,9 +13,12 @@ def _gold_paths(
     client: HydraClient, judged: Judged, wanted: Sequence[int], config: SearchConfig
 ) -> tuple[tuple[EdgeKey, ...], ...]:
     spec = template(judged.template)
+    hybrid_set = config.unweighted_sets and not spec.single_answer
+    selected_types = spec.base_types if hybrid_set else spec.search_types
+    effective = replace(config, weighted=False) if hybrid_set else config
     found: list[tuple[EdgeKey, ...]] = []
     for target in wanted:
-        path = cheapest_path_to(client, judged.seed_entity_id, target, spec.search_types, config)
+        path = cheapest_path_to(client, judged.seed_entity_id, target, selected_types, effective)
         if path:
             found.append(path)
     return tuple(found)

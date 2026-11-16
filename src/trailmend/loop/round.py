@@ -100,10 +100,12 @@ def run_round(
     documents: DocumentSet | None = None,
     pool: Sequence[Edge] = (),
     gapfill_rule: GapfillRule = NARROW,
+    train_search_config: SearchConfig | None = None,
 ) -> RoundOutcome:
     arms = mechanisms(policy)
-    judged_train = judge_all(client, index, [item.question for item in train], search_config)
-    verdicts = verdicts_for(client, judged_train, search_config)
+    teacher = search_config if train_search_config is None else train_search_config
+    judged_train = judge_all(client, index, [item.question for item in train], teacher)
+    verdicts = verdicts_for(client, judged_train, teacher)
     planned = plan(client, verdicts, mend_config)
     chosen = shape(policy, planned, candidates, rng)
     receipts: list[Receipt] = []
