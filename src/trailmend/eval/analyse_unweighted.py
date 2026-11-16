@@ -42,7 +42,7 @@ def require_same_frozen(extension: Sequence[Mapping[str, object]], run_two: Sequ
     return checked
 
 
-def _by_kind(run_name: str, round_index: int) -> dict[str, tuple[int, int]]:
+def by_kind(run_name: str, round_index: int) -> dict[str, tuple[int, int]]:
     tally: dict[str, list[int]] = {"single_answer": [0, 0], "answer_set": [0, 0]}
     for answer in Tape.for_run(run_name, RUNS_DIR).rounds():
         if answer.round_index != round_index:
@@ -126,7 +126,7 @@ def main() -> int:
             )
         for arm, name in ((UNWEIGHTED, unweighted), (WEIGHTED, weighted)):
             for round_index in (0, final):
-                for kind, (right, total) in _by_kind(name, round_index).items():
+                for kind, (right, total) in by_kind(name, round_index).items():
                     rows.append(
                         {
                             "kind": "by_answer_kind",
