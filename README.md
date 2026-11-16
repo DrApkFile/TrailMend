@@ -416,6 +416,9 @@ uv run python -m trailmend.metaqa.plain_run 1 7 42      # the document-only base
 uv run python -m trailmend.metaqa.analyse               # M1 to M5
 uv run python -m trailmend.eval.run --unweighted 1 7 42 # the same loop, search ignoring cost
 uv run python -m trailmend.eval.analyse_unweighted
+uv run python -m trailmend.eval.run --clean 1 7 42      # clean replication of run 2 + unweighted, on an emptied HydraDB
+uv run python -m trailmend.eval.analyse_replication
+uv run python -m trailmend.eval.replay 1                # the landing-page replay, from run 2's seed-1 tapes
 uv run python -m trailmend.eval.report                  # numbers block and the benchmark paragraph
 ```
 
