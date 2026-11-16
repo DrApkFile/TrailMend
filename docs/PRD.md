@@ -295,7 +295,9 @@ Northwind v2, seeds 1, 7, 42, five rounds. Same Mend constants and gap-fill rule
 Single-answer templates keep weighted search. Multi-answer templates use hop-count
 search, returning all eligible endpoints tied at minimum depth. This structural
 choice follows the declared set-answer semantics; no gold cardinality is supplied
-to search. It also applies to training candidates and training gold-path lookup.
+to search. Set search excludes shortcut types: compression changes depth and can
+hide uncompressed peers. The same base-relation, hop-count rule applies to
+training candidates and training gold-path lookup.
 
 Training feedback comes from an ungated internal candidate audit, scored against
 training gold by the existing exact judge. A public refusal no longer suppresses
