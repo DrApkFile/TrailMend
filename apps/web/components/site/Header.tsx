@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { NAV, REPO_URL, demoUrl } from "@/lib/site";
+import { REPO_URL, demoUrl } from "@/lib/site";
+import { NavLinks } from "./NavLinks";
 
 function Logo() {
   return (
@@ -69,15 +70,7 @@ export function Header() {
           <Logo />
           <span className="hidden sm:inline">TrailMend</span>
         </Link>
-        {NAV.map((page) => (
-          <Link
-            key={page.href}
-            href={page.href}
-            className="rounded-full px-1.5 py-1.5 text-[13px] text-stone-400 transition-colors hover:text-ink sm:px-3 sm:text-sm"
-          >
-            {page.label}
-          </Link>
-        ))}
+        <NavLinks />
       </nav>
       <div className={`${PILL} gap-1 p-1`}>
         <a
