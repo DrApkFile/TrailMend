@@ -1,7 +1,7 @@
 {
   "claim": "benchmark",
   "design": "The benchmark paragraph, one sentence per row, composed by trailmend.eval.benchmark from the evidence files named in each row's sources and from nothing else. A sentence is only written in its strong form when the numbers support it; otherwise it states what was measured. `facts` holds every number a sentence uses.",
-  "measured_at": "2026-11-16T01:16:58+00:00",
+  "measured_at": "2026-11-16T06:33:50+00:00",
   "measured_on": null,
   "rows": [
     {
@@ -15,9 +15,10 @@
     {
       "key": "comparability",
       "sources": [
-        "paired_v2_unweighted.json"
+        "curve_v2_clean.jsonl",
+        "replication_v2_clean.json"
       ],
-      "text": "The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, whose recorded paths include edges outside the intended G0 graph. The historical scores and verdicts remain published; this is not a clean replication."
+      "text": "Run 2's shared graph carried stray edges from earlier runs, so it was replicated on an emptied HydraDB (run 3dbcdf3-580ae8dc): the full loop went from 77.0% to 84.6% against 77.0% for the frozen graph, which reproduced the gain; run 2's own numbers below stay as recorded."
     },
     {
       "key": "gain",
@@ -55,9 +56,11 @@
       "sources": [
         "plain_store_v2.json",
         "plain_store_metaqa.json",
-        "curve_v2_unweighted.jsonl"
+        "curve_v2_unweighted.jsonl",
+        "curve_v2_clean.jsonl",
+        "replication_v2_clean.json"
       ],
-      "text": "A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and with unweighted search the same loop goes from 83.3% to 89.9%, 4.2 points above the loop that searches on cost (provisional comparison: the frozen baselines differ, so the difference cannot be attributed to search alone)."
+      "text": "A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and on the clean replication, the same loop with unweighted search goes from 83.3% to 89.9%, 5.3 points above the loop that searches on cost on the same graph (significantly higher on 3 of 3 seeds, significantly lower on 0)."
     },
     {
       "key": "wrong_and_kept",

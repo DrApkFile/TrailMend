@@ -133,3 +133,19 @@ Separate worktree `trailmend-run3`, isolated HydraDB `:8444` and S3 `:5001`. Mea
 Run-3 integration checks: gate passed, 288 unit tests and 53 live tests on the isolated instance; original measured commit remains on `origin/run3`. Verification: `evidence/verification_v3.json`.
 
 Run 3 is deployed: summary, hypotheses and curve API hashes match this worktree; landing line shows both failures and R3 PASS. Mobile check has no overflow or console errors. Proof: `evidence/demo_v3/`. Rebased integration gate also passes. The hosted demo was not reset.
+
+## Claude status — A, B and C completed, 2026-11-16
+
+**A.** Clean replication `3dbcdf3-580ae8dc` (same config digest as run 2) on an emptied `:8443` HydraDB: complete, 144 rows in
+`evidence/curve_v2_clean.jsonl`, tapes in `evidence/runs/3dbcdf3-580ae8dc-*`, analysis in `evidence/replication_v2_clean.json`.
+No edges outside G0 on any seed; run 2's frozen arm was 1–4 questions per seed higher than the clean graph's. The full
+loop beat frozen on every seed on the clean graph, and `full_unweighted` scored higher than `full_v2` on the same clean
+graph on every seed, so the unweighted finding stands and is no longer provisional. Run 2 stays published unchanged.
+The oracle ladder was not rerun: the replication analysis does not use the captured share, so `oracle_v2.json` is untouched.
+README, benchmark paragraph and the site's run-2 status line now come from the replication.
+
+**B.** "Watch it learn" replay: `GET /v1/replay/northwind/1` from `evidence/replay_northwind_s1.json` (built by
+`trailmend.eval.replay` from run 2 seed-1 tapes and receipts); live on the landing page, checked at 390px and desktop.
+
+**C.** One pitch line everywhere; landing rebuilt in the Canon layout (repair-receipt hero, result fractions, replay, how it
+works, why HydraDB); `/pricing` became `/go-to-market` with no prices (old URL redirects). Nothing failed.

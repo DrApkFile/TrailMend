@@ -26,7 +26,7 @@ No LLM is on the answer path, and no LLM scores an answer.
 ## The benchmark in one paragraph
 
 <!-- benchmark:start -->
-I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 planted faults each) and on MetaQA, a public movie knowledge graph (134,741 triples, 360 held-out questions per seed, 3 seeds, half the triples withheld). The company-graph results are provisional: the extension did not reproduce run 2's frozen baseline, whose recorded paths include edges outside the intended G0 graph. The historical scores and verdicts remain published; this is not a clean replication. After 5 rounds of learning from its own answers, held-out accuracy on the company graphs rose from 77.9% to 85.7% (p < 0.001 on a paired test, every seed), and held-out Hits@1 on MetaQA rose from 55.3% to 71.5% (p < 0.001 on a paired test, every seed). It captured 69% of the gain that perfect repairs would give on the company graphs and 38% on MetaQA. Random reweighting, matched to its own targeted plan's number and size of cost changes each round, ends at 76.6% on the company graphs against 77.9% for the untouched graph, and at 55.6% on MetaQA against 55.3% for the untouched graph, and random reweighting did not significantly beat the untouched graph on any seed. The random arm reads no new documents; gap-fill alone, with no reweighting, reaches 82.9% on the company graphs. A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and with unweighted search the same loop goes from 83.3% to 89.9%, 4.2 points above the loop that searches on cost (provisional comparison: the frozen baselines differ, so the difference cannot be attributed to search alone). Wrong answers fell 30% on the company graphs and fell 9% on MetaQA, and 1,386 of 1,393 held-out questions that were right at the start were still right at the end, with every break along the way traced to a receipt. The graph did get bigger, but only by reading: the company graphs gained 158 links (3.2%), each from a withheld document and each under a receipt, and MetaQA read back 5,684 withheld triples. Reweighting and quarantine also change the graph; these results do not isolate their gain from gap-fill.
+I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 planted faults each) and on MetaQA, a public movie knowledge graph (134,741 triples, 360 held-out questions per seed, 3 seeds, half the triples withheld). Run 2's shared graph carried stray edges from earlier runs, so it was replicated on an emptied HydraDB (run 3dbcdf3-580ae8dc): the full loop went from 77.0% to 84.6% against 77.0% for the frozen graph, which reproduced the gain; run 2's own numbers below stay as recorded. After 5 rounds of learning from its own answers, held-out accuracy on the company graphs rose from 77.9% to 85.7% (p < 0.001 on a paired test, every seed), and held-out Hits@1 on MetaQA rose from 55.3% to 71.5% (p < 0.001 on a paired test, every seed). It captured 69% of the gain that perfect repairs would give on the company graphs and 38% on MetaQA. Random reweighting, matched to its own targeted plan's number and size of cost changes each round, ends at 76.6% on the company graphs against 77.9% for the untouched graph, and at 55.6% on MetaQA against 55.3% for the untouched graph, and random reweighting did not significantly beat the untouched graph on any seed. The random arm reads no new documents; gap-fill alone, with no reweighting, reaches 82.9% on the company graphs. A plain document store over the same corpus stays flat at 28.3% (15.5% on MetaQA) because it has no links for the loop to repair, and on the clean replication, the same loop with unweighted search goes from 83.3% to 89.9%, 5.3 points above the loop that searches on cost on the same graph (significantly higher on 3 of 3 seeds, significantly lower on 0). Wrong answers fell 30% on the company graphs and fell 9% on MetaQA, and 1,386 of 1,393 held-out questions that were right at the start were still right at the end, with every break along the way traced to a receipt. The graph did get bigger, but only by reading: the company graphs gained 158 links (3.2%), each from a withheld document and each under a receipt, and MetaQA read back 5,684 withheld triples. Reweighting and quarantine also change the graph; these results do not isolate their gain from gap-fill.
 <!-- benchmark:end -->
 
 That paragraph is written by `trailmend.eval.benchmark` from the evidence files and from nothing else: each sentence
@@ -64,7 +64,7 @@ says what happened instead.
 <!-- numbers:start -->
 ### Run 2, on dataset v2
 
-**Provisional conclusions:** the later extension failed to reproduce this run's frozen baseline. Its recorded paths include edges outside the intended G0. Historical scores and hypothesis outputs are preserved; see [the replication diagnostic](evidence/paired_v2_unweighted.json).
+**Replicated on a clean graph.** Run 2's shared graph carried stray edges from earlier runs, so it was replicated on an emptied HydraDB (run 3dbcdf3-580ae8dc): the full loop went from 77.0% to 84.6% against 77.0% for the frozen graph, which reproduced the gain; run 2's own numbers below stay as recorded. The replication and its comparison with this run are in [the next section](#clean-replication-of-run-2).
 
 | arm | round 0 | round 5 | change |
 |---|---|---|---|
@@ -116,6 +116,49 @@ How much of the repairable damage the full arm repaired, with the denominator me
 | H7' | gap-fill ingests most of what its own rule reaches | **PASS** |
 | H8' | the run-2 update and gap-fill rules beat the run-1 rules on the same data | **PASS** |
 
+### Clean replication of run 2
+
+Run 2's arms and config digest, plus `full_unweighted` and `plain_store`, on a HydraDB emptied before the run. It decides nothing preregistered and run 2 is not replaced. Edges outside G0 on the clean frozen arm's round-0 paths: 0.
+
+| arm | round 0 | round 5 | change |
+|---|---|---|---|
+| `frozen` | 77.0% | 77.0% | +0.0 points |
+| `full_unweighted` | 83.3% | 89.9% | +6.7 points |
+| `full_v1_rule` | 77.0% | 82.4% | +5.4 points |
+| `full_v2` | 77.0% | 84.6% | +7.6 points |
+| `gapfill_wide_only` | 77.0% | 81.9% | +4.9 points |
+| `plain_store` | 28.3% | 28.3% | +0.0 points |
+| `random_quarantine` | 77.0% | 74.8% | -2.3 points |
+| `random_reweight` | 77.0% | 75.5% | -1.5 points |
+
+Held-out questions right, clean replication against run 2 as recorded:
+
+| seed | arm | round | clean | run 2 | difference |
+|---|---|---|---|---|---|
+| 1 | `frozen` | 0 | 261/340 | 262/340 | -1 |
+| 1 | `frozen` | 5 | 261/340 | 262/340 | -1 |
+| 1 | `full_v2` | 0 | 261/340 | 262/340 | -1 |
+| 1 | `full_v2` | 5 | 294/340 | 297/340 | -3 |
+| 7 | `frozen` | 0 | 259/340 | 263/340 | -4 |
+| 7 | `frozen` | 5 | 259/340 | 263/340 | -4 |
+| 7 | `full_v2` | 0 | 259/340 | 263/340 | -4 |
+| 7 | `full_v2` | 5 | 280/340 | 284/340 | -4 |
+| 42 | `frozen` | 0 | 267/342 | 271/342 | -4 |
+| 42 | `frozen` | 5 | 267/342 | 271/342 | -4 |
+| 42 | `full_v2` | 0 | 267/342 | 271/342 | -4 |
+| 42 | `full_v2` | 5 | 291/342 | 295/342 | -4 |
+
+Question by question at the last round, on the clean graph:
+
+| seed | arm | against | change | p (exact McNemar) |
+|---|---|---|---|---|
+| 1 | `full_v2` | `frozen` | +9.7 points | 0.0000 |
+| 1 | `full_unweighted` | `full_v2` | +5.0 points | 0.0023 |
+| 7 | `full_v2` | `frozen` | +6.2 points | 0.0000 |
+| 7 | `full_unweighted` | `full_v2` | +6.5 points | 0.0000 |
+| 42 | `full_v2` | `frozen` | +7.0 points | 0.0000 |
+| 42 | `full_unweighted` | `full_v2` | +4.4 points | 0.0026 |
+
 ### MetaQA, public data, half the triples withheld
 
 Held-out Hits@1 (the top-ranked answer is a gold answer), mean of the seeds. Questions are a stratified sample of the official test split inside a seeded region of the graph; the Mend sees only questions from the official dev split. Design and reasons: [PRD §3.3](docs/PRD.md).
@@ -154,14 +197,33 @@ Captured share of the gain the oracle ladder says was reachable:
 | M4 | the held-out wrong-answer rate falls by at least 40% | **FAIL** |
 | M5 | at most 2% of held-out hits are lost from one round to the next | **PASS** |
 
-### The same loop with unweighted search (extension, not part of any preregistered verdict)
+### The same loop with unweighted search
 
-Run 2's data and constants at a later commit. `full_unweighted` is the full Mend with a search that ignores cost and takes the fewest hops. **Provisional:** the frozen arm does not reproduce run 2; the diagnostic records edges outside G0 in run 2's frozen tape. No controlled paired comparison is claimed.
+`full_unweighted` is the full Mend with a search that ignores cost and takes the fewest hops. The first extension (below) ran at a later commit than run 2 and its frozen arm did not reproduce run 2's, so it was provisional. On the clean replication, the same loop with unweighted search goes from 83.3% to 89.9%, 5.3 points above the loop that searches on cost on the same graph (significantly higher on 3 of 3 seeds, significantly lower on 0).
 
 | arm | round 0 | round 5 | change |
 |---|---|---|---|
 | `frozen` | 77.0% | 77.0% | +0.0 points |
 | `full_unweighted` | 83.3% | 89.9% | +6.7 points |
+
+<!-- run3:start -->
+### Run 3: abstain instead of guessing
+
+Generated Northwind v2, run `v3-9fe1e3a-aab4f1f7`, seeds [1, 7, 42]; 5 rounds. Training-only cutoffs were frozen before held-out scoring. The table shows means across seeds; refusals count as neither correct nor wrong, and remain in the denominator.
+
+| arm | accuracy r0 → r5 | wrong/n r0 → r5 | refused/n r0 → r5 | coverage r0 → r5 |
+|---|---|---|---|---|
+| `frozen_abstain` | 77.0% → 77.0% | 13.6% → 13.6% | 0.0% → 0.0% | 90.6% → 90.6% |
+| `full_v2_abstain` | 77.0% → 80.0% | 13.6% → 9.3% | 0.0% → 5.4% | 90.6% → 89.3% |
+| `full_v2` | 77.0% → 84.6% | 13.6% → 9.5% | 0.0% → 0.0% | 90.6% → 94.1% |
+
+Preregistered verdicts: **R1 FAIL**; **R2 FAIL**; **R3 PASS**.
+R1 tests the wrong-answer reduction; R2 limits accuracy lost against the concurrent non-abstaining full Mend. This variant did not meet those safeguards. R3 only checks that frozen is not significantly better; it is not an equivalence or improvement claim. H6' and M4 remain failed in their original experiments.
+
+**MetaQA run 3: not_run.** Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-3 results were measured.
+
+Sources: [curve](evidence/curve_v3_northwind.jsonl), [training calibration](evidence/calibration_v3.json), [hypotheses](evidence/hypotheses_v3.json), [paired questions](evidence/paired_v3.json), [summary](evidence/summary_v3.json), [manifest and receipts](evidence/run_manifest_v3.json).
+<!-- run3:end -->
 
 ### Run 1, which failed and stays published
 
@@ -211,9 +273,11 @@ The unweighted-search extension and the benchmark paragraph:
 |---|---|---|
 | [`evidence/curve_v2_unweighted.jsonl`](evidence/curve_v2_unweighted.jsonl) | run 2 data, later commit: the same loop with search that ignores cost | `938d599e7e50fc6c…` |
 | [`evidence/paired_v2_unweighted.json`](evidence/paired_v2_unweighted.json) | the unweighted loop against run 2's weighted loop and frozen graph, paired | `738afeb09414ebb4…` |
-| [`evidence/dataset_summary_v2.json`](evidence/dataset_summary_v2.json) | run 2: nodes, edges and planted faults per generated company | `aec631ed06e31b33…` |
-| [`evidence/benchmark.json`](evidence/benchmark.json) | the benchmark paragraph, one sentence per row with its sources | `77b40db5822d5572…` |
-| [`evidence/benchmark_facts.json`](evidence/benchmark_facts.json) | every number the benchmark paragraph uses | `d556d35371a48963…` |
+| [`evidence/curve_v2_clean.jsonl`](evidence/curve_v2_clean.jsonl) | the clean replication of run 2, with the unweighted arm on the same graph | `4ca38754eec2efca…` |
+| [`evidence/replication_v2_clean.json`](evidence/replication_v2_clean.json) | the clean replication against run 2, and both searches paired on one graph | `8225f187e6411735…` |
+| [`evidence/dataset_summary_v2.json`](evidence/dataset_summary_v2.json) | run 2: nodes, edges and planted faults per generated company | `2f35abf89db8f442…` |
+| [`evidence/benchmark.json`](evidence/benchmark.json) | the benchmark paragraph, one sentence per row with its sources | `ca88fd9754aeb96c…` |
+| [`evidence/benchmark_facts.json`](evidence/benchmark_facts.json) | every number the benchmark paragraph uses | `9733e3f8f56f369f…` |
 
 Run 2:
 
@@ -250,24 +314,6 @@ Run 1, and the two files that describe the deployment both runs used:
 | [`evidence/run_manifest.json`](evidence/run_manifest.json) | commit, HydraDB image digest, config hash, seeds, and every file's sha256 | `a0c4e5cec36e2834…` |
 | [`evidence/load.json`](evidence/load.json) | loading G0 into HydraDB, and that a re-load adds nothing | `ef1c00b3507de398…` |
 | [`evidence/latency.json`](evidence/latency.json) | p50/p95/p99, QPS and errors by code under concurrent clients | `87a2921754f7ed09…` |
-<!-- run3:start -->
-### Run 3: abstain instead of guessing
-
-Generated Northwind v2, run `v3-9fe1e3a-aab4f1f7`, seeds [1, 7, 42]; 5 rounds. Training-only cutoffs were frozen before held-out scoring. The table shows means across seeds; refusals count as neither correct nor wrong, and remain in the denominator.
-
-| arm | accuracy r0 → r5 | wrong/n r0 → r5 | refused/n r0 → r5 | coverage r0 → r5 |
-|---|---|---|---|---|
-| `frozen_abstain` | 77.0% → 77.0% | 13.6% → 13.6% | 0.0% → 0.0% | 90.6% → 90.6% |
-| `full_v2_abstain` | 77.0% → 80.0% | 13.6% → 9.3% | 0.0% → 5.4% | 90.6% → 89.3% |
-| `full_v2` | 77.0% → 84.6% | 13.6% → 9.5% | 0.0% → 0.0% | 90.6% → 94.1% |
-
-Preregistered verdicts: **R1 FAIL**; **R2 FAIL**; **R3 PASS**.
-R1 tests the wrong-answer reduction; R2 limits accuracy lost against the concurrent non-abstaining full Mend. This variant did not meet those safeguards. R3 only checks that frozen is not significantly better; it is not an equivalence or improvement claim. H6' and M4 remain failed in their original experiments.
-
-**MetaQA run 3: not_run.** Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-3 results were measured.
-
-Sources: [curve](evidence/curve_v3_northwind.jsonl), [training calibration](evidence/calibration_v3.json), [hypotheses](evidence/hypotheses_v3.json), [paired questions](evidence/paired_v3.json), [summary](evidence/summary_v3.json), [manifest and receipts](evidence/run_manifest_v3.json).
-<!-- run3:end -->
 <!-- numbers:end -->
 
 Every figure above is written into this file by `trailmend.eval.report` from the files in `evidence/`. None of them is
@@ -360,7 +406,7 @@ how much of the repairable damage the Mend left on the table. Run 2 is preregist
   gap-fill can find.
 - **That was run 1's data.** Run 2 keeps 30% of its wrong edges exactly like that, on purpose, so a refusal stays
   the honest outcome for them; the rest have a true link the Mend can find, and gap-fill follows a second wave.
-- **Run 2 did not replicate on a fresh baseline.** The unweighted extension found residual edges outside G0 in run 2’s frozen answer paths. Its historical scores and verdicts remain published with provisional conclusions; the reset was tightened between runs. See [`paired_v2_unweighted.json`](evidence/paired_v2_unweighted.json).
+- **Run 2's frozen baseline carried stray edges.** The unweighted extension found residual edges outside G0 in run 2’s frozen answer paths, which put its frozen arm a few questions per seed above a clean graph. Run 2's scores and verdicts stay published as recorded. A clean replication on an emptied HydraDB (`3dbcdf3-580ae8dc`, same config digest) has no edges outside G0 and reproduces the gain; it decides nothing preregistered. See [`replication_v2_clean.json`](evidence/replication_v2_clean.json) and the diagnostic in [`paired_v2_unweighted.json`](evidence/paired_v2_unweighted.json).
 - **Run 2 still failed two of its eight hypotheses.** Quarantine recall and its false-quarantine rate missed their
   thresholds (H4'), and the wrong-answer rate fell by about 30%, not the 40% that was preregistered (H6').
 - **MetaQA is a sample inside a region, not the whole benchmark.** 360 held-out questions per seed, drawn from a

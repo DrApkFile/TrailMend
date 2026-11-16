@@ -38,6 +38,21 @@
     "wrong_round_0": 78,
     "wrong_round_n": 71
   },
+  "northwind_clean_replication": {
+    "frozen_edges_outside_g0": 0,
+    "frozen_round_n": 0.7700378396972823,
+    "full_beats_frozen_seeds": 3,
+    "full_round_0": 0.7700378396972823,
+    "full_round_n": 0.8463708290333677,
+    "rounds": 5,
+    "run_id": "3dbcdf3-580ae8dc",
+    "seeds_tested": 3,
+    "unweighted_higher_seeds": 3,
+    "unweighted_lower_seeds": 0,
+    "unweighted_round_0": 0.8326740052746245,
+    "unweighted_round_n": 0.8992260061919505,
+    "unweighted_seeds_tested": 3
+  },
   "northwind_run_2": {
     "accuracy_round_0": 0.778838435959179,
     "accuracy_round_n": 0.8571322096089897,

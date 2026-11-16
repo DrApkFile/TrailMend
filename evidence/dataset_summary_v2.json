@@ -1,7 +1,7 @@
 {
   "claim": "dataset_summary_v2",
   "design": "The generated company graphs of run 2, one row per seed: nodes and edges in G0, withheld edges, and the planted faults by kind. Regenerated from the seed by the dataset code, whose digests are in run_manifest_v2.json.",
-  "measured_at": "2026-11-16T01:16:58+00:00",
+  "measured_at": "2026-11-16T06:33:50+00:00",
   "measured_on": null,
   "rows": [
     {

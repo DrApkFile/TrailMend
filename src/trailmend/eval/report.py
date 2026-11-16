@@ -322,7 +322,7 @@ def unweighted() -> list[str]:
             "",
             "`full_unweighted` is the full Mend with a search that ignores cost and takes the fewest hops. The first "
             "extension (below) ran at a later commit than run 2 and its frozen arm did not reproduce run 2's, so it "
-            f"was provisional. The clean replication settles it: {clause}.",
+            f"was provisional. {clause[0].upper()}{clause[1:]}.",
             "",
             *arms_table(rows),
         ]
