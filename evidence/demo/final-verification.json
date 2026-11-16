@@ -1,0 +1,25 @@
+{
+  "checked_commit": "a1b997a",
+  "presubmit_checks": [
+    "no .env in the clone",
+    "no credential-shaped strings",
+    "README numbers block filled",
+    "evidence digests match manifest",
+    "no unfilled blanks on the site",
+    "uv sync --frozen",
+    "ruff",
+    "pyright strict",
+    "unit tests",
+    "web install",
+    "web typecheck",
+    "web lint",
+    "web build",
+    "live contract tests"
+  ],
+  "live_tests_passed": 52,
+  "unit_tests_passed": 274,
+  "gate": "passed",
+  "verify": "passed",
+  "presubmit": "clean",
+  "run_one_evidence": "all original manifest hashes match"
+}

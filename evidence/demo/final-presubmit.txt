@@ -1,0 +1,18 @@
+clean clone of /home/kingghidorah/Documents/projects/bounties/trailmend/trailmend at e92146a
+
+PASS  no .env in the clone
+PASS  no credential-shaped strings
+PASS  README numbers block filled
+PASS  evidence digests match manifest
+PASS  no unfilled blanks on the site
+PASS  uv sync --frozen
+PASS  ruff
+PASS  pyright strict
+PASS  unit tests
+PASS  web install
+PASS  web typecheck
+PASS  web lint
+PASS  web build
+PASS  live contract tests
+
+pre-submit audit: clean

@@ -1,4 +1,4 @@
-> Historical handoff. Both inherited runs have now completed; see `docs/SUBMISSION.md` for current results, replication limitations and remaining owner actions. Final deployment and clean-clone acceptance are being verified.
+> Historical handoff. Both inherited runs have now completed; see `docs/SUBMISSION.md` for current results, replication limitations and remaining owner actions. Technical handoff completed: deployment checked, screenshots saved, hosted demo reset, and clean-clone acceptance passed at `a1b997a`. Recording the Loom, posting and submitting remain owner actions.
 
 # Handoff — TrailMend, 2026-11-15 ~22:35 Lagos
 

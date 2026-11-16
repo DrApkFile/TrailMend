@@ -338,10 +338,12 @@ task is traced to a finding in `docs/RUN1_DIAGNOSIS.md`. Time boxes, Lagos: H1â€
     DONE 2026-11-15: oracle_run walks the ladder on v2, with a new first rung that quarantines only the contradicted
   stale edges so reweight's ceiling is separated from quarantine's. The captured share reads its denominator from
   oracle_v2.json.
-- [ ] H6 Run the sweep and publish it beside run 1. Seeds 1, 7, 42; arms frozen, plain_store, full_v2, full_v1_rule,
+- [x] H6 Run the sweep and publish it beside run 1. Seeds 1, 7, 42; arms frozen, plain_store, full_v2, full_v1_rule,
   gapfill_wide_only, random_reweight, random_quarantine; 5 rounds; under `evidence/.measuring.json`. `/`, `/evidence`
   and the README show run 2 as current and run 1 as the prior run, both with run ids, data versions and verdicts, and
   `docs/RUN1_DIAGNOSIS.md` is linked from the README. Seeds 101/404 and the ablation arms only if time is left, as a
   separately labelled extension that enters no verdict.
   Acceptance: INV6 passes on the recorded rows before any curve is written; `scripts/presubmit.sh` passes from a
   clean clone with both runs' digests matching; no run-1 evidence file changes content.
+
+  DONE 2026-11-16: both runs and the completed MetaQA experiment are published. INV6 passes on recorded run-2 controls; every original run-1 manifest hash still matches. Clean-clone pre-submit audit at `a1b997a` passes all checks, including live tests. Evidence: `evidence/demo/final-verification.json`. The extension failed to reproduce run 2's frozen baseline; residual edges outside G0 are recorded in `evidence/paired_v2_unweighted.json`, and company-graph conclusions are provisional. Historical results and failed hypotheses remain published.
