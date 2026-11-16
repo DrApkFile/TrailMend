@@ -1,5 +1,7 @@
 # TrailMend
 
+> Your service catalogue is quietly wrong. TrailMend finds out from its own answers and fixes it, with a receipt for every change.
+
 **The graph that repairs its own relationships.** Built on [HydraDB OSS](https://github.com/hydra-db/hydradb) for the
 HydraDB hackathon (Track 1: self-improving graph).
 

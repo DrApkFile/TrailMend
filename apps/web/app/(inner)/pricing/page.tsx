@@ -6,6 +6,10 @@ export default function PricingPage() {
   return (
     <main>
       <h1 className="text-2xl font-semibold tracking-tight">Who this is for, and what it costs</h1>
+      <p className="mt-2 text-stone-300">
+        Your service catalogue is quietly wrong. TrailMend finds out from its own answers and fixes it, with a receipt
+        for every change.
+      </p>
 
       <Panel title="The buyer">
         <p className="text-sm text-stone-300">

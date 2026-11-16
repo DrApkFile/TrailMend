@@ -5,7 +5,7 @@ import { Footer, Header } from "@/components/site/Header";
 export const metadata: Metadata = {
   title: "TrailMend — every answer leaves a trail",
   description:
-    "A graph on HydraDB that learns from its own answers: it reprices the links an answer walked, quarantines the ones that keep being wrong, and keeps a receipt for every change.",
+    "Your service catalogue is quietly wrong. TrailMend finds out from its own answers and fixes it, with a receipt for every change.",
 };
 
 export const viewport: Viewport = {

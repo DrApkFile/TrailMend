@@ -5,6 +5,7 @@ import {
   ReceiptFlight,
   type FlightCard,
 } from "@/components/site/ReceiptFlight";
+import { Replay } from "@/components/site/Replay";
 import { TrailCanvas } from "@/components/site/TrailCanvas";
 import {
   fetchCurve,
@@ -12,6 +13,7 @@ import {
   fetchCurveV2,
   fetchEvidence,
   fetchReadiness,
+  fetchReplay,
   type BenchmarkSentence,
   type CurveRow,
   type EvidenceFile,
@@ -42,6 +44,7 @@ const RUN2_ARMS = [
   "random_reweight",
   "random_quarantine",
 ];
+const REPLAY_SEED = 1;
 const METAQA_ARMS = ["full_v2", "frozen", "plain_store", "random_reweight"];
 const BENCHMARK_TEMPLATE =
   "I tested TrailMend on — generated company graphs (— nodes, — planted faults each) and on MetaQA, a public movie " +
@@ -433,6 +436,7 @@ export default async function Home() {
     hypothesesV2,
     hypothesesMetaqa,
     benchmark,
+    replay,
   ] = await Promise.all([
     fetchReadiness(),
     fetchCurve(),
@@ -442,7 +446,12 @@ export default async function Home() {
     fetchEvidence("hypotheses_v2"),
     fetchEvidence("hypotheses_metaqa"),
     fetchEvidence("benchmark"),
+    fetchReplay("northwind", REPLAY_SEED),
   ]);
+  const replayed =
+    replay.ok && replay.value.available && replay.value.rounds?.length
+      ? replay.value
+      : null;
   const rows = curve.ok && curve.value.available ? curve.value.rows : [];
   const rowsV2 =
     curveV2.ok && curveV2.value.available ? curveV2.value.rows : [];
@@ -494,10 +503,8 @@ export default async function Home() {
           </h1>
           <div className="rise-late max-w-sm lg:pb-4">
             <p className="text-base text-stone-300 sm:text-lg">
-              TrailMend answers by searching weighted paths in HydraDB, then
-              learns from the verdict: the links an answer walked get repriced,
-              the ones that keep being wrong are cut, and every change keeps a
-              receipt.
+              Your service catalogue is quietly wrong. TrailMend finds out from
+              its own answers and fixes it, with a receipt for every change.
             </p>
             <Link
               href="/ask"
@@ -522,6 +529,17 @@ export default async function Home() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section
+        id="replay"
+        className="mx-auto max-w-6xl px-4 pt-16 sm:px-8 sm:pt-24"
+      >
+        <Replay
+          rounds={replayed?.rounds ?? null}
+          runId={replayed?.run_id ?? null}
+          seed={REPLAY_SEED}
+        />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pt-20 sm:px-8 sm:pt-28">
@@ -549,16 +567,16 @@ export default async function Home() {
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
-            icon="up"
-            value={shift(rowsV2, "full_v2")}
-            label="Company graphs · accuracy %"
-            note="Round 0 to the last round, mean of seeds."
-          />
-          <StatCard
             icon="book"
             value={shift(rowsMetaqa, "full_v2")}
             label="MetaQA · Hits@1 %"
             note="Public data, questions from the official test split."
+          />
+          <StatCard
+            icon="up"
+            value={shift(rowsV2, "full_v2")}
+            label="Company graphs · accuracy %"
+            note="Round 0 to the last round, mean of seeds."
           />
           <StatCard
             icon="dice"
