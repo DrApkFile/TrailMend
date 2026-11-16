@@ -614,10 +614,8 @@ export default async function Home() {
               Generated company graphs, run 2
             </h3>
             <p className="mt-3 text-sm text-stone-400">
-              Provisional conclusions: the later frozen baseline did not
-              replicate. Recorded paths include edges outside the intended
-              starting graph. Historical scores and verdicts remain published;
-              see the replication diagnostic on /evidence.
+              {sentences.find((sentence) => sentence.key === "comparability")
+                ?.text ?? NOT_MEASURED}
             </p>
             <div className="mt-4">
               {curveV2.ok ? (

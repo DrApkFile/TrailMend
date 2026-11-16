@@ -34,9 +34,17 @@ const RUN1_FILES = [
   "run_manifest",
 ];
 const SHARED_FILES = [
-  "load", "latency", "benchmark", "paired_v2_unweighted",
-  "hypotheses_metaqa", "paired_metaqa", "captured_share_metaqa",
-  "oracle_metaqa", "non_regression_metaqa", "plain_store_metaqa",
+  "load",
+  "latency",
+  "benchmark",
+  "paired_v2_unweighted",
+  "replication_v2_clean",
+  "hypotheses_metaqa",
+  "paired_metaqa",
+  "captured_share_metaqa",
+  "oracle_metaqa",
+  "non_regression_metaqa",
+  "plain_store_metaqa",
 ];
 const FILES = [...RUN2_FILES, ...RUN1_FILES, ...SHARED_FILES];
 
@@ -47,6 +55,16 @@ export default async function EvidencePage() {
     ...FILES.map((name) => fetchEvidence(name)),
   ]);
   const changes = files[FILES.indexOf("changes")];
+  const benchmark = files[FILES.indexOf("benchmark")];
+  const comparability =
+    benchmark?.ok && benchmark.value.available
+      ? (
+          (benchmark.value.payload?.rows ?? []) as {
+            key?: string;
+            text?: string;
+          }[]
+        ).find((row) => row.key === "comparability")?.text
+      : undefined;
   const latency = files[FILES.indexOf("latency")];
   const latencyRows =
     latency?.ok && latency.value.available
@@ -69,11 +87,7 @@ export default async function EvidencePage() {
         exactly as it was published.
       </p>
       <p className="mt-3 text-sm text-stone-300">
-        Run 2 conclusions are provisional: the extension failed to reproduce
-        its frozen baseline. Recorded run-2 paths include edges outside the
-        intended starting graph. Historical results remain published. See
-        paired_v2_unweighted below for the diagnostic; no controlled comparison
-        between weighted and unweighted search is claimed.
+        {comparability ?? NOT_MEASURED}
       </p>
 
       <Panel title="curve_v2.jsonl">
