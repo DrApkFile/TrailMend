@@ -1,0 +1,7 @@
+quantile = 0.95
+rounds = 5
+seeds = [1, 7, 42]
+dataset = "northwind_generated"
+data_version = "v2"
+search = "weighted_single_unweighted_set"
+training = "ungated_internal_audit"

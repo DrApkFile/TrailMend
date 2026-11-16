@@ -285,6 +285,53 @@ hypotheses_v3.json, paired_v3.json and run_manifest_v3.json; receipts and held-o
 use the new run id and arm names. Original full_v2, run-2 and MetaQA files remain immutable.
 Preregistration and calibration provenance are published whatever the verdicts.
 
+### 3.5 Run 4 — retain training feedback and return complete sets
+
+Preregistered after run 3 completed and before implementing this follow-up. Run 3's
+R1/R2 failures remain published unchanged. This experiment repairs two identified
+design limitations without retuning run 3's cutoff from held-out results.
+
+Northwind v2, seeds 1, 7, 42, five rounds. Same Mend constants and gap-fill rule.
+Single-answer templates keep weighted search. Multi-answer templates use hop-count
+search, returning all eligible endpoints tied at minimum depth. This structural
+choice follows the declared set-answer semantics; no gold cardinality is supplied
+to search. It also applies to training candidates and training gold-path lookup.
+
+Training feedback comes from an ungated internal candidate audit, scored against
+training gold by the existing exact judge. A public refusal no longer suppresses
+that audit. Held-out questions never supply training credit. The published gate
+still refuses above its fixed cost cutoff or on an unconfirmed gap-filled link,
+including shortcut constituents. Per-template cutoffs use the same nearest-rank
+95th percentile rule on correct round-0 training answers, now through the hybrid
+search, so set-answer costs and thresholds both use hop-count units. No held-out
+score selects the rule or its cutoff.
+
+Four reported arms, three independent graph trajectories: frozen_v4; full_v4;
+full_v4_no_gate; and existing weighted full_v2. The full_v4 and full_v4_no_gate
+outputs are paired read-only evaluations of the EXACT SAME hybrid learner after
+each round. Both share its receipt journal and changes; their held-out outputs
+have separate tapes. They are not independent learner interventions. This matched
+control isolates the cost of the answer gate. The weighted full_v2 reference and
+frozen_v4 start from independently reset G0 graphs. Frozen uses the same calibrated
+hybrid answer gate and receives no updates.
+
+Hypotheses, all three seeds required:
+
+- R1: full_v4 held-out wrong/n at round 5 <= 0.60 times its own round 0 rate.
+  Zero-to-zero is INCONCLUSIVE; zero-to-positive fails.
+- R2: full_v4 round-5 accuracy is no more than two points below BOTH its matched
+  full_v4_no_gate output and the concurrent weighted full_v2 reference.
+- R3: frozen_v4 does not significantly beat full_v4 on the paired exact McNemar
+  test, p < 0.05. This remains a weak check, not equivalence or proof of improvement.
+
+Publish accuracy, wrong/n, refused/n, unreachable/n, coverage and low-confidence
+refusals by seed, arm and round. Publish whatever the fixed rule produces; do not
+change the gate or select another quantile after inspecting held-out performance.
+MetaQA is not_run in this time box. Measurement may finish after the Loom UI cutoff;
+keep the already published run-3 landing line stable during recording. New run-4
+curves, calibration, hypotheses, summary and provenance files only. All run-3 and
+historical evidence files remain immutable.
+
 ## 4. Datasets
 
 D1 "Northwind" (generated, seeded, deterministic, no LLM)
