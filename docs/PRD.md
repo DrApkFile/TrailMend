@@ -237,6 +237,54 @@ whatever it is. It is not a hypothesis.
 
 Any hypothesis that fails is published as failed, beside the Northwind runs.
 
+### 3.4 Run 3 — abstain instead of guessing, preregistered 2026-11-16
+
+This is a new experiment. H6' and M4 remain failed; no published evidence is overwritten.
+Northwind v2 runs first, seeds 1, 7, 42, five rounds, with independent resets before
+`frozen_abstain`, `full_v2_abstain` and the non-abstaining `full_v2` reference. Same Mend,
+search, splits, document corpus and gap-fill rules as run 2; only the refusal policy changes.
+MetaQA is **not_run in this time box**: its three-arm measurement needs roughly an hour
+per seed, in addition to Northwind, while the owner records at 08:00 Lagos. No MetaQA
+run-3 verdict will be inferred from Northwind. It requires a separately recorded run.
+
+Before any held-out answer is scored, calibrate on each seed's **training split only**,
+on G0 through the unchanged weighted search. For each question template separately,
+collect costs of correct exact-set training answers. Fix the cutoff to the nearest-rank
+95th percentile: sorted costs at index ceil(0.95*n)-1. Empty strata explicitly get cutoff
+0 and are recorded as such, not replaced by another stratum. Freeze each cutoff for all
+arms and rounds of that seed; persist counts, training question ids and calibration costs.
+No held-out score, prior published metric, or hypothesis verdict selects a cutoff.
+
+The gated answer refuses with `low_confidence` if its chosen best path costs **strictly
+more** than its template cutoff, or any selected answer path traverses a pool/gap-filled
+edge whose graph confirmation count is zero. For shortcuts, inspect their constituent
+`via_path` edges too. Equality at the cost cutoff is accepted. Existing unreachable,
+ambiguous and budget refusals keep their reasons. This gate applies to training as well
+as held-out answers; a refusal contributes no feedback under the existing loop. It may
+therefore leave ingested edges unconfirmed indefinitely; no oracle bypass is added to
+rescue accuracy. Gold remains available only in the existing training judge and credit
+assignment. Neither the gate nor pool selection receives held-out gold.
+
+Record accuracy, wrong/n, refused/n, unreachable/n, coverage (correct+wrong)/n,
+low_confidence/n and receipts per round. Primary hypotheses, decided separately on every
+measured dataset and requiring all three seeds:
+
+- R1: full_v2_abstain wrong/n at round 5 is at most 0.60 times round 0, every seed.
+  A zero baseline with a zero final rate is INCONCLUSIVE (no reduction to measure);
+  a zero baseline followed by a positive rate fails.
+- R2: round-5 exact-match accuracy of full_v2_abstain is no more than 0.02 below the
+  concurrently measured full_v2, every seed. This exposes gains bought by refusing right answers.
+- R3: frozen_abstain does not beat full_v2_abstain at round 5 under a two-sided exact
+  McNemar test at p < 0.05 on the same held-out questions, every seed. A tie satisfies this
+  weak non-superiority claim; it is not evidence of improvement or equivalence.
+
+Also report the paired full-vs-frozen differences and accuracy/coverage tradeoff without
+additional success claims. Run id includes the committed code and digests of mend.toml
+and run3.toml. New outputs only: curve_v3_northwind.jsonl, calibration_v3.json,
+hypotheses_v3.json, paired_v3.json and run_manifest_v3.json; receipts and held-out tapes
+use the new run id and arm names. Original full_v2, run-2 and MetaQA files remain immutable.
+Preregistration and calibration provenance are published whatever the verdicts.
+
 ## 4. Datasets
 
 D1 "Northwind" (generated, seeded, deterministic, no LLM)
