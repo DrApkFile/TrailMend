@@ -1,0 +1,24 @@
+{
+  "/v1/evidence/benchmark": {
+    "available": true,
+    "sha256": "77b40db5822d55727723c6f547ee6ac7242d366a4ee74caa8531b342fa71f747",
+    "expected_sha256": "77b40db5822d55727723c6f547ee6ac7242d366a4ee74caa8531b342fa71f747"
+  },
+  "/v1/evidence/curve-metaqa": {
+    "available": true,
+    "sha256": "a981c9d80598b22d5a1ba00a71f6d1d425cbffb625a8bfb1358120bb986d231f",
+    "expected_sha256": "a981c9d80598b22d5a1ba00a71f6d1d425cbffb625a8bfb1358120bb986d231f"
+  },
+  "https://trail-mend.vercel.app/": {
+    "status": 200,
+    "bytes": 102988,
+    "provisional_visible": true,
+    "metaqa_run_visible": true
+  },
+  "https://trail-mend.vercel.app/truth": {
+    "status": 200,
+    "bytes": 314697,
+    "provisional_visible": false,
+    "metaqa_run_visible": false
+  }
+}

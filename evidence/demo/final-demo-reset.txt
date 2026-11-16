@@ -1,0 +1,7 @@
+resetting the demo graph at https://trailmend-production-ee2e07ff.up.railway.app
+receipt rcpt-de8e44de94bda1dc digest de8e44de94bda1dc
+quarantines cleared 0
+shortcuts cleared   0
+pool edges withheld 108
+edges pruned        0
+{"graph_writable":true}

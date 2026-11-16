@@ -4,9 +4,9 @@ Deadline: **2026-11-16 09:00 IST (03:30 UTC)**.
 
 | Item | Location | State |
 |---|---|---|
-| Live app | https://trail-mend.vercel.app | Deployed; final post-push verification pending |
-| API | https://trailmend-production-ee2e07ff.up.railway.app | Deployed; final evidence verification pending |
-| Public repo | https://github.com/DrApkFile/TrailMend | Push final measured evidence after gate and live checks |
+| Live app | https://trail-mend.vercel.app | Verified after push: landing and `/truth` load; screenshots at desktop and mobile widths in `evidence/demo/` |
+| API | https://trailmend-production-ee2e07ff.up.railway.app | Verified after push: benchmark and MetaQA curve available with repository-matching hashes |
+| Public repo | https://github.com/DrApkFile/TrailMend | Completed measured evidence pushed after gate and live checks |
 | Loom | README table and `TRAILMEND_DEMO_URL` on Vercel | Owner must record and add URL; script: `docs/LOOM_SCRIPT.md` |
 | Posts | `evidence/posts.md` | Owner must check handle, post and log URLs |
 | Submission | Hackathon submission form | Owner must submit before deadline |
@@ -25,7 +25,7 @@ I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 plante
 
 ## Verification
 
-`make gate` passed, including strict Python checks, unit tests and the production web build. Live `make verify` passed, including both `/v1/truth` tests; deployed pages/evidence, screenshots, hosted demo reset and clean-clone `scripts/presubmit.sh` remain pending final verification. H6 is ticked only after those acceptance checks. All figures above are generated from evidence rather than manually transcribed.
+`make gate` passed, including strict Python checks, unit tests and the production web build. Live `make verify` passed, including both `/v1/truth` tests; deployed pages/evidence and their hashes, both screenshots, hosted demo reset and local preview shutdown are verified. Evidence: `evidence/demo/final-deployment-check.json`, `landing-final-*-check.json` and `final-demo-reset.txt`. The clean-clone `scripts/presubmit.sh` audit is pending. H6 is ticked only after those acceptance checks. All figures above are generated from evidence rather than manually transcribed.
 
 ## Owner actions
 
