@@ -14,6 +14,6 @@ I tested TrailMend on 3 generated company graphs (1,165 nodes, 124 to 126 plante
 
 **3:05 — say the failures.** MetaQA: M1 PASS; M2 PASS; M3 PASS; M4 FAIL; M5 PASS, from `evidence/hypotheses_metaqa.json`. M4 asked for a larger wrong-answer reduction and failed. Run 2 retains H4' and H6' as failures. Its historical verdict outputs are provisional because the frozen baseline did not replicate; the diagnostic records residual edges outside G0. The higher unweighted result stays published with that caveat. Run 1's failures also remain published.
 
-**3:35 — buyer and offer.** Show `/pricing` and read the current unit price and pilot terms from the screen. End on `/evidence` with source files and digests visible. No customer data has been measured.
+**3:35 — who wants it.** Show `/go-to-market`: the buyer, why they would pay, and the pitch. End on `/evidence` with source files and digests visible. No customer data has been measured.
 
 Runs: company `26b5469-580ae8dc`, public MetaQA `ddf430f-2260187b`, unweighted extension `9ae6601-580ae8dc`. Use README evidence links for seeds, arm, round, denominator, image digest and config provenance. Recording, uploading and adding the Loom URL remain with the repo owner.

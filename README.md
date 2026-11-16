@@ -321,10 +321,11 @@ an `UNWIND` write cannot `SET` a literal; `count(n)` is rejected but `count(*)` 
 carries is accepted and ignored; relationship properties do come back inside returned paths; and a repeated
 `query_id` is silently dropped after a restart.
 
-## Who this is for, and what it costs
+## Who this is for, and why they would pay
 
 **Buyer.** The person who owns the on-call rota and the service catalogue: a platform or SRE lead at a company with
-enough services that nobody holds the whole map in their head.
+enough services that nobody holds the whole map in their head. On-call engineers, service-desk owners and security
+teams ask the same "who owns this" question on their own graphs.
 
 **Pain.** The catalogue is wrong in ways nobody notices until an incident. A service points at a team that no longer
 owns it, a rota entry is stale, two entries describe the same person. The page goes to the wrong human and the
@@ -334,14 +335,16 @@ incident runs long. The map is maintained by hand, so it decays between audits.
 remembering to edit it, and nothing uses the one signal that is always available: whether the answer it just gave
 was right.
 
-**Price.** $4 per service in the catalogue per month, minimum $400 / month.
+**Why they would pay.** Fewer pages to the wrong human; a catalogue that maintains itself from use instead of audits;
+every change a receipt that can be audited and rolled back; and no model guessing at the answer.
 
-**Pilot.** 6 weeks, $2,000, capped at 250 services. Judged on one number agreed up front: the share of "who owns
-this / who do I page" questions answered correctly on a held-out set your team writes, measured before and after six
-weeks of judging. If it does not improve, the pilot is refunded.
+**The pitch.** Connect the catalogue, rota and incident write-ups; TrailMend answers ownership questions with the path
+it walked; judgements come from work that already happens (who actually resolved the incident); success is one number
+agreed up front, the share of "who owns this / who do I page" questions answered correctly on a held-out set the team
+writes, before and after.
 
 **What it is not.** Not an incident-response tool, not a replacement for the catalogue as the place humans edit, and
-there is no LLM on the answer path. The same terms are on [/pricing](apps/web/app/pricing/page.tsx).
+there is no LLM on the answer path. The same story is on [/go-to-market](apps/web/app/(inner)/go-to-market/page.tsx).
 
 ## Limitations
 
