@@ -1,0 +1,5363 @@
+{
+  "claim": "calibration_v4",
+  "design": "Run 4: training-only nearest-rank calibration through weighted single-answer and base-only hop-count set-answer search. Feedback audits ungated training candidates; held-out gating contributes no credit. full_v4 and full_v4_no_gate share the exact learner trajectory and receipts; their evaluations have separate tapes.",
+  "measured_at": "2026-11-16T06:46:56+00:00",
+  "measured_on": {
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880",
+    "host": "127.0.0.1",
+    "image": "ghcr.io/hydra-db/hydradb",
+    "kind": "local"
+  },
+  "rows": [
+    {
+      "correct_train_n": 61,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "alert_owning_team",
+      "threshold": 2.0,
+      "training_samples": [
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1015643336079897534"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-10779475224937394"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-1170528968370777877"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1172074266342541994"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-1289019317215947749"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1543228824141091267"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1577735587324157375"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1606711253781001005"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-1737310438244473316"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-1748174867676596464"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-1766431585097898624"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1785328714845749394"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1820184562451694394"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-1892840355210118610"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2009132247214194453"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-2032666492005269453"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-2127784194111171787"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2219726862512651780"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2297362116058913883"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-2354199976608739659"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-236432312688467705"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2441183816542157441"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-2494334871271004625"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2607686770794825567"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2707869211996913482"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2820529333012323880"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2886132422299032078"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-2893800189381590020"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2958494007717173383"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3067464643786006372"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3095874889254980335"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-319987491966452167"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3201728832716410858"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3242741799016269312"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3400467892727115175"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3427527827747622543"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3468165623566984776"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3483263172178291982"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3493495718751742326"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3532954994909198314"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3639760981076210098"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-3667348840909260603"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3687069856637992701"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3837173583878127318"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3851885048315880397"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3917494388216160199"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-4009926018382814176"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-4142045375857232766"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-428266986794694254"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-4389971511264625671"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-4397655719927398405"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-4421970041875411994"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-4426602219596883096"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-4500967477353703964"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-4539668627556021592"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-472693187752385843"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-48961179876770639"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-532749977107451701"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-875600065065081072"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-960719977072306585"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-997091932223526686"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 44,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "alert_service",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1405083175027714129"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-1416281324065297112"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-1417190502664649720"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-163272319037567923"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-1811346230355131083"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1842950049607835442"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-1853022117450727514"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1925574808919758583"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-235261803523429321"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-2502135718708273389"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2917902835516861770"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-292492345904433310"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3092017747338178846"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3095874889254980335"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3104775097440655537"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-319987491966452167"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-3284573010489548911"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-3440310860755433724"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-355767658914215638"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3634659798888618688"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3656578631233671797"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-3687069856637992701"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3792313427801003996"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3837173583878127318"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3856105794955481189"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3868065457456040299"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3927058684157949907"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3941372935704719332"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4362234593525329561"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-4389971511264625671"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-4400354378796916739"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4432843468693691695"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4502285337682265226"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4515866822779691298"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-4539668627556021592"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-4546867814124394667"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4552794301901960272"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-49192133449027872"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-634895110435119770"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-700326020267268002"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-74028810032941121"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-855616654462084150"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-865375895690049227"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-931027454336975567"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 22,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "customer_affected_by_incident",
+      "threshold": 2.0,
+      "training_samples": [
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1344571806975884076"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1418545184647785478"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1445410508407080875"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1882485089448838725"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1898532816326952630"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2356061966858808059"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2382898677689745817"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2651845432283916693"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2853254301602701845"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3054499239471490869"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3546770508943055765"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3823130559242930710"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3899352467536387765"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3903910850606770382"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3964343123337836714"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-4042265207162096231"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-4425744365475165420"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-491650223965225695"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-602291998363795344"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-614638555294559670"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-634534876352222451"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-713191439262938458"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 50,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "escalation_contact",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-117069821984255883"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-119723694236161783"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-124664997446397687"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1581439757780183354"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1596437966815080677"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1637790805503552384"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1862821921418354230"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2025657249186141895"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2035774400265837748"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2162448161437158976"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2278056492164623509"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2345721049794897385"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2360650336004196262"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2411420590297937424"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2486985919953608817"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2589117733486686504"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2640568655185149746"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2679424374168541952"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2741078875972435371"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2754910725346777083"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2784436437614532705"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2795657294386810109"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2897863507086199401"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2950931143451403655"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3006416766736931802"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3039588750905530674"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-3169128739634146755"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-3171441922471409400"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-323563252245531896"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3275458588811057299"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3295571530680802692"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3572968196967121720"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3617186755536113698"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3663628794716674962"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3711350304425320760"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3811379094423669675"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3839606787225919480"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3962603302382187982"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-4091968218951134036"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4265855546176771939"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4307417917055794105"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-4324551640588148542"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4391919342993060532"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4448691838522837054"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4465209620736922800"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4476578568099889009"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-516891214874208246"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-546848875350660110"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-950248863899169682"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-952388755198259990"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 17,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "incident_pager",
+      "threshold": 3.0,
+      "training_samples": [
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1458476663024218791"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1704270567819489794"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2210669178914706576"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2383870389992269998"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2699905087625875130"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2998179111196828874"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3054499239471490869"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-329128712797165254"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3471318499974612610"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3899352467536387765"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-4042265207162096231"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-4155433063520247640"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-4328389305259018388"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-4370215790495360667"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-602291998363795344"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-614638555294559670"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-713191439262938458"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 67,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "page_owner",
+      "threshold": 3.0,
+      "training_samples": [
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-1152687387515126977"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-1172074266342541994"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-1289019317215947749"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-1319791815266689412"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1417190502664649720"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-1708527319753751325"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1737866914372661550"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-1820184562451694394"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-1842950049607835442"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1934246098142992298"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-1942105647387938356"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2009132247214194453"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2023327314340742149"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-2127784194111171787"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-2251802671527250948"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-2336185180298520915"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-236432312688467705"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2441183816542157441"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2502135718708273389"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-2607686770794825567"
+        },
+        {
+          "cost": 1.429516074,
+          "question_id": "q-page_owner-2657685300577108627"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-2728037288666228461"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-273919612350119531"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-2821147918372984286"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-2880573770569267405"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2888980240261276938"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2917902835516861770"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-2935844953398857956"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-3080347825074829761"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-3101262793282494290"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3136805566125635833"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-3318419818216912065"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-3400467892727115175"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3440310860755433724"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-3522265733951449753"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-3532954994909198314"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-3634659798888618688"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-3656578631233671797"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3669523842265522513"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3832058111953919499"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-384602315459842143"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3913332344275140718"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-3917801284358431014"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-3938812735010125035"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-3963593186950217732"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-4142045375857232766"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-4185212306693293345"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-4270532980668578442"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-428266986794694254"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-428328209794876966"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-4349125765833660245"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-4383199999281188623"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-4426602219596883096"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-4432843468693691695"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-4500967477353703964"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-4539668627556021592"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-46640729143067439"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-477504756330642546"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-496950393371535372"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-498949154686556088"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-614719683147382471"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-74028810032941121"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-801600171928089570"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-812919244338994373"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-865375895690049227"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-960719977072306585"
+        },
+        {
+          "cost": 1.429516074,
+          "question_id": "q-page_owner-983796261924230878"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 54,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "person_team",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1027867786487287756"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1057902202557022871"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1078487936233368841"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1212436707615179687"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1298160271518130727"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-133874591345311803"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1401600271508141499"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1565911150726436415"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1589947805460228201"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1664468306892205207"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1699667686423486546"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1724026874606540857"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1743156987623556193"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1796839025503854625"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2048455361897396867"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2078372856742392261"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2110534166306773134"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2189836037077180341"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2207181041615206130"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2681693973374885355"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-284071273325349429"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-285181250531479905"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2914485586748703192"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2940677694520312517"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3006416766736931802"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-3242109137712205463"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3470978135059966984"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3507439636962353966"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3532619695549802557"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-3564108445757067560"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-3617186755536113698"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3657428271672960163"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3693670303424937069"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3772404794091146604"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-3839606787225919480"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3861984776772998509"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3912760743891123196"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-4009747208093222293"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4183318750142973215"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4265855546176771939"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4448691838522837054"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4455030698084479382"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4456474153812108467"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-4476578568099889009"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-4490216754455952838"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-477542820492029842"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-486822602480115896"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-517325032179739233"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-546848875350660110"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-609458055847077462"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-752836446826501005"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-789413663343636877"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-950248863899169682"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-972907813769505019"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 44,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "service_customers",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1086916149843682823"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1214902396373582022"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1317954331230297746"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1323812709494392861"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1425196619298020581"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1563246927656163511"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1635224434263432631"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1810330097605741516"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1867277249907603593"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1946939098315283417"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2292062351540493895"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2295569319132506730"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2405093805732646614"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2420807736528881183"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2462146986311911176"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2482099127963247972"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2624842869880891239"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2815844960577974327"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2827417653368298509"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-294615284939762053"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-304165279434278397"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3221440187613459131"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3517967638934851239"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3595645359524882209"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3789145200034765170"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3793375023421194600"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3858573230507933743"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-391054901789947553"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4042025167812409589"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4054400155027360281"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4102599104136452663"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4284531684831244293"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-433721326522558378"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4363860193852659232"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4508363206528084994"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-546101031459485574"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-62956548076969756"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-630928030431698118"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-697313736212471655"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-786584899997465189"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-794329567058969045"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-846581378985961272"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-922203194271753496"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-967975661270367226"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 43,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "service_owner_team",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1214902396373582022"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-1323812709494392861"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1425196619298020581"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1707992590601257283"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-1735972345807189143"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-1810330097605741516"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1895868840099090056"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-1900884264459732320"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1946939098315283417"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1972968919800034724"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2261689226718332133"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2292062351540493895"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-2302278771834809154"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2347086648994831351"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2405093805732646614"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2420807736528881183"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2462146986311911176"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2761339271514633800"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2769488371992618780"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2797562489733830799"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2815844960577974327"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2881312198619506133"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-294615284939762053"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2960338721168468544"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3195394851927553893"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3438361315843603730"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-344872588688899409"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3583171871202777501"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3789145200034765170"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3793375023421194600"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3858573230507933743"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-3985770070742151441"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3987754895615350271"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3988343777877776924"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-433721326522558378"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-49534672375546187"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-517166255173953067"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-598663428479760729"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-706463090007544751"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-786584899997465189"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-834143409869765404"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-922203194271753496"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-967975661270367226"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 17,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 1,
+      "template": "team_on_call",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-1012284396387411494"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-1251855199069963387"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-131707389873558897"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-1424339178517629505"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-176751862656525374"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-1880313684792363254"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-2113873813957764770"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-2283340969507318415"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-2367502025405430352"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-2538049740265056735"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-3740438609565168144"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-3954211166510045269"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-4029232806344203799"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-4472959213539684061"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-53985795405371729"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-544026358399780897"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-934053051099718454"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 55,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "alert_owning_team",
+      "threshold": 2.0,
+      "training_samples": [
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1007411711857768593"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-1104549976104965167"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-1112457303527436781"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1129767904857667194"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-1462916384364388424"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-1468396563269139776"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1502387077943743843"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1503789932507747793"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-1515889239942212205"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1575895924800669173"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-1696534298467333797"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-1978421044144043616"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2000141577668839630"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2044997637900533210"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2061417424573053669"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2136238572131116827"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2191583755322098779"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2393134504537772557"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2412679603023573815"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2466460463524565599"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2596762423593742927"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2721131152913669484"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-2725694059977731423"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2827025690627853321"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2924221101835223887"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-2941806238802846864"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2946372580381467105"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3132108047883718109"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3154056597584151568"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3184522957954594161"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3229636616937910520"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-3476871443380863571"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-3506761005409954613"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3615386976608855334"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3749444279683512129"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3801227963150276980"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-382490594900975690"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3838656179484634595"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-3850534557397774225"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-4036783627614909695"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-4077389029100351214"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-4093340030258023840"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-4148243674890448263"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-4156094663968983780"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-419748934832200459"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-428601702770748656"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-4301167663510278686"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-4456588874476427475"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-447559573525664970"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-4511642788893971918"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-455734017785161095"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-456902710357817791"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-4598584680302766992"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-496018571586671614"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-670536747927188325"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 44,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "alert_service",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-101251293001516506"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1144235833131295952"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-120175185203366844"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1288868187216866009"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1367446326934463905"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1502387077943743843"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1503789932507747793"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1763661849978522012"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1779859361757245422"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1783124137074105140"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-1856479706010098249"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-1974420439514368005"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1988016385636315842"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2143333588490345578"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2150798962148857433"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-2166159804940887169"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-2288987809778256571"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2314061576466869500"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-2377829187372441198"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2412679603023573815"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-2434659845315749095"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-2441407088855375460"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2509118102952900662"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-2553777379341953431"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2638542046787956137"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-2853318197227365361"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3229636616937910520"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3348934808729309987"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3542336146869260150"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-3615386976608855334"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-369463714301158484"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3938141605252931611"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-4128764562982489147"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-4151302514058363861"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-4153665606228342076"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4344314869779924688"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-4377565309356958978"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-4474738688324447579"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-482971923329476119"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-575951408008999612"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-595677800485939998"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-607899896804628081"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-927411257022712978"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-968775365583644581"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 22,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "customer_affected_by_incident",
+      "threshold": 2.0,
+      "training_samples": [
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1372041890547711371"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1501179671562137726"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1628125989431348750"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1939958541434452474"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1984687987454804285"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-231121309522782308"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2577011360017832582"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2662272241888036130"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2671553159620113201"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2829658310535144103"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2832522548244103444"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2962876871778028907"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3054748198644098013"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3227484973055574910"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3709295825646888234"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-376160437404625521"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3822432024670377827"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-4042113939359580898"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-4489652887707887881"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-771732039758779706"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-781847713471181988"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-983743070056673855"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 49,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "escalation_contact",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-1005702763734396453"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1007581842011979581"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1085341119774674114"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1226999247391537962"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1233937666292393089"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1358169842823262749"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-138139475362799010"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1461010741749422898"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1466330415978162182"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1483815680222466253"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1484359040889630862"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-151146203739327781"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1709455837791364510"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-187648602182503211"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-1940790960295868977"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2039268065429500863"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2174042320219406512"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2218471131495926825"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2266870214127995864"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2401864064084550569"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2424986177910822221"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2583796426238713430"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3109060229143167889"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3153314522471614610"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3327319369664945156"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3329482542381500958"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3482452139000100000"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-349386301733234499"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3535950397971208012"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3623299352429668157"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3655953004742124037"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3751020263273680712"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3853894180677654037"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-3872040139257070453"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3893373376406926861"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3921695801869937659"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-4323422389459859348"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4434083004764761846"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4438531579301808190"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-4443564681876693286"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4448622804504594070"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4579296436128866650"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-46784172500745767"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-473665002917205493"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-578753652655835779"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-580066838068352807"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-602414296785064482"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-649858318653481475"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-702485273184839572"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 21,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "incident_pager",
+      "threshold": 3.0,
+      "training_samples": [
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1117051497582129508"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1211225288127602886"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1372041890547711371"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1628125989431348750"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1705854870897904591"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1825064224701821306"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1955537017705411451"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-244658146573749590"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2502861592424422639"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2671553159620113201"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2832522548244103444"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2962876871778028907"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3054748198644098013"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3280705886215209877"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3428302414667315488"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-343597080313461265"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3545970883866883205"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3822432024670377827"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3923226048966231868"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-415433583612101383"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-4176458495878626316"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 60,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "page_owner",
+      "threshold": 3.0,
+      "training_samples": [
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-1008874558110293918"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-101251293001516506"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-10292696814077328"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1405903322055780534"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-1414681143574780911"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1515889239942212205"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1752685172608725917"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-1777353133916591908"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-1784142860560836454"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-1833564299273318536"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-1866078047430568730"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-1912498369309861790"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1924341815542500075"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-1978421044144043616"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-1990335272817346140"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-2000141577668839630"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-2110828960985752222"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-2216497592265948719"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-2246645742826597792"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2314061576466869500"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-2372574227304775988"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2393134504537772557"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-2468012238193508865"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2525100454336020066"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-25770485689429943"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-2692416211962891060"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2725694059977731423"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-2784192281617667175"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-2810973980706885182"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2827025690627853321"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-2988721248945880287"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2991988941394614094"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3132108047883718109"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-3145150386193379691"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-3213948921403250287"
+        },
+        {
+          "cost": 1.771848327,
+          "question_id": "q-page_owner-324429797240820920"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-3457505157022221650"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-346055289461176136"
+        },
+        {
+          "cost": 1.771848327,
+          "question_id": "q-page_owner-3506799353604337338"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-3725971155477955606"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-3772207307663254365"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-3900807119630138331"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-3919045177738823389"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-4055767376188107874"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-4135076816175495094"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-4215884152432363390"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-4301167663510278686"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-4377565309356958978"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-4456588874476427475"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-4457829691483881689"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-4498701904903781592"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-4500694235235214978"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-4598584680302766992"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-482971923329476119"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-494529369962939702"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-607406739959948713"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-694995877050976280"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-698205893429375234"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-843127519883451072"
+        },
+        {
+          "cost": 1.543626825,
+          "question_id": "q-page_owner-983448574850077103"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 52,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "person_team",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1098462727836108431"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1106681369769429787"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1169012742882442282"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1329506624698253240"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1418738521861465392"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1428734243034404447"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1520229444310148301"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1540239537699072726"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1558031209999922705"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1591262855563699467"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1690378183656562479"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-169934333370775548"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1771994732776305048"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1774056309551604218"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1868121153741515595"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2096396153794408155"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2170559953072589104"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2174042320219406512"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-242490445491068617"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2533164018138761404"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2574471883353341425"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2662219913527669221"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2698194445138047667"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2824388267989263810"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2839603431981664419"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2843158930566050673"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2849011802147375271"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2849091214597453057"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2906333337408279820"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-3081952579371530465"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3109060229143167889"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3164429177755541887"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-3327270899468370846"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-3327319369664945156"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-3384881330534853072"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-3521276867612868147"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-366828885813116998"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-3781816428797331502"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3787025851191934176"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3825195526557638761"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3940761481776310760"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3966469374526921164"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4080251384670228735"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4099921560150036458"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4200086509242627137"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4323422389459859348"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-432943086120377673"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-4574215864600881716"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-741497007437466746"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-75812026777442085"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-761720695380731061"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-902412064395542352"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 41,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "service_customers",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1000167916466216607"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1037395186126381817"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-132724680786236464"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1348946393075551623"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1469348043161088142"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1470420618949990147"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-150816311569828842"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1596561431852299357"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-17406328306164143"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-18010652493233461"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1915973349328850985"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2068210382521500017"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2167611033082588449"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2204614907853899135"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2209204865431774004"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2258692931729578140"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2518075074746473233"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2596929689149033174"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2638968652396926341"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2661298158095391423"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-27020432053975785"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2769383275387968866"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2808519395955687488"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2832324432070649637"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2902771508310241644"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-341378275897301968"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-359303167834772040"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3617990096168282555"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3832392337642954531"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-38598131747062886"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4000007933798664725"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-404044643725504683"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4050126377320811241"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4306642351956027175"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4572321000925154159"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-527930473864889997"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-531482997698785511"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-804211643243397694"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-842994289770848925"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-952588696651430895"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-967439710221046576"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 48,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "service_owner_team",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1000167916466216607"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-1106875951826854878"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1160382914052611369"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1243901906723706637"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1469348043161088142"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-1596561431852299357"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2043551825063370109"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-2113737942701623709"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2148143832160536303"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2167611033082588449"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2227779482022703757"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2258692931729578140"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-233987375042739466"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-245968527513374479"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2502482983188161262"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2518075074746473233"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2578965996578337013"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2639817286033506425"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-2661298158095391423"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-27020432053975785"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2704963254079768185"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2808519395955687488"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2809180077603437521"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2942148739869048450"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2960125540897047963"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-3037529265967779471"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3182430680207471672"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3245614039634330797"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3298844303244919899"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-3428346336239066409"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3527049589265812599"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-368196020207226172"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-3683670509232827148"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3729389021146970540"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3757662479907502466"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3832392337642954531"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-4000007933798664725"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-4050126377320811241"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-4181600774135078733"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-4261183369209286327"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-4433482463933861684"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-4572321000925154159"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-613029985091200942"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-644150057327814144"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-660274962991932835"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-665296650054529243"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-75075250099266258"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-877720785676544586"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 21,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 7,
+      "template": "team_on_call",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-1035280262380296243"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-1315174834979498970"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-1594222572058045583"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-2010035558132589003"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-2471783615969791350"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-247221624598625476"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-2759876633207991375"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-2778738782851580010"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-3100750518615694639"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-3117926187170954718"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-3255777670900488352"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-3389437380643057889"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-3719607511186643532"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-3771885421731020571"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-3980488894145410657"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-4020710848702314597"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-4449786527241936876"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-4475994749981107794"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-4540239847925006341"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-460562078619112657"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-567192009561154620"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 55,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "alert_owning_team",
+      "threshold": 2.0,
+      "training_samples": [
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1045446723476841611"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1097510966588015328"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1112732730115015059"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-1221179016642809773"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-1229970187623232584"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-1274667178453951312"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-1330676649316875669"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-1346604309494348697"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1420454960916593079"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-1452003557085557764"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-1588635348048915164"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1720777988576134542"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-179910046941703751"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1853154768802523221"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-1874783755339816853"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-1886358528767727582"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-2035509153992124948"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-2067905909411632391"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-2092583083553605556"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-2124394061057281321"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2136467670420854074"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-2138651687302422949"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2355760402353545515"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-2410993617944842750"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-2468862616603511638"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-2610178903011759152"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-2622417107341862318"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-287055071141826242"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3085376557593919171"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-3099597223469295891"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-3135184257756324762"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3199740677312626652"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-3244531949878856803"
+        },
+        {
+          "cost": 0.953010716,
+          "question_id": "q-alert_owning_team-3398796757617178263"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3536615308910772104"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-3538959018769359472"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3740913523299738928"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-3751898204545470979"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-3820268931621082458"
+        },
+        {
+          "cost": 1.181232218,
+          "question_id": "q-alert_owning_team-3820734710872428591"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-3893211051680433327"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-3916864730034931781"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-4074151069932836676"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-4148315925151070381"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-4199950609542042255"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-4265602780875978854"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-4350423792128003934"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-4428441869999868436"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-alert_owning_team-4541519884489502641"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-4577055911519900335"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-4608112604693554177"
+        },
+        {
+          "cost": 1.067121467,
+          "question_id": "q-alert_owning_team-48127186222419567"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-765864098603177693"
+        },
+        {
+          "cost": 1.590616109,
+          "question_id": "q-alert_owning_team-772661417772188991"
+        },
+        {
+          "cost": 1.476505358,
+          "question_id": "q-alert_owning_team-878805373203556602"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 44,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "alert_service",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1067640460292743372"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1073352043421652547"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1169523342768598996"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-1274295683083754440"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1336732247320132863"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1420454960916593079"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1468107087677533957"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1575821831467070519"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1720777988576134542"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-179910046941703751"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-1853154768802523221"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-1865234592749621027"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2017056637250350345"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2035509153992124948"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-2136467670420854074"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2160180849518019955"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2200373945821760426"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2519353778367935658"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2768769497990869661"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2791605732565690238"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2831115858033913148"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2833853646101256082"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2920145051475574166"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-2934762692632044946"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-3113676233620003694"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-3232809566779336254"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3275943630045564096"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3354523359623033614"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-3398796757617178263"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-3476285404895411516"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3614361806508894746"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3725105549137270523"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-3751898204545470979"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4199950609542042255"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-4253216197470634760"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-4265602780875978854"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-4279051817132929390"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-437933995816240402"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-alert_service-44813971299848268"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-523555123650385415"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-541328507459554994"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-595508332788063683"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-alert_service-813837152682782993"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-alert_service-998872046986433170"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 28,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "customer_affected_by_incident",
+      "threshold": 2.0,
+      "training_samples": [
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1497220532578609679"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1618568578623749222"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-1665358397936374400"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2073538481547076052"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2139841333183310006"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2156162420151331557"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2200592199452532247"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2202210278408897546"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2226915388734960840"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2400721986375731171"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2437031936818389415"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2450669168310582358"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2910856213533988630"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-2993666251364672584"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3181018109760842542"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3276144217892120652"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3282942827323316894"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3283395285982479773"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3394876575393364355"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3518342443235138704"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3701302637443243490"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-379768756222687682"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3903678493843932916"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-3933698752305046667"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-785546767051108729"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-82288062568447677"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-89660243214586695"
+        },
+        {
+          "cost": 2.0,
+          "question_id": "q-customer_affected_by_incident-94371786702362265"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 52,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "escalation_contact",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-106565785995446614"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1098277550271150862"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-119905271697792820"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1222577076017377598"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-1227087074112212291"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-1373261852295406674"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1404148210764518052"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1504905434107077235"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-1587745048423271915"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-1592216773210071375"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1612367183142512312"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-1685961116311762964"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-175499114568879216"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-193927533035294535"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2074636014217088808"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-217993115483536554"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2238231348080461526"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-264610860018128925"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-2749422592997080619"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2755134328953550950"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2756516690206232516"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2772617679685181797"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-2840521456542854249"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-2992079726304404736"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-300479665138588849"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3225672113423065110"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3360243605384423844"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3377760069398410636"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3409401991313403003"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-3701738267333168694"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3735426661005760257"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3744845456961364422"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-38543029868614814"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-3925286246303099535"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-3968633125776456053"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-4048476405794253119"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-4062681494142783041"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-4115189419356567856"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-4218694374814025304"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4223437731837192198"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-4272671561187863193"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-4313036710003414444"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-4498350406705692169"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-4541144842823262224"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-544032605041657149"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-595314494470057415"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-631250131307789394"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-640024983435153555"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-escalation_contact-70727831321594409"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-716904507892783866"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-escalation_contact-829808168896852674"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-escalation_contact-837134240519564584"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 18,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "incident_pager",
+      "threshold": 3.0,
+      "training_samples": [
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1497220532578609679"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-1618568578623749222"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2156162420151331557"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2201548539124344673"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2241421803623657718"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2437031936818389415"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2450669168310582358"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2713938110757811348"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2736591844730502926"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-2993666251364672584"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3041720670845305311"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3181018109760842542"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3282942827323316894"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3394876575393364355"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-3518342443235138704"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-4103659277875287091"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-490265742204470255"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-incident_pager-862730965213952274"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 59,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "page_owner",
+      "threshold": 3.0,
+      "training_samples": [
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-1169523342768598996"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-1221179016642809773"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-1401118239207429326"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1468107087677533957"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1601972049652160256"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-1659100671120996678"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-167559027131677731"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-1711582974616101461"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1886358528767727582"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-1904152661788418425"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-1917872312847487581"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-2081930766727006237"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2092583083553605556"
+        },
+        {
+          "cost": 1.771848327,
+          "question_id": "q-page_owner-2138651687302422949"
+        },
+        {
+          "cost": 1.771848327,
+          "question_id": "q-page_owner-2165458859514711026"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-2195638958845632722"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2214809713759062698"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-2319595733103306157"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-2368942265021325475"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2396876071277072582"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2468862616603511638"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-2474603438450305074"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-2519353778367935658"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-2537702634146891614"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-2566849118130735732"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-2610178903011759152"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-2762554224726482280"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-2791605732565690238"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-2922443260237021799"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-2967260437511022518"
+        },
+        {
+          "cost": 1.771848327,
+          "question_id": "q-page_owner-3023673723810394906"
+        },
+        {
+          "cost": 1.771848327,
+          "question_id": "q-page_owner-3054385474143257022"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-3100361079360181087"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-3135184257756324762"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-322054747415592927"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-3244531949878856803"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-3536615308910772104"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-3543030145066841616"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3725105549137270523"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-3760903122390877703"
+        },
+        {
+          "cost": 1.771848327,
+          "question_id": "q-page_owner-3820734710872428591"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-3842264206101260039"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-4074151069932836676"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-4135589030264386180"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-4199950609542042255"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-42151282234547018"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-4350423792128003934"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-4404613587378182344"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-4514075054750399604"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-4573379807479663829"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-4608112604693554177"
+        },
+        {
+          "cost": 1.953010716,
+          "question_id": "q-page_owner-599082243301297830"
+        },
+        {
+          "cost": 3.0,
+          "question_id": "q-page_owner-760864774113345214"
+        },
+        {
+          "cost": 2.067121467,
+          "question_id": "q-page_owner-813837152682782993"
+        },
+        {
+          "cost": 2.476505358,
+          "question_id": "q-page_owner-860993611564381043"
+        },
+        {
+          "cost": 1.657737576,
+          "question_id": "q-page_owner-86539927843196919"
+        },
+        {
+          "cost": 2.590616109,
+          "question_id": "q-page_owner-878275692708248538"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-898690462159537798"
+        },
+        {
+          "cost": 2.181232218,
+          "question_id": "q-page_owner-998872046986433170"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 51,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "person_team",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1066104617652966874"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1067208094905249651"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1123599826006598552"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1173792944891897066"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1321932614076919408"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1380236686860473423"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-1382902886513269155"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1392740084002884316"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1717591256525976095"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-171981546319639802"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1763925660897727587"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1772341580151090826"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1842143245399344317"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1878070351270140157"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1918936849298206792"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1967134562262455055"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-1984775312845096782"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-1995368224561505524"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2182158656471117208"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2329513210795460659"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2331407358078237860"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2387071676435880003"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2429637198704573431"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2709085090798279967"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-2762344351450006854"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2814365799573041072"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2832843591276705679"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-2833148330292669497"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2880541982879184906"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-2951718517440113069"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-300479665138588849"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3120559870122906135"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-317599386568939192"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3288152910924917068"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-3348317600084202627"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-3446425212818666116"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-3626939768368880213"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-3986989255494449"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4009012929372868780"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-4129512383390482104"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-4498350406705692169"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-459899705716746484"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-655098641158514255"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-679722620880051560"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-67979665695434098"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-70727831321594409"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-754231543961700776"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-803896611305366399"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-person_team-805000180907265078"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-person_team-925037205534363262"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-person_team-955003806376842440"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 46,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "service_customers",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-117624284174185817"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1248821855924989256"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1281451602734966214"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1293790895705249662"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1455905234278669040"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1557451920107257256"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1709998274410818464"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1746251482390031014"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-1825480370796344844"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2141971553650861605"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2201400913580265019"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-223714381432569750"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2341033089806624271"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-237277370919226678"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2377014669790419692"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2570821694868798616"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2780449743955228429"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2908539363457126471"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-2937801482907262182"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3014117516851003383"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-305170299832976508"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3085770398382977034"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3116859649708072392"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3123640502148460482"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3219140273286124306"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3261330936071748810"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3267197498296024895"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3291669617349852320"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3406565252368875695"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3577839385103433142"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3795724187049152659"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3840955739168583863"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-3917511033027475175"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-395278249081009037"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4126439404992271128"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4150586066211567177"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-428351004711764440"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4423340818645405391"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-4551085356899073968"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-46697703878475381"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-511080711985589235"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-610007667356968259"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-800988726225380812"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-949820814472132245"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-962062400431020900"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_customers-987833320758310311"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 48,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "service_owner_team",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1145988674207530009"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1267154245794995443"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-1455172742106597027"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1455905234278669040"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-1501431342212531814"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1557451920107257256"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1709998274410818464"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-1746251482390031014"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-1825480370796344844"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-1841015197316263721"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2013005755138842171"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2141971553650861605"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-2164391675119815246"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-2220516493332025309"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2269188203228586144"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2341033089806624271"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2377014669790419692"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2574731783572510899"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-2764628206029192422"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-2780449743955228429"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-2799914259909733930"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2838774568312463076"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-2908539363457126471"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-295279784175728077"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3180871893291324165"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-3219140273286124306"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-3267197498296024895"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-340375721178523630"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3404305730603563715"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3795724187049152659"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3840955739168583863"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-3998555953198414202"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-4150586066211567177"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-428351004711764440"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-4387131400400005076"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-4424711746138934930"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-4565009130782477622"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-4598918626155698950"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-460525064257276727"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-610007667356968259"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-653877190081321002"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-680660011456245605"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-740006398144543474"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-866602795683986664"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-service_owner_team-881566944515485859"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-949820814472132245"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-service_owner_team-960661180239795037"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-service_owner_team-978252728145437848"
+        }
+      ]
+    },
+    {
+      "correct_train_n": 22,
+      "empty_stratum": false,
+      "quantile": 0.95,
+      "run_id": "v4-b65058c-8b296c04",
+      "seed": 42,
+      "template": "team_on_call",
+      "threshold": 1.0,
+      "training_samples": [
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-1019639499205886261"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-1034347257125854755"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-1217942008983904845"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-1281405303462360359"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-1345627861847998600"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-1400363766021087464"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-2617188465009435456"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-2687012044821270169"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-2782311183766686291"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-2801074861673523581"
+        },
+        {
+          "cost": 0.476505358,
+          "question_id": "q-team_on_call-2836317917570685992"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-2866584313640081296"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-294271635919195486"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-307638553182245403"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-3220353635480977044"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-3387068152885720790"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-3594479558053706266"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-374294324662069943"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-4203767796516921379"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-4414415296818021729"
+        },
+        {
+          "cost": 0.590616109,
+          "question_id": "q-team_on_call-788561934999060341"
+        },
+        {
+          "cost": 1.0,
+          "question_id": "q-team_on_call-903968247926989110"
+        }
+      ]
+    }
+  ]
+}

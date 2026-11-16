@@ -1,0 +1,155 @@
+{
+  "claim": "hypotheses_v4",
+  "design": "Run 4 preregistered rules in PRD 3.5; all seeds required.",
+  "measured_at": "2026-11-16T07:04:07+00:00",
+  "measured_on": null,
+  "rows": [
+    {
+      "claim": "wrong-answer rate falls at least 40%, every seed",
+      "classification": "measured",
+      "dataset": "northwind_generated",
+      "id": "R1",
+      "per_seed": [
+        {
+          "n": 340,
+          "round_0_wrong": 29,
+          "round_5_wrong": 9,
+          "seed": 1,
+          "verdict": "PASS"
+        },
+        {
+          "n": 340,
+          "round_0_wrong": 26,
+          "round_5_wrong": 11,
+          "seed": 7,
+          "verdict": "PASS"
+        },
+        {
+          "n": 342,
+          "round_0_wrong": 20,
+          "round_5_wrong": 9,
+          "seed": 42,
+          "verdict": "PASS"
+        }
+      ],
+      "run_id": "v4-b65058c-8b296c04",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "accuracy is within two points of both matched hybrid and weighted references, every seed",
+      "classification": "measured",
+      "dataset": "northwind_generated",
+      "id": "R2",
+      "per_seed": [
+        {
+          "abstaining_accuracy": 0.9205882352941176,
+          "delta_points": -1.4705882352941235,
+          "delta_vs_weighted_points": 5.588235294117638,
+          "reference_accuracy": 0.9352941176470588,
+          "seed": 1,
+          "verdict": "PASS",
+          "weighted_reference_accuracy": 0.8647058823529412
+        },
+        {
+          "abstaining_accuracy": 0.888235294117647,
+          "delta_points": -0.8823529411764786,
+          "delta_vs_weighted_points": 6.470588235294117,
+          "reference_accuracy": 0.8970588235294118,
+          "seed": 7,
+          "verdict": "PASS",
+          "weighted_reference_accuracy": 0.8235294117647058
+        },
+        {
+          "abstaining_accuracy": 0.8830409356725146,
+          "delta_points": -1.4619883040935644,
+          "delta_vs_weighted_points": 3.2163742690058506,
+          "reference_accuracy": 0.8976608187134503,
+          "seed": 42,
+          "verdict": "PASS",
+          "weighted_reference_accuracy": 0.8508771929824561
+        }
+      ],
+      "run_id": "v4-b65058c-8b296c04",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "frozen_v4 does not significantly beat full_v4, every seed",
+      "classification": "measured",
+      "dataset": "northwind_generated",
+      "id": "R3",
+      "per_seed": [
+        {
+          "arm": "full_v4",
+          "dataset": "northwind_generated",
+          "delta_points": 8.823529411764707,
+          "n": 340,
+          "only_frozen_correct": 2,
+          "only_full_correct": 32,
+          "p_value": 6.938353180885315e-08,
+          "reference": "frozen_v4",
+          "round": 5,
+          "run_id": "v4-b65058c-8b296c04",
+          "seed": 1,
+          "verdict": "PASS"
+        },
+        {
+          "arm": "full_v4",
+          "dataset": "northwind_generated",
+          "delta_points": 5.882352941176471,
+          "n": 340,
+          "only_frozen_correct": 0,
+          "only_full_correct": 20,
+          "p_value": 1.9073486328125e-06,
+          "reference": "frozen_v4",
+          "round": 5,
+          "run_id": "v4-b65058c-8b296c04",
+          "seed": 7,
+          "verdict": "PASS"
+        },
+        {
+          "arm": "full_v4",
+          "dataset": "northwind_generated",
+          "delta_points": 4.678362573099415,
+          "n": 342,
+          "only_frozen_correct": 0,
+          "only_full_correct": 16,
+          "p_value": 3.0517578125e-05,
+          "reference": "frozen_v4",
+          "round": 5,
+          "run_id": "v4-b65058c-8b296c04",
+          "seed": 42,
+          "verdict": "PASS"
+        }
+      ],
+      "run_id": "v4-b65058c-8b296c04",
+      "verdict": "PASS"
+    },
+    {
+      "claim": "wrong-answer rate falls at least 40%, every seed",
+      "classification": "not_run",
+      "dataset": "metaqa",
+      "id": "R1",
+      "reason": "not_run: Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-4 results were measured.",
+      "run_id": null,
+      "verdict": "not_run"
+    },
+    {
+      "claim": "accuracy is within two points of both matched hybrid and weighted references, every seed",
+      "classification": "not_run",
+      "dataset": "metaqa",
+      "id": "R2",
+      "reason": "not_run: Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-4 results were measured.",
+      "run_id": null,
+      "verdict": "not_run"
+    },
+    {
+      "claim": "frozen_v4 does not significantly beat full_v4, every seed",
+      "classification": "not_run",
+      "dataset": "metaqa",
+      "id": "R3",
+      "reason": "not_run: Northwind was prioritized in the preregistered time box; MetaQA needs roughly one hour per seed for three arms in addition to Northwind. No MetaQA run-4 results were measured.",
+      "run_id": null,
+      "verdict": "not_run"
+    }
+  ]
+}

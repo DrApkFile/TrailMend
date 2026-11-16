@@ -1,0 +1,74 @@
+{
+  "run_id": "v4-b65058c-8b296c04",
+  "code_commit": "b65058c3917a9eb117221e63080e26444d51d390",
+  "preregistration_commit": "d6a300c",
+  "eligibility_clarification_commit": "0c630b0",
+  "shared_trajectory": {
+    "full_v4": "full_v4_no_gate"
+  },
+  "config_sha256": "8b296c043a68a82b256f10d3fd6dab5a82025cfde8ae859b2bbadce7bdf1b4dc",
+  "config": "quantile = 0.95\nrounds = 5\nseeds = [1, 7, 42]\ndataset = \"northwind_generated\"\ndata_version = \"v2\"\nsearch = \"weighted_single_unweighted_set\"\ntraining = \"ungated_internal_audit\"\nset_shortcuts = false\n",
+  "mend_config": "[mend]\neta = 0.35\neta_confirm = 0.10\ncost_floor = 0.5\ncost_ceiling = 20.0\nwindow = 6\nquarantine_min_blames = 3\nquarantine_blame_share = 0.8\nquarantine_confirm_ceiling = 1\npromote_min_questions = 3\n\n[run1_rule]\neta = 0.35\ncost_floor = 0.05\n\n[gapfill]\nwaves = 2\non_wrong = true\n\n[search]\nmax_len = 3\nresult_limit = 200\n\n[run]\nrounds = 5\nplain_store_top_k = 15\n",
+  "hydradb": {
+    "kind": "local",
+    "host": "127.0.0.1",
+    "image": "ghcr.io/hydra-db/hydradb",
+    "digest": "sha256:ab71d651fefee13ebb23eb56d72316065bdca563ff7587442e07be663f2bf880"
+  },
+  "hydra_url": "http://127.0.0.1:8444",
+  "data_version": "v2",
+  "dataset": "northwind_generated",
+  "classification": "measured",
+  "seeds": {
+    "1": {
+      "documents": "9f234dc5d1cf67e45734327c0d20f99f0dcbdfdb9ae5971d738a8c0c6cdc2a82",
+      "faults": "7b5bab05344316d07a5c260e362d1bb74f1e669c0216af7ba0d0b593d5dfca04",
+      "split": "c93ca2e073fc9c7f8220c4c0d4af5a80f3b8a67bf6955a957183ae8de0c0e12d"
+    },
+    "7": {
+      "documents": "14eb8cdff9d1158550a936cc91a5697fbf3817eab9d3880359d2dc68935f4986",
+      "faults": "626b9c9164db1bf2ffbbdd0cbbeab11b4707b93f2e2fee50c2d4433b9235d0c5",
+      "split": "d749758fa362c126c49773ec9a4e6006a568cf390090926507ff43673a479b4d"
+    },
+    "42": {
+      "documents": "c97e89a342a1ed9550ded01e5686b69e232d479f90c3aa4a8840644f01283599",
+      "faults": "2f0403e1e4466fa88f5c8cab0937ef62adaeee1be448a933d4995ddfafb887bb",
+      "split": "9fa7c171394ad8cefc45b96a75b55645a80c65634196c0a4c01a676d49a036f6"
+    }
+  },
+  "evidence_sha256": {
+    "curve_v4_northwind.jsonl": "5c37e173682283f0579d5649029fa91f674ce44618654c0214def8d53a524f5e",
+    "calibration_v4.json": "c5d0fec060c437478c0359a1439519cc366e23482996fa5daae329c52b607a18",
+    "hypotheses_v4.json": "6540bb7859f9b4e1879212c9f4540743aba413ab6af73934112f00276895b7a9",
+    "paired_v4.json": "0276bb593342dc783d87ec9c47f2e5aae728c5e2258aa95bf65e271af245aaf6",
+    "summary_v4.json": "aa3765806d66c86142293d875fb10edac0fb3aced42678f3daa0b55c2bf89f7a",
+    "runs/v4-b65058c-8b296c04-s1-frozen_v4/confirmations.jsonl": "7b2fb5861b89641551f8b76a68c67a1927adaee387c7d74ad8857a077bbdfdff",
+    "runs/v4-b65058c-8b296c04-s1-frozen_v4/heldout.jsonl": "5976ae1d1341fe2232a64e59db8cb18223c120ddfda78d29cff15fb40b93c51f",
+    "runs/v4-b65058c-8b296c04-s1-full_v2/confirmations.jsonl": "a9c01ecb16e5952ed0a8aa77c15098b03d429eed848616b2db3d91315454f38c",
+    "runs/v4-b65058c-8b296c04-s1-full_v2/heldout.jsonl": "98ecf85199a352559acbdb06a86d026cc79806084834c25c573d3b7346c0e729",
+    "runs/v4-b65058c-8b296c04-s1-full_v2/receipts.jsonl": "235dabf051339cab8570cdb640d66f860c69cc959d04a7cbb5fb27b2dc642ffd",
+    "runs/v4-b65058c-8b296c04-s1-full_v4/heldout.jsonl": "b72d13e8d6d31a51163701753753fd56372e2cecf0c9881d0dbd068250cd6913",
+    "runs/v4-b65058c-8b296c04-s1-full_v4_no_gate/confirmations.jsonl": "efc7aa33fa358650916f809c26a9ab6d1354121f5b70d95695c9607967502f0e",
+    "runs/v4-b65058c-8b296c04-s1-full_v4_no_gate/heldout.jsonl": "4323ae779257f78e75161e7b9985c2773e9eb673030852d94040e9cbbfa41ce6",
+    "runs/v4-b65058c-8b296c04-s1-full_v4_no_gate/receipts.jsonl": "bd2c17ff8e43167e5c61da3213b610ada4256224834c824fa60f2bf607b141e9",
+    "runs/v4-b65058c-8b296c04-s42-frozen_v4/confirmations.jsonl": "a04543ea692640c0c5eb4f9eecf252f0afcada9b58e55ef4b5cce9615ae4b19d",
+    "runs/v4-b65058c-8b296c04-s42-frozen_v4/heldout.jsonl": "5bfa101143baff9751e017d6d34dee0cf12fc39c01960d6404c2b7c9d249bade",
+    "runs/v4-b65058c-8b296c04-s42-full_v2/confirmations.jsonl": "3fc4b3687379e5fcb4a7df18a47f83ddf786a534d63adae7977dc43bc5272902",
+    "runs/v4-b65058c-8b296c04-s42-full_v2/heldout.jsonl": "a611318b0c8f085006538e5169bfcd361810c5e4259538383a9270ea2fdf38fe",
+    "runs/v4-b65058c-8b296c04-s42-full_v2/receipts.jsonl": "e7f2453c40267fc2e055f6605665f49b06e8dbf1b01a160ede6df111c2922291",
+    "runs/v4-b65058c-8b296c04-s42-full_v4/heldout.jsonl": "a8e14b25efa1d81925fbb3925b460e056fb77aa3cabf12d6060ddf6d2ec451c6",
+    "runs/v4-b65058c-8b296c04-s42-full_v4_no_gate/confirmations.jsonl": "e2a95db403a6b88cfc2f84d2e8d6742626a723d99e7ffb362d27c7ebd7003ab4",
+    "runs/v4-b65058c-8b296c04-s42-full_v4_no_gate/heldout.jsonl": "0631be2cf90e6233bcce750c69772f57f775017fbdca5a99b504811e6ec0e3c7",
+    "runs/v4-b65058c-8b296c04-s42-full_v4_no_gate/receipts.jsonl": "000d4667a72f68452c3a85174b3d66d601313085579dc26798fc60942907db62",
+    "runs/v4-b65058c-8b296c04-s7-frozen_v4/confirmations.jsonl": "76d58e14cf84a8471e8f4ead24f43df10a3d642e8655c71a100aaf1c4a068b7c",
+    "runs/v4-b65058c-8b296c04-s7-frozen_v4/heldout.jsonl": "111b2d3ce4b65d84a2b69303e476f99ce69aa76bfadfaaa14ea4d89e30dd4e4c",
+    "runs/v4-b65058c-8b296c04-s7-full_v2/confirmations.jsonl": "2429ac8bb4ade23ae64927dadd84fe9d21eeed4e8d22b96de6dddf8413ba146a",
+    "runs/v4-b65058c-8b296c04-s7-full_v2/heldout.jsonl": "36610a31580f80360712979036596b1c4f7f662217e6614379b36213edb46f6a",
+    "runs/v4-b65058c-8b296c04-s7-full_v2/receipts.jsonl": "f8a7f6229bb04dc3778d080068a6e1e93f20af1b05973090e5b2aa7ce915a246",
+    "runs/v4-b65058c-8b296c04-s7-full_v4/heldout.jsonl": "440aab7b95c1cc75ab50fe8ac5ff1f5e36109e13b3dad3f23fb2e764ac6fca4a",
+    "runs/v4-b65058c-8b296c04-s7-full_v4_no_gate/confirmations.jsonl": "354312846d7731d81975f51e23619090dc50376d8d38bc4d5f21f9e58da8c0c0",
+    "runs/v4-b65058c-8b296c04-s7-full_v4_no_gate/heldout.jsonl": "246f91cd9dd1e9cfe77f528866afbdffff6fafddb2b63876350e077626c6f089",
+    "runs/v4-b65058c-8b296c04-s7-full_v4_no_gate/receipts.jsonl": "bfe35868d04a1ace1ae069dad502c86c831fd5afb006abbab44b21c62f4246de"
+  },
+  "expected_rows": 72
+}
