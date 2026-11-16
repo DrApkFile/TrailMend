@@ -1,0 +1,656 @@
+{
+  "arms": [
+    "full_v2",
+    "frozen"
+  ],
+  "dataset": "northwind",
+  "rounds": [
+    {
+      "examples": [],
+      "frozen": {
+        "broke": 0,
+        "correct": 262,
+        "fixed": 0,
+        "n": 340
+      },
+      "full_v2": {
+        "broke": 0,
+        "correct": 262,
+        "fixed": 0,
+        "n": 340
+      },
+      "gapfills": 0,
+      "promotions": 0,
+      "quarantines": 0,
+      "reweights": 0,
+      "round": 0
+    },
+    {
+      "examples": [
+        {
+          "after": {
+            "cost": 1.6877747846575877,
+            "status": "quarantined"
+          },
+          "before": {
+            "cost": 1.6877747846575877,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 4183318750142973215,
+            "rel_type": "ON_CALL",
+            "src": 1289218567811507917
+          },
+          "kind": "quarantine",
+          "receipt_id": "rcpt-cb4214a89be9d41d"
+        },
+        {
+          "after": {
+            "cost": 1.0,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.0,
+            "status": "absent"
+          },
+          "edge": {
+            "dst": 967975661270367226,
+            "rel_type": "ALERTS_ON",
+            "src": 80899021891746790
+          },
+          "kind": "gapfill",
+          "receipt_id": "rcpt-41148404bd2e5583"
+        },
+        {
+          "after": {
+            "cost": 1.170320046035639,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.0,
+            "status": "absent"
+          },
+          "edge": {
+            "dst": 524027225483488231,
+            "rel_type": "SC_INCIDENT_PAGER",
+            "src": 1895868840099090056
+          },
+          "kind": "promote",
+          "receipt_id": "rcpt-fd00b31a7211480c"
+        },
+        {
+          "after": {
+            "cost": 2.7420990085109533,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.4765053580405043,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 4239483427174899321,
+            "rel_type": "OWNED_BY",
+            "src": 1317954331230297746
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-8ba91cc88593aafa"
+        },
+        {
+          "after": {
+            "cost": 2.7420990085109533,
+            "status": "quarantined"
+          },
+          "before": {
+            "cost": 2.7420990085109533,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 4239483427174899321,
+            "rel_type": "OWNED_BY",
+            "src": 1317954331230297746
+          },
+          "kind": "quarantine",
+          "receipt_id": "rcpt-b8cfffbd6a9f5d74"
+        },
+        {
+          "after": {
+            "cost": 1.0,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.0,
+            "status": "absent"
+          },
+          "edge": {
+            "dst": 1474270968532946286,
+            "rel_type": "AFFECTS",
+            "src": 106755696225398000
+          },
+          "kind": "gapfill",
+          "receipt_id": "rcpt-ad34ccd151637a60"
+        }
+      ],
+      "frozen": {
+        "broke": 0,
+        "correct": 262,
+        "fixed": 0,
+        "n": 340
+      },
+      "full_v2": {
+        "broke": 1,
+        "correct": 290,
+        "fixed": 29,
+        "n": 340
+      },
+      "gapfills": 54,
+      "promotions": 7,
+      "quarantines": 5,
+      "reweights": 562,
+      "round": 1
+    },
+    {
+      "examples": [
+        {
+          "after": {
+            "cost": 4.055199966844673,
+            "status": "quarantined"
+          },
+          "before": {
+            "cost": 4.055199966844673,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 4239483427174899321,
+            "rel_type": "OWNED_BY",
+            "src": 1204373370992565309
+          },
+          "kind": "quarantine",
+          "receipt_id": "rcpt-5572238b7e24155c"
+        },
+        {
+          "after": {
+            "cost": 1.0,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.0,
+            "status": "absent"
+          },
+          "edge": {
+            "dst": 2960338721168468544,
+            "rel_type": "DEPENDS_ON",
+            "src": 2011425517020866522
+          },
+          "kind": "gapfill",
+          "receipt_id": "rcpt-e8296fd3bdc19f51"
+        },
+        {
+          "after": {
+            "cost": 1.170320046035639,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.0,
+            "status": "absent"
+          },
+          "edge": {
+            "dst": 3323846035567969762,
+            "rel_type": "SC_INCIDENT_PAGER",
+            "src": 800050339645365040
+          },
+          "kind": "promote",
+          "receipt_id": "rcpt-32f4441391184be5"
+        },
+        {
+          "after": {
+            "cost": 4.055199966844673,
+            "status": "active"
+          },
+          "before": {
+            "cost": 2.013752707470476,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 4239483427174899321,
+            "rel_type": "OWNED_BY",
+            "src": 1204373370992565309
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-7701cfbfc3cb62bc"
+        },
+        {
+          "after": {
+            "cost": 2.857651118063163,
+            "status": "quarantined"
+          },
+          "before": {
+            "cost": 2.857651118063163,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 53985795405371729,
+            "rel_type": "OWNED_BY",
+            "src": 1983579117213848883
+          },
+          "kind": "quarantine",
+          "receipt_id": "rcpt-1b757c3ac84cc994"
+        },
+        {
+          "after": {
+            "cost": 1.0,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.0,
+            "status": "absent"
+          },
+          "edge": {
+            "dst": 2011425517020866522,
+            "rel_type": "AFFECTS",
+            "src": 4425744365475165420
+          },
+          "kind": "gapfill",
+          "receipt_id": "rcpt-88be1fdd812efb80"
+        }
+      ],
+      "frozen": {
+        "broke": 0,
+        "correct": 262,
+        "fixed": 0,
+        "n": 340
+      },
+      "full_v2": {
+        "broke": 0,
+        "correct": 295,
+        "fixed": 5,
+        "n": 340
+      },
+      "gapfills": 2,
+      "promotions": 2,
+      "quarantines": 5,
+      "reweights": 613,
+      "round": 2
+    },
+    {
+      "examples": [
+        {
+          "after": {
+            "cost": 1.6877747846575877,
+            "status": "quarantined"
+          },
+          "before": {
+            "cost": 1.6877747846575877,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 131862203289925689,
+            "rel_type": "OWNED_BY",
+            "src": 34379501779898177
+          },
+          "kind": "quarantine",
+          "receipt_id": "rcpt-2f80796f334d185c"
+        },
+        {
+          "after": {
+            "cost": 2.857651118063163,
+            "status": "active"
+          },
+          "before": {
+            "cost": 2.013752707470476,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 34379501779898177,
+            "rel_type": "ALERTS_ON",
+            "src": 2402309629397112801
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-02cb7e1aa3839646"
+        },
+        {
+          "after": {
+            "cost": 2.857651118063163,
+            "status": "quarantined"
+          },
+          "before": {
+            "cost": 2.857651118063163,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 34379501779898177,
+            "rel_type": "ALERTS_ON",
+            "src": 2402309629397112801
+          },
+          "kind": "quarantine",
+          "receipt_id": "rcpt-414be42d12f89326"
+        },
+        {
+          "after": {
+            "cost": 0.9512294245007126,
+            "status": "active"
+          },
+          "before": {
+            "cost": 1.7332530178673933,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2108215390061872779,
+            "rel_type": "ON_CALL",
+            "src": 4239483427174899321
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-d5585a7f4a601eca"
+        },
+        {
+          "after": {
+            "cost": 1.6877747846575877,
+            "status": "active"
+          },
+          "before": {
+            "cost": 1.1893547888757685,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 131862203289925689,
+            "rel_type": "OWNED_BY",
+            "src": 34379501779898177
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-b52261aa0b3c850b"
+        },
+        {
+          "after": {
+            "cost": 0.8669944141322682,
+            "status": "active"
+          },
+          "before": {
+            "cost": 1.170320046035639,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 3323846035567969762,
+            "rel_type": "SC_INCIDENT_PAGER",
+            "src": 800050339645365040
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-ae40ed6e0613d67d"
+        }
+      ],
+      "frozen": {
+        "broke": 0,
+        "correct": 262,
+        "fixed": 0,
+        "n": 340
+      },
+      "full_v2": {
+        "broke": 0,
+        "correct": 295,
+        "fixed": 0,
+        "n": 340
+      },
+      "gapfills": 0,
+      "promotions": 0,
+      "quarantines": 2,
+      "reweights": 608,
+      "round": 3
+    },
+    {
+      "examples": [
+        {
+          "after": {
+            "cost": 0.522045776761015,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.9512294245007126,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2108215390061872779,
+            "rel_type": "ON_CALL",
+            "src": 4239483427174899321
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-0e0868b93290250b"
+        },
+        {
+          "after": {
+            "cost": 0.6422852592184553,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.8669944141322682,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 3323846035567969762,
+            "rel_type": "SC_INCIDENT_PAGER",
+            "src": 800050339645365040
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-8011260713c5b17d"
+        },
+        {
+          "after": {
+            "cost": 0.5488116360940262,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.7408182206817177,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2110534166306773134,
+            "rel_type": "SC_PAGE_OWNER",
+            "src": 531400240736237492
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-1fe4aeeabd3d0eef"
+        },
+        {
+          "after": {
+            "cost": 0.7046880897187132,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.8607079764250576,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2732659089748091321,
+            "rel_type": "AFFECTS",
+            "src": 3823130559242930710
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-f25d05ca3f8bcd69"
+        },
+        {
+          "after": {
+            "cost": 0.5,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.6422852592184553,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 524027225483488231,
+            "rel_type": "SC_INCIDENT_PAGER",
+            "src": 1895868840099090056
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-b1af0d9f8b8ff1de"
+        },
+        {
+          "after": {
+            "cost": 0.5,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.6422852592184553,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 3377577196904905168,
+            "rel_type": "SC_PAGE_OWNER",
+            "src": 4042025167812409589
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-2e559fcdf954dd58"
+        }
+      ],
+      "frozen": {
+        "broke": 0,
+        "correct": 262,
+        "fixed": 0,
+        "n": 340
+      },
+      "full_v2": {
+        "broke": 0,
+        "correct": 297,
+        "fixed": 2,
+        "n": 340
+      },
+      "gapfills": 0,
+      "promotions": 0,
+      "quarantines": 0,
+      "reweights": 606,
+      "round": 4
+    },
+    {
+      "examples": [
+        {
+          "after": {
+            "cost": 0.5,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.6422852592184553,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 3323846035567969762,
+            "rel_type": "SC_INCIDENT_PAGER",
+            "src": 800050339645365040
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-039b068cd671444e"
+        },
+        {
+          "after": {
+            "cost": 1.2214027581601694,
+            "status": "active"
+          },
+          "before": {
+            "cost": 1.3498588075760027,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2501500458836480621,
+            "rel_type": "ON_CALL",
+            "src": 4005317124815653005
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-90ab4542669cdfed"
+        },
+        {
+          "after": {
+            "cost": 0.5769498103804865,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.7046880897187132,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2732659089748091321,
+            "rel_type": "AFFECTS",
+            "src": 3823130559242930710
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-02031706a9f85b5d"
+        },
+        {
+          "after": {
+            "cost": 0.5,
+            "status": "active"
+          },
+          "before": {
+            "cost": 0.6065306597126333,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 3367648975122836262,
+            "rel_type": "OWNED_BY",
+            "src": 3210318598701747845
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-82d9ac7c266e8b16"
+        },
+        {
+          "after": {
+            "cost": 0.9512294245007138,
+            "status": "active"
+          },
+          "before": {
+            "cost": 1.051271096376024,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2011425517020866522,
+            "rel_type": "ALERTS_ON",
+            "src": 408897862353415614
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-82fc32a44b4e5552"
+        },
+        {
+          "after": {
+            "cost": 0.9512294245007138,
+            "status": "active"
+          },
+          "before": {
+            "cost": 1.051271096376024,
+            "status": "active"
+          },
+          "edge": {
+            "dst": 2011425517020866522,
+            "rel_type": "AFFECTS",
+            "src": 2250279608376811026
+          },
+          "kind": "reweight",
+          "receipt_id": "rcpt-e4d4a32671820401"
+        }
+      ],
+      "frozen": {
+        "broke": 0,
+        "correct": 262,
+        "fixed": 0,
+        "n": 340
+      },
+      "full_v2": {
+        "broke": 0,
+        "correct": 297,
+        "fixed": 0,
+        "n": 340
+      },
+      "gapfills": 0,
+      "promotions": 0,
+      "quarantines": 0,
+      "reweights": 606,
+      "round": 5
+    }
+  ],
+  "run_id": "26b5469-580ae8dc",
+  "seed": 1,
+  "sources": {
+    "frozen": {
+      "heldout.jsonl": "5d3be67693740566c2767451c39ae87b236e9632d209fcc6b1feecbe42c6c6ba"
+    },
+    "full_v2": {
+      "confirmations.jsonl": "dd31c09e498ce233f49b8f9a009a5ef9b86c00f43631081c9ccd3f9fafbbea4f",
+      "heldout.jsonl": "4a2cd3107d6627c25fae3f5bfd2fc289b36e6555d131ab41911ce1fcb587cd7d",
+      "receipts.jsonl": "968254e52c27ed56525f9980a783288388d91a9dfc3d73ad66fa77c025045eee"
+    }
+  }
+}

@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from trailmend.api import demo, routes_ask, routes_evidence, routes_mend, routes_truth
+from trailmend.api import demo, routes_ask, routes_evidence, routes_mend, routes_replay, routes_truth
 from trailmend.api.state import Live, build_live
 from trailmend.errors import ERROR_SPECS, ErrorCode, TrailMendError
 from trailmend.graph.client import HydraClient
@@ -31,6 +31,7 @@ app.include_router(routes_ask.router)
 app.include_router(routes_mend.router)
 app.include_router(routes_evidence.router)
 app.include_router(routes_truth.router)
+app.include_router(routes_replay.router)
 
 
 @app.exception_handler(TrailMendError)

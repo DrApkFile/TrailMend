@@ -456,3 +456,59 @@ export type BenchmarkSentence = {
   text: string;
   sources: string[];
 };
+
+export type ReplayHeld = {
+  n: number;
+  correct: number;
+  fixed: number;
+  broke: number;
+};
+
+export type ReplayExample = {
+  receipt_id: string;
+  kind: string;
+  edge: {
+    src: string;
+    dst: string;
+    rel_type: string;
+    src_name: string;
+    dst_name: string;
+    truth: string;
+  };
+  before: { cost: number; status: string };
+  after: { cost: number; status: string };
+};
+
+export type ReplayRound = {
+  round: number;
+  full_v2: ReplayHeld;
+  frozen: ReplayHeld;
+  reweights: number;
+  quarantines: number;
+  gapfills: number;
+  promotions: number;
+  examples: ReplayExample[];
+};
+
+export type Replay = {
+  dataset: string;
+  seed: number;
+  available: boolean;
+  run_id?: string;
+  sha256?: string;
+  rounds?: ReplayRound[];
+};
+
+export async function fetchReplay(
+  dataset: string,
+  seed: number,
+): Promise<Fetched<Replay>> {
+  return shaped<Replay>(
+    await getJson(`/v1/replay/${dataset}/${seed}`),
+    (body) =>
+      isObject(body) &&
+      typeof body.available === "boolean" &&
+      (body.available === false || Array.isArray(body.rounds)),
+    "/v1/replay",
+  );
+}

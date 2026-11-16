@@ -134,3 +134,40 @@ body {
   background-size: auto, auto, 22px 22px;
   background-attachment: fixed;
 }
+
+.replay-card {
+  animation: replay-pop 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.replay-link-mend {
+  background: #6ee7b7;
+  animation: replay-mend 0.9s ease both;
+}
+
+@keyframes replay-pop {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes replay-mend {
+  0%,
+  35% {
+    background: #ff5a47;
+  }
+  100% {
+    background: #6ee7b7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .replay-card,
+  .replay-link-mend {
+    animation: none;
+  }
+}
