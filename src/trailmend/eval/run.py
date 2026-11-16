@@ -182,10 +182,15 @@ def run_arm(
 
 
 UNWEIGHTED_ARMS: tuple[MendPolicy, ...] = (MendPolicy.FROZEN, MendPolicy.FULL_UNWEIGHTED)
+CLEAN_ARMS: tuple[MendPolicy, ...] = (*RUN2_ARMS, MendPolicy.FULL_UNWEIGHTED)
 
 
 def main(
-    seeds: tuple[int, ...], arms: tuple[MendPolicy, ...] = ARMS, data_version: str = V1, out: Path | None = None
+    seeds: tuple[int, ...],
+    arms: tuple[MendPolicy, ...] = ARMS,
+    data_version: str = V1,
+    out: Path | None = None,
+    with_plain: bool = False,
 ) -> int:
     run = load_run_config(CONFIG)
     run_id = run_id_for()
@@ -194,7 +199,7 @@ def main(
     )
     measuring.acquire(run_id)
     try:
-        written = _sweep(seeds, arms, run_id, run.rounds, run.plain_store_top_k, data_version, out)
+        written = _sweep(seeds, arms, run_id, run.rounds, run.plain_store_top_k, data_version, out, with_plain)
     finally:
         measuring.release()
     print(f"wrote {written} rows to {out or curve.path_for(data_version)}")
@@ -209,6 +214,7 @@ def _sweep(
     plain_store_top_k: int,
     data_version: str,
     extension: Path | None = None,
+    with_plain: bool = False,
 ) -> int:
     written = 0
     out = extension or curve.path_for(data_version)
@@ -218,7 +224,7 @@ def _sweep(
         for seed in seeds:
             built = dataset.build(seed, data_version=data_version)
             print(f"seed {seed}", flush=True)
-            for row in plain_rows(run_id, built, rounds, plain_store_top_k) if extension is None else ():
+            for row in plain_rows(run_id, built, rounds, plain_store_top_k) if extension is None or with_plain else ():
                 curve.append(row | {"hydradb": where}, out)
                 written += 1
             for arm_index, arm in enumerate(arms):
@@ -232,6 +238,8 @@ if __name__ == "__main__":
     _args = sys.argv[1:]
     _run2 = "--v2" in _args
     _seeds = tuple(int(a) for a in _args if a.isdigit()) or (1, 7, 42)
+    if "--clean" in _args:
+        raise SystemExit(main(_seeds, CLEAN_ARMS, V2, curve.CURVE_V2_CLEAN, with_plain=True))
     if "--unweighted" in _args:
         raise SystemExit(main(_seeds, UNWEIGHTED_ARMS, V2, curve.CURVE_V2_UNWEIGHTED))
     raise SystemExit(main(_seeds, RUN2_ARMS if _run2 else ARMS, V2 if _run2 else V1))

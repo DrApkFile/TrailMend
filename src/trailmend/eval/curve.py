@@ -9,8 +9,9 @@ from trailmend.loop.round import RoundOutcome
 CURVE = Path("evidence/curve.jsonl")
 CURVE_V2 = Path("evidence/curve_v2.jsonl")
 CURVE_V2_UNWEIGHTED = Path("evidence/curve_v2_unweighted.jsonl")
+CURVE_V2_CLEAN = Path("evidence/curve_v2_clean.jsonl")
 BY_VERSION: dict[str, Path] = {V1: CURVE, V2: CURVE_V2}
-EXTENSIONS: dict[str, tuple[Path, ...]] = {V1: (), V2: (CURVE_V2_UNWEIGHTED,)}
+EXTENSIONS: dict[str, tuple[Path, ...]] = {V1: (), V2: (CURVE_V2_UNWEIGHTED, CURVE_V2_CLEAN)}
 
 
 def path_for(data_version: str) -> Path:
