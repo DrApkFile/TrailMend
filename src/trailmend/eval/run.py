@@ -11,7 +11,7 @@ from trailmend.core.config import (
     load_run_config,
     load_search_config,
 )
-from trailmend.core.model import EdgeKey, GapfillRule
+from trailmend.core.model import EdgeKey, GapfillRule, SearchConfig
 from trailmend.data import dataset
 from trailmend.data.faultmodel import V1, V2
 from trailmend.eval import curve, measuring, target
@@ -94,12 +94,19 @@ def plain_rows(run_id: str, built: dataset.Dataset, rounds: int, top_k: int) -> 
 
 
 def run_arm(
-    client: HydraClient, built: dataset.Dataset, arm: MendPolicy, arm_index: int, run_id: str, rounds: int
+    client: HydraClient,
+    built: dataset.Dataset,
+    arm: MendPolicy,
+    arm_index: int,
+    run_id: str,
+    rounds: int,
+    search_override: SearchConfig | None = None,
 ) -> list[dict[str, object]]:
     arm_rules = rules(arm)
     mend = load_mend_config(CONFIG, arm_rules.update)
     gapfill = gapfill_rule_for(arm)
-    search = replace(load_search_config(CONFIG), weighted=searches_on_cost(arm))
+    base_search = load_search_config(CONFIG) if search_override is None else search_override
+    search = replace(base_search, weighted=searches_on_cost(arm))
     stamp: dict[str, object] = {
         "run_id": run_id,
         "arm_run": "",

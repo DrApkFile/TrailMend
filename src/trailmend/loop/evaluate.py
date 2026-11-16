@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import StrEnum
 
 from trailmend.core.model import EdgeKey, SearchConfig
@@ -51,6 +51,8 @@ def _refused(question: Question, code: ErrorCode) -> Judged:
 
 def judge(client: HydraClient, index: EntityIndex, question: Question, config: SearchConfig) -> Judged:
     spec = template(question.template)
+    if config.confidence_thresholds:
+        config = replace(config, max_answer_cost=dict(config.confidence_thresholds)[question.template])
     found = seed_entity(index, question.text)
     if not isinstance(found, SeedFound):
         return _refused(question, found.code)

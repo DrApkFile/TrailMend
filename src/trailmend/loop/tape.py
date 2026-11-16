@@ -39,6 +39,7 @@ class Tape:
                             "question_id": item.question_id,
                             "template": item.template,
                             "verdict": item.verdict.value,
+                            "refusal": item.refusal.value if item.refusal is not None else None,
                             "answer_ids": list(item.answer_ids),
                             "paths": [[[h.src, h.rel_type, h.dst] for h in path] for path in item.paths],
                         },

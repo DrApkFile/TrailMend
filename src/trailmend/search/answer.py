@@ -7,6 +7,7 @@ from trailmend.graph import queries as q
 from trailmend.graph.client import HydraClient
 from trailmend.graph.schema import NodeLabel, endpoints_of, is_shortcut
 from trailmend.graph.values import PathValue
+from trailmend.search.confidence import uses_unconfirmed
 
 
 @dataclass(frozen=True, slots=True)
@@ -115,4 +116,10 @@ def answer(
     )
     if len(result.rows) >= config.result_limit:
         return AnswerRefused(ErrorCode.BUDGET_EXCEEDED)
-    return pick_answer(score_paths(result.rows), expected, multi_answer=multi_answer)
+    chosen = pick_answer(score_paths(result.rows), expected, multi_answer=multi_answer)
+    if isinstance(chosen, AnswerFound):
+        if config.max_answer_cost is not None and chosen.cost > config.max_answer_cost:
+            return AnswerRefused(ErrorCode.LOW_CONFIDENCE)
+        if config.gapfill_edges and uses_unconfirmed(client, chosen.paths, config.gapfill_edges):
+            return AnswerRefused(ErrorCode.LOW_CONFIDENCE)
+    return chosen

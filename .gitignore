@@ -11,7 +11,7 @@ apps/web/.vercel
 evidence/.measuring.json
 .env.prod
 
-data/external/metaqa/
+data/external/metaqa
 evidence/metaqa/*.partial.json
 hydradb-data2/
 
