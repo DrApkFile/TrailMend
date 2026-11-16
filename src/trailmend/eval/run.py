@@ -1,5 +1,6 @@
 import subprocess
 import sys
+from collections.abc import Callable
 from dataclasses import replace
 from pathlib import Path
 from random import Random
@@ -101,6 +102,8 @@ def run_arm(
     run_id: str,
     rounds: int,
     search_override: SearchConfig | None = None,
+    train_override: SearchConfig | None = None,
+    observe: Callable[[int], None] | None = None,
 ) -> list[dict[str, object]]:
     arm_rules = rules(arm)
     mend = load_mend_config(CONFIG, arm_rules.update)
@@ -127,6 +130,8 @@ def run_arm(
     judged_baseline = judge_all(client, index, [h.question for h in built.split.held_out], search)
     tape.record(0, judged_baseline)
     baseline = score(judged_baseline)
+    if observe is not None:
+        observe(0)
     rows: list[dict[str, object]] = [
         {
             "dataset": DATASET,
@@ -170,7 +175,10 @@ def run_arm(
             built.documents,
             built.ingested.pool,
             gapfill,
+            train_search_config=train_override,
         )
+        if observe is not None:
+            observe(round_index)
         reached.update(outcome.reached)
         ingested.update(outcome.ingested)
         rows.append(

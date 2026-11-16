@@ -110,8 +110,12 @@ def answer(
     *,
     multi_answer: bool = False,
 ) -> AnswerOutcome:
+    hybrid_set = config.unweighted_sets and multi_answer
+    selected_types = tuple(kind for kind in rel_types if not is_shortcut(kind)) if hybrid_set else rel_types
     result = client.run(
-        q.weighted_paths_from(rel_types, config.max_len, config.result_limit, weighted=config.weighted),
+        q.weighted_paths_from(
+            selected_types, config.max_len, config.result_limit, weighted=False if hybrid_set else config.weighted
+        ),
         {"src": seed_id},
     )
     if len(result.rows) >= config.result_limit:

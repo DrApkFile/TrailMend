@@ -70,6 +70,7 @@ class SearchConfig:
     max_len: int
     result_limit: int
     weighted: bool = True
+    unweighted_sets: bool = False
     confidence_thresholds: tuple[tuple[str, float], ...] = ()
     max_answer_cost: float | None = None
     gapfill_edges: frozenset[EdgeKey] = frozenset()
