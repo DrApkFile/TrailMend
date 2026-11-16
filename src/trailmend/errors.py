@@ -3,6 +3,7 @@ from enum import StrEnum
 
 
 class ErrorCode(StrEnum):
+    LOW_CONFIDENCE = "low_confidence"
     NO_SEED = "no_seed"
     AMBIGUOUS_SEED = "ambiguous_seed"
     AMBIGUOUS_ANSWER = "ambiguous_answer"
@@ -22,6 +23,9 @@ class ErrorSpec:
 
 
 ERROR_SPECS: dict[ErrorCode, ErrorSpec] = {
+    ErrorCode.LOW_CONFIDENCE: ErrorSpec(
+        "The answer does not meet the confidence policy. Nothing was guessed.", False, "Confirm supporting links.", 409
+    ),
     ErrorCode.NO_SEED: ErrorSpec(
         "No entity in the graph matches this question.", False, "Rephrase using a known name.", 422
     ),

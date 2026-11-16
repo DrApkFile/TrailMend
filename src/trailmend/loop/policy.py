@@ -8,6 +8,8 @@ from trailmend.core.model import Change, EdgeKey, Quarantine, Reweight, Signal
 
 class MendPolicy(StrEnum):
     FULL = "full"
+    FULL_V2_ABSTAIN = "full_v2_abstain"
+    FROZEN_ABSTAIN = "frozen_abstain"
     FULL_V2 = "full_v2"
     FULL_V1_RULE = "full_v1_rule"
     FULL_UNWEIGHTED = "full_unweighted"
@@ -39,6 +41,8 @@ class Mechanisms:
 
 MECHANISMS: Mapping[MendPolicy, Mechanisms] = {
     MendPolicy.FULL: Mechanisms(True, True, True, True),
+    MendPolicy.FULL_V2_ABSTAIN: Mechanisms(True, True, True, True),
+    MendPolicy.FROZEN_ABSTAIN: Mechanisms(False, False, False, False),
     MendPolicy.FULL_V2: Mechanisms(True, True, True, True),
     MendPolicy.FULL_V1_RULE: Mechanisms(True, True, True, True),
     MendPolicy.FULL_UNWEIGHTED: Mechanisms(True, True, True, True),
@@ -74,6 +78,8 @@ class Rules:
 
 RULES: Mapping[MendPolicy, Rules] = {
     MendPolicy.FULL: Rules(UPDATE_V1, GAPFILL_NARROW),
+    MendPolicy.FULL_V2_ABSTAIN: Rules(UPDATE_V2, GAPFILL_WIDE),
+    MendPolicy.FROZEN_ABSTAIN: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.FULL_V2: Rules(UPDATE_V2, GAPFILL_WIDE),
     MendPolicy.FULL_V1_RULE: Rules(UPDATE_V1, GAPFILL_NARROW),
     MendPolicy.FULL_UNWEIGHTED: Rules(UPDATE_V2, GAPFILL_WIDE),
@@ -143,13 +149,25 @@ def shape(
     policy: MendPolicy, planned: Sequence[Change], candidates: Sequence[EdgeKey], rng: Random
 ) -> tuple[Change, ...]:
     match policy:
-        case MendPolicy.FULL | MendPolicy.FULL_V2 | MendPolicy.FULL_V1_RULE | MendPolicy.FULL_UNWEIGHTED:
+        case (
+            MendPolicy.FULL
+            | MendPolicy.FULL_V2
+            | MendPolicy.FULL_V2_ABSTAIN
+            | MendPolicy.FULL_V1_RULE
+            | MendPolicy.FULL_UNWEIGHTED
+        ):
             return tuple(planned)
         case MendPolicy.REWEIGHT_ONLY:
             return tuple(c for c in planned if isinstance(c, Reweight))
         case MendPolicy.QUARANTINE_ONLY:
             return tuple(c for c in planned if isinstance(c, Quarantine))
-        case MendPolicy.PROMOTE_ONLY | MendPolicy.GAPFILL_ONLY | MendPolicy.GAPFILL_WIDE_ONLY | MendPolicy.FROZEN:
+        case (
+            MendPolicy.PROMOTE_ONLY
+            | MendPolicy.GAPFILL_ONLY
+            | MendPolicy.GAPFILL_WIDE_ONLY
+            | MendPolicy.FROZEN
+            | MendPolicy.FROZEN_ABSTAIN
+        ):
             return ()
         case MendPolicy.RANDOM_REWEIGHT:
             return _mirror_reweights(planned, candidates, rng)
