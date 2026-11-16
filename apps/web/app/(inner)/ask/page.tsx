@@ -10,18 +10,25 @@ export default async function AskPage() {
 
   return (
     <main>
-      <h1 className="text-2xl font-semibold tracking-tight">Ask, then judge</h1>
-      <p className="mt-2 text-stone-400">
+      <p className="font-mono text-xs tracking-wider text-mend uppercase">
+        Try it
+      </p>
+      <h1 className="mt-3 text-4xl tracking-tight text-ink sm:text-5xl">
+        Ask the graph. Tell it when it&apos;s wrong.
+      </h1>
+      <p className="mt-4 text-stone-400">
         The answer is the cheapest path HydraDB can find from the entity named
         in the question to a node of the expected kind. Judging it moves the
         cost of the edges on that path and writes a receipt for each change.
       </p>
 
-      <Panel title="Ask">
-        <AskForm examples={listed} />
-      </Panel>
+      <div className="mt-8 border-t border-white/10 pt-8">
+        <section className="rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm sm:p-6">
+          <AskForm examples={listed} />
+        </section>
+      </div>
 
-      <Panel title="Questions this graph can answer">
+      <Panel title="About these questions">
         {examples.ok ? (
           <ul className="flex flex-col gap-2 text-sm">
             {listed.map((one) => (

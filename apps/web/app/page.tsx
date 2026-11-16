@@ -169,6 +169,260 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+function finalRound(rows: CurveRow[]): number | null {
+  return rows.length ? Math.max(...rows.map((row) => row.round)) : null;
+}
+
+function pooled(
+  rows: CurveRow[],
+  arm: string,
+  round: number | null,
+  field: "correct" | "wrong" | "unreachable" | "n",
+): number | null {
+  if (round === null) {
+    return null;
+  }
+  const picked = rows.filter((row) => row.arm === arm && row.round === round);
+  return picked.length
+    ? picked.reduce((sum, row) => sum + (row.held_out?.[field] ?? 0), 0)
+    : null;
+}
+
+function pts(value: number | undefined): string {
+  return typeof value === "number" ? (value * 100).toFixed(1) : NOT_MEASURED;
+}
+
+function shift(rows: CurveRow[], arm: string): string {
+  const points = meanByRound(rows, arm);
+  return points.length
+    ? `${pts(points[0]?.accuracy)} › ${pts(points.at(-1)?.accuracy)}`
+    : NOT_MEASURED;
+}
+
+function last(rows: CurveRow[], arm: string): string {
+  const points = meanByRound(rows, arm);
+  return points.length ? `${pts(points.at(-1)?.accuracy)}%` : NOT_MEASURED;
+}
+
+function count(value: number | null): string {
+  return value === null ? NOT_MEASURED : value.toLocaleString("en-US");
+}
+
+const ICONS: Record<string, React.ReactNode> = {
+  up: <path d="M3 13l4-4 3 3 6-6M12 6h4v4" />,
+  book: (
+    <path d="M4 4h5a2 2 0 0 1 2 2v10a2 2 0 0 0-2-2H4zM18 4h-5a2 2 0 0 0-2 2v10a2 2 0 0 1 2-2h5z" />
+  ),
+  dice: <path d="M4 4h12v12H4zM8 8h.01M12 12h.01" />,
+  doc: <path d="M5 3h7l4 4v10H5zM12 3v4h4M8 11h6M8 14h4" />,
+};
+
+function StatCard({
+  icon,
+  value,
+  label,
+  note,
+}: {
+  icon: string;
+  value: string;
+  label: string;
+  note: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="#a8a29e"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        {ICONS[icon]}
+      </svg>
+      <p className="mt-5 font-mono text-2xl text-ink sm:text-3xl">{value}</p>
+      <p className="mt-3 font-mono text-[11px] tracking-wider text-stone-500 uppercase">
+        {label}
+      </p>
+      <p className="mt-2 text-sm text-stone-400">{note}</p>
+    </div>
+  );
+}
+
+const FAULTS: {
+  tag: string;
+  title: string;
+  before: string;
+  after: string;
+  outcome: string;
+}[] = [
+  {
+    tag: "contradicted",
+    title: "A stale owner, better documented",
+    before: "old on-call",
+    after: "current on-call",
+    outcome: "repaired by blame: the true link becomes the cheaper one",
+  },
+  {
+    tag: "recoverable",
+    title: "The true link is in an unread document",
+    before: "wrong team",
+    after: "team from the document",
+    outcome: "repaired by gap-fill reading the withheld document",
+  },
+  {
+    tag: "missing",
+    title: "A link that was never ingested",
+    before: "no path",
+    after: "path restored",
+    outcome: "repaired by gap-fill",
+  },
+  {
+    tag: "destroyed",
+    title: "The truth is in no document at all",
+    before: "wrong answer",
+    after: "refusal",
+    outcome: "cannot be repaired; quarantine can only stop the wrong answer",
+  },
+];
+
+function Comparison({ rows }: { rows: CurveRow[] }) {
+  const round = finalRound(rows);
+  const n = pooled(rows, "frozen", round, "n");
+  const frozenRight = pooled(rows, "frozen", round, "correct");
+  const mendRight = pooled(rows, "full_v2", round, "correct");
+  const table: [string, string, string][] = [
+    [
+      "Wrong answers",
+      count(pooled(rows, "frozen", round, "wrong")),
+      count(pooled(rows, "full_v2", round, "wrong")),
+    ],
+    [
+      "Unreachable",
+      count(pooled(rows, "frozen", round, "unreachable")),
+      count(pooled(rows, "full_v2", round, "unreachable")),
+    ],
+    [
+      "Random reweight, same budget",
+      last(rows, "frozen"),
+      last(rows, "random_reweight"),
+    ],
+    ["Plain document store", "—", last(rows, "plain_store")],
+  ];
+  return (
+    <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm sm:p-8">
+      <h2 className="text-2xl text-ink sm:text-3xl">
+        Same questions. Different graph.
+      </h2>
+      <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1fr_1.3fr]">
+        <div>
+          <p className="font-mono text-[11px] tracking-wider text-stone-500 uppercase">
+            Frozen graph, round {round ?? NOT_MEASURED}
+          </p>
+          <p className="mt-4 font-mono text-5xl text-bad sm:text-6xl">
+            {count(frozenRight)}
+            <span className="text-stone-600">/{count(n)}</span>
+          </p>
+          <p className="mt-4 text-sm text-stone-400">
+            Held-out questions right, never repaired.
+          </p>
+        </div>
+        <div>
+          <p className="font-mono text-[11px] tracking-wider text-stone-500 uppercase">
+            After the Mend, round {round ?? NOT_MEASURED}
+          </p>
+          <p className="mt-4 font-mono text-5xl text-mend sm:text-6xl">
+            {count(mendRight)}
+            <span className="text-stone-600">/{count(n)}</span>
+          </p>
+          <p className="mt-4 text-sm text-stone-400">
+            The same questions after it learned from its own training answers.
+          </p>
+        </div>
+        <div className="lg:border-l lg:border-white/10 lg:pl-8">
+          <p className="flex justify-between font-mono text-[11px] tracking-wider text-stone-300 uppercase">
+            <span>Run 2, all seeds</span>
+            <span>frozen / mend</span>
+          </p>
+          <dl className="mt-4">
+            {table.map(([label, before, after]) => (
+              <div
+                key={label}
+                className="flex items-baseline justify-between gap-4 border-b border-white/10 py-2.5"
+              >
+                <dt className="text-xs text-stone-400">{label}</dt>
+                <dd className="font-mono text-xs text-ink">
+                  {before} / {after}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+      <p className="mt-8 text-xs text-stone-500">
+        Generated company graphs, 3 seeds, held-out questions the Mend never
+        saw. Counts are summed over seeds; read from the recorded run, not
+        typed.
+      </p>
+    </div>
+  );
+}
+
+function FaultRows() {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm sm:p-8">
+      <p className="font-mono text-[11px] tracking-wider text-mend uppercase">
+        Planted faults
+      </p>
+      <h2 className="mt-2 text-2xl text-ink sm:text-3xl">
+        What is wrong in each graph, on purpose.
+      </h2>
+      <ul className="mt-6">
+        {FAULTS.map((fault) => (
+          <li
+            key={fault.tag}
+            className="grid gap-3 border-t border-white/10 py-5 sm:grid-cols-[1.3fr_1fr_1.2fr] sm:items-center"
+          >
+            <div className="flex items-center gap-3">
+              <span
+                className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] tracking-wider uppercase ${fault.tag === "destroyed" ? "border-stone-600 text-stone-400" : "border-bad/50 text-bad"}`}
+              >
+                {fault.tag}
+              </span>
+              <span className="text-sm text-ink">{fault.title}</span>
+            </div>
+            <p className="font-mono text-xs">
+              <span className="text-bad line-through">{fault.before}</span>
+              <span className="text-stone-500"> › </span>
+              <span className="text-mend">{fault.after}</span>
+            </p>
+            <p className="font-mono text-[11px] text-stone-500 sm:text-right">
+              {fault.outcome}
+            </p>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link
+          href="/truth"
+          className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-night hover:opacity-85"
+        >
+          See every fault live →
+        </Link>
+        <Link
+          href="/evidence"
+          className="rounded-full border border-white/15 px-5 py-2.5 text-sm text-ink hover:bg-white/5"
+        >
+          Read every result
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default async function Home() {
   const [
     readiness,
@@ -270,9 +524,64 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-4 pt-20 sm:px-8 sm:pt-28">
+        <p className="font-mono text-xs tracking-wider text-mend uppercase">
+          Self-repairing graph · HydraDB
+        </p>
+        <h2 className="mt-3 max-w-3xl text-4xl leading-tight tracking-tight text-ink sm:text-6xl">
+          The graph was wrong. It found out from its own answers.
+        </h2>
+        <p className="mt-4 max-w-2xl text-stone-400">
+          Generated company graphs with planted faults, and MetaQA, a public
+          movie knowledge graph with half its links withheld. No LLM writes to
+          the graph or scores an answer.
+        </p>
+        <div className="mt-8 border-t border-white/10 pt-4 font-mono text-xs text-stone-500">
+          {rowsV2.length
+            ? `${seedsOf(rowsV2).length} company graphs`
+            : NOT_MEASURED}{" "}
+          ·{" "}
+          {rowsMetaqa.length
+            ? `MetaQA, ${seedsOf(rowsMetaqa).length} seeds`
+            : "MetaQA —"}{" "}
+          · {rounds ?? NOT_MEASURED} rounds · held-out questions only · every
+          number from a recorded run
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            icon="up"
+            value={shift(rowsV2, "full_v2")}
+            label="Company graphs · accuracy %"
+            note="Round 0 to the last round, mean of seeds."
+          />
+          <StatCard
+            icon="book"
+            value={shift(rowsMetaqa, "full_v2")}
+            label="MetaQA · Hits@1 %"
+            note="Public data, questions from the official test split."
+          />
+          <StatCard
+            icon="dice"
+            value={last(rowsV2, "random_reweight")}
+            label="Random reweight"
+            note="Same number and size of changes, on random links."
+          />
+          <StatCard
+            icon="doc"
+            value={last(rowsV2, "plain_store")}
+            label="Plain store"
+            note="The same documents with no graph to repair."
+          />
+        </div>
+        <div className="mt-10 flex flex-col gap-10">
+          <Comparison rows={rowsV2} />
+          <FaultRows />
+        </div>
+      </section>
+
       <section className="mx-auto max-w-6xl px-4 pt-24 sm:px-8 sm:pt-32">
         <Eyebrow>The accuracy curve</Eyebrow>
-        <h2 className="mt-3 max-w-3xl font-display text-4xl leading-tight sm:text-6xl">
+        <h2 className="mt-3 max-w-3xl text-4xl leading-tight tracking-tight sm:text-5xl">
           Held-out questions, round by round.
         </h2>
         <p className="mt-4 max-w-2xl text-stone-400">
@@ -282,15 +591,15 @@ export default async function Home() {
           not been measured.
         </p>
         <div className="mt-10 grid gap-10 lg:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+          <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-4 backdrop-blur-sm sm:p-6">
             <h3 className="text-sm text-stone-300">
               Generated company graphs, run 2
             </h3>
             <p className="mt-3 text-sm text-stone-400">
-              Provisional conclusions: the later frozen baseline did not replicate.
-              Recorded paths include edges outside the intended starting graph.
-              Historical scores and verdicts remain published; see the replication
-              diagnostic on /evidence.
+              Provisional conclusions: the later frozen baseline did not
+              replicate. Recorded paths include edges outside the intended
+              starting graph. Historical scores and verdicts remain published;
+              see the replication diagnostic on /evidence.
             </p>
             <div className="mt-4">
               {curveV2.ok ? (
@@ -304,7 +613,7 @@ export default async function Home() {
             </div>
             <RunStats rows={rowsV2} arm="full_v2" metric="accuracy" />
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+          <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-4 backdrop-blur-sm sm:p-6">
             <h3 className="text-sm text-stone-300">
               MetaQA, public movie knowledge graph, half the triples withheld
             </h3>
@@ -377,7 +686,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col gap-10">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+          <div className="rounded-2xl border border-white/10 bg-stone-950/70 p-4 backdrop-blur-sm sm:p-6">
             <Eyebrow>Run 1 failed and is still here</Eyebrow>
             <p className="mt-3 text-sm text-stone-300">
               The first run&apos;s headline hypothesis failed: the full Mend

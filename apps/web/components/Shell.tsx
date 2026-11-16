@@ -6,7 +6,7 @@ export function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-6 rounded-lg border border-stone-800 bg-stone-900/40 p-4">
+    <section className="mt-6 rounded-2xl border border-white/10 bg-stone-950/70 p-5 backdrop-blur-sm">
       <h2 className="text-sm font-semibold tracking-wide text-stone-300 uppercase">
         {title}
       </h2>
