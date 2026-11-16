@@ -3,11 +3,12 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import cast
 
-from trailmend.eval import benchmark, curve, evidence, replication_facts
+from trailmend.eval import benchmark, curve, evidence, headline, replication_facts
 from trailmend.eval.v3 import report as run3_report
 from trailmend.eval.v4 import report as run4_report
 
 README = Path("README.md")
+BENCHMARK_MD = Path("BENCHMARK.md")
 START = "<!-- numbers:start -->"
 END = "<!-- numbers:end -->"
 BENCHMARK_START = "<!-- benchmark:start -->"
@@ -405,7 +406,7 @@ def paragraph() -> str:
     return " ".join(str(row.get("text")) for row in _rows("benchmark")) or "Not generated yet."
 
 
-def write(path: Path = README) -> Path:
+def write(path: Path = BENCHMARK_MD) -> Path:
     text = path.read_text(encoding="utf-8")
     if START not in text or END not in text:
         raise ValueError(f"{path} has no numbers block to fill")
@@ -416,6 +417,15 @@ def write(path: Path = README) -> Path:
     return path
 
 
+def write_front(path: Path = README) -> Path:
+    text = path.read_text(encoding="utf-8")
+    if headline.START not in text or headline.END not in text:
+        raise ValueError(f"{path} has no headline block to fill")
+    path.write_text(_fill(text, headline.START, headline.END, headline.table()))
+    return path
+
+
 if __name__ == "__main__":
     benchmark.write()
     print(f"filled {write()}")
+    print(f"filled {write_front()}")

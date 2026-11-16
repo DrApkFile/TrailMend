@@ -123,7 +123,7 @@ def section() -> list[str]:
     return lines
 
 
-def write_readme(path: Path = Path("README.md")) -> None:
+def write_readme(path: Path = Path("BENCHMARK.md")) -> None:
     block = "\n".join(section())
     text = path.read_text()
     if START in text:

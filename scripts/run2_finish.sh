@@ -15,7 +15,7 @@ uv run python -m trailmend.eval.plain_run --v2 $seeds
 echo "== decide H1' to H8' and write run 2's evidence and manifest"
 uv run python -m trailmend.eval.analyse_v2
 
-echo "== fill the README numbers block for both runs"
+echo "== fill the BENCHMARK.md numbers block for both runs"
 uv run python -m trailmend.eval.report
 
 echo

@@ -31,13 +31,13 @@ no_secrets() {
 
 numbers_filled() {
   cd "$CLONE_DIR" || return 1
-  grep -q '<!-- numbers:start -->' README.md || { echo "numbers block missing"; return 1; }
+  grep -q '<!-- numbers:start -->' BENCHMARK.md || { echo "numbers block missing"; return 1; }
   local block
-  block="$(awk '/numbers:start/,/numbers:end/' README.md)"
+  block="$(awk '/numbers:start/,/numbers:end/' BENCHMARK.md)"
   local hole
   hole="$(printf '%s\n' "$block" | grep -nE 'Not filled yet|not measured|Not decided yet|—' || true)"
   [ -z "$hole" ] || {
-    echo "the README numbers block still has holes; re-run trailmend.eval.report once every evidence file exists"
+    echo "the BENCHMARK.md numbers block still has holes; re-run trailmend.eval.report once every evidence file exists"
     printf '%s\n' "$hole"
     return 1
   }
@@ -81,7 +81,7 @@ PY
 no_placeholder_numbers_on_site() {
   cd "$CLONE_DIR" || return 1
   local hits
-  hits="$(git grep -nI '______' -- README.md 'apps/web' || true)"
+  hits="$(git grep -nI '______' -- README.md BENCHMARK.md JUDGING.md 'apps/web' || true)"
   [ -z "$hits" ] || { echo "$hits"; return 1; }
 }
 
@@ -92,7 +92,7 @@ git clone --quiet "$SOURCE" "$CLONE_DIR" || { echo "clone failed" >&2; exit 1; }
 
 check "no .env in the clone"            no_env_file
 check "no credential-shaped strings"    no_secrets
-check "README numbers block filled"     numbers_filled
+check "BENCHMARK numbers block filled"     numbers_filled
 check "evidence digests match manifest" evidence_digests_match
 check "no unfilled blanks on the site"  no_placeholder_numbers_on_site
 
